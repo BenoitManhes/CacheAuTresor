@@ -19,3 +19,13 @@ android {
 kapt {
     correctErrorTypes = true
 }
+
+dependencies {
+
+    // Kotlin
+    implementation(Kotlin.stdlib.jdk8)
+    implementation(KotlinX.coroutines.core)
+
+    // Timber
+    implementation(JakeWharton.timber)
+}

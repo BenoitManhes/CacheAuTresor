@@ -3,3 +3,9 @@ plugins {
 }
 rootProject.name = "dixh"
 include ':app'
+include ':common'
+include ':common-android'
+include ':domain'
+include ':repository'
+include ':local-datasource'
+include ':remote-datasource'
