@@ -1,0 +1,22 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+buildscript {
+
+    ext {
+        compose_version = '1.0.1'
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath(Android.tools.build.gradlePlugin)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
+    }
+}
