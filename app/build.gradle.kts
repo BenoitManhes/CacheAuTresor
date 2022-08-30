@@ -57,15 +57,24 @@ dependencies {
     implementation (AndroidX.lifecycle.runtimeKtx)
 
     // Compose
-    implementation (AndroidX.compose.ui)
-    implementation (AndroidX.compose.material)
-    implementation (AndroidX.compose.ui.toolingPreview)
-    implementation (AndroidX.activity.compose)
-    debugImplementation (AndroidX.compose.ui.tooling)
+    implementation(AndroidX.compose.ui)
+    implementation(AndroidX.compose.ui.tooling)
+    implementation(AndroidX.compose.ui.toolingPreview)
+    implementation(AndroidX.compose.material)
+    implementation(AndroidX.compose.material3)
+    implementation(AndroidX.Activity.compose)
+    implementation(AndroidX.hilt.navigationCompose)
+    implementation(AndroidX.compose.material.icons.extended)
+    implementation(AndroidX.compose.foundation)
+    implementation("com.google.accompanist:accompanist-navigation-animation:_")
+    implementation(Google.accompanist.systemuicontroller)
 
     // Hilt
     implementation(Google.dagger.hilt.android)
     kapt(Google.dagger.hilt.compiler)
+
+    // Material Design
+    implementation(Google.android.material)
 
     // Testing
     testImplementation (Testing.junit4)

@@ -1,44 +1,107 @@
 package com.benoitmanhes.cacheautresor.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.staticCompositionLocalOf
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
-
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+private val LocalColor: ProvidableCompositionLocal<AppColorScheme> = staticCompositionLocalOf { DayColorScheme }
+private val LocalTypography: ProvidableCompositionLocal<AppTypography> = staticCompositionLocalOf { AppTypography }
+private val LocalShape: ProvidableCompositionLocal<AppShape> = staticCompositionLocalOf { AppShape }
 
 @Composable
-fun AppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+fun AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    val localTypography = AppTypography
+    val localShape = AppShape
+
+    val localColor = if (darkTheme) {
+        NightColorScheme
     } else {
-        LightColorPalette
+        DayColorScheme
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
+    val materialColorScheme = mappedMaterialColorScheme(darkTheme, localColor)
+    val material2Colors = mappedMaterial2Colors(darkTheme, localColor)
+
+    CompositionLocalProvider(
+        LocalColor provides localColor,
+        LocalTypography provides localTypography,
+        LocalShape provides localShape,
+    ) {
+        MaterialTheme(
+            colorScheme = materialColorScheme,
+        ) {
+            androidx.compose.material.MaterialTheme(
+                colors = material2Colors,
+                content = content
+            )
+        }
+    }
+}
+
+@Composable
+private fun mappedMaterialColorScheme(
+    darkTheme: Boolean,
+    localColor: AppColorScheme
+) = if (darkTheme) {
+    darkColorScheme(
+        primary = localColor.primary,
+        onPrimary = localColor.onPrimary,
+        secondary = localColor.secondary,
+        onSecondary = localColor.onSecondary,
+        surface = localColor.surface,
     )
+} else {
+    lightColorScheme(
+        primary = localColor.primary,
+        onPrimary = localColor.onPrimary,
+        secondary = localColor.secondary,
+        onSecondary = localColor.onSecondary,
+        surface = localColor.surface,
+    )
+}
+
+@Composable
+private fun mappedMaterial2Colors(
+    darkTheme: Boolean,
+    localColor: AppColorScheme
+) = if (darkTheme) {
+    darkColors(
+        primary = localColor.primary,
+        onPrimary = localColor.onPrimary,
+        secondary = localColor.secondary,
+        onSecondary = localColor.onSecondary,
+        surface = localColor.surface,
+    )
+} else {
+    lightColors(
+        primary = localColor.primary,
+        onPrimary = localColor.onPrimary,
+        secondary = localColor.secondary,
+        onSecondary = localColor.onSecondary,
+        surface = localColor.surface,
+    )
+}
+
+object AppTheme {
+    val typography: AppTypography
+        @Composable
+        get() = LocalTypography.current
+
+    val colors: AppColorScheme
+        @Composable
+        get() = LocalColor.current
+
+    val shape: AppShape
+        @Composable
+        get() = LocalShape.current
 }

@@ -4,17 +4,19 @@
     package="com.benoitmanhes.cacheautresor">
 
     <application
-        android:allowBackup="true"
+        android:name="com.benoitmanhes.cacheautresor.TresorApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.App">
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.benoitmanhes.cacheautresor.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.App">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
