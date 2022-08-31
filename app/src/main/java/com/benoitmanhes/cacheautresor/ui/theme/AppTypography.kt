@@ -38,4 +38,9 @@ object AppTypography {
         fontWeight = FontWeight.W300,
         fontSize = Dimens.Font.captionFontSize,
     )
+    val captionBold: TextStyle = TextStyle(
+        fontFamily = LeagueSpartan,
+        fontWeight = FontWeight.W500,
+        fontSize = Dimens.Font.captionFontSize,
+    )
 }

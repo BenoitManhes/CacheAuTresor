@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cache Au Trésor</string>
+    <string name="bottomBar_home">Accueil</string>
+    <string name="bottomBar_favourites">Favoris</string>
+    <string name="bottomBar_explore">Explorer</string>
+    <string name="bottomBar_instruments">Instruments</string>
+    <string name="bottomBar_profile">Profil</string>
+</resources>
