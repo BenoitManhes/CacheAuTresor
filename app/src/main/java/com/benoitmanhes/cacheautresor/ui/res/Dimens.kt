@@ -9,7 +9,8 @@ object Dimens {
     object Font {
         val header1FontSize: TextUnit = 20.sp
         val bodyFontSize: TextUnit = 15.sp
-        val captionFontSize: TextUnit = 12.sp
+        val bodySmallFontSize: TextUnit = 12.sp
+        val captionFontSize: TextUnit = 10.sp
     }
 
     object Radius {
@@ -20,5 +21,13 @@ object Dimens {
 
     object ComponentSize {
         val bottomBarItemSize: Dp = 28.dp
+    }
+
+    object Elevation {
+        val none: Dp = 0.dp
+    }
+    
+    object Stroke {
+        val medium: Dp = 1.dp
     }
 }

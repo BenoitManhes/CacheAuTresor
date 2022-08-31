@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Typography
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
@@ -42,7 +43,8 @@ fun AppTheme(
         ) {
             androidx.compose.material.MaterialTheme(
                 colors = material2Colors,
-                content = content
+                typography = mappedMaterial2Typography(localTypography),
+                content = content,
             )
         }
     }
@@ -91,6 +93,13 @@ private fun mappedMaterial2Colors(
         surface = localColor.surface,
     )
 }
+
+@Composable
+private fun mappedMaterial2Typography(localTypography: AppTypography) = Typography(
+    body1 = localTypography.body,
+    subtitle1 = localTypography.body,
+    caption = localTypography.caption,
+)
 
 object AppTheme {
     val typography: AppTypography

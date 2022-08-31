@@ -33,6 +33,11 @@ object AppTypography {
         fontWeight = FontWeight.W500,
         fontSize = Dimens.Font.bodyFontSize,
     )
+    val bodySmall: TextStyle = TextStyle(
+        fontFamily = LeagueSpartan,
+        fontWeight = FontWeight.W300,
+        fontSize = Dimens.Font.bodySmallFontSize,
+    )
     val caption: TextStyle = TextStyle(
         fontFamily = LeagueSpartan,
         fontWeight = FontWeight.W300,
