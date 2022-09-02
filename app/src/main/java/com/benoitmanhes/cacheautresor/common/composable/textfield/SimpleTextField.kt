@@ -2,11 +2,14 @@ package com.benoitmanhes.cacheautresor.common.composable.textfield
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -25,6 +28,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.input.InputImeAction
@@ -34,24 +38,20 @@ import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 
 @Composable
 fun SimpleTextField(
+    focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
     value: String? = null,
     @StringRes labelRes: Int? = null,
     @StringRes placeHolderRes: Int? = null,
     textStyle: TextStyle = AppTheme.typography.body,
     shape: Shape = AppTheme.shape.mediumRoundedCornerShape,
-    textFieldColors: TextFieldColors = TextFieldDefaults.textFieldColors(
-        focusedIndicatorColor = Color.Transparent,
-        disabledIndicatorColor = Color.Transparent,
-        unfocusedIndicatorColor = Color.Transparent,
-        backgroundColor = Color.Transparent,
-    ),
+    color: Color = MaterialTheme.colors.primary,
+    backgroundColor: Color = MaterialTheme.colors.surface,
     inputImeAction: InputImeAction = InputImeAction.Default(LocalFocusManager.current) { },
     leftIcon: @Composable (() -> Unit)? = null,
     rightIcon: @Composable (() -> Unit)? = null,
     onFocusChange: (FocusState) -> Unit = { },
     onTextChanged: ((String) -> Unit) = { },
-    focusRequester: FocusRequester,
 ) {
 
     val hintLabel = if (value.isNullOrEmpty()) {
@@ -62,17 +62,19 @@ fun SimpleTextField(
         modifier = modifier,
         shape = shape,
         elevation = Dimens.Elevation.none,
+        color = backgroundColor,
     ) {
-        TextField(
+        CustomTextField(
             modifier = Modifier
+                .height(Dimens.ComponentSize.textFieldHeight)
                 .focusRequester(focusRequester)
                 .onFocusChanged(onFocusChange),
             value = value.orEmpty(),
             onValueChange = onTextChanged,
-            label = { TextView(textRes = labelRes) },
+            label = { TextView(textRes = labelRes, textAlign = TextAlign.Center) },
             placeholder = { TextView(text = hintLabel, style = textStyle) },
             singleLine = true,
-            colors = textFieldColors,
+            colors = SimpleTextFieldColors(color),
             leadingIcon = leftIcon,
             trailingIcon = rightIcon,
             keyboardOptions = KeyboardOptions(
@@ -84,6 +86,18 @@ fun SimpleTextField(
     }
 }
 
+@Composable
+private fun SimpleTextFieldColors(
+    color: Color = MaterialTheme.colors.primary,
+): TextFieldColors = TextFieldDefaults.textFieldColors(
+    cursorColor = color,
+    focusedLabelColor = color,
+    focusedIndicatorColor = Color.Transparent,
+    disabledIndicatorColor = Color.Transparent,
+    unfocusedIndicatorColor = Color.Transparent,
+    backgroundColor = Color.Transparent,
+)
+
 @Preview
 @Composable
 private fun PreviewSimpleTextField() {
@@ -92,15 +106,19 @@ private fun PreviewSimpleTextField() {
         var text by remember { mutableStateOf("") }
 
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Gray),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Gray),
             contentAlignment = Alignment.Center,
         ) {
-            SimpleTextField(
-                value = text,
-                labelRes = R.string.bottomBar_explore,
-                onTextChanged = { text = it },
-                focusRequester = focusRequester,
-            )
+            Column {
+                SimpleTextField(
+                    value = text,
+                    labelRes = R.string.bottomBar_explore,
+                    onTextChanged = { text = it },
+                    focusRequester = focusRequester,
+                )
+            }
         }
     }
 }

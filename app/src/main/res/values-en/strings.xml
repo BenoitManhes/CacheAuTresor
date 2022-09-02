@@ -6,4 +6,6 @@
     <string name="bottomBar_instruments">Instruments</string>
     <string name="bottomBar_profile">Profile</string>
     <string name="bottomBar_favourites">Favourites</string>
+    <string name="loginScreen_login_emailTextField_label">Identifier</string>
+    <string name="loginScreen_login_passwordTextField_label">Password</string>
 </resources>

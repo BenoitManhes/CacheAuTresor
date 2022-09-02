@@ -7,10 +7,10 @@ import androidx.compose.ui.unit.sp
 
 object Dimens {
     object Font {
-        val header1FontSize: TextUnit = 20.sp
-        val bodyFontSize: TextUnit = 15.sp
-        val bodySmallFontSize: TextUnit = 12.sp
-        val captionFontSize: TextUnit = 10.sp
+        val header1FontSize: TextUnit = 24.sp
+        val bodyFontSize: TextUnit = 18.sp
+        val bodySmallFontSize: TextUnit = 15.sp
+        val captionFontSize: TextUnit = 12.sp
     }
 
     object Radius {
@@ -21,6 +21,9 @@ object Dimens {
 
     object ComponentSize {
         val bottomBarItemSize: Dp = 28.dp
+        val textFieldHeight: Dp = 52.dp
+        val textFieldMinHeight: Dp = 36.dp
+        val textFieldMinWidth: Dp = 180.dp
     }
 
     object Elevation {
@@ -28,6 +31,15 @@ object Dimens {
     }
     
     object Stroke {
-        val medium: Dp = 1.dp
+        val thin: Dp = 1.dp
+        val strong: Dp = 3.dp
+    }
+
+    object Padding {
+        val horizontalTextFieldDefault: Dp = 12.dp
+        val topTextFieldDefault: Dp = 8.dp
+        val topTextFieldLabel: Dp = 16.dp
+        val bottomTextFieldDefault: Dp = 4.dp
+        val doubleTextFieldInner: Dp = 2.dp
     }
 }

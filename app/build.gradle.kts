@@ -68,6 +68,7 @@ dependencies {
     implementation(AndroidX.compose.foundation)
     implementation("com.google.accompanist:accompanist-navigation-animation:_")
     implementation(Google.accompanist.systemuicontroller)
+    implementation (AndroidX.constraintLayout.compose)
 
     // Hilt
     implementation(Google.dagger.hilt.android)

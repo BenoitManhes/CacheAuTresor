@@ -99,7 +99,7 @@ private fun <I : BottomBarItem> RowScope.AppBottomNavigationBarItem(
                 AnimatedVisibility(visible = isSelected) {
                     Text(
                         text = stringResource(id = item.labelRes),
-                        style = AppTheme.typography.bodySmall,
+                        style = AppTheme.typography.captionBold,
                         color = tint,
                     )
                 }
