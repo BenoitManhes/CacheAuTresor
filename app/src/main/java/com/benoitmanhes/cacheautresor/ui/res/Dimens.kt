@@ -13,15 +13,27 @@ object Dimens {
         val captionFontSize: TextUnit = 12.sp
     }
 
-    object Radius {
+    object Margin {
         val small: Dp = 4.dp
         val medium: Dp = 8.dp
-        val large: Dp = 12.dp
+        val large: Dp = 16.dp
+    }
+
+    object Radius {
+        val small: Dp = 8.dp
+        val medium: Dp = 12.dp
+        val large: Dp = 24.dp
+    }
+
+    object Size {
+        val loginImageSize: Dp = 128.dp
+        val loginInputSectionSize: Dp = 128.dp
     }
 
     object ComponentSize {
+        val buttonHeight: Dp = 48.dp
         val bottomBarItemSize: Dp = 28.dp
-        val textFieldHeight: Dp = 52.dp
+        val textFieldHeight: Dp = 48.dp
         val textFieldMinHeight: Dp = 36.dp
         val textFieldMinWidth: Dp = 180.dp
     }
@@ -40,6 +52,5 @@ object Dimens {
         val topTextFieldDefault: Dp = 8.dp
         val topTextFieldLabel: Dp = 16.dp
         val bottomTextFieldDefault: Dp = 4.dp
-        val doubleTextFieldInner: Dp = 2.dp
     }
 }

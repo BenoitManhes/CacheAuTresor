@@ -7,4 +7,9 @@
     <string name="bottomBar_profile">Profile</string>
     <string name="loginScreen_login_emailTextField_label">Identifier</string>
     <string name="loginScreen_login_passwordTextField_label">Password</string>
+    <string name="loginScreen_loginButton_label">Login</string>
+    <string name="loginScreen_registerButton_label">Create my account</string>
+    <string name="logenScreen_register_emailTextField_label">Email</string>
+    <string name="logenScreen_register_passwordTextField_label">New password</string>
+    <string name="orSeparator_label">or</string>
 </resources>

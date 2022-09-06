@@ -19,9 +19,11 @@ object DayColorScheme : AppColorScheme {
     override val onSecondary: Color = White
     override val surface: Color = White
     override val onSurface: Color = Black
+    override val background: Color = White
+    override val onBackground: Color = Black
     override val placeholder: Color = TransparentBlack35
     override val disable: Color = TransparentBlack15
-
+    override val onDisable: Color = White
 }
 
 @Immutable
@@ -32,9 +34,11 @@ object NightColorScheme : AppColorScheme {
     override val onSecondary: Color = White
     override val surface: Color = White
     override val onSurface: Color = Black
+    override val background: Color = White
+    override val onBackground: Color = Black
     override val placeholder: Color = TransparentBlack35
     override val disable: Color = TransparentBlack15
-
+    override val onDisable: Color = White
 }
 
 @Immutable
@@ -45,6 +49,9 @@ interface AppColorScheme {
     val onSecondary: Color
     val surface: Color
     val onSurface: Color
+    val background: Color
+    val onBackground: Color
     val placeholder: Color
     val disable: Color
+    val onDisable: Color
 }

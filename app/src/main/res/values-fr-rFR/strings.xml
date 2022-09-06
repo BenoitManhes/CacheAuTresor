@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cache Au Trésor</string>
     <string name="bottomBar_home">Accueil</string>
     <string name="bottomBar_favourites">Favoris</string>
     <string name="bottomBar_explore">Explorer</string>
@@ -8,4 +7,9 @@
     <string name="bottomBar_profile">Profil</string>
     <string name="loginScreen_login_emailTextField_label">Identifiant</string>
     <string name="loginScreen_login_passwordTextField_label">Mot de passe</string>
+    <string name="loginScreen_loginButton_label">Se connecter</string>
+    <string name="loginScreen_registerButton_label">Creer mon compte</string>
+    <string name="logenScreen_register_emailTextField_label">Email</string>
+    <string name="logenScreen_register_passwordTextField_label">Nouveau mot de passe</string>
+    <string name="orSeparator_label">ou</string>
 </resources>

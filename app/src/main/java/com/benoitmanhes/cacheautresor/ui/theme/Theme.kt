@@ -61,6 +61,9 @@ private fun mappedMaterialColorScheme(
         secondary = localColor.secondary,
         onSecondary = localColor.onSecondary,
         surface = localColor.surface,
+        onSurface = localColor.onSurface,
+        background = localColor.onBackground,
+        onBackground = localColor.onBackground,
     )
 } else {
     lightColorScheme(
@@ -69,6 +72,9 @@ private fun mappedMaterialColorScheme(
         secondary = localColor.secondary,
         onSecondary = localColor.onSecondary,
         surface = localColor.surface,
+        onSurface = localColor.onSurface,
+        background = localColor.onBackground,
+        onBackground = localColor.onBackground,
     )
 }
 
@@ -83,6 +89,9 @@ private fun mappedMaterial2Colors(
         secondary = localColor.secondary,
         onSecondary = localColor.onSecondary,
         surface = localColor.surface,
+        onSurface = localColor.onSurface,
+        background = localColor.onBackground,
+        onBackground = localColor.onBackground,
     )
 } else {
     lightColors(
@@ -91,6 +100,9 @@ private fun mappedMaterial2Colors(
         secondary = localColor.secondary,
         onSecondary = localColor.onSecondary,
         surface = localColor.surface,
+        onSurface = localColor.onSurface,
+        background = localColor.onBackground,
+        onBackground = localColor.onBackground,
     )
 }
 
