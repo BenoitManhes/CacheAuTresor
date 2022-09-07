@@ -2,7 +2,6 @@ package com.benoitmanhes.cacheautresor.common.composable.textfield
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +27,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.R
@@ -45,9 +46,12 @@ fun SimpleTextField(
     @StringRes placeHolderRes: Int? = null,
     textStyle: TextStyle = AppTheme.typography.body,
     shape: Shape = AppTheme.shape.mediumRoundedCornerShape,
+    textColor: Color = MaterialTheme.colors.onSurface,
     color: Color = MaterialTheme.colors.primary,
     backgroundColor: Color = MaterialTheme.colors.surface,
     inputImeAction: InputImeAction = InputImeAction.Default(LocalFocusManager.current) { },
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardType: KeyboardType = KeyboardType.Text,
     leftIcon: @Composable (() -> Unit)? = null,
     rightIcon: @Composable (() -> Unit)? = null,
     onFocusChange: (FocusState) -> Unit = { },
@@ -74,22 +78,26 @@ fun SimpleTextField(
             label = { TextView(textRes = labelRes, textAlign = TextAlign.Center) },
             placeholder = { TextView(text = hintLabel, style = textStyle) },
             singleLine = true,
-            colors = SimpleTextFieldColors(color),
+            colors = SimpleTextFieldColors(textColor = textColor, color = color),
             leadingIcon = leftIcon,
             trailingIcon = rightIcon,
             keyboardOptions = KeyboardOptions(
-                imeAction = inputImeAction.imeAction
+                imeAction = inputImeAction.imeAction,
+                keyboardType = keyboardType,
             ),
             textStyle = textStyle,
             keyboardActions = inputImeAction.keyboardActions,
+            visualTransformation = visualTransformation,
         )
     }
 }
 
 @Composable
 private fun SimpleTextFieldColors(
-    color: Color = MaterialTheme.colors.primary,
+    textColor: Color,
+    color: Color,
 ): TextFieldColors = TextFieldDefaults.textFieldColors(
+    textColor = textColor,
     cursorColor = color,
     focusedLabelColor = color,
     focusedIndicatorColor = Color.Transparent,

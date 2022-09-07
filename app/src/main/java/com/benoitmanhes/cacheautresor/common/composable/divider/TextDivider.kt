@@ -2,7 +2,6 @@ package com.benoitmanhes.cacheautresor.common.composable.divider
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -22,7 +21,7 @@ fun TextDivider(
     Row(
         modifier = modifier.height(Dimens.Margin.large),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.Margin.small)
+        horizontalArrangement = Arrangement.spacedBy(Dimens.Margin.medium)
     ) {
         HorizontalDivider(modifier = Modifier.weight(1f))
         TextView(

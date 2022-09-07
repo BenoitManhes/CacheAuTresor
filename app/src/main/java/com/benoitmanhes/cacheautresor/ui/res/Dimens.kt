@@ -17,6 +17,8 @@ object Dimens {
         val small: Dp = 4.dp
         val medium: Dp = 8.dp
         val large: Dp = 16.dp
+        val great: Dp = 32.dp
+        val huge: Dp = 64.dp
     }
 
     object Radius {
@@ -27,7 +29,7 @@ object Dimens {
 
     object Size {
         val loginImageSize: Dp = 128.dp
-        val loginInputSectionSize: Dp = 128.dp
+        val passwordIconSize: Dp = 24.dp
     }
 
     object ComponentSize {

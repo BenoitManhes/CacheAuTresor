@@ -94,6 +94,7 @@ internal fun LoginInputSection(
                     focusRequester = focusRequester,
                     labelTopRes = R.string.logenScreen_register_emailTextField_label,
                     labelBottomRes = R.string.logenScreen_register_passwordTextField_label,
+                    color = AppTheme.colors.secondary,
                     onTextTopChanged = onRegisterMailChange,
                     onTextBottomChanged = onRegisterPwdChange,
                 )
@@ -105,6 +106,7 @@ internal fun LoginInputSection(
             text = stringResource(id = R.string.loginScreen_registerButton_label),
             isEnabled = { !valueRegisterMail.isNullOrEmpty() && !valueRegisterPwd.isNullOrEmpty() || it == ButtonStyle.Outlined },
             buttonStyle = if (loginState == LoginState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
+            color = AppTheme.colors.secondary,
             onClick = onClickRegister,
         )
     }
