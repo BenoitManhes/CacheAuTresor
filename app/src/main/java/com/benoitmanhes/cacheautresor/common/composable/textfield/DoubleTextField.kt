@@ -1,7 +1,6 @@
 package com.benoitmanhes.cacheautresor.common.composable.textfield
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.focusable
@@ -152,6 +151,7 @@ private fun Selector(modifier: Modifier = Modifier, color: Color, shape: Shape) 
 }
 
 private enum class State { None, Top, Bottom }
+
 private const val BACKGROUND_ID: String = "background.id"
 private const val CONTENT_ID: String = "content.id"
 

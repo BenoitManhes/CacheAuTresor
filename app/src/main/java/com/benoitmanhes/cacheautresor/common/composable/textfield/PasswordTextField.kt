@@ -52,13 +52,15 @@ fun PasswordTextField(
     textColor: Color = MaterialTheme.colors.onSurface,
     color: Color = MaterialTheme.colors.primary,
     backgroundColor: Color = MaterialTheme.colors.surface,
-    hideText: Boolean = true,
-    isEyeIconVisible: Boolean = false,
     inputImeAction: InputImeAction = InputImeAction.Default(LocalFocusManager.current) { },
     onFocusChange: (FocusState) -> Unit = { },
     onTextChanged: (String) -> Unit = { },
     onClickEyeIcon: () -> Unit = { },
+    forceHideText: Boolean? = null,
 ) {
+    var internalHideText by remember() { mutableStateOf(false) }
+    val hideText = forceHideText ?: internalHideText
+
     SimpleTextField(
         focusRequester = focusRequester,
         modifier = modifier,
@@ -79,11 +81,16 @@ fun PasswordTextField(
             val image = if (hideText) AppIconPack.IconSmallEye else AppIconPack.IconSmallEyeClose
 
             AnimatedVisibility(
-                visible = isEyeIconVisible,
+                visible = !value.isNullOrEmpty(),
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
-                IconButton(onClick = onClickEyeIcon) {
+                IconButton(
+                    onClick = {
+                        internalHideText = !hideText
+                        onClickEyeIcon()
+                    }
+                ) {
                     Icon(
                         imageVector = image,
                         contentDescription = null,
