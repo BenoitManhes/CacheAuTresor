@@ -1,12 +1,27 @@
-package com.benoitmanhes.cacheautresor.screen.login
+package com.benoitmanhes.cacheautresor.screen.connection
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.screen.connection.section.LoginInputSection
+import com.benoitmanhes.cacheautresor.ui.res.Dimens
+import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel = viewModel(),
+fun ConnectionScreen(
 ) {
-    val focusRequester = remember { FocusRequester() }
-
     Column(
         modifier = Modifier
             .imePadding()
@@ -43,6 +58,6 @@ fun LoginScreen(
 @Composable
 private fun PreviewLoginScreen() {
     AppTheme {
-        LoginScreen()
+        ConnectionScreen()
     }
 }
