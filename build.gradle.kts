@@ -4,6 +4,7 @@ allprojects {
         mavenCentral()
     }
 }
+
 buildscript {
     repositories {
         google()
