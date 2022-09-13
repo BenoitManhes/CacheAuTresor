@@ -5,6 +5,9 @@ plugins {
 }
 
 dependencies {
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:_")
+
     // Hilt
     implementation(Google.dagger.hilt.android)
     kapt(Google.dagger.hilt.compiler)

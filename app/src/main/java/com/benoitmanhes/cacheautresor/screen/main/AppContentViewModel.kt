@@ -6,16 +6,28 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.screen.main.holder.AuthenticatedState
+import com.benoitmanhes.domain.usecase.user.IsAuthenticatedUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AppContentViewModel : ViewModel() {
+@HiltViewModel
+class AppContentViewModel @Inject constructor(
+    isAuthenticatedUseCase: IsAuthenticatedUseCase
+) : ViewModel() {
 
     var authenticatedState: AuthenticatedState by mutableStateOf(AuthenticatedState.Unknown)
         private set
 
     init {
         viewModelScope.launch {
-            authenticatedState = AuthenticatedState.UnAuthenticated
+            isAuthenticatedUseCase().collect { isLoggedIn ->
+                authenticatedState = if (isLoggedIn) {
+                    AuthenticatedState.Authenticated
+                } else {
+                    AuthenticatedState.UnAuthenticated
+                }
+            }
         }
     }
 }
