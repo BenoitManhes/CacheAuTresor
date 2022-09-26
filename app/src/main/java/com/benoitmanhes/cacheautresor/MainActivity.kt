@@ -4,14 +4,8 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import com.benoitmanhes.cacheautresor.screen.connection.ConnectionScreen
-import com.benoitmanhes.cacheautresor.screen.main.AppContent
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.benoitmanhes.cacheautresor.screen.root.AppContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

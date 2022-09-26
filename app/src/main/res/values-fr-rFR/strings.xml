@@ -12,4 +12,7 @@
     <string name="logenScreen_register_emailTextField_label">Email</string>
     <string name="logenScreen_register_passwordTextField_label">Nouveau mot de passe</string>
     <string name="orSeparator_label">ou</string>
+    <string name="app_name">Cache Au Trésor</string>
+    <string name="bottomBar_news">Actualités</string>
+    <string name="bottomBar_create">Créer</string>
 </resources>

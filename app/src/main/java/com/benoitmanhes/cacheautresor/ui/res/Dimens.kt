@@ -42,6 +42,8 @@ object Dimens {
 
     object Elevation {
         val none: Dp = 0.dp
+        val small: Dp = 4.dp
+        val medium: Dp = 8.dp
     }
     
     object Stroke {
