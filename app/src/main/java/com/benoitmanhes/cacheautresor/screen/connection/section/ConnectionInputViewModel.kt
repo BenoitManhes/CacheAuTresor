@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.domain.usecase.user.AuthenticationUseCase
 import com.benoitmanhes.domain.utils.BResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +21,8 @@ class ConnectionInputViewModel @Inject constructor(
         value = ConnectionInputViewModelState()
     )
         private set
+
+    private var loginJob: Job? = null
 
     fun clickLogin() {
         when (state.connectionInputState) {
@@ -60,23 +63,39 @@ class ConnectionInputViewModel @Inject constructor(
     }
 
     private fun login() {
-        viewModelScope.launch {
+        loginJob?.cancel()
+        loginJob = viewModelScope.launch {
             authenticationUseCase.invoke(
                 identifier = state.valueLoginEmail,
                 password = state.valueLoginPwd,
             ).collect { loginResult ->
                 when (loginResult) {
-                    is BResult.Loading -> {}
-                    is BResult.Success -> {}
-                    is BResult.Failure -> {}
+                    is BResult.Loading -> {
+                        state = state.copy(loadingLogin = true)
+                    }
+                    is BResult.Success -> {
+                        state = state.copy(
+                            loadingLogin = false,
+                            valueLoginPwd = null,
+                            valueRegisterPwd = null,
+                        )
+                    }
+                    is BResult.Failure -> {
+                        state = state.copy(loadingLogin = false)
+                    }
                 }
             }
         }
     }
 
     private fun updateConnexionState(value: ConnectionInputState) {
+        if (value == ConnectionInputState.Register) {
+            loginJob?.cancel()
+        }
         state = state.copy(
             connectionInputState = value,
+            loadingLogin = state.loadingLogin && value == ConnectionInputState.Login,
+            loadingRegister = state.loadingRegister && value == ConnectionInputState.Register,
         )
     }
 }

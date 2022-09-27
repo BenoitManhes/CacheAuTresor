@@ -65,6 +65,7 @@ internal fun LoginInputSection(
             text = stringResource(id = R.string.loginScreen_loginButton_label),
             buttonStyle = if (viewModel.state.connectionInputState == ConnectionInputState.Login) ButtonStyle.Filled else ButtonStyle.Outlined,
             isEnabled = { viewModel.state.isLoginEnable || it == ButtonStyle.Outlined },
+            isLoading = viewModel.state.loadingLogin,
             onClick = { viewModel.clickLogin() },
         )
         Spacer(size = Dimens.Margin.large)
@@ -93,6 +94,7 @@ internal fun LoginInputSection(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.loginScreen_registerButton_label),
             isEnabled = { viewModel.state.isRegisterEnable || it == ButtonStyle.Outlined },
+            isLoading = viewModel.state.loadingRegister,
             buttonStyle = if (viewModel.state.connectionInputState == ConnectionInputState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
             color = AppTheme.colors.secondary,
             onClick = { viewModel.clickRegister() },

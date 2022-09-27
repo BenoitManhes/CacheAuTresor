@@ -6,6 +6,8 @@ data class ConnectionInputViewModelState(
     val valueLoginPwd: String? = null,
     val valueRegisterEmail: String? = null,
     val valueRegisterPwd: String? = null,
+    val loadingLogin: Boolean = false,
+    val loadingRegister: Boolean = false,
 ) {
     val isLoginTextVisible: Boolean = connectionInputState == ConnectionInputState.Login
     val isRegisterTextVisible: Boolean = connectionInputState == ConnectionInputState.Register

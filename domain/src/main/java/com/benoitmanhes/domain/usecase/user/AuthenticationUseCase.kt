@@ -14,6 +14,7 @@ class AuthenticationUseCase @Inject constructor(
         identifier: String?,
         password: String?,
     ): Flow<BResult<Unit>> = flow {
+        emit(BResult.Loading())
         delay(3000)
         userRepository.saveIsAuthenticated(true)
         emit(BResult.Success(Unit))

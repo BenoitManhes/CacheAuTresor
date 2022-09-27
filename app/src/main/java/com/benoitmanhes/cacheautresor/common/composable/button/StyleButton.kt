@@ -16,18 +16,20 @@ fun StyleButton(
     textColor: Color = AppTheme.colors.onPrimary,
     buttonStyle: ButtonStyle = ButtonStyle.Filled,
     isEnabled: (ButtonStyle) -> Boolean = { true },
+    isLoading: Boolean = false,
     onClick: () -> Unit = { },
 ) {
     Crossfade(targetState = buttonStyle) { style ->
         when (style) {
             ButtonStyle.Filled -> {
-                FilledButton(
+                LoadingFilledButton(
                     text = text,
-                    modifier = modifier.heightIn(min = Dimens.ComponentSize.buttonHeight),
+                    modifier = modifier.heightIn(Dimens.ComponentSize.buttonHeight),
                     enabled = isEnabled(style),
                     color = color,
                     textColor = textColor,
                     onClick = onClick,
+                    isLoading = isLoading,
                 )
             }
             ButtonStyle.Outlined -> {

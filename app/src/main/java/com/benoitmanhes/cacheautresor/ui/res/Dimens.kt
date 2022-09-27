@@ -34,6 +34,7 @@ object Dimens {
 
     object ComponentSize {
         val buttonHeight: Dp = 48.dp
+        val buttonLoaderSize: Dp = 32.dp
         val bottomBarItemSize: Dp = 28.dp
         val textFieldHeight: Dp = 48.dp
         val textFieldMinHeight: Dp = 36.dp
