@@ -70,6 +70,10 @@ dependencies {
     implementation(Google.accompanist.systemuicontroller)
     implementation (AndroidX.constraintLayout.compose)
 
+    // Google map
+    implementation (Google.android.maps.compose)
+    implementation (Google.android.playServices.maps)
+
     // Hilt
     implementation(Google.dagger.hilt.android)
     kapt(Google.dagger.hilt.compiler)
