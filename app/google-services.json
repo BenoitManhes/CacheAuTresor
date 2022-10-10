@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "84493193189",
+    "project_id": "cacheautresor",
+    "storage_bucket": "cacheautresor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84493193189:android:c732bd8c7fccd5e998a90c",
+        "android_client_info": {
+          "package_name": "com.benoitmanhes.cacheautresor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84493193189-86sickkda9vje14ok9p0thl7dm7sun0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeDogY2lS4Ne8YikBlLiVx3aPrBckRcyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84493193189-86sickkda9vje14ok9p0thl7dm7sun0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

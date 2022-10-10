@@ -1,17 +1,12 @@
 package com.benoitmanhes.domain.usecase.user
 
-import com.benoitmanhes.domain.interfaces.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import javax.inject.Inject
 
 class LogoutUseCase @Inject constructor(
-    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository,
 ) {
     operator fun invoke() {
-        CoroutineScope(Dispatchers.IO).launch {
-            userRepository.saveIsAuthenticated(false)
-        }
+        authRepository.logout()
     }
 }

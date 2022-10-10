@@ -1,12 +1,13 @@
 package com.benoitmanhes.cacheautresor.screen.connection.section
 
+import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.benoitmanhes.domain.usecase.user.AuthenticationUseCase
-import com.benoitmanhes.domain.utils.BResult
+import com.benoitmanhes.domain.usecase.user.LoginUseCase
+import com.benoitmanhes.domain.structure.BResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConnectionInputViewModel @Inject constructor(
-    private val authenticationUseCase: AuthenticationUseCase,
+    private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 
     var state: ConnectionInputViewModelState by mutableStateOf(
@@ -64,24 +65,26 @@ class ConnectionInputViewModel @Inject constructor(
 
     private fun login() {
         loginJob?.cancel()
-        loginJob = viewModelScope.launch {
-            authenticationUseCase.invoke(
-                identifier = state.valueLoginEmail,
-                password = state.valueLoginPwd,
-            ).collect { loginResult ->
-                when (loginResult) {
-                    is BResult.Loading -> {
-                        state = state.copy(loadingLogin = true)
-                    }
-                    is BResult.Success -> {
-                        state = state.copy(
-                            loadingLogin = false,
-                            valueLoginPwd = null,
-                            valueRegisterPwd = null,
-                        )
-                    }
-                    is BResult.Failure -> {
-                        state = state.copy(loadingLogin = false)
+        if (state.valueLoginEmail?.isEmailValid() == true && state.valueLoginPwd?.isPasswordValid() == true) {
+            loginJob = viewModelScope.launch {
+                loginUseCase.invoke(
+                    identifier = state.valueLoginEmail!!,
+                    password = state.valueLoginPwd!!,
+                ).collect { loginResult ->
+                    when (loginResult) {
+                        is BResult.Loading -> {
+                            state = state.copy(loadingLogin = true)
+                        }
+                        is BResult.Success -> {
+                            state = state.copy(
+                                loadingLogin = false,
+                                valueLoginPwd = null,
+                                valueRegisterPwd = null,
+                            )
+                        }
+                        is BResult.Failure -> {
+                            state = state.copy(loadingLogin = false)
+                        }
                     }
                 }
             }
@@ -98,4 +101,7 @@ class ConnectionInputViewModel @Inject constructor(
             loadingRegister = state.loadingRegister && value == ConnectionInputState.Register,
         )
     }
+
+    private fun String.isEmailValid(): Boolean = Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    private fun String.isPasswordValid(): Boolean = this.isNotBlank()
 }

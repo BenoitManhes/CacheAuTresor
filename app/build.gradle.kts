@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -69,6 +70,11 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:_")
     implementation(Google.accompanist.systemuicontroller)
     implementation (AndroidX.constraintLayout.compose)
+
+    // Firebase
+    implementation(platform(Google.firebase.bom))
+    implementation(Google.firebase.authenticationKtx)
+    implementation(Google.firebase.cloudFirestoreKtx)
 
     // Google map
     implementation (Google.android.maps.compose)

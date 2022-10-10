@@ -1,8 +1,8 @@
 package com.benoitmanhes.local_datasource.di
 
-import com.benoitmanhes.domain.interfaces.datasource.UserLocalDataSource
-import com.benoitmanhes.local_datasource.datasource.UserLocalDataSourceImpl
-import com.benoitmanhes.local_datasource.datastore.UserDataStore
+import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
+import com.benoitmanhes.local_datasource.datasource.AuthLocalDataSourceImpl
+import com.benoitmanhes.local_datasource.datastore.AuthDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +14,6 @@ internal object StorageModule {
 
     @Provides
     fun provideUserLocaleDataSource(
-        dataStore: UserDataStore
-    ): UserLocalDataSource = UserLocalDataSourceImpl(dataStore)
+        dataStore: AuthDataStore
+    ): AuthLocalDataSource = AuthLocalDataSourceImpl(dataStore)
 }
