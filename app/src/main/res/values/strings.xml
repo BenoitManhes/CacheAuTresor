@@ -14,4 +14,9 @@
     <string name="orSeparator_label">or</string>
     <string name="bottomBar_news">News</string>
     <string name="bottomBar_create">Create</string>
+    <string name="loginScreen_register_codeText_label">Code</string>
+    <string name="accountCreation_topBar_title">Create your account</string>
+    <string name="accountCreation_name_label">Explorater name</string>
+    <string name="accountCreation_email_label">Email</string>
+    <string name="accountCreation_name_error">Name already existing</string>
 </resources>

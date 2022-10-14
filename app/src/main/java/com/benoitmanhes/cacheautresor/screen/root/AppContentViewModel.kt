@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.screen.root.holder.AuthenticatedState
-import com.benoitmanhes.domain.usecase.user.IsAuthenticatedUseCase
+import com.benoitmanhes.domain.usecase.authentication.IsAuthenticatedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

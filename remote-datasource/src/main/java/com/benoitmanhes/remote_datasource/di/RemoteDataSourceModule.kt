@@ -20,7 +20,8 @@ object RemoteDataSourceModule {
     @Provides
     fun provideAuthRemoteDataSource(
         auth: FirebaseAuth,
-    ): AuthRemoteDataSource = AuthRemoteDataSourceImpl(auth)
+        firestore: FirebaseFirestore,
+    ): AuthRemoteDataSource = AuthRemoteDataSourceImpl(auth, firestore)
 
     @Singleton
     @Provides

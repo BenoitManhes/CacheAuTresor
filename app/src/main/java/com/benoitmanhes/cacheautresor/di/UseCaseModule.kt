@@ -1,9 +1,10 @@
 package com.benoitmanhes.cacheautresor.di
 
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
-import com.benoitmanhes.domain.usecase.user.LoginUseCase
-import com.benoitmanhes.domain.usecase.user.IsAuthenticatedUseCase
-import com.benoitmanhes.domain.usecase.user.LogoutUseCase
+import com.benoitmanhes.domain.usecase.authentication.CheckAuthCodeUseCase
+import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
+import com.benoitmanhes.domain.usecase.authentication.IsAuthenticatedUseCase
+import com.benoitmanhes.domain.usecase.authentication.LogoutUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +28,9 @@ object UseCaseModule {
     fun provideLogoutUseCase(
         authRepository: AuthRepository,
     ): LogoutUseCase = LogoutUseCase(authRepository)
+
+    @Provides
+    fun provideCheckCodeUseCase(
+        authRepository: AuthRepository,
+    ): CheckAuthCodeUseCase = CheckAuthCodeUseCase(authRepository)
 }

@@ -84,6 +84,7 @@ fun SimpleTextField(
             keyboardOptions = KeyboardOptions(
                 imeAction = inputImeAction.imeAction,
                 keyboardType = keyboardType,
+                autoCorrect = false,
             ),
             textStyle = textStyle,
             keyboardActions = inputImeAction.keyboardActions,

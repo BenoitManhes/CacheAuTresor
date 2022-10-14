@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.coroutines.resume
@@ -15,7 +16,12 @@ import kotlin.coroutines.suspendCoroutine
 
 class AuthRemoteDataSourceImpl(
     private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore,
 ) : AuthRemoteDataSource {
+
+    companion object {
+        const val ACCOUNT_TOKENS_COLLECTION: String = "accountTokens"
+    }
 
     override fun getCurrentUserAccount(): Account? = auth.currentUser?.toAccount()
 
@@ -32,6 +38,30 @@ class AuthRemoteDataSourceImpl(
     }
 
     override fun logout(): Unit = auth.signOut()
+
+    override fun getAuthCode(code: String): Flow<BResult<Unit>> = flow {
+        emit(BResult.Loading())
+        val result: BResult<Unit> = suspendCoroutine { cont ->
+            firestore.collection(ACCOUNT_TOKENS_COLLECTION)
+                .document(code)
+                .get()
+                .addOnSuccessListener { accountToken ->
+                    cont.resume(
+                        if (accountToken.exists()) BResult.Success(Unit) else BResult.Failure(BError.ObjectNotFound)
+                    )
+                }
+                .addOnFailureListener {
+                    cont.resume(BResult.Failure(BError.UnknownError(cause = it)))
+                }
+        }
+        emit(result)
+    }
+
+    override fun deleteAuthCode(code: String) {
+        firestore.collection(ACCOUNT_TOKENS_COLLECTION)
+            .document(code)
+            .delete()
+    }
 
     private fun FirebaseUser.toAccount(): Account = Account(
         explorerId = this.displayName,

@@ -15,4 +15,9 @@
     <string name="app_name">Cache Au Trésor</string>
     <string name="bottomBar_news">Actualités</string>
     <string name="bottomBar_create">Créer</string>
+    <string name="loginScreen_register_codeText_label">Code</string>
+    <string name="accountCreation_topBar_title">Créer ton compte</string>
+    <string name="accountCreation_name_label">Nom d’explorateur</string>
+    <string name="accountCreation_email_label">Email</string>
+    <string name="accountCreation_name_error">Nom déjà existant</string>
 </resources>

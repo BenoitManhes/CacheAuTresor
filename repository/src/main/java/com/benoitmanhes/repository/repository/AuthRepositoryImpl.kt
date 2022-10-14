@@ -43,6 +43,12 @@ class AuthRepositoryImpl(
         }
     }
 
+    override fun getAuthCode(code: String): Flow<BResult<Unit>> = authRemoteDataSource.getAuthCode(code)
+
+    override fun deleteAuthCode(code: String) {
+        authRemoteDataSource.deleteAuthCode(code)
+    }
+
     private fun Flow<BResult<Account>>.fetchAccount(): Flow<BResult<Account>> = flatMapMerge { authResult ->
         when (authResult) {
             is BResult.Loading -> flowOf(authResult.convert())

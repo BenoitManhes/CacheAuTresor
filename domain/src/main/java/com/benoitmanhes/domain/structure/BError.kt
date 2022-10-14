@@ -33,5 +33,4 @@ sealed class BError(
         override val message: String? = null,
         override val cause: Throwable? = null,
     ) : BError(message, cause)
-
 }

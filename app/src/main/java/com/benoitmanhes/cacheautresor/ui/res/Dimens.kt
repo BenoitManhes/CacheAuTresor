@@ -57,5 +57,6 @@ object Dimens {
         val topTextFieldDefault: Dp = 8.dp
         val topTextFieldLabel: Dp = 16.dp
         val bottomTextFieldDefault: Dp = 4.dp
+        val switchText: Dp = 2.dp
     }
 }
