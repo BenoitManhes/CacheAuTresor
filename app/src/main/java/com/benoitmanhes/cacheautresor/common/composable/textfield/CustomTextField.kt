@@ -16,15 +16,19 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TextFieldDefaults.indicatorLine
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import com.benoitmanhes.cacheautresor.ui.res.AppPadding
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomTextField(
     value: String,
@@ -39,8 +43,11 @@ fun CustomTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    kbController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions(),
+    keyboardActions: KeyboardActions = KeyboardActions(
+        onDone = { kbController?.hide() },
+    ),
     singleLine: Boolean = false,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },

@@ -28,6 +28,7 @@ object Dimens {
     }
 
     object Size {
+        val accountCreationImageSize: Dp = 180.dp
         val loginImageSize: Dp = 128.dp
         val passwordIconSize: Dp = 24.dp
     }

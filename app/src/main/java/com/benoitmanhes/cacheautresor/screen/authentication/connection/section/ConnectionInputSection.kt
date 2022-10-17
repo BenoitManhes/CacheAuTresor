@@ -13,11 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,12 +36,6 @@ internal fun LoginInputSection(
     modifier: Modifier = Modifier,
     viewModel: ConnectionInputViewModel = hiltViewModel(),
 ) {
-    val focusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(viewModel.navigateToAccountCreation) {
-        viewModel.navigateToAccountCreation?.let(onAccountTokenValid)
-    }
-
     Column(
         modifier = modifier
             .wrapContentHeight(),
@@ -59,7 +50,6 @@ internal fun LoginInputSection(
                 DoubleTextField(
                     valueTop = viewModel.state.valueLoginEmail,
                     valueBottom = viewModel.state.valueLoginPwd,
-                    focusRequester = focusRequester,
                     labelTopRes = R.string.loginScreen_login_emailTextField_label,
                     labelBottomRes = R.string.loginScreen_login_passwordTextField_label,
                     onTextTopChanged = { viewModel.updateLoginEmail(it) },
@@ -86,7 +76,6 @@ internal fun LoginInputSection(
         ) {
             Column {
                 OutlinedTextField(
-                    focusRequester = focusRequester,
                     modifier = Modifier.fillMaxWidth(),
                     value = viewModel.state.valueRegisterCode,
                     color = AppTheme.colors.secondary,
@@ -103,7 +92,7 @@ internal fun LoginInputSection(
             isLoading = viewModel.state.loadingRegister,
             buttonStyle = if (viewModel.state.connectionInputState == ConnectionInputState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
             color = AppTheme.colors.secondary,
-            onClick = { viewModel.clickRegister() },
+            onClick = { viewModel.clickRegister(onAccountTokenValid) },
         )
     }
 }

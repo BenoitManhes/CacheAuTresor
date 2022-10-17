@@ -18,18 +18,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.common.composable.input.InputImeAction
+import com.benoitmanhes.cacheautresor.common.utils.InputType
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.cacheautresor.ui.res.icons.AppIconPack
 import com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack.IconSmallEye
@@ -38,7 +35,6 @@ import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 
 @Composable
 fun PasswordTextField(
-    focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
     value: String? = null,
     @StringRes labelRes: Int? = null,
@@ -48,7 +44,8 @@ fun PasswordTextField(
     textColor: Color = MaterialTheme.colors.onSurface,
     color: Color = MaterialTheme.colors.primary,
     backgroundColor: Color = MaterialTheme.colors.surface,
-    inputImeAction: InputImeAction = InputImeAction.Default(LocalFocusManager.current) { },
+    hasNext: Boolean = false,
+    inputType: InputType = InputType.Default,
     onFocusChange: (FocusState) -> Unit = { },
     onTextChanged: (String) -> Unit = { },
     onClickEyeIcon: () -> Unit = { },
@@ -58,7 +55,6 @@ fun PasswordTextField(
     val hideText = forceHideText ?: internalHideText
 
     SimpleTextField(
-        focusRequester = focusRequester,
         modifier = modifier,
         value = value,
         labelRes = labelRes,
@@ -68,11 +64,11 @@ fun PasswordTextField(
         textColor = textColor,
         color = color,
         backgroundColor = backgroundColor,
-        inputImeAction = inputImeAction,
+        hasNext = hasNext,
+        inputType = inputType,
         onFocusChange = onFocusChange,
         onTextChanged = onTextChanged,
         visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardType = KeyboardType.Password,
         rightIcon = {
             val image = if (hideText) AppIconPack.IconSmallEye else AppIconPack.IconSmallEyeClose
 
@@ -103,7 +99,6 @@ fun PasswordTextField(
 @Composable
 private fun PreviewPasswordTextField() {
     AppTheme {
-        val focusRequester = remember { FocusRequester() }
         var text by remember { mutableStateOf("") }
 
         Box(
@@ -116,7 +111,6 @@ private fun PreviewPasswordTextField() {
                 value = text,
                 labelRes = R.string.bottomBar_explore,
                 onTextChanged = { text = it },
-                focusRequester = focusRequester,
             )
         }
     }

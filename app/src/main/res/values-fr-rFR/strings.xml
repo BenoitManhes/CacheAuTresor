@@ -20,4 +20,6 @@
     <string name="accountCreation_name_label">Nom d’explorateur</string>
     <string name="accountCreation_email_label">Email</string>
     <string name="accountCreation_name_error">Nom déjà existant</string>
+    <string name="common_validate">Valider</string>
+    <string name="accountCreation_password_label">Nouveau mot de passe</string>
 </resources>

@@ -7,9 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.ConnectionInputState
-import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
 import com.benoitmanhes.domain.structure.BResult
 import com.benoitmanhes.domain.usecase.authentication.CheckAuthCodeUseCase
+import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -26,9 +26,6 @@ class ConnectionInputViewModel @Inject constructor(
     )
         private set
 
-    var navigateToAccountCreation: String? by mutableStateOf(null)
-        private set
-
     private var loginJob: Job? = null
     private var registerJob: Job? = null
 
@@ -39,10 +36,10 @@ class ConnectionInputViewModel @Inject constructor(
         }
     }
 
-    fun clickRegister() {
+    fun clickRegister(onAccountTokenValid: (accountToken: String) -> Unit) {
         when (state.connectionInputState) {
             ConnectionInputState.Login -> updateConnexionState(ConnectionInputState.Register)
-            ConnectionInputState.Register -> register()
+            ConnectionInputState.Register -> register(onAccountTokenValid)
         }
     }
 
@@ -92,7 +89,7 @@ class ConnectionInputViewModel @Inject constructor(
         }
     }
 
-    private fun register() {
+    private fun register(onAccountTokenValid: (accountToken: String) -> Unit) {
         registerJob?.cancel()
         registerJob = viewModelScope.launch {
             checkAuthCodeUseCase.invoke(state.valueRegisterCode!!).collect { registerResult ->
@@ -105,7 +102,7 @@ class ConnectionInputViewModel @Inject constructor(
                             loadingRegister = false,
                             valueLoginPwd = null,
                         )
-                        navigateToAccountCreation = registerResult.successData
+                        onAccountTokenValid.invoke(registerResult.successData)
                     }
                     is BResult.Failure -> {
                         state = state.copy(

@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.common.composable.textfield
 
-import android.graphics.drawable.shapes.Shape
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -13,42 +12,38 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.divider.Spacer
-import com.benoitmanhes.cacheautresor.common.composable.input.InputImeAction
 import com.benoitmanhes.cacheautresor.common.composable.textview.TextView
+import com.benoitmanhes.cacheautresor.common.extension.getKeyboardOption
+import com.benoitmanhes.cacheautresor.common.utils.InputType
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun OutlinedTextField(
-    focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
     value: String? = null,
     isError: Boolean = false,
@@ -60,9 +55,9 @@ fun OutlinedTextField(
     color: Color = MaterialTheme.colors.primary,
     errorColor: Color = MaterialTheme.colors.error,
     backgroundColor: Color = MaterialTheme.colors.surface,
-    inputImeAction: InputImeAction = InputImeAction.Default(LocalFocusManager.current) { },
+    hasNext: Boolean = false,
+    inputType: InputType = InputType.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardType: KeyboardType = KeyboardType.Text,
     leftIcon: @Composable (() -> Unit)? = null,
     rightIcon: @Composable (() -> Unit)? = null,
     onFocusChange: (FocusState) -> Unit = { },
@@ -94,7 +89,6 @@ fun OutlinedTextField(
                 modifier = Modifier
                     .height(Dimens.ComponentSize.textFieldHeight)
                     .fillMaxWidth()
-                    .focusRequester(focusRequester)
                     .onFocusChanged { focusState ->
                         hasFocus = focusState.hasFocus
                         onFocusChange(focusState)
@@ -109,12 +103,8 @@ fun OutlinedTextField(
                 colors = OutlinedTextFieldColors(textColor = textColor, color = color),
                 leadingIcon = leftIcon,
                 trailingIcon = rightIcon,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = inputImeAction.imeAction,
-                    keyboardType = keyboardType,
-                ),
+                keyboardOptions = inputType.getKeyboardOption(hasNext),
                 textStyle = textStyle,
-                keyboardActions = inputImeAction.keyboardActions,
                 visualTransformation = visualTransformation,
             )
         }
@@ -148,7 +138,6 @@ private fun OutlinedTextFieldColors(
 @Composable
 private fun PreviewOutlinedTextField() {
     AppTheme {
-        val focusRequester = remember { FocusRequester() }
         var text by remember { mutableStateOf("") }
         var text2 by remember { mutableStateOf("") }
 
@@ -164,7 +153,6 @@ private fun PreviewOutlinedTextField() {
                     value = text,
                     labelRes = R.string.bottomBar_explore,
                     onTextChanged = { text = it },
-                    focusRequester = focusRequester,
                 )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -173,7 +161,6 @@ private fun PreviewOutlinedTextField() {
                     isError = true,
                     errorRes = R.string.bottomBar_home,
                     onTextChanged = { text2 = it },
-                    focusRequester = focusRequester,
                 )
             }
         }
