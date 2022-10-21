@@ -4,6 +4,7 @@ import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
 import com.benoitmanhes.domain.model.Account
 import com.benoitmanhes.local_datasource.datastore.AuthDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class AuthLocalDataSourceImpl @Inject constructor(
@@ -16,4 +17,5 @@ class AuthLocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun removeAccount() = authDataStore.removeAccount()
+    override suspend fun getAccount(): Account? = authDataStore.getAccountFlow().firstOrNull()
 }

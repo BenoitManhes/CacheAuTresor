@@ -1,19 +1,16 @@
 package com.benoitmanhes.repository.repository
 
+import com.benoitmanhes.domain.extension.convert
 import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
 import com.benoitmanhes.domain.interfaces.remotedatasource.AuthRemoteDataSource
-import com.benoitmanhes.domain.structure.BError
-import com.benoitmanhes.domain.structure.BResult
-import com.benoitmanhes.domain.extension.convert
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.model.Account
+import com.benoitmanhes.domain.structure.BError
+import com.benoitmanhes.domain.structure.BResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class AuthRepositoryImpl(
@@ -23,17 +20,19 @@ class AuthRepositoryImpl(
 
     override fun getAuthAccount(): Flow<Account?> {
         CoroutineScope(Dispatchers.IO).launch {
-            authRemoteDataSource.getCurrentUserAccount()?.let { account ->
+            authRemoteDataSource.getCurrentAccount()?.let { account ->
                 authLocalDataSource.saveAccount(account)
             } ?: run { logout() }
         }
         return authLocalDataSource.getAccountFlow()
     }
 
-    override fun login(email: String, password: String): Flow<BResult<Account>> =
-        authRemoteDataSource.login(email = email, password).fetchAccount()
+    override fun login(email: String, password: String): Flow<BResult<Account>> = flow {
+        emit(BResult.Loading())
+        emit(authRemoteDataSource.login(email = email, password).fetchAccount())
+    }
 
-    override fun createAuthAccount(email: String, password: String): Flow<BResult<Account>> =
+    override suspend fun createAuthAccount(email: String, password: String): BResult<Account> =
         authRemoteDataSource.createAuthAccount(email = email, password = password).fetchAccount()
 
     override fun logout() {
@@ -43,26 +42,20 @@ class AuthRepositoryImpl(
         }
     }
 
-    override fun getAuthCode(code: String): Flow<BResult<Unit>> = authRemoteDataSource.getAuthCode(code)
+    override suspend fun isAuthCodeValid(code: String): BResult<Unit> = authRemoteDataSource.isAuthCodeValid(code)
 
-    override fun deleteAuthCode(code: String) {
+    override suspend fun deleteAuthCode(code: String): BResult<Unit> =
         authRemoteDataSource.deleteAuthCode(code)
-    }
 
-    private fun Flow<BResult<Account>>.fetchAccount(): Flow<BResult<Account>> = flatMapMerge { authResult ->
-        when (authResult) {
-            is BResult.Loading -> flowOf(authResult.convert())
-            is BResult.Failure -> flowOf(authResult.convert())
+    private suspend fun BResult<Account>.fetchAccount(): BResult<Account> =
+        when (this) {
+            is BResult.Loading -> this.convert()
+            is BResult.Failure -> this.convert()
             is BResult.Success -> {
-                authLocalDataSource.saveAccount(authResult.successData)
-                authLocalDataSource.getAccountFlow().map { localAccount ->
-                    if (localAccount != null) {
-                        BResult.Success(localAccount)
-                    } else {
-                        BResult.Failure(BError.UnexpectedResult)
-                    }
-                }
+                authLocalDataSource.saveAccount(this.successData)
+                authLocalDataSource.getAccount()?.let { account ->
+                    BResult.Success(account)
+                } ?: BResult.Failure(BError.UnexpectedResult)
             }
         }
-    }
 }

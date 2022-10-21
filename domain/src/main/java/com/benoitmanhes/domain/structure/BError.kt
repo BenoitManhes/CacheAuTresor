@@ -15,12 +15,20 @@ sealed class BError(
         override val cause: Throwable? = null,
     ) : BError(message, cause)
 
+    object AuthenticationCodeInvalidError : BError(null, null)
+    object ExplorerNameTakenError : BError(null, null)
+
     data class GetRemoteObjectError(
         override val message: String? = null,
         override val cause: Throwable? = null,
     ) : BError(message, cause)
 
     object ObjectNotFound : BError(null, null)
+
+    data class RemoteObjectEditingError(
+        override val message: String? = null,
+        override val cause: Throwable? = null,
+    ) : BError(message, cause)
 
     data class RemoteObjectParsingError(
         override val message: String? = null,

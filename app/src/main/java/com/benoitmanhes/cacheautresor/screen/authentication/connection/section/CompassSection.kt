@@ -5,7 +5,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -36,8 +35,6 @@ fun CompassSection(
     val context = LocalContext.current
 
     DisposableEffect(true) {
-        Log.d("compass", "dispose sensor")
-
         val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         val magneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
@@ -108,4 +105,3 @@ private fun smoothRotation(rotation: Float): MutableState<Float> {
 }
 
 private const val COMPASS_ANIMATION_DURATION: Int = 100
-

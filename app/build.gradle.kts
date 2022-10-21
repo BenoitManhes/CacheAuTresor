@@ -93,6 +93,9 @@ dependencies {
     androidTestImplementation (AndroidX.test.espresso.core)
     androidTestImplementation (AndroidX.compose.ui.testJunit4)
 
+    // Timber
+    implementation(JakeWharton.timber)
+
     implementation(project(":domain"))
     implementation(project(":common"))
     implementation(project(":common-android"))

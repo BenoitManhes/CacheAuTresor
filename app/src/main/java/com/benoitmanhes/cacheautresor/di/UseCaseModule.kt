@@ -5,6 +5,7 @@ import com.benoitmanhes.domain.usecase.authentication.CheckAuthCodeUseCase
 import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
 import com.benoitmanhes.domain.usecase.authentication.IsAuthenticatedUseCase
 import com.benoitmanhes.domain.usecase.authentication.LogoutUseCase
+import com.benoitmanhes.domain.usecase.register.CreateAccountUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +34,9 @@ object UseCaseModule {
     fun provideCheckCodeUseCase(
         authRepository: AuthRepository,
     ): CheckAuthCodeUseCase = CheckAuthCodeUseCase(authRepository)
+
+    @Provides
+    fun provideCreateAccountUseCase(
+        authRepository: AuthRepository,
+    ): CreateAccountUseCase = CreateAccountUseCase(authRepository)
 }
