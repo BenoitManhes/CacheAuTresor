@@ -46,10 +46,10 @@ import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 fun OutlinedTextField(
     modifier: Modifier = Modifier,
     value: String? = null,
-    isError: Boolean = false,
     @StringRes labelRes: Int? = null,
     @StringRes placeHolderRes: Int? = null,
-    @StringRes errorRes: Int? = null,
+    errorText: String? = null,
+    isError: Boolean = !errorText.isNullOrEmpty(),
     textStyle: TextStyle = AppTheme.typography.body,
     textColor: Color = MaterialTheme.colors.onSurface,
     color: Color = MaterialTheme.colors.primary,
@@ -109,10 +109,10 @@ fun OutlinedTextField(
             )
         }
         Spacer(size = Dimens.Margin.small)
-        AnimatedVisibility(visible = isError && errorRes != null) {
+        AnimatedVisibility(visible = isError && errorText != null) {
             TextView(
                 modifier = Modifier.padding(start = Dimens.Margin.medium + Dimens.Margin.small),
-                text = stringResource(id = errorRes!!),
+                text = errorText,
                 color = errorColor,
                 style = AppTheme.typography.caption,
             )
@@ -159,7 +159,7 @@ private fun PreviewOutlinedTextField() {
                     value = text2,
                     labelRes = R.string.logenScreen_register_passwordTextField_label,
                     isError = true,
-                    errorRes = R.string.bottomBar_home,
+                    errorText = "Error message",
                     onTextChanged = { text2 = it },
                 )
             }

@@ -31,7 +31,6 @@ fun AccountCreationInputSection(
         OutlinedTextField(
             value = viewModel.state.valueName,
             labelRes = R.string.accountCreation_name_label,
-            errorRes = R.string.accountCreation_name_error,
             hasNext = true,
             onTextChanged = { viewModel.updateName(it) }
         )

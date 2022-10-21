@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.ConnectionInputState
+import com.benoitmanhes.domain.structure.BError
 import com.benoitmanhes.domain.structure.BResult
 import com.benoitmanhes.domain.usecase.authentication.CheckAuthCodeUseCase
 import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
@@ -21,8 +22,8 @@ class ConnectionInputViewModel @Inject constructor(
     private val checkAuthCodeUseCase: CheckAuthCodeUseCase,
 ) : ViewModel() {
 
-    var state: ConnectionInputViewModelState by mutableStateOf(
-        value = ConnectionInputViewModelState()
+    var uiState: ConnectionInputUIState by mutableStateOf(
+        value = ConnectionInputUIState()
     )
         private set
 
@@ -30,58 +31,59 @@ class ConnectionInputViewModel @Inject constructor(
     private var registerJob: Job? = null
 
     fun clickLogin() {
-        when (state.connectionInputState) {
+        when (uiState.connectionInputState) {
             ConnectionInputState.Login -> login()
             ConnectionInputState.Register -> updateConnexionState(ConnectionInputState.Login)
         }
     }
 
     fun clickRegister(onAccountTokenValid: (accountToken: String) -> Unit) {
-        when (state.connectionInputState) {
+        when (uiState.connectionInputState) {
             ConnectionInputState.Login -> updateConnexionState(ConnectionInputState.Register)
             ConnectionInputState.Register -> register(onAccountTokenValid)
         }
     }
 
     fun updateLoginEmail(value: String) {
-        state = state.copy(
+        uiState = uiState.copy(
             valueLoginEmail = value,
         )
     }
 
     fun updateLoginPassword(value: String) {
-        state = state.copy(
+        uiState = uiState.copy(
             valueLoginPwd = value,
         )
     }
 
     fun updateRegisterCode(value: String) {
-        state = state.copy(
+        uiState = uiState.copy(
             valueRegisterCode = value,
+            errorRegister = null,
         )
     }
 
     private fun login() {
         loginJob?.cancel()
-        if (state.valueLoginEmail?.isEmailValid() == true && state.valueLoginPwd?.isPasswordValid() == true) {
+        if (uiState.valueLoginEmail?.isEmailValid() == true && uiState.valueLoginPwd?.isPasswordValid() == true) {
             loginJob = viewModelScope.launch {
                 loginUseCase.invoke(
-                    identifier = state.valueLoginEmail!!,
-                    password = state.valueLoginPwd!!,
+                    identifier = uiState.valueLoginEmail!!,
+                    password = uiState.valueLoginPwd!!,
                 ).collect { loginResult ->
                     when (loginResult) {
                         is BResult.Loading -> {
-                            state = state.copy(loadingLogin = true)
+                            uiState = uiState.copy(loadingLogin = true)
                         }
                         is BResult.Success -> {
-                            state = state.copy(
+                            uiState = uiState.copy(
                                 loadingLogin = false,
                                 valueLoginPwd = null,
                                 valueRegisterCode = null,
                             )
                         }
                         is BResult.Failure -> {
-                            state = state.copy(loadingLogin = false)
+                            uiState = uiState.copy(loadingLogin = false)
                         }
                     }
                 }
@@ -92,22 +94,23 @@ class ConnectionInputViewModel @Inject constructor(
     private fun register(onAccountTokenValid: (accountToken: String) -> Unit) {
         registerJob?.cancel()
         registerJob = viewModelScope.launch {
-            checkAuthCodeUseCase.invoke(state.valueRegisterCode!!).collect { registerResult ->
-                when (registerResult) {
+            checkAuthCodeUseCase(code = uiState.valueRegisterCode ?: "").collect { result ->
+                when (result) {
                     is BResult.Loading -> {
-                        state = state.copy(loadingRegister = true)
-                    }
-                    is BResult.Success -> {
-                        state = state.copy(
-                            loadingRegister = false,
-                            valueLoginPwd = null,
-                        )
-                        onAccountTokenValid.invoke(registerResult.successData)
+                        uiState = uiState.copy(loadingRegister = true)
                     }
                     is BResult.Failure -> {
-                        state = state.copy(
+                        uiState = uiState.copy(
                             loadingRegister = false,
+                            errorRegister = result.error as? BError.AuthenticationCodeInvalidError,
                         )
+                    }
+                    is BResult.Success -> {
+                        uiState = uiState.copy(
+                            loadingRegister = false,
+                            valueRegisterCode = null,
+                        )
+                        onAccountTokenValid(result.successData)
                     }
                 }
             }
@@ -115,13 +118,14 @@ class ConnectionInputViewModel @Inject constructor(
     }
 
     private fun updateConnexionState(value: ConnectionInputState) {
-        if (value == ConnectionInputState.Register) {
-            loginJob?.cancel()
+        when (value) {
+            ConnectionInputState.Register -> loginJob?.cancel()
+            ConnectionInputState.Login -> registerJob?.cancel()
         }
-        state = state.copy(
+        uiState = uiState.copy(
             connectionInputState = value,
-            loadingLogin = state.loadingLogin && value == ConnectionInputState.Login,
-            loadingRegister = state.loadingRegister && value == ConnectionInputState.Register,
+            loadingLogin = uiState.loadingLogin && value == ConnectionInputState.Login,
+            loadingRegister = uiState.loadingRegister && value == ConnectionInputState.Register,
         )
     }
 

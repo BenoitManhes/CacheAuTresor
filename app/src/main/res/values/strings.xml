@@ -21,4 +21,6 @@
     <string name="accountCreation_name_error">Name already existing</string>
     <string name="common_validate">Validate</string>
     <string name="accountCreation_password_label">New password</string>
+    <string name="errorMessage_authCodeInvalid">The explorer key is invalid</string>
+    <string name="errorMessage_default">An error occur</string>
 </resources>

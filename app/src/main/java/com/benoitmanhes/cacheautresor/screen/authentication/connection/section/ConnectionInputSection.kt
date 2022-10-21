@@ -26,6 +26,7 @@ import com.benoitmanhes.cacheautresor.common.composable.divider.Spacer
 import com.benoitmanhes.cacheautresor.common.composable.divider.TextDivider
 import com.benoitmanhes.cacheautresor.common.composable.textfield.DoubleTextField
 import com.benoitmanhes.cacheautresor.common.composable.textfield.OutlinedTextField
+import com.benoitmanhes.cacheautresor.common.extension.getUIErrorMessage
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionInputViewModel
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
@@ -42,14 +43,14 @@ internal fun LoginInputSection(
         verticalArrangement = Arrangement.Bottom,
     ) {
         AnimatedVisibility(
-            visible = viewModel.state.isLoginTextVisible,
+            visible = viewModel.uiState.isLoginTextVisible,
             enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
             exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
         ) {
             Column {
                 DoubleTextField(
-                    valueTop = viewModel.state.valueLoginEmail,
-                    valueBottom = viewModel.state.valueLoginPwd,
+                    valueTop = viewModel.uiState.valueLoginEmail,
+                    valueBottom = viewModel.uiState.valueLoginPwd,
                     labelTopRes = R.string.loginScreen_login_emailTextField_label,
                     labelBottomRes = R.string.loginScreen_login_passwordTextField_label,
                     onTextTopChanged = { viewModel.updateLoginEmail(it) },
@@ -61,25 +62,26 @@ internal fun LoginInputSection(
         StyleButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.loginScreen_loginButton_label),
-            buttonStyle = if (viewModel.state.connectionInputState == ConnectionInputState.Login) ButtonStyle.Filled else ButtonStyle.Outlined,
-            isEnabled = { viewModel.state.isLoginEnable || it == ButtonStyle.Outlined },
-            isLoading = viewModel.state.loadingLogin,
+            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Login) ButtonStyle.Filled else ButtonStyle.Outlined,
+            isEnabled = { viewModel.uiState.isLoginEnable || it == ButtonStyle.Outlined },
+            isLoading = viewModel.uiState.loadingLogin,
             onClick = { viewModel.clickLogin() },
         )
         Spacer(size = Dimens.Margin.large)
         TextDivider()
         Spacer(size = Dimens.Margin.large)
         AnimatedVisibility(
-            visible = viewModel.state.isRegisterTextVisible,
+            visible = viewModel.uiState.isRegisterTextVisible,
             enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
             exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
         ) {
             Column {
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = viewModel.state.valueRegisterCode,
+                    value = viewModel.uiState.valueRegisterCode,
                     color = AppTheme.colors.secondary,
                     labelRes = R.string.loginScreen_register_codeText_label,
+                    errorText = viewModel.uiState.errorRegister?.getUIErrorMessage(),
                     onTextChanged = { viewModel.updateRegisterCode(it) },
                 )
                 Spacer(size = Dimens.Margin.medium)
@@ -88,9 +90,9 @@ internal fun LoginInputSection(
         StyleButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.loginScreen_registerButton_label),
-            isEnabled = { viewModel.state.isRegisterEnable || it == ButtonStyle.Outlined },
-            isLoading = viewModel.state.loadingRegister,
-            buttonStyle = if (viewModel.state.connectionInputState == ConnectionInputState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
+            isEnabled = { viewModel.uiState.isRegisterEnable || it == ButtonStyle.Outlined },
+            isLoading = viewModel.uiState.loadingRegister,
+            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
             color = AppTheme.colors.secondary,
             onClick = { viewModel.clickRegister(onAccountTokenValid) },
         )
