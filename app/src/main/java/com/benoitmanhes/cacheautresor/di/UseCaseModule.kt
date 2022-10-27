@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.di
 
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
+import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.usecase.authentication.CheckAuthCodeUseCase
 import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
 import com.benoitmanhes.domain.usecase.authentication.IsAuthenticatedUseCase
@@ -38,5 +39,6 @@ object UseCaseModule {
     @Provides
     fun provideCreateAccountUseCase(
         authRepository: AuthRepository,
-    ): CreateAccountUseCase = CreateAccountUseCase(authRepository)
+        explorerRepository: ExplorerRepository,
+    ): CreateAccountUseCase = CreateAccountUseCase(explorerRepository, authRepository)
 }

@@ -32,8 +32,8 @@ class AuthRepositoryImpl(
         emit(authRemoteDataSource.login(email = email, password).fetchAccount())
     }
 
-    override suspend fun createAuthAccount(email: String, password: String): BResult<Account> =
-        authRemoteDataSource.createAuthAccount(email = email, password = password).fetchAccount()
+    override suspend fun createAuthAccount(email: String, password: String, explorerId: String): BResult<Account> =
+        authRemoteDataSource.createAuthAccount(email = email, password = password, explorerId = explorerId).fetchAccount()
 
     override fun logout() {
         CoroutineScope(Dispatchers.IO).launch {

@@ -50,6 +50,7 @@ fun AccountCreationInputSection(
             text = stringResource(id = R.string.common_validate),
             enabled = viewModel.state.isValidateButtonEnabled,
             isLoading = viewModel.state.loading,
+            onClick = { viewModel.validate() },
         )
     }
 }

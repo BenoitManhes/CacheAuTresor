@@ -1,13 +1,18 @@
 package com.benoitmanhes.remote_datasource.firestore
 
+import com.benoitmanhes.domain.extension.convert
+import com.benoitmanhes.domain.extension.convertResult
+import com.benoitmanhes.domain.extension.suspendConvertResult
 import com.benoitmanhes.domain.interfaces.remotedatasource.AuthRemoteDataSource
 import com.benoitmanhes.domain.model.Account
 import com.benoitmanhes.domain.structure.BError
 import com.benoitmanhes.domain.structure.BResult
+import com.benoitmanhes.remote_datasource.extensions.withCoroutine
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -23,8 +28,26 @@ class AuthRemoteDataSourceImpl(
 
     override fun getCurrentAccount(): Account? = auth.currentUser?.toAccount()
 
-    override suspend fun createAuthAccount(email: String, password: String): BResult<Account> =
-        auth.createUserWithEmailAndPassword(email, password).fetchAccountResult()
+    override suspend fun createAuthAccount(email: String, password: String, explorerId: String): BResult<Account> {
+        val createUserResult = auth.createUserWithEmailAndPassword(email, password).withCoroutine(
+            onFailure = { BError.AuthenticationError(cause = it) },
+            onSuccess = { BResult.Success(it) }
+        )
+        return if (createUserResult is BResult.Success) {
+            auth.currentUser!!.updateProfile(
+                userProfileChangeRequest {
+                    displayName = explorerId
+                }
+            ).withCoroutine(
+                onFailure = { BError.AuthenticationError(cause = it) },
+                onSuccess = {
+                    getCurrentAccount()?.let {
+                        BResult.Success(it)
+                    } ?: BResult.Failure(BError.UnexpectedResult)
+                }
+            )
+        } else (createUserResult as BResult.Failure).convert()
+    }
 
     override suspend fun login(email: String, password: String): BResult<Account> =
         auth.signInWithEmailAndPassword(email, password).fetchAccountResult()
@@ -59,7 +82,7 @@ class AuthRemoteDataSourceImpl(
     }
 
     private fun FirebaseUser.toAccount(): Account = Account(
-        explorerId = this.displayName,
+        explorerId = this.displayName!!,
         email = this.email!!,
     )
 

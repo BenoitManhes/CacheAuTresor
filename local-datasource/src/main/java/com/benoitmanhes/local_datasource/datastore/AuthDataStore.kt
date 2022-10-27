@@ -31,7 +31,9 @@ class AuthDataStore @Inject constructor(
             dataStore.data.map { it[DataStoreKeys.explorerId] },
         ) { email, explorerId ->
             email?.let { safeEmail ->
-                Account(explorerId = explorerId, email = safeEmail)
+                explorerId?.let { safeId ->
+                    Account(explorerId = safeId, email = safeEmail)
+                }
             }
         }
 }
