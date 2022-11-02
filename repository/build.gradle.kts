@@ -9,7 +9,6 @@ dependencies {
     implementation(Google.dagger.hilt.android)
     kapt(Google.dagger.hilt.compiler)
 
+    implementation(project(":core"))
     implementation(project(":domain"))
-    implementation(project(":common"))
-    implementation(project(":common-android"))
 }

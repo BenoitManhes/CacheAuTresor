@@ -97,8 +97,7 @@ dependencies {
     implementation(JakeWharton.timber)
 
     implementation(project(":domain"))
-    implementation(project(":common"))
-    implementation(project(":common-android"))
+    implementation(project(":core"))
     runtimeOnly(project(":local-datasource"))
     runtimeOnly(project(":remote-datasource"))
     runtimeOnly(project(":repository"))
