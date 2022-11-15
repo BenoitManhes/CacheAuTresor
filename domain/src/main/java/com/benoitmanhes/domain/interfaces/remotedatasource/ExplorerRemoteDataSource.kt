@@ -5,8 +5,9 @@ import com.benoitmanhes.domain.structure.BResult
 import kotlinx.coroutines.flow.Flow
 
 interface ExplorerRemoteDataSource {
-    suspend fun saveExplorer(explorer: Explorer): BResult<Explorer>
-    suspend fun isExplorerNameAvailable(name: String): BResult<Unit>
-    fun getExplorerFlow(explorerId: String): Flow<BResult<Explorer>>
-    suspend fun deleteExplorer(explorerId: String): BResult<Unit>
+    fun getExplorerFlow(explorerId: String): Flow<Explorer>
+    suspend fun getExplorer(explorerId: String): Explorer
+    suspend fun saveExplorer(explorer: Explorer)
+    suspend fun isExplorerNameAvailable(name: String): Boolean
+    suspend fun deleteExplorer(explorerId: String)
 }

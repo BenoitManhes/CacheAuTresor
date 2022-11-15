@@ -11,22 +11,19 @@ class ExplorerRepositoryImpl(
     private val remoteDataSource: ExplorerRemoteDataSource,
 ) : ExplorerRepository {
 
-    override suspend fun isExplorerNameAvailable(explorerName: String): BResult<Unit> =
+    override suspend fun isExplorerNameAvailable(explorerName: String): Boolean =
         remoteDataSource.isExplorerNameAvailable(explorerName)
 
-    override suspend fun createExplorer(explorer: Explorer): BResult<Explorer> {
-        val remoteResult = remoteDataSource.saveExplorer(explorer)
-        return remoteResult.data?.let { explorerSaved ->
-            localDataSource.saveExplorer(explorerSaved)
-            localDataSource.getExplorer(explorerSaved.explorerId)
-        } ?: remoteResult
+    override suspend fun createExplorer(explorer: Explorer): Explorer {
+        remoteDataSource.saveExplorer(explorer)
+        remoteDataSource.getExplorer(explorer.explorerId).also { remoteExplorer ->
+            localDataSource.saveExplorer(remoteExplorer)
+        }
+        return localDataSource.getExplorer(explorer.explorerId)
     }
 
-    override suspend fun deleteExplorer(explorerId: String): BResult<Unit> {
-        val remoteResult = remoteDataSource.deleteExplorer(explorerId)
-        if (remoteResult is BResult.Success) {
-            localDataSource.deleteExplorer(explorerId)
-        }
-        return remoteResult
+    override suspend fun deleteExplorer(explorerId: String) {
+        remoteDataSource.deleteExplorer(explorerId)
+        localDataSource.deleteExplorer(explorerId)
     }
 }

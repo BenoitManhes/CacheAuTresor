@@ -6,18 +6,17 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.button.ButtonStyle
@@ -26,17 +25,29 @@ import com.benoitmanhes.cacheautresor.common.composable.divider.Spacer
 import com.benoitmanhes.cacheautresor.common.composable.divider.TextDivider
 import com.benoitmanhes.cacheautresor.common.composable.textfield.DoubleTextField
 import com.benoitmanhes.cacheautresor.common.composable.textfield.OutlinedTextField
-import com.benoitmanhes.cacheautresor.common.extension.getUIErrorMessage
+import com.benoitmanhes.cacheautresor.error.localizedDescription
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionInputViewModel
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginInputSection(
     onAccountTokenValid: (accountToken: String) -> Unit,
+    showErrorSnackBar: (errorMsg: String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ConnectionInputViewModel = hiltViewModel(),
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ) {
+
+    val snackbarMessage = viewModel.uiState.errorSnackbar?.localizedDescription()
+    LaunchedEffect(snackbarMessage) {
+        snackbarMessage?.let {
+            showErrorSnackBar(snackbarMessage)
+            viewModel.consumeSnackbarError()
+        }
+    }
+
     Column(
         modifier = modifier
             .wrapContentHeight(),
@@ -53,6 +64,7 @@ internal fun LoginInputSection(
                     valueBottom = viewModel.uiState.valueLoginPwd,
                     labelTopRes = R.string.loginScreen_login_emailTextField_label,
                     labelBottomRes = R.string.loginScreen_login_passwordTextField_label,
+                    errorText = viewModel.uiState.errorLogin?.localizedDescription(),
                     onTextTopChanged = { viewModel.updateLoginEmail(it) },
                     onTextBottomChanged = { viewModel.updateLoginPassword(it) },
                 )
@@ -65,7 +77,10 @@ internal fun LoginInputSection(
             buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Login) ButtonStyle.Filled else ButtonStyle.Outlined,
             isEnabled = { viewModel.uiState.isLoginEnable || it == ButtonStyle.Outlined },
             isLoading = viewModel.uiState.loadingLogin,
-            onClick = { viewModel.clickLogin() },
+            onClick = {
+                viewModel.clickLogin()
+                keyboardController?.hide()
+            },
         )
         Spacer(size = Dimens.Margin.large)
         TextDivider()
@@ -81,7 +96,7 @@ internal fun LoginInputSection(
                     value = viewModel.uiState.valueRegisterCode,
                     color = AppTheme.colors.secondary,
                     labelRes = R.string.loginScreen_register_codeText_label,
-                    errorText = viewModel.uiState.errorRegister?.getUIErrorMessage(),
+                    errorText = viewModel.uiState.errorRegister?.localizedDescription(),
                     onTextChanged = { viewModel.updateRegisterCode(it) },
                 )
                 Spacer(size = Dimens.Margin.medium)
@@ -94,24 +109,10 @@ internal fun LoginInputSection(
             isLoading = viewModel.uiState.loadingRegister,
             buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
             color = AppTheme.colors.secondary,
-            onClick = { viewModel.clickRegister(onAccountTokenValid) },
+            onClick = {
+                viewModel.clickRegister(onAccountTokenValid)
+                keyboardController?.hide()
+            },
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewLoginInputSection() {
-    AppTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    horizontal = 64.dp,
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            LoginInputSection(onAccountTokenValid = {})
-        }
     }
 }

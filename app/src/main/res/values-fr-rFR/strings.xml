@@ -23,5 +23,11 @@
     <string name="common_validate">Valider</string>
     <string name="accountCreation_password_label">Nouveau mot de passe</string>
     <string name="errorMessage_authCodeInvalid">La clé explorateur est invalide</string>
-    <string name="errorMessage_default">Une erreur est survenue</string>
+    <string name="error_defaultMessage">Une erreur est survenue</string>
+    <string name="error_defaultTitle">Oups</string>
+    <string name="error_networkConnection_title">Pas de réseau</string>
+    <string name="error_networkConnection_description">Vérifie, ta connexion internet</string>
+    <string name="authentication_error_noUserEmail">Aucun utilisateur avec cet email</string>
+    <string name="authentication_error_invalidPassword">Mot de passe incorrect</string>
+    <string name="authentication_error_emailFormInvalid">Le format de l’adresse mail est incorrecte</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.benoitmanhes.cacheautresor.common.composable.textfield
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.focusable
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +35,8 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.divider.HorizontalDivider
+import com.benoitmanhes.cacheautresor.common.composable.divider.Spacer
+import com.benoitmanhes.cacheautresor.common.composable.textview.TextView
 import com.benoitmanhes.cacheautresor.common.utils.InputType
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
@@ -44,79 +49,100 @@ fun DoubleTextField(
     @StringRes labelTopRes: Int? = null,
     @StringRes labelBottomRes: Int? = null,
     color: Color = AppTheme.colors.primary,
+    errorColor: Color = MaterialTheme.colors.error,
     hasNext: Boolean = false,
+    errorText: String? = null,
+    isError: Boolean = !errorText.isNullOrEmpty(),
     onTextTopChanged: ((String) -> Unit) = { },
     onTextBottomChanged: ((String) -> Unit) = { },
 ) {
     val shape = AppTheme.shape.mediumRoundedCornerShape
     var state by remember { mutableStateOf(State.None) }
 
-    BoxWithConstraints(modifier = modifier) {
-        ConstraintLayout(constraintSet = constraints()) {
-            Surface(
-                modifier = Modifier
-                    .layoutId(BACKGROUND_ID),
-                shape = shape,
-                border = BorderStroke(Dimens.Stroke.thin, AppTheme.colors.placeholder),
-            ) { }
-            if (state != State.None) {
-                val offset by animateDpAsState(
-                    targetValue = if (state == State.Bottom) Dimens.ComponentSize.textFieldHeight else 0.dp
-                )
-                Selector(
+    val borderColor: Color by animateColorAsState(
+        targetValue = when {
+            isError -> errorColor
+            else -> AppTheme.colors.placeholder
+        }
+    )
+
+    Column(modifier = modifier) {
+        BoxWithConstraints {
+            ConstraintLayout(constraintSet = constraints()) {
+                Surface(
                     modifier = Modifier
-                        .focusable(false)
-                        .offset(y = offset),
-                    color = color,
+                        .layoutId(BACKGROUND_ID),
                     shape = shape,
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .layoutId(CONTENT_ID)
-                    .wrapContentHeight(),
-            ) {
-                SimpleTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onFocusEvent { focusState ->
-                            if (focusState.hasFocus) {
-                                state = State.Top
-                            } else if (state == State.Top) {
-                                state = State.None
-                            }
-                        },
-                    value = valueTop,
-                    labelRes = labelTopRes,
-                    color = color,
-                    backgroundColor = Color.Transparent,
-                    onTextChanged = onTextTopChanged,
-                    inputType = InputType.Email,
-                    hasNext = true,
-                )
-                if (state == State.None) {
-                    HorizontalDivider()
+                    border = BorderStroke(Dimens.Stroke.thin, borderColor),
+                ) { }
+                if (state != State.None) {
+                    val offset by animateDpAsState(
+                        targetValue = if (state == State.Bottom) Dimens.ComponentSize.textFieldHeight else 0.dp
+                    )
+                    Selector(
+                        modifier = Modifier
+                            .focusable(false)
+                            .offset(y = offset),
+                        color = color,
+                        shape = shape,
+                    )
                 }
-                PasswordTextField(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .onFocusEvent { focusState ->
-                            if (focusState.hasFocus) {
-                                state = State.Bottom
-                            } else if (state == State.Bottom) {
-                                state = State.None
-                            }
-                        },
-                    value = valueBottom,
-                    labelRes = labelBottomRes,
-                    color = color,
-                    backgroundColor = Color.Transparent,
-                    onTextChanged = onTextBottomChanged,
-                    hasNext = hasNext,
-                    inputType = InputType.Password,
-                )
+                        .layoutId(CONTENT_ID)
+                        .wrapContentHeight(),
+                ) {
+                    SimpleTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onFocusEvent { focusState ->
+                                if (focusState.hasFocus) {
+                                    state = State.Top
+                                } else if (state == State.Top) {
+                                    state = State.None
+                                }
+                            },
+                        value = valueTop,
+                        labelRes = labelTopRes,
+                        color = color,
+                        backgroundColor = Color.Transparent,
+                        onTextChanged = onTextTopChanged,
+                        inputType = InputType.Email,
+                        hasNext = true,
+                    )
+                    if (state == State.None) {
+                        HorizontalDivider()
+                    }
+                    PasswordTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onFocusEvent { focusState ->
+                                if (focusState.hasFocus) {
+                                    state = State.Bottom
+                                } else if (state == State.Bottom) {
+                                    state = State.None
+                                }
+                            },
+                        value = valueBottom,
+                        labelRes = labelBottomRes,
+                        color = color,
+                        backgroundColor = Color.Transparent,
+                        onTextChanged = onTextBottomChanged,
+                        hasNext = hasNext,
+                        inputType = InputType.Password,
+                    )
+                }
             }
         }
+    }
+    Spacer(size = Dimens.Margin.small)
+    AnimatedVisibility(visible = isError && errorText != null) {
+        TextView(
+            modifier = Modifier.padding(start = Dimens.Margin.medium + Dimens.Margin.small),
+            text = errorText,
+            color = errorColor,
+            style = AppTheme.typography.caption,
+        )
     }
 }
 

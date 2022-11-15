@@ -1,6 +1,8 @@
 package com.benoitmanhes.cacheautresor.screen.authentication.connection
 
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.ConnectionInputState
+import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.error.CTError
 import com.benoitmanhes.domain.structure.BError
 
 data class ConnectionInputUIState(
@@ -10,7 +12,9 @@ data class ConnectionInputUIState(
     val valueRegisterCode: String? = null,
     val loadingLogin: Boolean = false,
     val loadingRegister: Boolean = false,
-    val errorRegister: BError? = null,
+    val errorLogin: CTDomainError? = null,
+    val errorRegister: CTDomainError? = null,
+    val errorSnackbar: CTDomainError? = null,
 ) {
     val isLoginTextVisible: Boolean = connectionInputState == ConnectionInputState.Login
     val isRegisterTextVisible: Boolean = connectionInputState == ConnectionInputState.Register

@@ -1,21 +1,19 @@
 package com.benoitmanhes.remote_datasource.extensions
 
-import com.benoitmanhes.domain.structure.BError
-import com.benoitmanhes.domain.structure.BResult
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.flow.Flow
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-suspend fun <R, T> Task<R>.withCoroutine(
-    onFailure: (Exception) -> BError,
-    onSuccess: (R) -> BResult<T>,
-): BResult<T> = suspendCoroutine { continuation ->
+suspend fun <R> Task<R>.withCoroutine(
+    onFailure: (Exception) -> Throwable = { it.toCTError() },
+): R = suspendCoroutine { continuation ->
     this
         .addOnFailureListener { e ->
-            continuation.resume(BResult.Failure(error = onFailure(e)))
+            continuation.resumeWithException(onFailure(e))
         }
-        .addOnSuccessListener { result ->
-            continuation.resume(onSuccess(result))
+        .addOnSuccessListener {
+            continuation.resume(it as R)
         }
-
 }

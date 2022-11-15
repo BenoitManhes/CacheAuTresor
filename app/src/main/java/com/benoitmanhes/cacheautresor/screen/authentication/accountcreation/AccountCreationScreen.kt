@@ -28,6 +28,7 @@ import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
 @Composable
 fun AccountCreationScreen(
     onNavigateBack: () -> Unit,
+    showSnackbar: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -60,6 +61,7 @@ fun AccountCreationScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(0.7f),
+                showSnackbar = showSnackbar,
             )
         }
     }
@@ -91,7 +93,7 @@ private fun PreviewAccountCreationScreen() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            AccountCreationScreen() {}
+            AccountCreationScreen({}) {}
         }
     }
 }

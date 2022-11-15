@@ -1,11 +1,15 @@
 package com.benoitmanhes.domain.usecase.register
 
+import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.result.CTResult
+import com.benoitmanhes.domain.Util
 import com.benoitmanhes.domain.extension.convert
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.structure.BError
 import com.benoitmanhes.domain.structure.BResult
+import com.benoitmanhes.domain.usecase.AbstractUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -14,56 +18,37 @@ import javax.inject.Inject
 class CreateAccountUseCase @Inject constructor(
     private val explorerRepository: ExplorerRepository,
     private val authRepository: AuthRepository,
-) {
+) : AbstractUseCase() {
+
     operator fun invoke(
         tokenAccount: String,
         email: String,
         password: String,
         explorerName: String,
-    ): Flow<BResult<Unit>> = flow {
-        emit(BResult.Loading())
-        handleResult(authRepository.isAuthCodeValid(tokenAccount)) {
-            handleResult(explorerRepository.isExplorerNameAvailable(explorerName = explorerName)) {
-                handleResult(explorerRepository.createExplorer(explorer = newExplorer(explorerName))) { createExplorerSuccess ->
-                    handleResult(
-                        result = authRepository.createAuthAccount(
-                            email = email,
-                            password = password,
-                            explorerId = createExplorerSuccess.successData.explorerId,
-                        ),
-                        onError = { failure ->
-                            explorerRepository.deleteExplorer(explorerId = createExplorerSuccess.successData.explorerId)
-                            emit(failure.convert())
-                        },
-                        onSuccess = {
-                            authRepository.deleteAuthCode(tokenAccount)
-                            emit(BResult.Success(Unit))
-                        },
-                    )
-                }
-            }
+    ): Flow<CTResult<Unit>> = useCaseFlow {
+        if (!authRepository.isAuthCodeValid(tokenAccount)) {
+            throw CTDomainError(CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN)
         }
+        if (!explorerRepository.isExplorerNameAvailable(explorerName)) {
+            throw CTDomainError(CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE)
+        }
+        val explorerCreated = explorerRepository.createExplorer(explorer = newExplorer(explorerName))
+        try {
+            authRepository.createAuthAccount(
+                email = email,
+                password = password,
+                explorerId = explorerCreated.explorerId,
+            )
+        } catch (e: Exception) {
+            explorerRepository.deleteExplorer(explorerCreated.explorerId)
+            throw  e
+        }
+        authRepository.deleteAuthCode(tokenAccount)
+        emit(CTResult.Success(Unit))
     }
 
     private fun newExplorer(explorerName: String): Explorer = Explorer(
-        // The id is defined by datasource if empty
-        explorerId = "",
+        explorerId = Util.autoId(),
         name = explorerName,
     )
-}
-
-private suspend fun <R, U> FlowCollector<BResult<U>>.handleResult(
-    result: BResult<R>,
-    onError: suspend FlowCollector<BResult<U>>.(BResult.Failure<R>) -> Unit = { failure ->
-        emit(failure.convert())
-    },
-    onSuccess: suspend FlowCollector<BResult<U>>.(BResult.Success<R>) -> Unit,
-) {
-    when (result) {
-        is BResult.Failure -> onError(result)
-        is BResult.Success -> onSuccess(result)
-        else -> {
-            onError(BResult.Failure(BError.UnexpectedResult))
-        }
-    }
 }

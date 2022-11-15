@@ -7,11 +7,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.navigation.unauthenticated.AccountCreationDestination
-import com.benoitmanhes.domain.structure.BResult
+import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.usecase.register.CreateAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,48 +22,74 @@ class AccountCreationInputViewModel @Inject constructor(
     private val accountUseCase: CreateAccountUseCase,
 ) : ViewModel() {
 
-    var state: AccountCreationInputViewModelState by mutableStateOf(AccountCreationInputViewModelState())
+    var uiState: AccountCreationInputViewModelState by mutableStateOf(AccountCreationInputViewModelState())
         private set
 
     private val tokenAccount: String = savedStateHandle.get<String>(AccountCreationDestination.accountTokenArgument) ?: ""
 
     fun updateEmail(value: String) {
-        state = state.copy(valueEmail = value)
+        uiState = uiState.copy(
+            valueEmail = value,
+            errorCredential = null,
+        )
     }
 
     fun updatePwd(value: String) {
-        state = state.copy(valuePwd = value)
+        uiState = uiState.copy(
+            valuePwd = value,
+            errorCredential = null,
+        )
     }
 
     fun updateName(value: String) {
-        state = state.copy(valueName = value)
+        uiState = uiState.copy(
+            valueName = value,
+            errorUserName = null,
+        )
     }
 
     fun validate() {
         viewModelScope.launch(Dispatchers.IO) {
             accountUseCase(
                 tokenAccount = tokenAccount,
-                email = state.valueEmail!!,
-                password = state.valuePwd!!,
-                explorerName = state.valueName!!,
+                email = uiState.valueEmail!!,
+                password = uiState.valuePwd!!,
+                explorerName = uiState.valueName!!,
             ).collect { result ->
                 when (result) {
-                    is BResult.Loading -> {
-                        state = state.copy(loading = true)
+                    is CTResult.Loading -> {
+                        uiState = uiState.copy(loading = true)
                     }
-                    is BResult.Failure -> {
-                        state = state.copy(
-                            loading = false,
-                        )
+                    is CTResult.Failure -> {
                         Timber.e(result.error)
+                        uiState = when (result.error?.code) {
+                            CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE ->
+                                uiState.copy(
+                                    loading = false,
+                                    errorUserName = result.error,
+                                )
+                            CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM ->
+                                uiState.copy(
+                                    loading = false,
+                                    errorCredential = result.error,
+                                )
+                            else -> uiState.copy(
+                                loading = false,
+                                errorSnackbar = result.error,
+                            )
+                        }
                     }
-                    is BResult.Success -> {
-                        state = state.copy(
+                    is CTResult.Success -> {
+                        uiState = uiState.copy(
                             loading = false,
                         )
                     }
                 }
             }
         }
+    }
+
+    fun consumeSnackbarError() {
+        uiState = uiState.copy(errorSnackbar = null)
     }
 }

@@ -1,19 +1,20 @@
 package com.benoitmanhes.cacheautresor.screen.authentication.connection
 
-import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.ConnectionInputState
-import com.benoitmanhes.domain.structure.BError
-import com.benoitmanhes.domain.structure.BResult
+import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.usecase.authentication.CheckAuthCodeUseCase
 import com.benoitmanhes.domain.usecase.authentication.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,12 +48,14 @@ class ConnectionInputViewModel @Inject constructor(
     fun updateLoginEmail(value: String) {
         uiState = uiState.copy(
             valueLoginEmail = value,
+            errorLogin = null,
         )
     }
 
     fun updateLoginPassword(value: String) {
         uiState = uiState.copy(
             valueLoginPwd = value,
+            errorLogin = null,
         )
     }
 
@@ -63,27 +66,47 @@ class ConnectionInputViewModel @Inject constructor(
         )
     }
 
+    fun consumeSnackbarError() {
+        uiState = uiState.copy(
+            errorSnackbar = null,
+        )
+    }
+
     private fun login() {
         loginJob?.cancel()
         if (uiState.valueLoginEmail?.isEmailValid() == true && uiState.valueLoginPwd?.isPasswordValid() == true) {
-            loginJob = viewModelScope.launch {
+            loginJob = viewModelScope.launch(Dispatchers.IO) {
                 loginUseCase.invoke(
                     identifier = uiState.valueLoginEmail!!,
                     password = uiState.valueLoginPwd!!,
                 ).collect { loginResult ->
                     when (loginResult) {
-                        is BResult.Loading -> {
+                        is CTResult.Loading -> {
                             uiState = uiState.copy(loadingLogin = true)
                         }
-                        is BResult.Success -> {
+                        is CTResult.Success -> {
                             uiState = uiState.copy(
                                 loadingLogin = false,
                                 valueLoginPwd = null,
                                 valueRegisterCode = null,
                             )
                         }
-                        is BResult.Failure -> {
-                            uiState = uiState.copy(loadingLogin = false)
+                        is CTResult.Failure -> {
+                            Timber.e(loginResult.error)
+                            uiState = when (loginResult.error?.code) {
+                                CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM,
+                                CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST,
+                                CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL,
+                                -> uiState.copy(
+                                    errorLogin = loginResult.error,
+                                    loadingLogin = false,
+                                )
+
+                                else -> uiState.copy(
+                                    errorSnackbar = loginResult.error,
+                                    loadingLogin = false,
+                                )
+                            }
                         }
                     }
                 }
@@ -96,16 +119,24 @@ class ConnectionInputViewModel @Inject constructor(
         registerJob = viewModelScope.launch {
             checkAuthCodeUseCase(code = uiState.valueRegisterCode ?: "").collect { result ->
                 when (result) {
-                    is BResult.Loading -> {
+                    is CTResult.Loading -> {
                         uiState = uiState.copy(loadingRegister = true)
                     }
-                    is BResult.Failure -> {
-                        uiState = uiState.copy(
-                            loadingRegister = false,
-                            errorRegister = result.error as? BError.AuthenticationCodeInvalidError,
-                        )
+                    is CTResult.Failure -> {
+                        Timber.e(result.error)
+                        uiState = when (result.error?.code) {
+                            CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> uiState.copy(
+                                errorRegister = result.error,
+                                loadingRegister = false,
+                            )
+
+                            else -> uiState.copy(
+                                errorSnackbar = result.error,
+                                loadingRegister = false,
+                            )
+                        }
                     }
-                    is BResult.Success -> {
+                    is CTResult.Success -> {
                         uiState = uiState.copy(
                             loadingRegister = false,
                             valueRegisterCode = null,
@@ -129,6 +160,6 @@ class ConnectionInputViewModel @Inject constructor(
         )
     }
 
-    private fun String.isEmailValid(): Boolean = Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    private fun String.isEmailValid(): Boolean = this.isNotBlank()
     private fun String.isPasswordValid(): Boolean = this.isNotBlank()
 }

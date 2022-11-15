@@ -22,5 +22,11 @@
     <string name="common_validate">Validate</string>
     <string name="accountCreation_password_label">New password</string>
     <string name="errorMessage_authCodeInvalid">The explorer key is invalid</string>
-    <string name="errorMessage_default">An error occur</string>
+    <string name="error_defaultMessage">Something went wrong</string>
+    <string name="error_defaultTitle">Ooops</string>
+    <string name="error_networkConnection_title">No network</string>
+    <string name="error_networkConnection_description">Prease, check your internet connection</string>
+    <string name="authentication_error_noUserEmail">No user with this email</string>
+    <string name="authentication_error_invalidPassword">Invalid password</string>
+    <string name="authentication_error_emailFormInvalid">Email form incorrect</string>
 </resources>

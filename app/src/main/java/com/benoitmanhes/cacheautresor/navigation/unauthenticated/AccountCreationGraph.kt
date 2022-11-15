@@ -15,8 +15,9 @@ object AccountCreationDestination : AppDestination {
 
 fun NavGraphBuilder.accountCreationGraph(
     onNavigateBack: () -> Unit,
+    showSnackbar: (String) -> Unit,
 ) {
     composable(AccountCreationDestination.route) {
-        AccountCreationScreen(onNavigateBack = onNavigateBack)
+        AccountCreationScreen(onNavigateBack = onNavigateBack, showSnackbar = showSnackbar)
     }
 }

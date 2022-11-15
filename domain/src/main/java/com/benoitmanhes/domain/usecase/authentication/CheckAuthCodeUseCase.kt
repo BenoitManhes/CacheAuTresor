@@ -1,18 +1,20 @@
 package com.benoitmanhes.domain.usecase.authentication
 
-import com.benoitmanhes.domain.extension.convertResult
+import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
-import com.benoitmanhes.domain.structure.BResult
+import com.benoitmanhes.domain.usecase.AbstractUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CheckAuthCodeUseCase @Inject constructor(
     private val authRepository: AuthRepository,
-) {
-    operator fun invoke(code: String): Flow<BResult<String>> = flow {
-        emit(BResult.Loading())
-        emit(authRepository.isAuthCodeValid(code).convertResult { code })
+) : AbstractUseCase() {
+    operator fun invoke(code: String): Flow<CTResult<String>> = useCaseFlow {
+        if (authRepository.isAuthCodeValid(code)) {
+            emit(CTResult.Success(code))
+        } else {
+            throw CTDomainError(CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN)
+        }
     }
 }

@@ -11,10 +11,12 @@ object ConnectionDestination : AppDestination {
 
 fun NavGraphBuilder.connectionGraph(
     navigateToAccountCreation: (String) -> Unit,
+    showErrorSnackBar: (errorMsg: String) -> Unit,
 ) {
     composable(ConnectionDestination.route) {
         ConnectionScreen(
             navigateToAccountCreation = navigateToAccountCreation,
+            showErrorSnackBar = showErrorSnackBar,
         )
     }
 }

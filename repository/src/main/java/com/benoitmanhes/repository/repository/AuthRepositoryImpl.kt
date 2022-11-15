@@ -1,16 +1,13 @@
 package com.benoitmanhes.repository.repository
 
-import com.benoitmanhes.domain.extension.convert
+import com.benoitmanhes.core.error.CTStorageError
 import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
 import com.benoitmanhes.domain.interfaces.remotedatasource.AuthRemoteDataSource
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.model.Account
-import com.benoitmanhes.domain.structure.BError
-import com.benoitmanhes.domain.structure.BResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class AuthRepositoryImpl(
@@ -27,35 +24,28 @@ class AuthRepositoryImpl(
         return authLocalDataSource.getAccountFlow()
     }
 
-    override fun login(email: String, password: String): Flow<BResult<Account>> = flow {
-        emit(BResult.Loading())
-        emit(authRemoteDataSource.login(email = email, password).fetchAccount())
+    override suspend fun login(email: String, password: String): Account {
+        val loginAccount = authRemoteDataSource.login(email = email, password)
+        return fetchAccount(loginAccount)
     }
 
-    override suspend fun createAuthAccount(email: String, password: String, explorerId: String): BResult<Account> =
-        authRemoteDataSource.createAuthAccount(email = email, password = password, explorerId = explorerId).fetchAccount()
-
-    override fun logout() {
-        CoroutineScope(Dispatchers.IO).launch {
-            authRemoteDataSource.logout()
-            authLocalDataSource.removeAccount()
-        }
+    override suspend fun createAuthAccount(email: String, password: String, explorerId: String): Account {
+        val createdAccount = authRemoteDataSource.createAuthAccount(email = email, password = password, explorerId = explorerId)
+        return fetchAccount(createdAccount)
     }
 
-    override suspend fun isAuthCodeValid(code: String): BResult<Unit> = authRemoteDataSource.isAuthCodeValid(code)
+    override suspend fun logout() {
+        authRemoteDataSource.logout()
+        authLocalDataSource.removeAccount()
+    }
 
-    override suspend fun deleteAuthCode(code: String): BResult<Unit> =
-        authRemoteDataSource.deleteAuthCode(code)
+    override suspend fun isAuthCodeValid(code: String): Boolean = authRemoteDataSource.isAuthCodeValid(code)
 
-    private suspend fun BResult<Account>.fetchAccount(): BResult<Account> =
-        when (this) {
-            is BResult.Loading -> this.convert()
-            is BResult.Failure -> this.convert()
-            is BResult.Success -> {
-                authLocalDataSource.saveAccount(this.successData)
-                authLocalDataSource.getAccount()?.let { account ->
-                    BResult.Success(account)
-                } ?: BResult.Failure(BError.UnexpectedResult)
-            }
-        }
+    override suspend fun deleteAuthCode(code: String): Unit = authRemoteDataSource.deleteAuthCode(code)
+
+    private suspend fun fetchAccount(account: Account): Account {
+        authLocalDataSource.saveAccount(account)
+        return authLocalDataSource.getAccount() ?: throw CTStorageError.UnexpectedResult("No account after saving")
+    }
+
 }

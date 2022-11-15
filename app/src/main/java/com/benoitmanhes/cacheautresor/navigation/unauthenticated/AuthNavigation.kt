@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 @Composable
 fun AuthNavigation(
     navController: NavHostController,
+    showErrorSnackBar: (errorMsg: String) -> Unit,
     onNavigateBack: () -> Unit = remember(navController) { { navController.popBackStack() } },
 ) {
 
@@ -21,7 +22,11 @@ fun AuthNavigation(
     ) {
         connectionGraph(
             navigateToAccountCreation = navigateToAccountCreation,
+            showErrorSnackBar = showErrorSnackBar,
         )
-        accountCreationGraph(onNavigateBack)
+        accountCreationGraph(
+            onNavigateBack = onNavigateBack,
+            showSnackbar = showErrorSnackBar,
+        )
     }
 }
