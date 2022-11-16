@@ -93,11 +93,9 @@ dependencies {
     androidTestImplementation(AndroidX.test.espresso.core)
     androidTestImplementation(AndroidX.compose.ui.testJunit4)
 
-    // Timber
-    implementation(JakeWharton.timber)
-
     implementation(project(":domain"))
     implementation(project(":core"))
+    implementation(project(":logger:logger-timber"))
     runtimeOnly(project(":local-datasource"))
     runtimeOnly(project(":remote-datasource"))
     runtimeOnly(project(":repository"))

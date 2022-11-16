@@ -4,14 +4,21 @@ import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.error.CTRemoteError
 import com.benoitmanhes.core.error.CTStorageError
 import com.benoitmanhes.core.result.CTResult
+import com.benoitmanhes.logger.CTLogger
+import com.benoitmanhes.logger.e
+import com.benoitmanhes.logger.i
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
+import org.slf4j.Logger
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class AbstractUseCase {
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected val logger: Logger = CTLogger.get(this::class.java.simpleName)
 
     fun <T> useCaseFlow(
         mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
@@ -21,7 +28,9 @@ abstract class AbstractUseCase {
     }
         .onStart { emit(CTResult.Loading()) }
         .catch { t ->
-            emit(CTResult.Failure(error = mapErr(t)))
+            val domainError = mapErr(t)
+            logError(domainError)
+            emit(CTResult.Failure(error = domainError))
         }
 
     @Suppress("MemberVisibilityCanBePrivate")
@@ -44,5 +53,25 @@ abstract class AbstractUseCase {
             else -> CTDomainError.Code.UNKNOWN
         }
         return CTDomainError(code = code, cause = t, message = t.message ?: code.name)
+    }
+
+    private fun logError(error: CTDomainError) {
+        if (error.code in nonImportantCodeErrors) {
+            logger.i(t = error, message = error.message)
+        } else {
+            logger.e(t = error, message = error.message)
+        }
+    }
+
+    private companion object {
+        private val nonImportantCodeErrors = listOf(
+            CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE,
+            CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN,
+            CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL,
+            CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM,
+            CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST,
+            CTDomainError.Code.EXPLORER_NOT_FOUND,
+            CTDomainError.Code.NO_INTERNET,
+        )
     }
 }

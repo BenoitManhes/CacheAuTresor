@@ -12,4 +12,5 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:_")
 
     implementation(project(":core"))
+    implementation(project(":logger"))
 }

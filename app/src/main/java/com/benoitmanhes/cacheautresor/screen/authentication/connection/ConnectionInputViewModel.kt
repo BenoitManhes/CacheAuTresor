@@ -14,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -92,7 +91,6 @@ class ConnectionInputViewModel @Inject constructor(
                             )
                         }
                         is CTResult.Failure -> {
-                            Timber.e(loginResult.error)
                             uiState = when (loginResult.error?.code) {
                                 CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM,
                                 CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST,
@@ -123,7 +121,6 @@ class ConnectionInputViewModel @Inject constructor(
                         uiState = uiState.copy(loadingRegister = true)
                     }
                     is CTResult.Failure -> {
-                        Timber.e(result.error)
                         uiState = when (result.error?.code) {
                             CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> uiState.copy(
                                 errorRegister = result.error,

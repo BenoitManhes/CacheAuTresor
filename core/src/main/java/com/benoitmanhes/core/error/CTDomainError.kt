@@ -6,8 +6,8 @@ data class CTDomainError(
     override val cause: Throwable? = null,
 ) : CTError(message, cause) {
     enum class Code {
-        ACCOUNT_CREATION_INVALID_TOKEN,
         ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE,
+        ACCOUNT_CREATION_INVALID_TOKEN,
         AUTHENTICATION_INVALID_CREDENTIAL,
         AUTHENTICATION_USER_EMAIL_NO_EXIST,
         AUTHENTICATION_EMAIL_INVALID_FORM,

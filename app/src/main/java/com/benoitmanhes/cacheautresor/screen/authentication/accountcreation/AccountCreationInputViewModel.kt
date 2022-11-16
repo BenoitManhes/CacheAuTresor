@@ -13,7 +13,6 @@ import com.benoitmanhes.domain.usecase.register.CreateAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,7 +60,6 @@ class AccountCreationInputViewModel @Inject constructor(
                         uiState = uiState.copy(loading = true)
                     }
                     is CTResult.Failure -> {
-                        Timber.e(result.error)
                         uiState = when (result.error?.code) {
                             CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE ->
                                 uiState.copy(
