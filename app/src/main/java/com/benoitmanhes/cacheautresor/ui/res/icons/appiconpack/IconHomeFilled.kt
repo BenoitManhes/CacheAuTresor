@@ -16,11 +16,17 @@ public val AppIconPack.IconHomeFilled: ImageVector
         if (_iconHomeFilled != null) {
             return _iconHomeFilled!!
         }
-        _iconHomeFilled = Builder(name = "IconHomeFilled", defaultWidth = 48.0.dp, defaultHeight =
-                48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                    pathFillType = NonZero) {
+        _iconHomeFilled = Builder(
+            name = "IconHomeFilled", defaultWidth = 48.0.dp,
+            defaultHeight =
+            48.0.dp,
+            viewportWidth = 48.0f, viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
+                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(20.2f, 39.0f)
                 horizontalLineTo(12.45f)
                 curveTo(12.05f, 39.0f, 11.708f, 38.858f, 11.425f, 38.575f)
@@ -58,7 +64,7 @@ public val AppIconPack.IconHomeFilled: ImageVector
                 close()
             }
         }
-        .build()
+            .build()
         return _iconHomeFilled!!
     }
 

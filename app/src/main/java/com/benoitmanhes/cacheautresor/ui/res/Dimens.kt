@@ -47,7 +47,7 @@ object Dimens {
         val small: Dp = 4.dp
         val medium: Dp = 8.dp
     }
-    
+
     object Stroke {
         val thin: Dp = 1.dp
         val strong: Dp = 3.dp

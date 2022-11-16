@@ -16,11 +16,17 @@ public val AppIconPack.IconSmallEye: ImageVector
         if (_iconSmallEye != null) {
             return _iconSmallEye!!
         }
-        _iconSmallEye = Builder(name = "IconSmallEye", defaultWidth = 16.0.dp, defaultHeight =
-                16.0.dp, viewportWidth = 16.0f, viewportHeight = 16.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.25f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero) {
+        _iconSmallEye = Builder(
+            name = "IconSmallEye", defaultWidth = 16.0.dp,
+            defaultHeight =
+            16.0.dp,
+            viewportWidth = 16.0f, viewportHeight = 16.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)), stroke = SolidColor(Color(0xFF000000)),
+                strokeLineWidth = 0.25f, strokeLineCap = Butt, strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f, pathFillType = NonZero
+            ) {
                 moveTo(8.0f, 10.5f)
                 curveTo(8.7889f, 10.5f, 9.4583f, 10.225f, 10.0083f, 9.675f)
                 curveTo(10.5583f, 9.125f, 10.8333f, 8.4556f, 10.8333f, 7.6667f)
@@ -71,7 +77,7 @@ public val AppIconPack.IconSmallEye: ImageVector
                 close()
             }
         }
-        .build()
+            .build()
         return _iconSmallEye!!
     }
 

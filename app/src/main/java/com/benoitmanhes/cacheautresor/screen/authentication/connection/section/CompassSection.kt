@@ -69,11 +69,10 @@ fun CompassSection(
     val angle: Float by animateFloatAsState(
         targetValue = smoothHeading,
         animationSpec = tween(
-            durationMillis = COMPASS_ANIMATION_DURATION,
+            durationMillis = CompassAnimationDuration,
             easing = LinearEasing,
         ),
     )
-
 
     Image(
         modifier = modifier
@@ -104,4 +103,4 @@ private fun smoothRotation(rotation: Float): MutableState<Float> {
     return storedRotation
 }
 
-private const val COMPASS_ANIMATION_DURATION: Int = 100
+private const val CompassAnimationDuration: Int = 100

@@ -1,9 +1,7 @@
 package com.benoitmanhes.cacheautresor.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
 
 object AppShape {

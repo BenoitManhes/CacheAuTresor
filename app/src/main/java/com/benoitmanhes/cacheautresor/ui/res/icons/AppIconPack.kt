@@ -17,17 +17,18 @@ import kotlin.collections.List as ____KtList
 
 public object AppIconPack
 
-private var __AppIcons: ____KtList<ImageVector>? = null
+@Suppress("ObjectPropertyName")
+private var _AppIcons: ____KtList<ImageVector>? = null
 
 public val AppIconPack.AppIcons: ____KtList<ImageVector>
     get() {
-        if (__AppIcons != null) {
-            return __AppIcons!!
+        if (_AppIcons != null) {
+            return _AppIcons!!
         }
-        __AppIcons = listOf(
+        _AppIcons = listOf(
             IconCompass, IconExplore, IconLogo, IconSmallEye, IconProfile,
             IconProfileFilled, IconFavorite, IconHomeFilled, IconSmallEyeClose, IconExploreFilled,
             IconHome, IconFavoriteFilled
         )
-        return __AppIcons!!
+        return _AppIcons!!
     }

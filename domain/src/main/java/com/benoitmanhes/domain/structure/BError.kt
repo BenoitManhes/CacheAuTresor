@@ -8,7 +8,8 @@ sealed class BError(
 ) : Exception(
     message,
     cause,
-), Model {
+),
+    Model {
 
     data class AuthenticationError(
         override val message: String? = null,

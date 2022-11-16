@@ -47,5 +47,4 @@ class AuthRepositoryImpl(
         authLocalDataSource.saveAccount(account)
         return authLocalDataSource.getAccount() ?: throw CTStorageError.UnexpectedResult("No account after saving")
     }
-
 }

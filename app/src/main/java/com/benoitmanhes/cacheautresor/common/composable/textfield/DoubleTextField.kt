@@ -71,7 +71,7 @@ fun DoubleTextField(
             ConstraintLayout(constraintSet = constraints()) {
                 Surface(
                     modifier = Modifier
-                        .layoutId(BACKGROUND_ID),
+                        .layoutId(BackgroundId),
                     shape = shape,
                     border = BorderStroke(Dimens.Stroke.thin, borderColor),
                 ) { }
@@ -89,7 +89,7 @@ fun DoubleTextField(
                 }
                 Column(
                     modifier = Modifier
-                        .layoutId(CONTENT_ID)
+                        .layoutId(ContentId)
                         .wrapContentHeight(),
                 ) {
                     SimpleTextField(
@@ -147,8 +147,8 @@ fun DoubleTextField(
 }
 
 private fun constraints() = ConstraintSet {
-    val background = createRefFor(BACKGROUND_ID)
-    val content = createRefFor(CONTENT_ID)
+    val background = createRefFor(BackgroundId)
+    val content = createRefFor(ContentId)
 
     constrain(background) {
         top.linkTo(content.top)
@@ -174,8 +174,8 @@ private fun Selector(modifier: Modifier = Modifier, color: Color, shape: Shape) 
 
 private enum class State { None, Top, Bottom }
 
-private const val BACKGROUND_ID: String = "background.id"
-private const val CONTENT_ID: String = "content.id"
+private const val BackgroundId: String = "background.id"
+private const val ContentId: String = "content.id"
 
 @Preview
 @Composable
@@ -187,7 +187,8 @@ private fun PreviewDoubleTextField() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(48.dp), contentAlignment = Alignment.TopCenter
+                .padding(48.dp),
+            contentAlignment = Alignment.TopCenter
         ) {
             DoubleTextField(
                 valueTop = textTop,

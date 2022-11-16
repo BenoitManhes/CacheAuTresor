@@ -16,11 +16,15 @@ public val AppIconPack.IconFavoriteFilled: ImageVector
         if (_iconFavoriteFilled != null) {
             return _iconFavoriteFilled!!
         }
-        _iconFavoriteFilled = Builder(name = "IconFavoriteFilled", defaultWidth = 48.0.dp,
-                defaultHeight = 48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                    pathFillType = NonZero) {
+        _iconFavoriteFilled = Builder(
+            name = "IconFavoriteFilled", defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
+                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(21.95f, 40.2f)
                 lineTo(19.3f, 37.75f)
                 curveTo(15.1667f, 33.9167f, 11.5833f, 30.2583f, 8.55f, 26.775f)
@@ -41,7 +45,7 @@ public val AppIconPack.IconFavoriteFilled: ImageVector
                 close()
             }
         }
-        .build()
+            .build()
         return _iconFavoriteFilled!!
     }
 

@@ -54,8 +54,8 @@ kapt {
 dependencies {
 
     // AndroidX
-    implementation (AndroidX.core.ktx)
-    implementation (AndroidX.lifecycle.runtimeKtx)
+    implementation(AndroidX.core.ktx)
+    implementation(AndroidX.lifecycle.runtimeKtx)
 
     // Compose
     implementation(AndroidX.compose.ui)
@@ -69,7 +69,7 @@ dependencies {
     implementation(AndroidX.compose.foundation)
     implementation("com.google.accompanist:accompanist-navigation-animation:_")
     implementation(Google.accompanist.systemuicontroller)
-    implementation (AndroidX.constraintLayout.compose)
+    implementation(AndroidX.constraintLayout.compose)
 
     // Firebase
     implementation(platform(Google.firebase.bom))
@@ -77,8 +77,8 @@ dependencies {
     implementation(Google.firebase.cloudFirestoreKtx)
 
     // Google map
-    implementation (Google.android.maps.compose)
-    implementation (Google.android.playServices.maps)
+    implementation(Google.android.maps.compose)
+    implementation(Google.android.playServices.maps)
 
     // Hilt
     implementation(Google.dagger.hilt.android)
@@ -88,10 +88,10 @@ dependencies {
     implementation(Google.android.material)
 
     // Testing
-    testImplementation (Testing.junit4)
-    androidTestImplementation (AndroidX.test.ext.junit)
-    androidTestImplementation (AndroidX.test.espresso.core)
-    androidTestImplementation (AndroidX.compose.ui.testJunit4)
+    testImplementation(Testing.junit4)
+    androidTestImplementation(AndroidX.test.ext.junit)
+    androidTestImplementation(AndroidX.test.espresso.core)
+    androidTestImplementation(AndroidX.compose.ui.testJunit4)
 
     // Timber
     implementation(JakeWharton.timber)

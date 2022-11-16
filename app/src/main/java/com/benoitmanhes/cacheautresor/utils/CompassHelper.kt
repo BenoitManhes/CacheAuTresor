@@ -1,12 +1,11 @@
 package com.benoitmanhes.cacheautresor.utils
 
-import java.util.GregorianCalendar
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
 object CompassHelper {
-    //0 ≤ ALPHA ≤ 1
-    //smaller ALPHA results in smoother sensor data but slower updates
+    // 0 ≤ ALPHA ≤ 1
+    // smaller ALPHA results in smoother sensor data but slower updates
     private const val ALPHA: Float = 0.15f
 
     fun lowPassFilter(input: FloatArray, output: FloatArray): FloatArray {
@@ -16,6 +15,7 @@ object CompassHelper {
         return output
     }
 
+    @Suppress("LocalVariableName", "UNUSED_VARIABLE")
     fun calculateHeading(accelerometerReading: FloatArray, magnetometerReading: FloatArray): Float {
         var Ax = accelerometerReading[0]
         var Ay = accelerometerReading[1]
@@ -24,29 +24,29 @@ object CompassHelper {
         val Ey = magnetometerReading[1]
         val Ez = magnetometerReading[2]
 
-        //cross product of the magnetic field vector and the gravity vector
+        // cross product of the magnetic field vector and the gravity vector
         var Hx = Ey * Az - Ez * Ay
         var Hy = Ez * Ax - Ex * Az
         var Hz = Ex * Ay - Ey * Ax
 
-        //normalize the values of resulting vector
+        // normalize the values of resulting vector
         val invH = 1.0f / sqrt((Hx * Hx + Hy * Hy + Hz * Hz).toDouble()).toFloat()
         Hx *= invH
         Hy *= invH
         Hz *= invH
 
-        //normalize the values of gravity vector
+        // normalize the values of gravity vector
         val invA = 1.0f / sqrt((Ax * Ax + Ay * Ay + Az * Az).toDouble()).toFloat()
         Ax *= invA
         Ay *= invA
         Az *= invA
 
-        //cross product of the gravity vector and the new vector H
+        // cross product of the gravity vector and the new vector H
         val Mx = Ay * Hz - Az * Hy
         val My = Az * Hx - Ax * Hz
         val Mz = Ax * Hy - Ay * Hx
 
-        //arc-tangent to obtain heading in radians
+        // arc-tangent to obtain heading in radians
         return atan2(Hy.toDouble(), My.toDouble()).toFloat()
     }
 
@@ -54,7 +54,7 @@ object CompassHelper {
         return (rad / Math.PI).toFloat() * 180
     }
 
-    //map angle from [-180,180] range to [0,360] range
+    // map angle from [-180,180] range to [0,360] range
     fun map180to360(angle: Float): Float {
         return (angle + 360) % 360
     }

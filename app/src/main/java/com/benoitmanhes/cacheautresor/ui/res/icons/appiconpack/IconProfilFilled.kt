@@ -16,11 +16,17 @@ public val AppIconPack.IconProfileFilled: ImageVector
         if (_iconProfilFilled != null) {
             return _iconProfilFilled!!
         }
-        _iconProfilFilled = Builder(name = "IconProfilFilled", defaultWidth = 48.0.dp, defaultHeight
-                = 48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                    pathFillType = NonZero) {
+        _iconProfilFilled = Builder(
+            name = "IconProfilFilled", defaultWidth = 48.0.dp,
+            defaultHeight =
+            48.0.dp,
+            viewportWidth = 48.0f, viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
+                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(11.1f, 35.25f)
                 curveTo(13.2f, 33.9167f, 15.275f, 32.9083f, 17.325f, 32.225f)
                 curveTo(19.375f, 31.5417f, 21.6f, 31.2f, 24.0f, 31.2f)
@@ -65,7 +71,7 @@ public val AppIconPack.IconProfileFilled: ImageVector
                 close()
             }
         }
-        .build()
+            .build()
         return _iconProfilFilled!!
     }
 

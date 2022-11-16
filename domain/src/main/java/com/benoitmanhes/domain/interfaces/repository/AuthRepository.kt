@@ -1,7 +1,6 @@
 package com.benoitmanhes.domain.interfaces.repository
 
 import com.benoitmanhes.domain.model.Account
-import com.benoitmanhes.domain.structure.BResult
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

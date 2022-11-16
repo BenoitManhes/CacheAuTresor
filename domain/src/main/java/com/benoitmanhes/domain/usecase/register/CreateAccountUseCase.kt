@@ -3,16 +3,11 @@ package com.benoitmanhes.domain.usecase.register
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.Util
-import com.benoitmanhes.domain.extension.convert
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
-import com.benoitmanhes.domain.structure.BError
-import com.benoitmanhes.domain.structure.BResult
 import com.benoitmanhes.domain.usecase.AbstractUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CreateAccountUseCase @Inject constructor(
@@ -41,7 +36,7 @@ class CreateAccountUseCase @Inject constructor(
             )
         } catch (e: Exception) {
             explorerRepository.deleteExplorer(explorerCreated.explorerId)
-            throw  e
+            throw e
         }
         authRepository.deleteAuthCode(tokenAccount)
         emit(CTResult.Success(Unit))

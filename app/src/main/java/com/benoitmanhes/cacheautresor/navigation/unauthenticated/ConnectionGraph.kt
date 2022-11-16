@@ -5,10 +5,6 @@ import androidx.navigation.compose.composable
 import com.benoitmanhes.cacheautresor.navigation.AppDestination
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionScreen
 
-object ConnectionDestination : AppDestination {
-    override val route: String = "connection"
-}
-
 fun NavGraphBuilder.connectionGraph(
     navigateToAccountCreation: (String) -> Unit,
     showErrorSnackBar: (errorMsg: String) -> Unit,
@@ -19,4 +15,8 @@ fun NavGraphBuilder.connectionGraph(
             showErrorSnackBar = showErrorSnackBar,
         )
     }
+}
+
+object ConnectionDestination : AppDestination {
+    override val route: String = "connection"
 }

@@ -2,8 +2,6 @@ package com.benoitmanhes.cacheautresor.screen.authentication.connection
 
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.ConnectionInputState
 import com.benoitmanhes.core.error.CTDomainError
-import com.benoitmanhes.core.error.CTError
-import com.benoitmanhes.domain.structure.BError
 
 data class ConnectionInputUIState(
     val connectionInputState: ConnectionInputState = ConnectionInputState.Login,

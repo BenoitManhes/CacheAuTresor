@@ -4,7 +4,6 @@ import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSourc
 import com.benoitmanhes.domain.interfaces.remotedatasource.ExplorerRemoteDataSource
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
-import com.benoitmanhes.domain.structure.BResult
 
 class ExplorerRepositoryImpl(
     private val localDataSource: ExplorerLocalDataSource,

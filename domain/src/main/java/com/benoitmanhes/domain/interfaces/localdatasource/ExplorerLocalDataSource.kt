@@ -1,7 +1,6 @@
 package com.benoitmanhes.domain.interfaces.localdatasource
 
 import com.benoitmanhes.domain.model.Explorer
-import com.benoitmanhes.domain.structure.BResult
 import kotlinx.coroutines.flow.Flow
 
 interface ExplorerLocalDataSource {

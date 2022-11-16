@@ -16,11 +16,17 @@ public val AppIconPack.IconCompass: ImageVector
         if (_iconCompass != null) {
             return _iconCompass!!
         }
-        _iconCompass = Builder(name = "IconCompass", defaultWidth = 48.0.dp, defaultHeight =
-                48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                    pathFillType = NonZero) {
+        _iconCompass = Builder(
+            name = "IconCompass", defaultWidth = 48.0.dp,
+            defaultHeight =
+            48.0.dp,
+            viewportWidth = 48.0f, viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
+                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(22.0f, 22.7f)
                 lineTo(15.9f, 39.5f)
                 lineTo(15.75f, 39.75f)
@@ -74,7 +80,7 @@ public val AppIconPack.IconCompass: ImageVector
                 close()
             }
         }
-        .build()
+            .build()
         return _iconCompass!!
     }
 

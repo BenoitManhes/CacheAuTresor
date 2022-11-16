@@ -23,7 +23,7 @@ fun CTDomainError.localizedTitle(): String = when (code) {
 
 @Composable
 @ReadOnlyComposable
-fun CTDomainError.localizedDescription(): String = when(code) {
+fun CTDomainError.localizedDescription(): String = when (code) {
     CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> stringResource(id = R.string.errorMessage_authCodeInvalid)
     CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE -> stringResource(id = R.string.accountCreation_name_error)
     CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> stringResource(id = R.string.authentication_error_invalidPassword)

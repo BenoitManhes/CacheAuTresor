@@ -16,11 +16,17 @@ public val AppIconPack.IconExplore: ImageVector
         if (_iconExplore != null) {
             return _iconExplore!!
         }
-        _iconExplore = Builder(name = "IconExplore", defaultWidth = 48.0.dp, defaultHeight =
-                48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                    pathFillType = NonZero) {
+        _iconExplore = Builder(
+            name = "IconExplore", defaultWidth = 48.0.dp,
+            defaultHeight =
+            48.0.dp,
+            viewportWidth = 48.0f, viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
+                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(15.15f, 33.85f)
                 lineTo(27.2f, 27.95f)
                 curveTo(27.3667f, 27.8833f, 27.5083f, 27.7917f, 27.625f, 27.675f)
@@ -76,7 +82,7 @@ public val AppIconPack.IconExplore: ImageVector
                 close()
             }
         }
-        .build()
+            .build()
         return _iconExplore!!
     }
 

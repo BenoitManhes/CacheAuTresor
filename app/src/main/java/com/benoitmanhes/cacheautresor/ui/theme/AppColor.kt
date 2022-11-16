@@ -16,7 +16,6 @@ val TransparentWhite35: Color = Color(0x59FFFFFF)
 val Neutral10: Color = Color(red = 28, green = 27, blue = 31)
 val Neutral90: Color = Color(red = 230, green = 225, blue = 229)
 
-
 @Immutable
 object DayColorScheme : AppColorScheme {
     override val primary: Color = Marigold

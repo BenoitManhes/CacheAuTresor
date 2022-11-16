@@ -1,8 +1,6 @@
 package com.benoitmanhes.domain.interfaces.remotedatasource
 
-import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.model.Account
-import com.benoitmanhes.domain.structure.BResult
 
 interface AuthRemoteDataSource {
     fun getCurrentAccount(): Account?

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class AbstractUseCase {
 
     fun <T> useCaseFlow(
@@ -23,6 +24,7 @@ abstract class AbstractUseCase {
             emit(CTResult.Failure(error = mapErr(t)))
         }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun defaultMapError(t: Throwable): CTDomainError {
         val code: CTDomainError.Code = when (t) {
             is CTDomainError -> t.code

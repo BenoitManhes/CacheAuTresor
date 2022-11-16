@@ -1,7 +1,6 @@
 package com.benoitmanhes.cacheautresor.ui.res.animation
 
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -32,7 +31,7 @@ fun LoaderAnimation(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = PERIOD_MILLIS),
+            animation = tween(durationMillis = PeriodMillis),
         ),
     )
 
@@ -45,7 +44,7 @@ fun LoaderAnimation(
     )
 }
 
-private const val PERIOD_MILLIS: Int = 2000
+private const val PeriodMillis: Int = 2000
 
 @Preview
 @Composable

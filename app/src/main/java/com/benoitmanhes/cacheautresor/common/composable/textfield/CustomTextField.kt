@@ -63,43 +63,45 @@ fun CustomTextField(
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
 
     @OptIn(ExperimentalMaterialApi::class)
-    (BasicTextField(
-        value = value,
-        modifier = modifier
-            .background(colors.backgroundColor(enabled).value, shape)
-            .indicatorLine(enabled, isError, interactionSource, colors)
-            .defaultMinSize(
-                minWidth = Dimens.ComponentSize.textFieldMinWidth,
-                minHeight = Dimens.ComponentSize.textFieldMinHeight
-            ),
-        onValueChange = onValueChange,
-        enabled = enabled,
-        readOnly = readOnly,
-        textStyle = mergedTextStyle,
-        cursorBrush = SolidColor(colors.cursorColor(isError).value),
-        visualTransformation = visualTransformation,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        interactionSource = interactionSource,
-        singleLine = singleLine,
-        maxLines = maxLines,
-        decorationBox = @Composable { innerTextField ->
-            // places leading icon, text field with label and placeholder, trailing icon
-            TextFieldDefaults.TextFieldDecorationBox(
-                value = value,
-                visualTransformation = visualTransformation,
-                innerTextField = innerTextField,
-                placeholder = placeholder,
-                label = label,
-                leadingIcon = leadingIcon,
-                trailingIcon = trailingIcon,
-                singleLine = singleLine,
-                enabled = enabled,
-                isError = isError,
-                interactionSource = interactionSource,
-                colors = colors,
-                contentPadding = contentPadding,
-            )
-        }
-    ))
+    (
+        BasicTextField(
+            value = value,
+            modifier = modifier
+                .background(colors.backgroundColor(enabled).value, shape)
+                .indicatorLine(enabled, isError, interactionSource, colors)
+                .defaultMinSize(
+                    minWidth = Dimens.ComponentSize.textFieldMinWidth,
+                    minHeight = Dimens.ComponentSize.textFieldMinHeight
+                ),
+            onValueChange = onValueChange,
+            enabled = enabled,
+            readOnly = readOnly,
+            textStyle = mergedTextStyle,
+            cursorBrush = SolidColor(colors.cursorColor(isError).value),
+            visualTransformation = visualTransformation,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            interactionSource = interactionSource,
+            singleLine = singleLine,
+            maxLines = maxLines,
+            decorationBox = @Composable { innerTextField ->
+                // places leading icon, text field with label and placeholder, trailing icon
+                TextFieldDefaults.TextFieldDecorationBox(
+                    value = value,
+                    visualTransformation = visualTransformation,
+                    innerTextField = innerTextField,
+                    placeholder = placeholder,
+                    label = label,
+                    leadingIcon = leadingIcon,
+                    trailingIcon = trailingIcon,
+                    singleLine = singleLine,
+                    enabled = enabled,
+                    isError = isError,
+                    interactionSource = interactionSource,
+                    colors = colors,
+                    contentPadding = contentPadding,
+                )
+            }
+        )
+        )
 }

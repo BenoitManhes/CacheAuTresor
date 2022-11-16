@@ -74,7 +74,11 @@ internal fun LoginInputSection(
         StyleButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.loginScreen_loginButton_label),
-            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Login) ButtonStyle.Filled else ButtonStyle.Outlined,
+            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Login) {
+                ButtonStyle.Filled
+            } else {
+                ButtonStyle.Outlined
+            },
             isEnabled = { viewModel.uiState.isLoginEnable || it == ButtonStyle.Outlined },
             isLoading = viewModel.uiState.loadingLogin,
             onClick = {
@@ -107,7 +111,11 @@ internal fun LoginInputSection(
             text = stringResource(id = R.string.loginScreen_registerButton_label),
             isEnabled = { viewModel.uiState.isRegisterEnable || it == ButtonStyle.Outlined },
             isLoading = viewModel.uiState.loadingRegister,
-            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Register) ButtonStyle.Filled else ButtonStyle.Outlined,
+            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Register) {
+                ButtonStyle.Filled
+            } else {
+                ButtonStyle.Outlined
+            },
             color = AppTheme.colors.secondary,
             onClick = {
                 viewModel.clickRegister(onAccountTokenValid)
