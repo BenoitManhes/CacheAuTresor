@@ -43,5 +43,5 @@ object Dimens {
         val strong: Dp = 3.dp
     }
 
-    object Size {}
+    object Size
 }

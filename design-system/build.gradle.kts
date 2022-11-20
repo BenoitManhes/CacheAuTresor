@@ -14,6 +14,9 @@ android {
 
 dependencies {
 
+    // Coil
+    implementation(COIL.compose)
+
     // Compose
     implementation(AndroidX.compose.ui)
     implementation(AndroidX.compose.ui.tooling)
