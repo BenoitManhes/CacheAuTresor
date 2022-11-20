@@ -2,6 +2,16 @@ plugins {
     `android-library`
 }
 
+android {
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "_"
+    }
+}
+
 dependencies {
 
     // Compose
