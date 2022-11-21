@@ -17,6 +17,7 @@ private val LocalTypography: ProvidableCompositionLocal<CTTypography> = staticCo
 private val LocalCorner: ProvidableCompositionLocal<Dimens.Corner> = staticCompositionLocalOf { Dimens.Corner }
 private val LocalSpacing: ProvidableCompositionLocal<Dimens.Spacing> = staticCompositionLocalOf { Dimens.Spacing }
 private val LocalElevation: ProvidableCompositionLocal<Dimens.Elevation> = staticCompositionLocalOf { Dimens.Elevation }
+private val LocalStroke: ProvidableCompositionLocal<Dimens.Stroke> = staticCompositionLocalOf { Dimens.Stroke }
 
 @Composable
 fun CTTheme(
@@ -40,6 +41,7 @@ fun CTTheme(
         LocalCorner provides Dimens.Corner,
         LocalSpacing provides Dimens.Spacing,
         LocalElevation provides Dimens.Elevation,
+        LocalStroke provides Dimens.Stroke,
     ) {
         androidx.compose.material3.MaterialTheme(
             colorScheme = materialColorScheme,
@@ -129,5 +131,7 @@ val MaterialTheme.elevation: Dimens.Elevation
     @Composable get() = LocalElevation.current
 
 val MaterialTheme.colorScheme: CTColorScheme
-    @Composable
-    get() = LocalColor.current
+    @Composable get() = LocalColor.current
+
+val MaterialTheme.stroke: Dimens.Stroke
+    @Composable get() = LocalStroke.current

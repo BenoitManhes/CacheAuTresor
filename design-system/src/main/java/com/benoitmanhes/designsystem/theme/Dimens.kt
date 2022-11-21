@@ -43,5 +43,8 @@ object Dimens {
         val strong: Dp = 3.dp
     }
 
-    object Size
+    object Size {
+        val primaryButtonMinHeight: Dp = 48.dp
+        val lottieAnimationButton: Dp = 24.dp
+    }
 }
