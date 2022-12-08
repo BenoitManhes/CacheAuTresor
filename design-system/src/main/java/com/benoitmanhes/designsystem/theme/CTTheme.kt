@@ -11,13 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.benoitmanhes.designsystem.res.Dimens
 
 private val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DayColorScheme }
 private val LocalTypography: ProvidableCompositionLocal<CTTypography> = staticCompositionLocalOf { CTTypography }
-private val LocalCorner: ProvidableCompositionLocal<Dimens.Corner> = staticCompositionLocalOf { Dimens.Corner }
+private val LocalShape: ProvidableCompositionLocal<CTShape> = staticCompositionLocalOf { CTShape }
 private val LocalSpacing: ProvidableCompositionLocal<Dimens.Spacing> = staticCompositionLocalOf { Dimens.Spacing }
 private val LocalElevation: ProvidableCompositionLocal<Dimens.Elevation> = staticCompositionLocalOf { Dimens.Elevation }
 private val LocalStroke: ProvidableCompositionLocal<Dimens.Stroke> = staticCompositionLocalOf { Dimens.Stroke }
+private val LocalPadding: ProvidableCompositionLocal<CTPadding> = staticCompositionLocalOf { CTPadding }
+private val LocalSize: ProvidableCompositionLocal<Dimens.Size> = staticCompositionLocalOf { Dimens.Size }
 
 @Composable
 fun CTTheme(
@@ -38,10 +41,12 @@ fun CTTheme(
     CompositionLocalProvider(
         LocalColor provides localColor,
         LocalTypography provides localTypography,
-        LocalCorner provides Dimens.Corner,
+        LocalShape provides CTShape,
         LocalSpacing provides Dimens.Spacing,
         LocalElevation provides Dimens.Elevation,
         LocalStroke provides Dimens.Stroke,
+        LocalPadding provides CTPadding,
+        LocalSize provides Dimens.Size,
     ) {
         androidx.compose.material3.MaterialTheme(
             colorScheme = materialColorScheme,
@@ -69,6 +74,7 @@ private fun mappedMaterialColorScheme(
         onSurface = localColor.onSurface,
         background = localColor.onBackground,
         onBackground = localColor.onBackground,
+        error = localColor.error,
     )
 } else {
     lightColorScheme(
@@ -80,6 +86,7 @@ private fun mappedMaterialColorScheme(
         onSurface = localColor.onSurface,
         background = localColor.onBackground,
         onBackground = localColor.onBackground,
+        error = localColor.error,
     )
 }
 
@@ -97,6 +104,7 @@ private fun mappedMaterial2Colors(
         onSurface = localColor.onSurface,
         background = localColor.onBackground,
         onBackground = localColor.onBackground,
+        error = localColor.error,
     )
 } else {
     lightColors(
@@ -108,6 +116,7 @@ private fun mappedMaterial2Colors(
         onSurface = localColor.onSurface,
         background = localColor.onBackground,
         onBackground = localColor.onBackground,
+        error = localColor.error,
     )
 }
 
@@ -124,8 +133,8 @@ val MaterialTheme.typo: CTTypography
 val MaterialTheme.spacing: Dimens.Spacing
     @Composable get() = LocalSpacing.current
 
-val MaterialTheme.corner: Dimens.Corner
-    @Composable get() = LocalCorner.current
+val MaterialTheme.shape: CTShape
+    @Composable get() = LocalShape.current
 
 val MaterialTheme.elevation: Dimens.Elevation
     @Composable get() = LocalElevation.current
@@ -135,3 +144,6 @@ val MaterialTheme.colorScheme: CTColorScheme
 
 val MaterialTheme.stroke: Dimens.Stroke
     @Composable get() = LocalStroke.current
+
+val MaterialTheme.padding: CTPadding
+    @Composable get() = LocalPadding.current

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
@@ -28,12 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.benoitmanhes.designsystem.atoms.CTTextView
 import com.benoitmanhes.designsystem.atoms.LoadingDotAnimation
-import com.benoitmanhes.designsystem.atoms.TextView
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.Dimens
+import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.colorScheme
-import com.benoitmanhes.designsystem.theme.corner
+import com.benoitmanhes.designsystem.theme.shape
 import com.benoitmanhes.designsystem.theme.spacing
 import com.benoitmanhes.designsystem.theme.stroke
 import com.benoitmanhes.designsystem.theme.typo
@@ -47,16 +46,18 @@ fun PrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     type: PrimaryButtonType = PrimaryButtonType.COLORED,
-    status: PrimaryButtonStatus = PrimaryButtonStatus.ENABLE,
+    status: ButtonStatus = ButtonStatus.ENABLE,
+    color: Color = MaterialTheme.colorScheme.primary,
     options: Set<PrimaryButtonOption> = emptySet(),
 ) {
     ButtonFromType(
         status = status,
         modifier = modifier.heightIn(Dimens.Size.primaryButtonMinHeight),
         type = type,
+        color = color,
         onClick = onClick,
     ) { buttonColors ->
-        if (status == PrimaryButtonStatus.LOADING) {
+        if (status == ButtonStatus.LOADING) {
             // Lottie animation
             LoadingDotAnimation(
                 color = buttonColors.contentColor(enabled = true).value,
@@ -65,10 +66,10 @@ fun PrimaryButton(
             )
         } else {
             // Text
-            TextView(
+            CTTextView(
                 text = text,
                 style = LocalTextStyle.current,
-                color = buttonColors.contentColor(enabled = status != PrimaryButtonStatus.DISABLE).value,
+                color = buttonColors.contentColor(enabled = status != ButtonStatus.DISABLE).value,
                 modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium),
                 maxLine = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -79,13 +80,14 @@ fun PrimaryButton(
 
 @Composable
 private fun ButtonFromType(
-    type: PrimaryButtonType,
-    status: PrimaryButtonStatus,
     modifier: Modifier,
+    type: PrimaryButtonType,
+    status: ButtonStatus,
+    color: Color,
     onClick: () -> Unit,
     content: @Composable (ButtonColors) -> Unit,
 ) {
-    val safeOnClick = if (status == PrimaryButtonStatus.ENABLE) {
+    val safeOnClick = if (status == ButtonStatus.ENABLE) {
         onClick
     } else {
         {}
@@ -94,9 +96,9 @@ private fun ButtonFromType(
     when (type) {
         PrimaryButtonType.COLORED -> {
             Button(
-                shape = RoundedCornerShape(MaterialTheme.corner.medium),
-                colors = buttonColorsColored,
-                enabled = status != PrimaryButtonStatus.DISABLE,
+                shape = MaterialTheme.shape.medium,
+                colors = buttonColorsColored(color),
+                enabled = status != ButtonStatus.DISABLE,
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = Dimens.Elevation.none,
                     pressedElevation = Dimens.Elevation.none,
@@ -107,20 +109,20 @@ private fun ButtonFromType(
                 onClick = safeOnClick,
             ) {
                 ProvideTextStyle(value = MaterialTheme.typo.bodyBold) {
-                    content(buttonColorsColored)
+                    content(buttonColorsColored(color))
                 }
             }
         }
         PrimaryButtonType.OUTLINED -> {
             OutlinedButton(
-                shape = RoundedCornerShape(MaterialTheme.corner.medium),
+                shape = MaterialTheme.shape.medium,
                 colors = buttonColorsOutlined,
-                enabled = status != PrimaryButtonStatus.DISABLE,
+                enabled = status != ButtonStatus.DISABLE,
                 modifier = modifier,
                 onClick = safeOnClick,
                 border = BorderStroke(
                     width = MaterialTheme.stroke.thin,
-                    color = if (status == PrimaryButtonStatus.DISABLE) {
+                    color = if (status == ButtonStatus.DISABLE) {
                         MaterialTheme.colorScheme.disable
                     } else {
                         MaterialTheme.colorScheme.onSurface
@@ -135,11 +137,12 @@ private fun ButtonFromType(
     }
 }
 
-private val buttonColorsColored
-    @Composable get() = ButtonDefaults.buttonColors(
-        disabledBackgroundColor = MaterialTheme.colorScheme.disable,
-        disabledContentColor = MaterialTheme.colorScheme.onDisable,
-    )
+@Composable
+private fun buttonColorsColored(color: Color) = ButtonDefaults.buttonColors(
+    backgroundColor = color,
+    disabledBackgroundColor = MaterialTheme.colorScheme.disable,
+    disabledContentColor = MaterialTheme.colorScheme.onDisable,
+)
 
 private val buttonColorsOutlined
     @Composable get() = ButtonDefaults.outlinedButtonColors(
@@ -152,7 +155,7 @@ private val buttonColorsOutlined
 @Composable
 private fun PreviewCTButton() {
     CTTheme {
-        var status by remember { mutableStateOf(PrimaryButtonStatus.ENABLE) }
+        var status by remember { mutableStateOf(ButtonStatus.ENABLE) }
         val scope = rememberCoroutineScope()
 
         Box(
@@ -166,26 +169,26 @@ private fun PreviewCTButton() {
                 PrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.COLORED,
-                    status = PrimaryButtonStatus.ENABLE,
+                    status = ButtonStatus.ENABLE,
                     onClick = { },
                 )
                 PrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.COLORED,
-                    status = PrimaryButtonStatus.LOADING,
+                    status = ButtonStatus.LOADING,
                     onClick = { },
                 )
                 PrimaryButton(text = TextSpec.RawString("Button"), type = PrimaryButtonType.OUTLINED, onClick = { })
                 PrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.OUTLINED,
-                    status = PrimaryButtonStatus.LOADING,
+                    status = ButtonStatus.LOADING,
                     onClick = { },
                 )
                 PrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.OUTLINED,
-                    status = PrimaryButtonStatus.DISABLE,
+                    status = ButtonStatus.DISABLE,
                     onClick = { },
                 )
                 PrimaryButton(
@@ -196,9 +199,9 @@ private fun PreviewCTButton() {
                     status = status,
                     onClick = {
                         scope.launch {
-                            status = PrimaryButtonStatus.LOADING
+                            status = ButtonStatus.LOADING
                             delay(2000)
-                            status = PrimaryButtonStatus.ENABLE
+                            status = ButtonStatus.ENABLE
                         }
                     }
                 )

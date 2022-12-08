@@ -7,7 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.screen.authentication.UnAuthenticatedRoot
 import com.benoitmanhes.cacheautresor.screen.home.HomeRoot
 import com.benoitmanhes.cacheautresor.screen.root.holder.AuthenticatedState
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -17,7 +17,7 @@ fun AppContent(
     val systemUiController = rememberSystemUiController()
     val isDarkMode = false
 
-    AppTheme(darkTheme = isDarkMode) {
+    CTTheme(darkTheme = isDarkMode) {
 
         val useDarkIcons = !isDarkMode
         DisposableEffect(systemUiController, useDarkIcons) {

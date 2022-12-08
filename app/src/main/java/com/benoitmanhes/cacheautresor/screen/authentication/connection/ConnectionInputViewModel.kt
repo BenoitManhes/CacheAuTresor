@@ -30,20 +30,6 @@ class ConnectionInputViewModel @Inject constructor(
     private var loginJob: Job? = null
     private var registerJob: Job? = null
 
-    fun clickLogin() {
-        when (uiState.connectionInputState) {
-            ConnectionInputState.Login -> login()
-            ConnectionInputState.Register -> updateConnexionState(ConnectionInputState.Login)
-        }
-    }
-
-    fun clickRegister(onAccountTokenValid: (accountToken: String) -> Unit) {
-        when (uiState.connectionInputState) {
-            ConnectionInputState.Login -> updateConnexionState(ConnectionInputState.Register)
-            ConnectionInputState.Register -> register(onAccountTokenValid)
-        }
-    }
-
     fun updateLoginEmail(value: String) {
         uiState = uiState.copy(
             valueLoginEmail = value,
@@ -71,7 +57,7 @@ class ConnectionInputViewModel @Inject constructor(
         )
     }
 
-    private fun login() {
+    fun login() {
         loginJob?.cancel()
         if (uiState.valueLoginEmail?.isEmailValid() == true && uiState.valueLoginPwd?.isPasswordValid() == true) {
             loginJob = viewModelScope.launch(Dispatchers.IO) {
@@ -112,7 +98,7 @@ class ConnectionInputViewModel @Inject constructor(
         }
     }
 
-    private fun register(onAccountTokenValid: (accountToken: String) -> Unit) {
+    fun register(onAccountTokenValid: (accountToken: String) -> Unit) {
         registerJob?.cancel()
         registerJob = viewModelScope.launch {
             checkAuthCodeUseCase(code = uiState.valueRegisterCode ?: "").collect { result ->
@@ -145,7 +131,7 @@ class ConnectionInputViewModel @Inject constructor(
         }
     }
 
-    private fun updateConnexionState(value: ConnectionInputState) {
+    fun updateConnexionState(value: ConnectionInputState) {
         when (value) {
             ConnectionInputState.Register -> loginJob?.cancel()
             ConnectionInputState.Login -> registerJob?.cancel()

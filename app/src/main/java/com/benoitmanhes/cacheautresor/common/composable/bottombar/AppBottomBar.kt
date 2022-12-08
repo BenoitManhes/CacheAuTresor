@@ -25,7 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.benoitmanhes.cacheautresor.common.composable.divider.Spacer
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.theme.spacing
+import com.benoitmanhes.designsystem.theme.typo
 
 @Composable
 fun <I : BottomBarItem> AppBottomBar(
@@ -94,10 +95,10 @@ private fun <I : BottomBarItem> RowScope.AppBottomNavigationBarItem(
                     Column(
                         modifier = Modifier.wrapContentSize(),
                     ) {
-                        Spacer(Dimens.Margin.small)
+                        Spacer(MaterialTheme.spacing.extraSmall)
                         Text(
                             text = stringResource(id = item.labelRes),
-                            style = AppTheme.typography.captionBold,
+                            style = MaterialTheme.typo.captionBold,
                             color = tint,
                         )
                     }

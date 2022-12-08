@@ -9,17 +9,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.common.composable.button.LoadingFilledButton
-import com.benoitmanhes.cacheautresor.common.composable.textfield.DoubleTextField
-import com.benoitmanhes.cacheautresor.common.composable.textfield.OutlinedTextField
 import com.benoitmanhes.cacheautresor.error.localizedDescription
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
+import com.benoitmanhes.designsystem.molecule.textfield.CTDoubleTextField
+import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
+import com.benoitmanhes.designsystem.molecule.textfield.InputType
+import com.benoitmanhes.designsystem.molecule.textfield.TextFieldType
+import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.TextSpec
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AccountCreationInputSection(
     modifier: Modifier = Modifier,
@@ -39,30 +44,32 @@ fun AccountCreationInputSection(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
     ) {
-        OutlinedTextField(
+        CTOutlinedTextField(
             value = viewModel.uiState.valueName,
-            labelRes = R.string.accountCreation_name_label,
-            errorText = viewModel.uiState.errorUserName?.localizedDescription(),
-            hasNext = true,
-            onTextChanged = { viewModel.updateName(it) }
+            onValueChange = { viewModel.updateName(it) },
+            labelText = TextSpec.Resources(R.string.accountCreation_name_label),
+            errorText = TextSpec.RawString(viewModel.uiState.errorUserName?.localizedDescription()),
+            imeAction = ImeAction.Next,
         )
         Spacer(modifier = Modifier.weight(0.2f))
-        DoubleTextField(
+        CTDoubleTextField(
             valueTop = viewModel.uiState.valueEmail,
             valueBottom = viewModel.uiState.valuePwd,
-            labelTopRes = R.string.accountCreation_email_label,
-            labelBottomRes = R.string.accountCreation_password_label,
-            errorText = viewModel.uiState.errorCredential?.localizedDescription(),
-            onTextTopChanged = { viewModel.updateEmail(it) },
-            onTextBottomChanged = { viewModel.updatePwd(it) },
+            onValueTopChanged = { viewModel.updateEmail(it) },
+            onValueBottomChanged = { viewModel.updatePwd(it) },
+            labelTop = TextSpec.Resources(R.string.accountCreation_email_label),
+            labelBottom = TextSpec.Resources(R.string.accountCreation_password_label),
+            errorText = TextSpec.RawString(viewModel.uiState.errorCredential?.localizedDescription()),
+            inputTypeTop = InputType.Email,
+            inputTypeBottom = InputType.Password,
+            textFieldTypeBottom = TextFieldType.PASSWORD,
         )
         Spacer(modifier = Modifier.weight(1f))
-        LoadingFilledButton(
+        PrimaryButton(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = stringResource(id = R.string.common_validate),
-            enabled = viewModel.uiState.isValidateButtonEnabled,
-            isLoading = viewModel.uiState.loading,
+            text = TextSpec.Resources(R.string.common_validate),
+            status = viewModel.uiState.validateButtonStatus,
             onClick = { viewModel.validate() },
         )
     }
@@ -71,7 +78,7 @@ fun AccountCreationInputSection(
 @Preview
 @Composable
 private fun PreviewAccountCreationInputSection() {
-    AppTheme {
+    CTTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,

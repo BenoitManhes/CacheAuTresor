@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import com.benoitmanhes.designsystem.R
+import com.benoitmanhes.designsystem.res.Dimens
 
 private val LeagueSpartan = FontFamily(
     Font(R.font.league_spartan_light, FontWeight.W300),

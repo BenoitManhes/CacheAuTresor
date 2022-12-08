@@ -26,6 +26,7 @@ dependencies {
     implementation(AndroidX.Activity.compose)
     implementation(AndroidX.compose.material.icons.extended)
     implementation(AndroidX.compose.foundation)
+    implementation(AndroidX.constraintLayout.compose)
 
     // Lottie
     implementation("com.airbnb.android:lottie-compose:_")

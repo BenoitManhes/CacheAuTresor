@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.screen.authentication
 
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -12,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.benoitmanhes.cacheautresor.navigation.unauthenticated.AuthNavigation
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.theme.colorScheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +33,7 @@ fun UnAuthenticatedRoot(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-        containerColor = AppTheme.colors.background,
+        containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         }

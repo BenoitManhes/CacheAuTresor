@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.screen.authentication.connection.section
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -16,19 +18,22 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.common.composable.button.ButtonStyle
-import com.benoitmanhes.cacheautresor.common.composable.button.StyleButton
-import com.benoitmanhes.cacheautresor.common.composable.divider.Spacer
-import com.benoitmanhes.cacheautresor.common.composable.divider.TextDivider
-import com.benoitmanhes.cacheautresor.common.composable.textfield.DoubleTextField
-import com.benoitmanhes.cacheautresor.common.composable.textfield.OutlinedTextField
 import com.benoitmanhes.cacheautresor.error.localizedDescription
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionInputViewModel
-import com.benoitmanhes.cacheautresor.ui.res.Dimens
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
+import com.benoitmanhes.designsystem.molecule.divider.CTDividerText
+import com.benoitmanhes.designsystem.molecule.textfield.CTDoubleTextField
+import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
+import com.benoitmanhes.designsystem.molecule.textfield.InputType
+import com.benoitmanhes.designsystem.molecule.textfield.TextFieldType
+import com.benoitmanhes.designsystem.theme.colorScheme
+import com.benoitmanhes.designsystem.utils.TextSpec
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -39,8 +44,8 @@ internal fun LoginInputSection(
     viewModel: ConnectionInputViewModel = hiltViewModel(),
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ) {
-
-    val snackbarMessage = viewModel.uiState.errorSnackbar?.localizedDescription()
+    val uiState = viewModel.uiState
+    val snackbarMessage = uiState.errorSnackbar?.localizedDescription()
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {
             showErrorSnackBar(snackbarMessage)
@@ -54,73 +59,94 @@ internal fun LoginInputSection(
         verticalArrangement = Arrangement.Bottom,
     ) {
         AnimatedVisibility(
-            visible = viewModel.uiState.isLoginTextVisible,
+            visible = uiState.isLoginTextVisible,
             enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
             exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
         ) {
             Column {
-                DoubleTextField(
-                    valueTop = viewModel.uiState.valueLoginEmail,
-                    valueBottom = viewModel.uiState.valueLoginPwd,
-                    labelTopRes = R.string.loginScreen_login_emailTextField_label,
-                    labelBottomRes = R.string.loginScreen_login_passwordTextField_label,
-                    errorText = viewModel.uiState.errorLogin?.localizedDescription(),
-                    onTextTopChanged = { viewModel.updateLoginEmail(it) },
-                    onTextBottomChanged = { viewModel.updateLoginPassword(it) },
+                CTDoubleTextField(
+                    valueTop = uiState.valueLoginEmail,
+                    valueBottom = uiState.valueLoginPwd,
+                    labelTop = TextSpec.Resources(R.string.loginScreen_login_emailTextField_label),
+                    labelBottom = TextSpec.Resources(R.string.loginScreen_login_passwordTextField_label),
+                    errorText = TextSpec.RawString(uiState.errorLogin?.localizedDescription()),
+                    isError = uiState.errorLogin != null,
+                    onValueTopChanged = { viewModel.updateLoginEmail(it) },
+                    onValueBottomChanged = { viewModel.updateLoginPassword(it) },
+                    imeAction = ImeAction.Done,
+                    inputTypeTop = InputType.Email,
+                    inputTypeBottom = InputType.Password,
+                    textFieldTypeBottom = TextFieldType.PASSWORD,
                 )
-                Spacer(size = Dimens.Margin.medium)
+                SpacerSmall()
             }
         }
-        StyleButton(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.loginScreen_loginButton_label),
-            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Login) {
-                ButtonStyle.Filled
-            } else {
-                ButtonStyle.Outlined
-            },
-            isEnabled = { viewModel.uiState.isLoginEnable || it == ButtonStyle.Outlined },
-            isLoading = viewModel.uiState.loadingLogin,
-            onClick = {
-                viewModel.clickLogin()
-                keyboardController?.hide()
-            },
-        )
-        Spacer(size = Dimens.Margin.large)
-        TextDivider()
-        Spacer(size = Dimens.Margin.large)
-        AnimatedVisibility(
-            visible = viewModel.uiState.isRegisterTextVisible,
-            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
-            exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
-        ) {
-            Column {
-                OutlinedTextField(
+        Crossfade(targetState = uiState.connectionInputState) { state ->
+            if (state == ConnectionInputState.Login) {
+                PrimaryButton(
+                    text = TextSpec.Resources(R.string.loginScreen_loginButton_label),
+                    onClick = {
+                        keyboardController?.hide()
+                        viewModel.login()
+                    },
                     modifier = Modifier.fillMaxWidth(),
-                    value = viewModel.uiState.valueRegisterCode,
-                    color = AppTheme.colors.secondary,
-                    labelRes = R.string.loginScreen_register_codeText_label,
-                    errorText = viewModel.uiState.errorRegister?.localizedDescription(),
-                    onTextChanged = { viewModel.updateRegisterCode(it) },
+                    status = uiState.loginButtonStatus,
                 )
-                Spacer(size = Dimens.Margin.medium)
+            } else {
+                PrimaryButton(
+                    text = TextSpec.Resources(R.string.loginScreen_loginButton_label),
+                    onClick = {
+                        keyboardController?.hide()
+                        viewModel.updateConnexionState(ConnectionInputState.Login)
+                    },
+                    type = PrimaryButtonType.OUTLINED,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         }
-        StyleButton(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.loginScreen_registerButton_label),
-            isEnabled = { viewModel.uiState.isRegisterEnable || it == ButtonStyle.Outlined },
-            isLoading = viewModel.uiState.loadingRegister,
-            buttonStyle = if (viewModel.uiState.connectionInputState == ConnectionInputState.Register) {
-                ButtonStyle.Filled
+        SpacerLarge()
+        CTDividerText(TextSpec.Resources(R.string.orSeparator_label))
+        SpacerLarge()
+        AnimatedVisibility(
+            visible = uiState.isRegisterTextVisible,
+            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+            exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
+        ) {
+            Column {
+                CTOutlinedTextField(
+                    value = uiState.valueRegisterCode,
+                    onValueChange = { viewModel.updateRegisterCode(it) },
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.secondary,
+                    labelText = TextSpec.Resources(R.string.loginScreen_register_codeText_label),
+                    errorText = TextSpec.RawString(uiState.errorRegister?.localizedDescription()),
+                )
+                SpacerSmall()
+            }
+        }
+        Crossfade(targetState = uiState.connectionInputState) { state ->
+            if (state == ConnectionInputState.Register) {
+                PrimaryButton(
+                    text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
+                    onClick = {
+                        keyboardController?.hide()
+                        viewModel.register(onAccountTokenValid)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.secondary,
+                    status = uiState.registerButtonStatus,
+                )
             } else {
-                ButtonStyle.Outlined
-            },
-            color = AppTheme.colors.secondary,
-            onClick = {
-                viewModel.clickRegister(onAccountTokenValid)
-                keyboardController?.hide()
-            },
-        )
+                PrimaryButton(
+                    text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
+                    onClick = {
+                        keyboardController?.hide()
+                        viewModel.updateConnexionState(ConnectionInputState.Register)
+                    },
+                    type = PrimaryButtonType.OUTLINED,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        }
     }
 }

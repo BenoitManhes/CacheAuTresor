@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
 fun <T : TabItem> CellTabRow(
@@ -76,7 +76,7 @@ sealed class CellTabItem : TabItem {
 @Preview
 @Composable
 private fun PreviewCellTab() {
-    AppTheme {
+    CTTheme {
         val tabs = listOf(CellTabItem.Map(), CellTabItem.List())
         var currentItem by remember { mutableStateOf(tabs.first()) }
 

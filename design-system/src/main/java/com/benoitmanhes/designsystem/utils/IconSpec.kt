@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 
 sealed interface IconSpec {
 
-    val contentDescription: String
+    val contentDescription: String?
 
     @Composable
     fun painter(): Painter
@@ -22,7 +22,7 @@ sealed interface IconSpec {
     data class ResIcon(
         @DrawableRes
         private val drawableRes: Int,
-        override val contentDescription: String,
+        override val contentDescription: String?,
     ) : IconSpec {
 
         @Composable
@@ -31,7 +31,7 @@ sealed interface IconSpec {
 
     data class VectorIcon(
         private val imageVector: ImageVector,
-        override val contentDescription: String,
+        override val contentDescription: String?,
     ) : IconSpec {
 
         @Composable
@@ -40,7 +40,7 @@ sealed interface IconSpec {
 
     data class BitmapIcon(
         val imageBitmap: ImageBitmap,
-        override val contentDescription: String,
+        override val contentDescription: String?,
         private val filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     ) : IconSpec {
         @Composable

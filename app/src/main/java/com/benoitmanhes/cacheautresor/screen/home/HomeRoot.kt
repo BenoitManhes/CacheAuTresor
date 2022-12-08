@@ -7,8 +7,9 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -22,7 +23,7 @@ import com.benoitmanhes.cacheautresor.common.composable.bottombar.AppBottomBar
 import com.benoitmanhes.cacheautresor.navigation.home.HomeDestination
 import com.benoitmanhes.cacheautresor.navigation.home.HomeNavigation
 import com.benoitmanhes.cacheautresor.ui.res.Dimens
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.theme.colorScheme
 
 @Composable
 fun HomeRoot() {
@@ -43,18 +44,18 @@ fun HomeRoot() {
                     shape = CircleShape,
                     elevation = FloatingActionButtonDefaults.elevation(defaultElevation = Dimens.Elevation.small),
                     onClick = { },
-                    backgroundColor = AppTheme.colors.primary,
+                    backgroundColor = MaterialTheme.colorScheme.primary,
                 ) {
                     Icon(
                         imageVector = HomeRoot.fabDestination.iconSelected,
                         contentDescription = null,
-                        tint = AppTheme.colors.onPrimary,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
             }
         },
         isFloatingActionButtonDocked = true,
-        backgroundColor = AppTheme.colors.background,
+        backgroundColor = MaterialTheme.colorScheme.background,
     ) { innerPadding ->
         HomeNavigation(
             navController = navController,
@@ -69,15 +70,15 @@ private fun HomeBottomBar(
     currentRoute: NavDestination?,
 ) {
     BottomAppBar(
-        backgroundColor = AppTheme.colors.surface,
+        backgroundColor = MaterialTheme.colorScheme.surface,
         cutoutShape = CircleShape,
         contentPadding = PaddingValues(0.dp),
     ) {
         AppBottomBar(
             bottomBarItems = HomeRoot.bottomBarDestinations,
-            backgroundColor = AppTheme.colors.surface,
-            selectedContentColor = AppTheme.colors.primary,
-            unselectedContentColor = AppTheme.colors.placeholder,
+            backgroundColor = MaterialTheme.colorScheme.surface,
+            selectedContentColor = MaterialTheme.colorScheme.primary,
+            unselectedContentColor = MaterialTheme.colorScheme.placeholder,
             itemIsSelected = { it.route == currentRoute?.route },
             onItemSelected = {
                 navController.navigate(it.route)

@@ -16,7 +16,7 @@ import com.airbnb.lottie.compose.rememberLottieDynamicProperty
 import com.benoitmanhes.designsystem.R
 
 @Composable
-fun LoadingDotAnimation(
+internal fun LoadingDotAnimation(
     color: Color,
     modifier: Modifier = Modifier,
 ) {

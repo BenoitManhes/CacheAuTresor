@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @Composable
-fun TextView(
+fun CTTextView(
     text: TextSpec,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,

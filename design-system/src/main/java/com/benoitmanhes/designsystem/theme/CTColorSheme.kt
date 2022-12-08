@@ -2,6 +2,7 @@ package com.benoitmanhes.designsystem.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import com.benoitmanhes.designsystem.res.Colors
 
 @Immutable
 object DayColorScheme : CTColorScheme {
@@ -16,6 +17,7 @@ object DayColorScheme : CTColorScheme {
     override val placeholder: Color = Colors.TransparentBlack35
     override val disable: Color = Colors.TransparentBlack10
     override val onDisable: Color = Colors.White
+    override val error: Color = Colors.BurntUmber
 }
 
 @Immutable
@@ -31,6 +33,7 @@ object NightColorScheme : CTColorScheme {
     override val placeholder: Color = Colors.TransparentWhite35
     override val disable: Color = Colors.TransparentWhite10
     override val onDisable: Color = Colors.Neutral90
+    override val error: Color = Colors.BurntUmber
 }
 
 @Immutable
@@ -46,4 +49,5 @@ interface CTColorScheme {
     val placeholder: Color
     val disable: Color
     val onDisable: Color
+    val error: Color
 }

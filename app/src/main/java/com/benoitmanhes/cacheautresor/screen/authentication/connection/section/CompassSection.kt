@@ -9,6 +9,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -24,7 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.ui.theme.AppTheme
+import com.benoitmanhes.designsystem.theme.colorScheme
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -79,7 +80,7 @@ fun CompassSection(
             .rotate(angle),
         painter = painterResource(id = R.drawable.logo_monochrome),
         contentDescription = null,
-        colorFilter = ColorFilter.tint(AppTheme.colors.onBackground),
+        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
     )
 }
 
