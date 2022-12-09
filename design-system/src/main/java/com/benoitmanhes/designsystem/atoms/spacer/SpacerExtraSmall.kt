@@ -7,6 +7,6 @@ import androidx.compose.ui.Modifier
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
-fun SpacerTiny() {
+fun SpacerExtraSmall() {
     Spacer(modifier = Modifier.size(CTTheme.spacing.extraSmall))
 }

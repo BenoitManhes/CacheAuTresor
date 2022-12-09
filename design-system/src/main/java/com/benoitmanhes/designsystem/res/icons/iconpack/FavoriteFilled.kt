@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack
+package com.benoitmanhes.designsystem.res.icons.iconpack
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
@@ -9,9 +9,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
-import com.benoitmanhes.cacheautresor.ui.res.icons.AppIconPack
+import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val AppIconPack.IconFavoriteFilled: ImageVector
+public val CTIconPack.FavoriteFilled: ImageVector
     get() {
         if (_iconFavoriteFilled != null) {
             return _iconFavoriteFilled!!

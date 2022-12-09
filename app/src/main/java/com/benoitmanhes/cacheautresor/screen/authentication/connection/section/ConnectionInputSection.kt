@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -32,7 +31,7 @@ import com.benoitmanhes.designsystem.molecule.textfield.CTDoubleTextField
 import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
 import com.benoitmanhes.designsystem.molecule.textfield.InputType
 import com.benoitmanhes.designsystem.molecule.textfield.TextFieldType
-import com.benoitmanhes.designsystem.theme.colorScheme
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -117,7 +116,7 @@ internal fun LoginInputSection(
                     value = uiState.valueRegisterCode,
                     onValueChange = { viewModel.updateRegisterCode(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = CTTheme.color.secondary,
                     labelText = TextSpec.Resources(R.string.loginScreen_register_codeText_label),
                     errorText = TextSpec.RawString(uiState.errorRegister?.localizedDescription()),
                 )
@@ -133,7 +132,7 @@ internal fun LoginInputSection(
                         viewModel.register(onAccountTokenValid)
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = CTTheme.color.secondary,
                     status = uiState.registerButtonStatus,
                 )
             } else {

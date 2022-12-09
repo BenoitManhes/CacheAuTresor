@@ -7,5 +7,5 @@ object CTShape {
     val small: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.small)
     val medium: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.medium)
     val large: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.large)
-    val round: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.percentRounded)
+    val circle: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.percentRounded)
 }

@@ -7,17 +7,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.CompassSection
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.LoginInputSection
-import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.spacing
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -37,7 +36,7 @@ fun ConnectionScreen(
             contentAlignment = Alignment.Center,
         ) {
             CompassSection(
-                modifier = Modifier.size(Dimens.Size.loginImageSize),
+                modifier = Modifier.size(LoginImageSize),
             )
         }
         Box(
@@ -50,11 +49,13 @@ fun ConnectionScreen(
                 onAccountTokenValid = navigateToAccountCreation,
                 showErrorSnackBar = showErrorSnackBar,
                 modifier = Modifier
-                    .padding(horizontal = MaterialTheme.spacing.immense),
+                    .padding(horizontal = CTTheme.spacing.immense),
             )
         }
     }
 }
+
+private val LoginImageSize: Dp = 128.dp
 
 @Preview
 @Composable

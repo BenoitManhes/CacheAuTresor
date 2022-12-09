@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-internal val CTIconPack.EyeClose: ImageVector
+val CTIconPack.EyeClose: ImageVector
     get() {
         if (_iconSmallEyeClose != null) {
             return _iconSmallEyeClose!!

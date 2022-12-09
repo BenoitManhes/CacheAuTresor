@@ -16,4 +16,5 @@ object CTPadding {
         top = Dimens.Padding.topTextFieldLabel,
         bottom = Dimens.Padding.bottomTextFieldDefault,
     )
+    val zero: PaddingValues = PaddingValues(Dimens.Padding.none)
 }

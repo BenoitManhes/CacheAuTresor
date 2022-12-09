@@ -13,7 +13,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.Composable
@@ -29,13 +28,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.designsystem.atoms.CTTextView
 import com.benoitmanhes.designsystem.atoms.LoadingDotAnimation
-import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.theme.colorScheme
-import com.benoitmanhes.designsystem.theme.shape
-import com.benoitmanhes.designsystem.theme.spacing
-import com.benoitmanhes.designsystem.theme.stroke
-import com.benoitmanhes.designsystem.theme.typo
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,7 +41,7 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     type: PrimaryButtonType = PrimaryButtonType.COLORED,
     status: ButtonStatus = ButtonStatus.ENABLE,
-    color: Color = MaterialTheme.colorScheme.primary,
+    color: Color = CTTheme.color.primary,
     options: Set<PrimaryButtonOption> = emptySet(),
 ) {
     ButtonFromType(
@@ -70,7 +64,7 @@ fun PrimaryButton(
                 text = text,
                 style = LocalTextStyle.current,
                 color = buttonColors.contentColor(enabled = status != ButtonStatus.DISABLE).value,
-                modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium),
+                modifier = Modifier.padding(horizontal = CTTheme.spacing.medium),
                 maxLine = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -96,7 +90,7 @@ private fun ButtonFromType(
     when (type) {
         PrimaryButtonType.COLORED -> {
             Button(
-                shape = MaterialTheme.shape.medium,
+                shape = CTTheme.shape.medium,
                 colors = buttonColorsColored(color),
                 enabled = status != ButtonStatus.DISABLE,
                 elevation = ButtonDefaults.elevation(
@@ -108,28 +102,28 @@ private fun ButtonFromType(
                 modifier = modifier,
                 onClick = safeOnClick,
             ) {
-                ProvideTextStyle(value = MaterialTheme.typo.bodyBold) {
+                ProvideTextStyle(value = CTTheme.typography.bodyBold) {
                     content(buttonColorsColored(color))
                 }
             }
         }
         PrimaryButtonType.OUTLINED -> {
             OutlinedButton(
-                shape = MaterialTheme.shape.medium,
+                shape = CTTheme.shape.medium,
                 colors = buttonColorsOutlined,
                 enabled = status != ButtonStatus.DISABLE,
                 modifier = modifier,
                 onClick = safeOnClick,
                 border = BorderStroke(
-                    width = MaterialTheme.stroke.thin,
+                    width = CTTheme.stroke.thin,
                     color = if (status == ButtonStatus.DISABLE) {
-                        MaterialTheme.colorScheme.disable
+                        CTTheme.color.disable
                     } else {
-                        MaterialTheme.colorScheme.onSurface
+                        CTTheme.color.onSurface
                     },
                 )
             ) {
-                ProvideTextStyle(value = MaterialTheme.typo.bodyBold) {
+                ProvideTextStyle(value = CTTheme.typography.bodyBold) {
                     content(buttonColorsOutlined)
                 }
             }
@@ -140,15 +134,15 @@ private fun ButtonFromType(
 @Composable
 private fun buttonColorsColored(color: Color) = ButtonDefaults.buttonColors(
     backgroundColor = color,
-    disabledBackgroundColor = MaterialTheme.colorScheme.disable,
-    disabledContentColor = MaterialTheme.colorScheme.onDisable,
+    disabledBackgroundColor = CTTheme.color.disable,
+    disabledContentColor = CTTheme.color.onDisable,
 )
 
 private val buttonColorsOutlined
     @Composable get() = ButtonDefaults.outlinedButtonColors(
         backgroundColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.onSurface,
-        disabledContentColor = MaterialTheme.colorScheme.disable,
+        contentColor = CTTheme.color.onSurface,
+        disabledContentColor = CTTheme.color.disable,
     )
 
 @Preview
@@ -163,7 +157,7 @@ private fun PreviewCTButton() {
             contentAlignment = Alignment.Center,
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)
+                verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium)
             ) {
                 PrimaryButton(text = TextSpec.RawString("Button"), onClick = { })
                 PrimaryButton(
@@ -194,7 +188,7 @@ private fun PreviewCTButton() {
                 PrimaryButton(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(MaterialTheme.spacing.huge),
+                        .padding(CTTheme.spacing.huge),
                     text = TextSpec.RawString("Primary button"),
                     status = status,
                     onClick = {

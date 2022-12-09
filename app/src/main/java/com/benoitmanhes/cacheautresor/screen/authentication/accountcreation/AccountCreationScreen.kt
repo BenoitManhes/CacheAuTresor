@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,12 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.topbar.DefaultTopBar
-import com.benoitmanhes.cacheautresor.ui.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.colorScheme
-import com.benoitmanhes.designsystem.theme.spacing
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,15 +34,15 @@ fun AccountCreationScreen(
                 onNavBack = onNavigateBack,
             )
         },
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = CTTheme.color.background,
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
                 .padding(
-                    horizontal = MaterialTheme.spacing.immense,
-                    vertical = MaterialTheme.spacing.large,
+                    horizontal = CTTheme.spacing.immense,
+                    vertical = CTTheme.spacing.large,
                 ),
         ) {
             Box(
@@ -54,7 +52,7 @@ fun AccountCreationScreen(
                 contentAlignment = Alignment.BottomCenter,
             ) {
                 Image(
-                    modifier = Modifier.size(Dimens.Size.accountCreationImageSize),
+                    modifier = Modifier.size(MainImageSize),
                     painter = painterResource(id = R.drawable.explorer),
                     contentDescription = null,
                 )
@@ -68,6 +66,8 @@ fun AccountCreationScreen(
         }
     }
 }
+
+private val MainImageSize: Dp = 180.dp
 
 @Preview
 @Composable

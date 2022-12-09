@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,12 +38,8 @@ import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.CTSelector
 import com.benoitmanhes.designsystem.atoms.CTTextView
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerTiny
-import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.theme.colorScheme
-import com.benoitmanhes.designsystem.theme.shape
-import com.benoitmanhes.designsystem.theme.spacing
-import com.benoitmanhes.designsystem.theme.stroke
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -60,8 +54,8 @@ fun CTDoubleTextField(
     labelBottom: TextSpec? = null,
     errorText: TextSpec? = null,
     isError: Boolean = !errorText?.value()?.text.isNullOrEmpty(),
-    color: Color = MaterialTheme.colorScheme.primary,
-    errorColor: Color = MaterialTheme.colorScheme.error,
+    color: Color = CTTheme.color.primary,
+    errorColor: Color = CTTheme.color.error,
     textFieldTypeTop: TextFieldType = TextFieldType.STANDARD,
     textFieldTypeBottom: TextFieldType = TextFieldType.STANDARD,
     imeAction: ImeAction = ImeAction.Done,
@@ -72,14 +66,14 @@ fun CTDoubleTextField(
     visualTransformationTop: VisualTransformation = VisualTransformation.None,
     visualTransformationBottom: VisualTransformation = VisualTransformation.None,
 ) {
-    val shape = MaterialTheme.shape.medium
+    val shape = CTTheme.shape.medium
     val textFieldHeight = Dimens.Size.textFieldMinHeight
     var state by remember { mutableStateOf(State.None) }
 
     val borderColor: Color by animateColorAsState(
         targetValue = when {
             isError -> errorColor
-            else -> MaterialTheme.colorScheme.placeholder
+            else -> CTTheme.color.placeholder
         }
     )
     val contentColor by animateColorAsState(targetValue = if (isError) errorColor else color)
@@ -91,7 +85,7 @@ fun CTDoubleTextField(
                     modifier = Modifier
                         .layoutId(BackgroundId),
                     shape = shape,
-                    border = BorderStroke(MaterialTheme.stroke.thin, borderColor),
+                    border = BorderStroke(CTTheme.stroke.thin, borderColor),
                 ) { }
                 if (state != State.None) {
                     val offset by animateDpAsState(
@@ -127,7 +121,7 @@ fun CTDoubleTextField(
                         inputType = inputTypeTop,
                         imeAction = ImeAction.Next,
                         colors = CTTextFieldColors(
-                            textColor = MaterialTheme.colorScheme.onSurface,
+                            textColor = CTTheme.color.onSurface,
                             color = contentColor,
                         ),
                         textFieldType = textFieldTypeTop,
@@ -156,7 +150,7 @@ fun CTDoubleTextField(
                         inputType = inputTypeBottom,
                         imeAction = imeAction,
                         colors = CTTextFieldColors(
-                            textColor = MaterialTheme.colorScheme.onSurface,
+                            textColor = CTTheme.color.onSurface,
                             color = contentColor,
                         ),
                         textFieldType = textFieldTypeBottom,
@@ -170,9 +164,9 @@ fun CTDoubleTextField(
         AnimatedVisibility(visible = isError && errorText != null) {
             CTTextView(
                 text = errorText!!,
-                modifier = Modifier.padding(start = MaterialTheme.spacing.medium),
+                modifier = Modifier.padding(start = CTTheme.spacing.medium),
                 color = errorColor,
-                style = MaterialTheme.typography.caption,
+                style = CTTheme.typography.caption,
             )
         }
     }
@@ -208,7 +202,7 @@ private fun PreviewDoubleTextField() {
             modifier = Modifier
                 .imePadding()
                 .fillMaxSize()
-                .padding(MaterialTheme.spacing.extraLarge),
+                .padding(CTTheme.spacing.extraLarge),
             contentAlignment = Alignment.Center,
         ) {
             CTDoubleTextField(

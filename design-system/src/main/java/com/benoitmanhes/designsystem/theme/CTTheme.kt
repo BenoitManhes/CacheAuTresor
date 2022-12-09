@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.benoitmanhes.designsystem.res.Dimens
+import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
 private val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DayColorScheme }
 private val LocalTypography: ProvidableCompositionLocal<CTTypography> = staticCompositionLocalOf { CTTypography }
@@ -21,6 +22,34 @@ private val LocalElevation: ProvidableCompositionLocal<Dimens.Elevation> = stati
 private val LocalStroke: ProvidableCompositionLocal<Dimens.Stroke> = staticCompositionLocalOf { Dimens.Stroke }
 private val LocalPadding: ProvidableCompositionLocal<CTPadding> = staticCompositionLocalOf { CTPadding }
 private val LocalSize: ProvidableCompositionLocal<Dimens.Size> = staticCompositionLocalOf { Dimens.Size }
+private val LocalIcon: ProvidableCompositionLocal<CTIconPack> = staticCompositionLocalOf { CTIconPack }
+
+object CTTheme {
+
+    val typography: CTTypography
+        @Composable get() = LocalTypography.current
+
+    val spacing: Dimens.Spacing
+        @Composable get() = LocalSpacing.current
+
+    val shape: CTShape
+        @Composable get() = LocalShape.current
+
+    val elevation: Dimens.Elevation
+        @Composable get() = LocalElevation.current
+
+    val color: CTColorScheme
+        @Composable get() = LocalColor.current
+
+    val stroke: Dimens.Stroke
+        @Composable get() = LocalStroke.current
+
+    val padding: CTPadding
+        @Composable get() = LocalPadding.current
+
+    val icon: CTIconPack
+        @Composable get() = LocalIcon.current
+}
 
 @Composable
 fun CTTheme(
@@ -47,6 +76,7 @@ fun CTTheme(
         LocalStroke provides Dimens.Stroke,
         LocalPadding provides CTPadding,
         LocalSize provides Dimens.Size,
+        LocalIcon provides CTIconPack,
     ) {
         androidx.compose.material3.MaterialTheme(
             colorScheme = materialColorScheme,
@@ -126,24 +156,3 @@ private fun mappedMaterial2Typography(localTypography: CTTypography) = Typograph
     subtitle1 = localTypography.body,
     caption = localTypography.caption,
 )
-
-val MaterialTheme.typo: CTTypography
-    @Composable get() = LocalTypography.current
-
-val MaterialTheme.spacing: Dimens.Spacing
-    @Composable get() = LocalSpacing.current
-
-val MaterialTheme.shape: CTShape
-    @Composable get() = LocalShape.current
-
-val MaterialTheme.elevation: Dimens.Elevation
-    @Composable get() = LocalElevation.current
-
-val MaterialTheme.colorScheme: CTColorScheme
-    @Composable get() = LocalColor.current
-
-val MaterialTheme.stroke: Dimens.Stroke
-    @Composable get() = LocalStroke.current
-
-val MaterialTheme.padding: CTPadding
-    @Composable get() = LocalPadding.current

@@ -1,7 +1,6 @@
 package com.benoitmanhes.designsystem.molecule.textfield
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -11,10 +10,8 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TextFieldDefaults.indicatorLine
@@ -42,8 +39,7 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.EyeClose
 import com.benoitmanhes.designsystem.res.icons.iconpack.EyeOpen
-import com.benoitmanhes.designsystem.theme.colorScheme
-import com.benoitmanhes.designsystem.theme.padding
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ComposableContent
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
@@ -75,9 +71,10 @@ internal fun CTBasicTextField(
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape =
-        MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
+        CTTheme.shape.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
     colors: TextFieldColors = TextFieldDefaults.textFieldColors(),
-    contentPadding: PaddingValues = if (labelText?.value() == null) MaterialTheme.padding.textFieldDefault else MaterialTheme.padding.textFieldLabel,
+    contentPadding: PaddingValues =
+        if (labelText?.value() == null) CTTheme.padding.textFieldDefault else CTTheme.padding.textFieldLabel,
 ) {
     // If color is not provided via the text style, use content color as a default
     val textColor = textStyle.color.takeOrElse {
@@ -152,7 +149,7 @@ internal fun CTBasicTextField(
                                 imageVector = if (showPassword) CTIconPack.EyeClose else CTIconPack.EyeOpen,
                                 contentDescription = null,
                             ),
-                            color = MaterialTheme.colorScheme.onSurface,
+                            color = CTTheme.color.onSurface,
                             onClick = { showPassword = !showPassword },
                         )
                     }

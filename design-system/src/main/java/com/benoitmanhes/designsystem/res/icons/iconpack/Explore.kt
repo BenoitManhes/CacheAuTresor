@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack
+package com.benoitmanhes.designsystem.res.icons.iconpack
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
@@ -9,16 +9,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
-import com.benoitmanhes.cacheautresor.ui.res.icons.AppIconPack
+import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val AppIconPack.IconExploreFilled: ImageVector
+val CTIconPack.Explore: ImageVector
     get() {
-        if (_iconExploreFilled != null) {
-            return _iconExploreFilled!!
+        if (_iconExplore != null) {
+            return _iconExplore!!
         }
-        _iconExploreFilled = Builder(
-            name = "IconExploreFilled", defaultWidth = 48.0.dp,
-            defaultHeight = 48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f
+        _iconExplore = Builder(
+            name = "IconExplore", defaultWidth = 48.0.dp,
+            defaultHeight =
+            48.0.dp,
+            viewportWidth = 48.0f, viewportHeight = 48.0f
         ).apply {
             path(
                 fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
@@ -68,10 +70,20 @@ public val AppIconPack.IconExploreFilled: ImageVector
                 curveTo(36.3083f, 39.9417f, 34.1833f, 41.375f, 31.75f, 42.425f)
                 curveTo(29.3167f, 43.475f, 26.7333f, 44.0f, 24.0f, 44.0f)
                 close()
+                moveTo(24.0f, 41.0f)
+                curveTo(28.6667f, 41.0f, 32.6667f, 39.3333f, 36.0f, 36.0f)
+                curveTo(39.3333f, 32.6667f, 41.0f, 28.6667f, 41.0f, 24.0f)
+                curveTo(41.0f, 19.3333f, 39.3333f, 15.3333f, 36.0f, 12.0f)
+                curveTo(32.6667f, 8.6667f, 28.6667f, 7.0f, 24.0f, 7.0f)
+                curveTo(19.3333f, 7.0f, 15.3333f, 8.6667f, 12.0f, 12.0f)
+                curveTo(8.6667f, 15.3333f, 7.0f, 19.3333f, 7.0f, 24.0f)
+                curveTo(7.0f, 28.6667f, 8.6667f, 32.6667f, 12.0f, 36.0f)
+                curveTo(15.3333f, 39.3333f, 19.3333f, 41.0f, 24.0f, 41.0f)
+                close()
             }
         }
             .build()
-        return _iconExploreFilled!!
+        return _iconExplore!!
     }
 
-private var _iconExploreFilled: ImageVector? = null
+private var _iconExplore: ImageVector? = null

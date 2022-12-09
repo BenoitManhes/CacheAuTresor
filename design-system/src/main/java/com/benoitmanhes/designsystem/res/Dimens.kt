@@ -39,6 +39,7 @@ object Dimens {
     }
 
     object Padding {
+        val none: Dp = 0.dp
         val horizontalTextFieldDefault: Dp = 12.dp
         val topTextFieldDefault: Dp = 8.dp
         val topTextFieldLabel: Dp = 16.dp
@@ -52,6 +53,7 @@ object Dimens {
     }
 
     object Size {
+        val bottomBarItemSize: Dp = 28.dp
 
         val lottieAnimationButton: Dp = 24.dp
         val primaryButtonMinHeight: Dp = 48.dp

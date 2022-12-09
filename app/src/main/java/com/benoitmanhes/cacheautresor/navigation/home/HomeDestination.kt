@@ -1,58 +1,58 @@
 package com.benoitmanhes.cacheautresor.navigation.home
 
-import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Newspaper
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomBarItem
 import com.benoitmanhes.cacheautresor.navigation.AppDestination
-import com.benoitmanhes.cacheautresor.ui.res.icons.AppIconPack
-import com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack.IconCompass
-import com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack.IconExplore
-import com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack.IconExploreFilled
-import com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack.IconProfile
-import com.benoitmanhes.cacheautresor.ui.res.icons.appiconpack.IconProfileFilled
+import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomNavBarItemEntry
+import com.benoitmanhes.designsystem.res.icons.CTIconPack
+import com.benoitmanhes.designsystem.res.icons.iconpack.Add
+import com.benoitmanhes.designsystem.res.icons.iconpack.Compass
+import com.benoitmanhes.designsystem.res.icons.iconpack.Explore
+import com.benoitmanhes.designsystem.res.icons.iconpack.ExploreFilled
+import com.benoitmanhes.designsystem.res.icons.iconpack.Newspaper
+import com.benoitmanhes.designsystem.res.icons.iconpack.Profile
+import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
+import com.benoitmanhes.designsystem.utils.IconSpec
+import com.benoitmanhes.designsystem.utils.TextSpec
 
 sealed class HomeDestination(
     override val route: String,
-    @StringRes override val labelRes: Int,
-    override val iconSelected: ImageVector,
-    override val iconUnselected: ImageVector,
-) : BottomBarItem, AppDestination {
+    override val selectedIcon: IconSpec,
+    override val unselectedIcon: IconSpec,
+    override val labelText: TextSpec,
+) : BottomNavBarItemEntry, AppDestination {
+
     object News : HomeDestination(
         route = "news",
-        labelRes = R.string.bottomBar_news,
-        iconSelected = Icons.Rounded.Newspaper,
-        iconUnselected = Icons.Rounded.Newspaper,
+        labelText = TextSpec.Resources(R.string.bottomBar_news),
+        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Newspaper, contentDescription = null),
+        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Newspaper, contentDescription = null),
     )
 
     object Explore : HomeDestination(
         route = "explore",
-        labelRes = R.string.bottomBar_explore,
-        iconSelected = AppIconPack.IconExploreFilled,
-        iconUnselected = AppIconPack.IconExplore,
+        labelText = TextSpec.Resources(R.string.bottomBar_explore),
+        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.ExploreFilled, contentDescription = null),
+        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Explore, contentDescription = null),
     )
 
     object Instruments : HomeDestination(
         route = "instruments",
-        labelRes = R.string.bottomBar_instruments,
-        iconSelected = AppIconPack.IconCompass,
-        iconUnselected = AppIconPack.IconCompass,
+        labelText = TextSpec.Resources(R.string.bottomBar_instruments),
+        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Compass, contentDescription = null),
+        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Compass, contentDescription = null),
     )
 
     object Profile : HomeDestination(
         route = "profile",
-        labelRes = R.string.bottomBar_profile,
-        iconSelected = AppIconPack.IconProfileFilled,
-        iconUnselected = AppIconPack.IconProfile,
+        labelText = TextSpec.Resources(R.string.bottomBar_profile),
+        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.ProfileFilled, contentDescription = null),
+        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Profile, contentDescription = null),
     )
 
     object Create : HomeDestination(
         route = "create",
-        labelRes = R.string.bottomBar_create,
-        iconSelected = Icons.Rounded.Add,
-        iconUnselected = Icons.Rounded.Add,
+        labelText = TextSpec.Resources(R.string.bottomBar_create),
+        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Add, contentDescription = null),
+        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Add, contentDescription = null),
     )
 }
