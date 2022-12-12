@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun AuthNavigation(
+fun UnauthenticatedNavigation(
     navController: NavHostController,
     showErrorSnackBar: (errorMsg: String) -> Unit,
     onNavigateBack: () -> Unit = remember(navController) { { navController.popBackStack() } },

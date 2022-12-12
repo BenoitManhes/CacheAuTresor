@@ -1,11 +1,11 @@
-package com.benoitmanhes.cacheautresor.screen.root
+package com.benoitmanhes.cacheautresor.navigation.root
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.benoitmanhes.cacheautresor.screen.root.holder.AuthenticatedState
+import com.benoitmanhes.cacheautresor.navigation.root.holder.AuthenticatedState
 import com.benoitmanhes.domain.usecase.authentication.IsAuthenticatedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

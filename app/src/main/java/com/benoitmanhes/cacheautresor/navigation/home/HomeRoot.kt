@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.screen.home
+package com.benoitmanhes.cacheautresor.navigation.home
 
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.FabPosition
@@ -18,7 +18,9 @@ import com.benoitmanhes.designsystem.molecule.bottomnavbar.CTBottomNavBar
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
-fun HomeRoot() {
+fun HomeRoot(
+    showErrorSnackBar: (errorMsg: String) -> Unit,
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination

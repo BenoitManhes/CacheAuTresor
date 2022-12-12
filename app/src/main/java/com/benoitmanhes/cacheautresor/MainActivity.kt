@@ -5,7 +5,7 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import com.benoitmanhes.cacheautresor.screen.root.AppContent
+import com.benoitmanhes.cacheautresor.navigation.root.AppContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

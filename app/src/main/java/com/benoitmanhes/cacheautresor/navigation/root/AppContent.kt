@@ -1,12 +1,12 @@
-package com.benoitmanhes.cacheautresor.screen.root
+package com.benoitmanhes.cacheautresor.navigation.root
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.benoitmanhes.cacheautresor.screen.authentication.UnAuthenticatedRoot
-import com.benoitmanhes.cacheautresor.screen.home.HomeRoot
-import com.benoitmanhes.cacheautresor.screen.root.holder.AuthenticatedState
+import com.benoitmanhes.cacheautresor.navigation.authenticated.AuthenticatedRoot
+import com.benoitmanhes.cacheautresor.navigation.root.holder.AuthenticatedState
+import com.benoitmanhes.cacheautresor.navigation.unauthenticated.UnAuthenticatedRoot
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -29,7 +29,7 @@ fun AppContent(
         }
 
         when (viewModel.authenticatedState) {
-            AuthenticatedState.Authenticated -> HomeRoot()
+            AuthenticatedState.Authenticated -> AuthenticatedRoot()
             AuthenticatedState.UnAuthenticated -> UnAuthenticatedRoot()
             AuthenticatedState.Unknown -> {}
         }

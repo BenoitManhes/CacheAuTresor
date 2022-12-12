@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.screen.root.holder
+package com.benoitmanhes.cacheautresor.navigation.root.holder
 
 enum class AuthenticatedState {
     Authenticated,
