@@ -1,5 +1,6 @@
 package com.benoitmanhes.cacheautresor.screen.authentication.connection
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ fun ConnectionScreen(
 ) {
     Column(
         modifier = Modifier
+            .background(CTTheme.color.background)
             .imePadding()
             .fillMaxSize(),
     ) {

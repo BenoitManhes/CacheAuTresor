@@ -1,14 +1,14 @@
 package com.benoitmanhes.cacheautresor.screen.authentication.accountcreation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +21,6 @@ import com.benoitmanhes.cacheautresor.common.composable.topbar.DefaultTopBar
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountCreationScreen(
     onNavigateBack: () -> Unit,
@@ -34,12 +33,13 @@ fun AccountCreationScreen(
                 onNavBack = onNavigateBack,
             )
         },
-        containerColor = CTTheme.color.background,
+        backgroundColor = CTTheme.color.background,
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .background(CTTheme.color.background)
                 .padding(
                     horizontal = CTTheme.spacing.immense,
                     vertical = CTTheme.spacing.large,
