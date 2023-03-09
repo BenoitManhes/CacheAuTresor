@@ -54,12 +54,23 @@ object Dimens {
 
     object Size {
         val bottomBarItemSize: Dp = 28.dp
+        val fabButtonSize: Dp = 48.dp
+        val fabIconButtonSize: Dp = 42.dp
+
+        val selectorMinWidth: Dp = 36.dp
+        val selectorHeight: Dp = 36.dp
 
         val lottieAnimationButton: Dp = 24.dp
         val primaryButtonMinHeight: Dp = 48.dp
 
+        val cacheCardHeight: Dp = 96.dp
+
+        val smallIconSize: Dp = 16.dp
         val mediumIconSize: Dp = 24.dp
-        val largeIconSize: Dp = 36.dp
+        val largeIconSize: Dp = 32.dp
+        val hugeIconSize: Dp = 48.dp
+
+        val hugeIconSlot: Dp = 64.dp
 
         val textFieldMinHeight: Dp = 48.dp
         val textFieldMinWidth: Dp = 180.dp

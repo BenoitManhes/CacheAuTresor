@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import com.benoitmanhes.designsystem.atoms.CTTextView
-import com.benoitmanhes.designsystem.atoms.spacer.SpacerTiny
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerExtraSmall
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
@@ -89,7 +89,7 @@ fun CTOutlinedTextField(
             )
         }
         if (errorVisible) {
-            SpacerTiny()
+            SpacerExtraSmall()
         }
         AnimatedVisibility(visible = errorVisible) {
             CTTextView(

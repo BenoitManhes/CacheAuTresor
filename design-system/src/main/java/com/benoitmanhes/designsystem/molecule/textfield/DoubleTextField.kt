@@ -37,7 +37,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.CTSelector
 import com.benoitmanhes.designsystem.atoms.CTTextView
-import com.benoitmanhes.designsystem.atoms.spacer.SpacerTiny
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerExtraSmall
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
@@ -160,7 +160,7 @@ fun CTDoubleTextField(
                 }
             }
         }
-        SpacerTiny()
+        SpacerExtraSmall()
         AnimatedVisibility(visible = isError && errorText != null) {
             CTTextView(
                 text = errorText!!,

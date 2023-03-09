@@ -1,4 +1,4 @@
-package com.benoitmanhes.domain
+package com.benoitmanhes.domain.utils
 
 import java.security.SecureRandom
 import java.util.Random

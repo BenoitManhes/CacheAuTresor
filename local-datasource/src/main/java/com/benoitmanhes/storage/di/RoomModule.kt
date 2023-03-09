@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.benoitmanhes.storage.dao.ExplorerDao
 import com.benoitmanhes.storage.database.MainDatabase
+import com.benoitmanhes.storage.utils.RoomConverters
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,13 +19,14 @@ object RoomModule {
     @Singleton
     fun provideMainDatabase(
         @ApplicationContext appContext: Context,
-    ): MainDatabase {
-        return Room.databaseBuilder(
+    ): MainDatabase = Room
+        .databaseBuilder(
             appContext,
             MainDatabase::class.java,
             "bc943e798-a4f0-402e-9f5b-kjfqm86",
-        ).build()
-    }
+        )
+        .addTypeConverter(RoomConverters)
+        .build()
 }
 
 @Module

@@ -35,14 +35,14 @@ class ExplorerRemoteDataSourceImpl(
     override fun getExplorerFlow(explorerId: String): Flow<Explorer> =
         firestore.collection(EXPLORER_COLLECTION)
             .document(explorerId)
-            .listenToFlow<Explorer, FSExplorer>(documentId = explorerId)
+            .listenToFlow<Explorer, FSExplorer>()
 
     override suspend fun getExplorer(explorerId: String): Explorer =
         firestore.collection(EXPLORER_COLLECTION)
             .document(explorerId)
             .get()
             .withCoroutine()
-            .convertToAppModel<Explorer, FSExplorer>(explorerId)
+            .convertToAppModel<Explorer, FSExplorer>()
 
     override suspend fun deleteExplorer(explorerId: String) {
         firestore.collection(EXPLORER_COLLECTION)

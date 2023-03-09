@@ -2,7 +2,7 @@ package com.benoitmanhes.domain.usecase.register
 
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
-import com.benoitmanhes.domain.Util
+import com.benoitmanhes.domain.utils.Util
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer

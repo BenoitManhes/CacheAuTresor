@@ -11,9 +11,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 inline fun <M : Model, reified F : FirestoreModel<M>> DocumentReference.listenToFlow(
-    documentId: String,
     noinline onFailure: (Exception) -> Throwable = { it.toCTError() },
-    noinline onSuccess: ProducerScope<M>.(DocumentSnapshot) -> Unit = { snapshot -> snapshot.convertToAppModel<M, F>(documentId) },
+    noinline onSuccess: ProducerScope<M>.(DocumentSnapshot) -> Unit = { snapshot -> snapshot.convertToAppModel<M, F>() },
 ): Flow<M> = callbackFlow {
     this@listenToFlow.addSnapshotListener { snapShot, e ->
         when {
@@ -24,16 +23,14 @@ inline fun <M : Model, reified F : FirestoreModel<M>> DocumentReference.listenTo
                 this.onSuccess(snapShot)
             }
             else -> {
-                throw CTRemoteError.ObjectNotFound(message = "${F::class.simpleName} not found for id: $documentId")
+                throw CTRemoteError.ObjectNotFound(message = "${F::class.simpleName} not found")
             }
         }
     }
 }
 
-inline fun <M : Model, reified F : FirestoreModel<M>> DocumentSnapshot.convertToAppModel(
-    documentId: String,
-): M {
+inline fun <M : Model, reified F : FirestoreModel<M>> DocumentSnapshot.convertToAppModel(): M {
     val fsModel = this.toObject<F>()
-        ?: throw CTRemoteError.ParsingFailed(message = "Failed to parse snapshot to ${F::class.simpleName}, with id $documentId")
-    return fsModel.toAppModel(documentId)
+        ?: throw CTRemoteError.ParsingFailed(message = "Failed to parse snapshot to ${F::class.simpleName}, with id ${this.id}")
+    return fsModel.toAppModel(this.id)
 }

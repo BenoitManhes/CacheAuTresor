@@ -6,7 +6,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @IgnoreExtraProperties
 data class FSExplorer(
     val name: String? = null,
-) : FirestoreModel<Explorer> {
+) : FirestoreModel<Explorer>() {
 
     constructor(explorer: Explorer) : this(
         name = explorer.name,
@@ -14,10 +14,10 @@ data class FSExplorer(
 
     override fun toAppModel(id: String): Explorer = Explorer(
         explorerId = id,
-        name = this.name!!,
+        name = name.requiredField(),
     )
 
-    override fun toHashMap(): HashMap<String, Any> = hashMapOf(
+    fun toHashMap(): HashMap<String, Any> = hashMapOf(
         FSExplorer::name.name to this.name!!,
     )
 }
