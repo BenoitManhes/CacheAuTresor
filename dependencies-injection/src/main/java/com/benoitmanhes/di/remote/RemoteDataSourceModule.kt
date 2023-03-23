@@ -29,4 +29,28 @@ interface RemoteDataSourceModule {
     @Binds
     @ActivityRetainedScoped
     fun bindExploreRemoteDataSource(exploreRemoteDataSourceImpl: ExplorerRemoteDataSourceImpl): ExplorerRemoteDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindCacheClassicalRemoteDataSource(
+        cacheClassicalRemoteDataSourceImpl: CacheClassicalRemoteDataSourceImpl,
+    ): CacheClassicalRemoteDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindCacheCoopRemoteDataSource(
+        cacheCoopRemoteDataSourceImpl: CacheCoopRemoteDataSourceImpl1,
+    ): CacheCoopRemoteDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindCacheMysteryRemoteDataSource(
+        cacheMysteryRemoteDataSourceImpl: CacheMysteryRemoteDataSourceImpl,
+    ): CacheMysteryRemoteDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindCachePisteRemoteDataSource(
+        cachePisteRemoteDataSourceImpl: CachePisteRemoteDataSourceImpl,
+    ): CachePisteRemoteDataSource
 }
