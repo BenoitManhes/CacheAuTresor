@@ -88,14 +88,6 @@ internal fun ExploreMapScreen(
         verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large, Alignment.Bottom),
         horizontalAlignment = Alignment.End,
     ) {
-        CTTextView(
-            text = TextSpec.RawString("map position ${uiState.mapPosition}"),
-            color = CTTheme.color.onPrimary,
-        )
-        CTTextView(
-            text = TextSpec.RawString("current position ${uiState.currentPosition}"),
-            color = CTTheme.color.onPrimary,
-        )
         FabIconButton(
             icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Layer, contentDescription = null),
             onClick = { /*TODO*/ },
