@@ -22,7 +22,11 @@ fun HomeNavigation(navController: NavHostController, scaffoldPadding: PaddingVal
         startDestination = HomeDestination.Explore.route
     ) {
         composable(HomeDestination.News.route) { NewsScreen() }
-        composable(HomeDestination.Explore.route) { ExploreRoute(Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding())) }
+        composable(HomeDestination.Explore.route) {
+            ExploreRoute(
+                Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding())
+            )
+        }
         composable(HomeDestination.Create.route) { CreateScreen() }
         composable(HomeDestination.Instruments.route) { InstrumentScreen() }
         composable(HomeDestination.Profile.route) { ProfileScreen(Modifier.padding(scaffoldPadding)) }

@@ -59,7 +59,6 @@ fun ExploreRoute(
                 updateMapPosition = viewModel::setMapPosition,
             )
         } else {
-
         }
     }
 

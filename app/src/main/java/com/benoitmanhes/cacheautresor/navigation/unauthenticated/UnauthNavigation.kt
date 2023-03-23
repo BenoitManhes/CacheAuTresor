@@ -13,7 +13,6 @@ fun UnauthenticatedNavigation(
     showErrorSnackBar: (errorMsg: String) -> Unit,
     onNavigateBack: () -> Unit = remember(navController) { { navController.popBackStack() } },
 ) {
-
     val navigateToAccountCreation: (accountToken: String) -> Unit = remember {
         { accountToken -> navController.navigate(AccountCreationDestination.getRoute(accountToken)) }
     }

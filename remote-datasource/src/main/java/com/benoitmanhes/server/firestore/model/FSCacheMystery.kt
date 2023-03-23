@@ -11,12 +11,13 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class FSCacheMystery(
+    override val id: String? = null,
     val creatorId: String? = null,
     val title: String? = null,
     val coordinates: GeoPoint? = null,
     val difficulty: Float? = null,
     val ground: Float? = null,
-    val size: CacheSize? = null,
+    val size: String? = null,
     val discovered: Boolean? = null,
     val logCode: String? = null,
     val description: String? = null,
@@ -26,7 +27,7 @@ data class FSCacheMystery(
     val clue: String? = null,
     val tagIds: List<String>? = null,
     val cacheIdsRequired: List<String>? = null,
-) : FirestoreModel<Cache.Mystery>() {
+) : FSCache<Cache.Mystery> {
 
     constructor(cache: Cache.Mystery) : this(
         creatorId = cache.creatorId,
@@ -34,7 +35,7 @@ data class FSCacheMystery(
         coordinates = cache.coordinates.toFSModel(),
         difficulty = cache.difficulty,
         ground = cache.ground,
-        size = cache.size,
+        size = cache.size.value,
         discovered = cache.discovered,
         cacheIdsRequired = cache.cacheIdsRequired,
         clue = cache.clue,
@@ -45,14 +46,14 @@ data class FSCacheMystery(
         createDate = Timestamp(cache.createDate),
     )
 
-    override fun toAppModel(id: String): Cache.Mystery = Cache.Mystery(
-        cacheId = id,
+    override fun toAppModel(): Cache.Mystery = Cache.Mystery(
+        cacheId = id.requiredField(),
         creatorId = creatorId.requiredField(),
         title = title.requiredField(),
         coordinates = coordinates.requiredField().toModel(),
         difficulty = difficulty.requiredField(),
         ground = ground.requiredField(),
-        size = size.requiredField(),
+        size = CacheSize.build(size.requiredField()),
         discovered = discovered.requiredField(),
         cacheIdsRequired = cacheIdsRequired ?: emptyList(),
         createDate = createDate.requiredField().toDate(),

@@ -10,12 +10,13 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class FSCachePiste(
+    override val id: String? = null,
     val creatorId: String? = null,
     val title: String? = null,
     val coordinates: GeoPoint? = null,
     val difficulty: Float? = null,
     val ground: Float? = null,
-    val size: CacheSize? = null,
+    val size: String? = null,
     val discovered: Boolean? = null,
     val cacheIdsRequired: List<String>? = null,
     val createDate: Timestamp? = null,
@@ -24,7 +25,7 @@ data class FSCachePiste(
     val description: String? = null,
     val stepRefs: List<String>? = null,
     val finalCoordinates: GeoPoint? = null,
-) : FirestoreModel<Cache.Piste>() {
+) : FSCache<Cache.Piste> {
 
     constructor(cache: Cache.Piste) : this(
         creatorId = cache.creatorId,
@@ -32,7 +33,7 @@ data class FSCachePiste(
         coordinates = cache.coordinates.toFSModel(),
         difficulty = cache.difficulty,
         ground = cache.ground,
-        size = cache.size,
+        size = cache.size.value,
         discovered = cache.discovered,
         cacheIdsRequired = cache.cacheIdsRequired,
         createDate = Timestamp(cache.createDate),
@@ -43,14 +44,14 @@ data class FSCachePiste(
         finalCoordinates = cache.finalCoordinates.toFSModel(),
     )
 
-    override fun toAppModel(id: String): Cache.Piste = Cache.Piste(
-        cacheId = id,
+    override fun toAppModel(): Cache.Piste = Cache.Piste(
+        cacheId = id.requiredField(),
         creatorId = creatorId.requiredField(),
         title = title.requiredField(),
         coordinates = coordinates.requiredField().toModel(),
         difficulty = difficulty.requiredField(),
         ground = ground.requiredField(),
-        size = size.requiredField(),
+        size = CacheSize.build(size.requiredField()),
         discovered = discovered.requiredField(),
         cacheIdsRequired = cacheIdsRequired ?: emptyList(),
         createDate = createDate.requiredField().toDate(),

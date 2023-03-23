@@ -18,7 +18,6 @@ fun CTTextView(
     maxLine: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
 ) {
-
     text.value()?.let { safeValue ->
         Text(
             text = safeValue,

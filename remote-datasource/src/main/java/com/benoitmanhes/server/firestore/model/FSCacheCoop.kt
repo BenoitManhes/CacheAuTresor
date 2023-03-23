@@ -10,12 +10,13 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class FSCacheCoop(
+    override val id: String? = null,
     val creatorId: String? = null,
     val title: String? = null,
     val coordinates: GeoPoint? = null,
     val difficulty: Float? = null,
     val ground: Float? = null,
-    val size: CacheSize? = null,
+    val size: String? = null,
     val discovered: Boolean? = null,
     val logCode: String? = null,
     val description: String? = null,
@@ -24,7 +25,7 @@ data class FSCacheCoop(
     val tagIds: List<String>? = null,
     val instructionRefs: List<String>? = null,
     val cacheIdsRequired: List<String>? = null,
-) : FirestoreModel<Cache.Coop>() {
+) : FSCache<Cache.Coop> {
 
     constructor(cache: Cache.Coop) : this(
         creatorId = cache.creatorId,
@@ -32,7 +33,7 @@ data class FSCacheCoop(
         coordinates = cache.coordinates.toFSModel(),
         difficulty = cache.difficulty,
         ground = cache.ground,
-        size = cache.size,
+        size = cache.size.value,
         discovered = cache.discovered,
         cacheIdsRequired = cache.cacheIdsRequired,
         logCode = cache.logCode,
@@ -43,14 +44,14 @@ data class FSCacheCoop(
         createDate = Timestamp(cache.createDate),
     )
 
-    override fun toAppModel(id: String): Cache.Coop = Cache.Coop(
-        cacheId = id,
+    override fun toAppModel(): Cache.Coop = Cache.Coop(
+        cacheId = id.requiredField(),
         creatorId = creatorId.requiredField(),
         title = title.requiredField(),
         coordinates = coordinates.requiredField().toModel(),
         difficulty = difficulty.requiredField(),
         ground = ground.requiredField(),
-        size = size.requiredField(),
+        size = CacheSize.build(size.requiredField()),
         discovered = discovered.requiredField(),
         createDate = createDate.requiredField().toDate(),
         logCode = logCode.requiredField(),

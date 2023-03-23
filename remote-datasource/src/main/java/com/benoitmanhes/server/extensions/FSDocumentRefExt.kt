@@ -31,6 +31,8 @@ inline fun <M : Model, reified F : FirestoreModel<M>> DocumentReference.listenTo
 
 inline fun <M : Model, reified F : FirestoreModel<M>> DocumentSnapshot.convertToAppModel(): M {
     val fsModel = this.toObject<F>()
-        ?: throw CTRemoteError.ParsingFailed(message = "Failed to parse snapshot to ${F::class.simpleName}, with id ${this.id}")
-    return fsModel.toAppModel(this.id)
+        ?: throw CTRemoteError.ParsingFailed(
+            message = "Failed to parse snapshot to ${F::class.simpleName}, with id ${this.id}"
+        )
+    return fsModel.toAppModel()
 }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -96,9 +95,7 @@ fun Selector(
             .first { it.layoutId == SelectorId }
             .measure(selectorConstraints)
 
-
         layout(constraints.maxWidth, maxHeight) {
-
             selectorPlaceable.placeRelative(x = (state.selectedIndex * itemWidth).toInt(), y = 0)
 
             itemPlaceables.forEachIndexed { index, placeable ->
@@ -143,7 +140,6 @@ private const val SelectorId: String = "SelectorId"
 @Composable
 private fun PreviewSelectorLayout() {
     CTTheme {
-
         val selectorItems = listOf(
             SelectorItem(TextSpec.RawString("Lorem")),
             SelectorItem(TextSpec.RawString("Ipsum")),

@@ -5,15 +5,16 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class FSExplorer(
+    override val id: String? = null,
     val name: String? = null,
-) : FirestoreModel<Explorer>() {
+) : FirestoreModel<Explorer> {
 
     constructor(explorer: Explorer) : this(
         name = explorer.name,
     )
 
-    override fun toAppModel(id: String): Explorer = Explorer(
-        explorerId = id,
+    override fun toAppModel(): Explorer = Explorer(
+        explorerId = id.requiredField(),
         name = name.requiredField(),
     )
 

@@ -31,7 +31,11 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createAuthAccount(email: String, password: String, explorerId: String): Account {
-        val createdAccount = authRemoteDataSource.createAuthAccount(email = email, password = password, explorerId = explorerId)
+        val createdAccount = authRemoteDataSource.createAuthAccount(
+            email = email,
+            password = password,
+            explorerId = explorerId
+        )
         return fetchAccount(createdAccount)
     }
 

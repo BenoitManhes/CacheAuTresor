@@ -1,4 +1,4 @@
-package com.benoitmanhes.repository.repository
+package com.benoitmanhes.repository
 
 import com.benoitmanhes.domain.interfaces.remotedatasource.CacheRemoteDataSource
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
@@ -6,8 +6,12 @@ import com.benoitmanhes.domain.model.Cache
 import javax.inject.Inject
 
 class CacheRepositoryImpl @Inject constructor(
-    cacheRemoteDataSource: CacheRemoteDataSource,
+    private val cacheRemoteDataSource: CacheRemoteDataSource,
 ) : CacheRepository {
+
     override suspend fun getAllCaches(): List<Cache> =
-    override suspend fun saveCache(cache: Cache) =
+        cacheRemoteDataSource.getAllCaches()
+
+    override suspend fun saveCache(cache: Cache): Unit =
+        cacheRemoteDataSource.saveCache(cache)
 }

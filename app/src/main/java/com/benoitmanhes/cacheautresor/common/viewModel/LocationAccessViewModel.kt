@@ -30,7 +30,12 @@ abstract class LocationAccessViewModel(
             } else {
                 LocationManager.GPS_PROVIDER
             }
-            locationManager.requestLocationUpdates(locationProvider, minTimeInterval.inWholeMilliseconds, minDistanceIntervalMeter, this)
+            locationManager.requestLocationUpdates(
+                locationProvider,
+                minTimeInterval.inWholeMilliseconds,
+                minDistanceIntervalMeter,
+                this
+            )
             locationManager.getLastKnownLocation(locationProvider)?.let(::onLocationChanged)
         }
     }

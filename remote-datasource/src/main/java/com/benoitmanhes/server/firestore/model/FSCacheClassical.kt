@@ -10,12 +10,13 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class FSCacheClassical(
+    override val id: String? = null,
     val creatorId: String? = null,
     val title: String? = null,
     val coordinates: GeoPoint? = null,
     val difficulty: Float? = null,
     val ground: Float? = null,
-    val size: CacheSize? = null,
+    val size: String? = null,
     val discovered: Boolean? = null,
     val createDate: Timestamp? = null,
     val logCode: String? = null,
@@ -23,7 +24,7 @@ data class FSCacheClassical(
     val tagIds: List<String>? = null,
     val instructionRef: String? = null,
     val clue: String? = null,
-) : FirestoreModel<Cache.Classical>() {
+) : FSCache<Cache.Classical> {
 
     constructor(cache: Cache.Classical) : this(
         creatorId = cache.creatorId,
@@ -31,7 +32,7 @@ data class FSCacheClassical(
         coordinates = cache.coordinates.toFSModel(),
         difficulty = cache.difficulty,
         ground = cache.ground,
-        size = cache.size,
+        size = cache.size.value,
         discovered = cache.discovered,
         createDate = Timestamp(cache.createDate),
         logCode = cache.logCode,
@@ -41,14 +42,14 @@ data class FSCacheClassical(
         instructionRef = cache.instructionRef,
     )
 
-    override fun toAppModel(id: String): Cache.Classical = Cache.Classical(
-        cacheId = id,
+    override fun toAppModel(): Cache.Classical = Cache.Classical(
+        cacheId = id.requiredField(),
         creatorId = creatorId.requiredField(),
         title = title.requiredField(),
         coordinates = coordinates.requiredField().toModel(),
         difficulty = difficulty.requiredField(),
         ground = ground.requiredField(),
-        size = size.requiredField(),
+        size = CacheSize.build(size.requiredField()),
         discovered = discovered.requiredField(),
         logCode = logCode.requiredField(),
         createDate = createDate.requiredField().toDate(),

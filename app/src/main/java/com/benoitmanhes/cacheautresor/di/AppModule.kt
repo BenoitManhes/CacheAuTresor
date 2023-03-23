@@ -17,5 +17,4 @@ object AppModule {
     @Singleton
     fun provideLocationManager(@ApplicationContext context: Context): LocationManager =
         context.getSystemService(Context.LOCATION_SERVICE) as android.location.LocationManager
-
 }

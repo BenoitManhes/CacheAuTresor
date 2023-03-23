@@ -72,7 +72,6 @@ fun FabButton(
                     )
                     SpacerSmall()
                 }
-
             }
         }
     }

@@ -25,10 +25,18 @@ fun CTDomainError.localizedTitle(): String = when (code) {
 @ReadOnlyComposable
 fun CTDomainError.localizedDescription(): String = when (code) {
     CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> stringResource(id = R.string.errorMessage_authCodeInvalid)
-    CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE -> stringResource(id = R.string.accountCreation_name_error)
-    CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> stringResource(id = R.string.authentication_error_invalidPassword)
-    CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM -> stringResource(id = R.string.authentication_error_emailFormInvalid)
-    CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST -> stringResource(id = R.string.authentication_error_noUserEmail)
+    CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE -> stringResource(
+        id = R.string.accountCreation_name_error
+    )
+    CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> stringResource(
+        id = R.string.authentication_error_invalidPassword
+    )
+    CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM -> stringResource(
+        id = R.string.authentication_error_emailFormInvalid
+    )
+    CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST -> stringResource(
+        id = R.string.authentication_error_noUserEmail
+    )
     CTDomainError.Code.EXPLORER_NOT_FOUND -> null
     CTDomainError.Code.NO_INTERNET -> stringResource(id = R.string.error_networkConnection_description)
     CTDomainError.Code.SERVER_ERROR -> null

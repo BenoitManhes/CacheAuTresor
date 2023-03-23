@@ -1,11 +1,7 @@
 package com.benoitmanhes.cacheautresor.navigation.unauthenticated
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.shrinkOut
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.composable
 import com.benoitmanhes.cacheautresor.navigation.AppDestination
 import com.benoitmanhes.cacheautresor.navigation.ctComposable
 import com.benoitmanhes.cacheautresor.screen.authentication.accountcreation.AccountCreationScreen

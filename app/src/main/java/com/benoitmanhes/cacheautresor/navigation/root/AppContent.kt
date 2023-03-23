@@ -18,7 +18,6 @@ fun AppContent(
     val isDarkMode = false
 
     CTTheme(darkTheme = isDarkMode) {
-
         val useDarkIcons = !isDarkMode
         DisposableEffect(systemUiController, useDarkIcons) {
             systemUiController.setStatusBarColor(

@@ -7,7 +7,11 @@ android {
     resourcePrefix("logger")
 
     defaultConfig {
-        buildConfigField("String", "SLF4j_VERSION", "\"${de.fayard.refreshVersions.core.versionFor("version.org.slf4j..slf4j-api")}\"")
+        buildConfigField(
+            "String",
+            "SLF4j_VERSION",
+            "\"${de.fayard.refreshVersions.core.versionFor("version.org.slf4j..slf4j-api")}\""
+        )
     }
 }
 

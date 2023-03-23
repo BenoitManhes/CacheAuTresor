@@ -8,8 +8,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import javax.inject.Inject
 
-class AuthRemoteDataSourceImpl(
+class AuthRemoteDataSourceImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : AuthRemoteDataSource {
@@ -56,7 +57,9 @@ class AuthRemoteDataSourceImpl(
 
     private fun FirebaseUser.toAccount(): Account =
         Account(
-            explorerId = this.displayName ?: throw CTRemoteError.ParsingFailed("Failed to parse account, displayName null"),
+            explorerId = this.displayName ?: throw CTRemoteError.ParsingFailed(
+                "Failed to parse account, displayName null"
+            ),
             email = this.email ?: throw CTRemoteError.ParsingFailed("Failed to parse account, email null"),
         )
 }

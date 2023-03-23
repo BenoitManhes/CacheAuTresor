@@ -11,9 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.benoitmanhes.cacheautresor.navigation.home.HomeDestination
-import com.benoitmanhes.cacheautresor.navigation.home.HomeNavigation
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomBarFloatingButton
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.CTBottomNavBar
 import com.benoitmanhes.designsystem.theme.CTTheme

@@ -6,10 +6,11 @@ enum class CacheSize {
     val value: String = name
 
     companion object {
-        fun get(value: String): CacheSize = try {
-            valueOf(value)
-        } catch (e: Exception) {
-            Undefined
+        fun build(value: String): CacheSize = when (value.lowercase()) {
+            Small.value.lowercase() -> Small
+            Regular.value.lowercase() -> Regular
+            Big.value.lowercase() -> Big
+            else -> Undefined
         }
     }
 }

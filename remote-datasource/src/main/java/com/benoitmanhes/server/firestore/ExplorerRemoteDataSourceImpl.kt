@@ -8,8 +8,9 @@ import com.benoitmanhes.server.extensions.withCoroutine
 import com.benoitmanhes.server.firestore.model.FSExplorer
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class ExplorerRemoteDataSourceImpl(
+class ExplorerRemoteDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) : ExplorerRemoteDataSource {
     companion object {
