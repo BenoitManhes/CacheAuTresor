@@ -1,11 +1,12 @@
-package com.benoitmanhes.repository.repository
+package com.benoitmanhes.repository
 
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
 import com.benoitmanhes.domain.interfaces.remotedatasource.ExplorerRemoteDataSource
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
+import javax.inject.Inject
 
-class ExplorerRepositoryImpl(
+class ExplorerRepositoryImpl @Inject constructor(
     private val localDataSource: ExplorerLocalDataSource,
     private val remoteDataSource: ExplorerRemoteDataSource,
 ) : ExplorerRepository {

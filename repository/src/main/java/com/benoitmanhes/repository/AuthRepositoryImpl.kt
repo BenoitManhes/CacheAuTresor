@@ -1,4 +1,4 @@
-package com.benoitmanhes.repository.repository
+package com.benoitmanhes.repository
 
 import com.benoitmanhes.core.error.CTStorageError
 import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
@@ -9,8 +9,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val authLocalDataSource: AuthLocalDataSource,
     private val authRemoteDataSource: AuthRemoteDataSource,
 ) : AuthRepository {

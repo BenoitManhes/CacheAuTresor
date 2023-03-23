@@ -1,4 +1,4 @@
-package com.benoitmanhes.storage.di
+package com.benoitmanhes.di.local
 
 import android.content.Context
 import androidx.room.Room
@@ -8,15 +8,16 @@ import com.benoitmanhes.storage.utils.RoomConverters
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 object RoomModule {
+
     @Provides
-    @Singleton
+    @ActivityRetainedScoped
     fun provideMainDatabase(
         @ApplicationContext appContext: Context,
     ): MainDatabase = Room
@@ -30,7 +31,7 @@ object RoomModule {
 }
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 internal object RoomDaoModule {
 
     @Provides

@@ -94,10 +94,8 @@ dependencies {
     androidTestImplementation(AndroidX.compose.ui.testJunit4)
 
     implementation(project(":core"))
+    implementation(project(":dependencies-injection"))
     implementation(project(":design-system"))
     implementation(project(":domain"))
     implementation(project(":logger:logger-timber"))
-    runtimeOnly(project(":local-datasource"))
-    runtimeOnly(project(":remote-datasource"))
-    runtimeOnly(project(":repository"))
 }
