@@ -16,11 +16,22 @@ public val CTIconPack.Difficulty: ImageVector
         if (_difficulty != null) {
             return _difficulty!!
         }
-        _difficulty = Builder(name = "Difficulty", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
-            viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                pathFillType = NonZero) {
+        _difficulty = Builder(
+            name = "Difficulty",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(44.0f, 26.9816f)
                 curveTo(44.0f, 28.103f, 44.0f, 29.2245f, 44.0f, 30.4142f)
                 curveTo(43.9227f, 31.0328f, 43.8698f, 31.5878f, 43.764f, 32.1325f)
@@ -128,9 +139,15 @@ public val CTIconPack.Difficulty: ImageVector
                 curveTo(18.5529f, 11.999f, 17.193f, 12.5473f, 15.826f, 13.2285f)
                 close()
             }
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                pathFillType = NonZero) {
+            path(
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(27.2913f, 32.7714f)
                 curveTo(26.8212f, 33.3098f, 26.3841f, 33.8293f, 25.7633f, 34.1784f)
                 curveTo(24.249f, 35.0298f, 21.9992f, 34.6218f, 20.9882f, 33.0059f)

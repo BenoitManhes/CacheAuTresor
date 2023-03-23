@@ -65,6 +65,8 @@ object Dimens {
 
         val cacheCardHeight: Dp = 96.dp
 
+        val markerSize: Dp = 24.dp
+
         val smallIconSize: Dp = 16.dp
         val mediumIconSize: Dp = 24.dp
         val largeIconSize: Dp = 32.dp

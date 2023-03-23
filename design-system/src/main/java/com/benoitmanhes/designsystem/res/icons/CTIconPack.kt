@@ -23,6 +23,12 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Newspaper
 import com.benoitmanhes.designsystem.res.icons.iconpack.Profile
 import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Search
+import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
+import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
+import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
+import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
+import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
+import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 
 object CTIconPack
 
@@ -38,7 +44,10 @@ val CTIconPack.CTIcons: List<ImageVector>
             Add,
             Box,
             Compass,
+            Coop,
+            Crown,
             Difficulty,
+            Ensign,
             Explore,
             ExploreFilled,
             EyeClose,
@@ -51,7 +60,10 @@ val CTIconPack.CTIcons: List<ImageVector>
             Location,
             Logo,
             Mountain,
+            Mystery,
             Newspaper,
+            Parchment,
+            Piste,
             Position,
             PositionCurrent,
             Profile,

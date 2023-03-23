@@ -17,12 +17,19 @@ public val CTIconPack.Layer: ImageVector
             return _layer!!
         }
         _layer = Builder(
-            name = "Layer", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
-            viewportWidth = 48.0f, viewportHeight = 48.0f
+            name = "Layer",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
         ).apply {
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(24.0588f, 44.0f)

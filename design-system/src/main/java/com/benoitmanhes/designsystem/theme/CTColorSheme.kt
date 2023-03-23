@@ -7,6 +7,11 @@ import com.benoitmanhes.designsystem.res.Colors
 @Immutable
 object DayColorScheme : CTColorScheme {
     override val primary: Color = Colors.Marigold
+    override val primaryClassical: Color = Colors.LaSalleGreen
+    override val primaryCoop: Color = Colors.LightSeaGreen
+    override val primaryMystery: Color = Colors.MetallicViolet
+    override val primaryPiste: Color = Colors.WatermelonRed
+    override val primaryOwner: Color = Colors.BlackOlive
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
     override val onSecondary: Color = Colors.White
@@ -24,6 +29,11 @@ object DayColorScheme : CTColorScheme {
 @Immutable
 object NightColorScheme : CTColorScheme {
     override val primary: Color = Colors.Marigold
+    override val primaryClassical: Color = Colors.LaSalleGreen
+    override val primaryCoop: Color = Colors.LightSeaGreen
+    override val primaryMystery: Color = Colors.MetallicViolet
+    override val primaryPiste: Color = Colors.WatermelonRed
+    override val primaryOwner: Color = Colors.BlackOlive
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
     override val onSecondary: Color = Colors.White
@@ -41,6 +51,11 @@ object NightColorScheme : CTColorScheme {
 @Immutable
 interface CTColorScheme {
     val primary: Color
+    val primaryClassical: Color
+    val primaryCoop: Color
+    val primaryMystery: Color
+    val primaryPiste: Color
+    val primaryOwner: Color
     val onPrimary: Color
     val secondary: Color
     val onSecondary: Color

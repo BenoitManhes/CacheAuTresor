@@ -17,12 +17,19 @@ val CTIconPack.ExploreFilled: ImageVector
             return _iconExploreFilled!!
         }
         _iconExploreFilled = Builder(
-            name = "IconExploreFilled", defaultWidth = 48.0.dp,
-            defaultHeight = 48.0.dp, viewportWidth = 48.0f, viewportHeight = 48.0f
+            name = "IconExploreFilled",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
         ).apply {
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(15.15f, 33.85f)

@@ -17,15 +17,21 @@ val CTIconPack.EyeOpen: ImageVector
             return _iconSmallEye!!
         }
         _iconSmallEye = Builder(
-            name = "EyeOpen", defaultWidth = 16.0.dp,
+            name = "EyeOpen",
+            defaultWidth = 16.0.dp,
             defaultHeight =
             16.0.dp,
-            viewportWidth = 16.0f, viewportHeight = 16.0f
+            viewportWidth = 16.0f,
+            viewportHeight = 16.0f
         ).apply {
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = SolidColor(Color(0xFF000000)),
-                strokeLineWidth = 0.25f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                strokeLineMiter = 4.0f, pathFillType = NonZero
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = SolidColor(Color(0xFF000000)),
+                strokeLineWidth = 0.25f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
             ) {
                 moveTo(8.0f, 10.5f)
                 curveTo(8.7889f, 10.5f, 9.4583f, 10.225f, 10.0083f, 9.675f)

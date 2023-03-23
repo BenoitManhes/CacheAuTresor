@@ -16,11 +16,22 @@ public val CTIconPack.Location: ImageVector
         if (_location != null) {
             return _location!!
         }
-        _location = Builder(name = "Location", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
-            viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                pathFillType = NonZero) {
+        _location = Builder(
+            name = "Location",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(24.0f, 23.5f)
                 curveTo(24.9667f, 23.5f, 25.7917f, 23.1583f, 26.475f, 22.475f)
                 curveTo(27.1583f, 21.7917f, 27.5f, 20.9667f, 27.5f, 20.0f)

@@ -17,12 +17,19 @@ val CTIconPack.EyeClose: ImageVector
             return _iconSmallEyeClose!!
         }
         _iconSmallEyeClose = Builder(
-            name = "IconSmallEyeClose", defaultWidth = 16.0.dp,
-            defaultHeight = 16.0.dp, viewportWidth = 16.0f, viewportHeight = 16.0f
+            name = "IconSmallEyeClose",
+            defaultWidth = 16.0.dp,
+            defaultHeight = 16.0.dp,
+            viewportWidth = 16.0f,
+            viewportHeight = 16.0f
         ).apply {
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = EvenOdd
             ) {
                 moveTo(5.8085f, 4.2761f)

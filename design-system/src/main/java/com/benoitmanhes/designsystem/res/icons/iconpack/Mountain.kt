@@ -16,11 +16,22 @@ public val CTIconPack.Mountain: ImageVector
         if (_mountain != null) {
             return _mountain!!
         }
-        _mountain = Builder(name = "Mountain", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
-            viewportWidth = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                pathFillType = NonZero) {
+        _mountain = Builder(
+            name = "Mountain",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(25.5522f, 11.1088f)
                 curveTo(24.9975f, 11.27f, 24.6921f, 11.4144f, 24.2545f, 11.7255f)
                 curveTo(23.9237f, 11.9589f, 23.374f, 12.5478f, 23.1908f, 12.859f)

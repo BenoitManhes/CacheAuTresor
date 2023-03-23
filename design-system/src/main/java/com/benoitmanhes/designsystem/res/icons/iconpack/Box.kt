@@ -16,11 +16,22 @@ public val CTIconPack.Box: ImageVector
         if (_box != null) {
             return _box!!
         }
-        _box = Builder(name = "Box", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp, viewportWidth
-        = 48.0f, viewportHeight = 48.0f).apply {
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                pathFillType = NonZero) {
+        _box = Builder(
+            name = "Box",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(4.7292f, 8.7806f)
                 curveTo(4.4759f, 8.8695f, 4.2092f, 9.1139f, 4.0936f, 9.3539f)
                 curveTo(4.0003f, 9.5539f, 4.0003f, 9.5717f, 4.0003f, 13.4161f)
@@ -65,9 +76,15 @@ public val CTIconPack.Box: ImageVector
                 lineTo(39.28f, 27.4427f)
                 close()
             }
-            path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
-                pathFillType = NonZero) {
+            path(
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
+                pathFillType = NonZero
+            ) {
                 moveTo(20.9779f, 20.5272f)
                 curveTo(20.7468f, 20.5672f, 20.3068f, 20.7049f, 20.2491f, 20.7583f)
                 curveTo(20.2224f, 20.7805f, 20.178f, 20.7983f, 20.1513f, 20.7983f)
