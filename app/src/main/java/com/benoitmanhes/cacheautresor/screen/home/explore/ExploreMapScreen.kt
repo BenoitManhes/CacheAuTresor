@@ -14,9 +14,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.benoitmanhes.cacheautresor.utils.extension.toLatLng
 import com.benoitmanhes.cacheautresor.utils.extension.toModel
-import com.benoitmanhes.designsystem.atoms.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
 import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
@@ -24,7 +24,6 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Layer
 import com.benoitmanhes.designsystem.res.icons.iconpack.Position
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.extension.similar
 import com.benoitmanhes.domain.model.Coordinates
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,6 +33,8 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,6 +44,7 @@ internal fun ExploreMapScreen(
     updateMapPosition: (Coordinates) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     val mapProperties by remember {
         mutableStateOf(
@@ -79,7 +81,14 @@ internal fun ExploreMapScreen(
         cameraPositionState = cameraPositionState,
         properties = mapProperties,
         uiSettings = mapUiSettings,
-    )
+    ) {
+        uiState.caches.forEach { _cache ->
+            Marker(
+                state = MarkerState(position = _cache.coordinates.toLatLng()),
+                icon = CacheMarker.Classical.bitmapDescriptor(context),
+            )
+        }
+    }
 
     Column(
         modifier = Modifier

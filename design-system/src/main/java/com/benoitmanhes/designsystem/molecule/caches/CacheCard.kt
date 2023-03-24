@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.CTTextView
 import com.benoitmanhes.designsystem.molecule.label.LabelIconMedium
 import com.benoitmanhes.designsystem.molecule.label.LabelIconSmall
@@ -63,7 +62,11 @@ fun CacheCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
         ) {
-            IconSlotHuge(icon = icon, backgroundColor = color)
+            IconSlotHuge(
+                icon = icon,
+                backgroundColor = color,
+                contentColor = CTTheme.color.onPrimary,
+            )
             MainInfoLayout(
                 color = color,
                 creatorText = creatorText,
