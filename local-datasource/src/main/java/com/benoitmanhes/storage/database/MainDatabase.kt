@@ -16,5 +16,5 @@ import com.benoitmanhes.storage.utils.RoomConverters
 )
 @TypeConverters(RoomConverters::class)
 abstract class MainDatabase : RoomDatabase() {
-    internal abstract fun explorerDao(): ExplorerDao
+    abstract fun explorerDao(): ExplorerDao
 }
