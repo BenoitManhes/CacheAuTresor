@@ -28,6 +28,7 @@ data class FSCacheCoop(
 ) : FSCache<Cache.Coop> {
 
     constructor(cache: Cache.Coop) : this(
+        id = cache.cacheId,
         creatorId = cache.creatorId,
         title = cache.title,
         coordinates = cache.coordinates.toFSModel(),

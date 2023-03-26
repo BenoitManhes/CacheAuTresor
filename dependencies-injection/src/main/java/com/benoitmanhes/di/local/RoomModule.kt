@@ -26,7 +26,6 @@ object RoomModule {
             MainDatabase::class.java,
             "bc943e798-a4f0-402e-9f5b-kjfqm86",
         )
-        .addTypeConverter(RoomConverters)
         .build()
 }
 

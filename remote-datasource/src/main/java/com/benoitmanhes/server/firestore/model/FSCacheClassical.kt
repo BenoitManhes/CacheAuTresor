@@ -27,6 +27,7 @@ data class FSCacheClassical(
 ) : FSCache<Cache.Classical> {
 
     constructor(cache: Cache.Classical) : this(
+        id = cache.cacheId,
         creatorId = cache.creatorId,
         title = cache.title,
         coordinates = cache.coordinates.toFSModel(),

@@ -13,4 +13,12 @@ object RoomConverters {
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time?.toLong()
     }
+
+    @TypeConverter
+    fun listStringToString(list: List<String>): String =
+        list.joinToString(LocalConstants.Room.listSeparator)
+
+    @TypeConverter
+    fun stringToListString(rawList: String): List<String> =
+        rawList.split(LocalConstants.Room.listSeparator)
 }

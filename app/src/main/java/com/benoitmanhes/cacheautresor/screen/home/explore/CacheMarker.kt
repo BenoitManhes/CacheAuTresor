@@ -35,7 +35,7 @@ sealed class CacheMarker(
 
     object Classical : CacheMarker(iconRes = R.drawable.marker_classical)
 
-//    object Piste : CacheMarker(iconRes = R.drawable.)
+    object Piste : CacheMarker(iconRes = R.drawable.marker_piste)
 
     object Mystery : CacheMarker(iconRes = R.drawable.marker_mystery)
 

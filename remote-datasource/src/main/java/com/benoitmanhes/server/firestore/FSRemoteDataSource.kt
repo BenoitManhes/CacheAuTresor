@@ -8,7 +8,6 @@ import com.benoitmanhes.server.firestore.model.FirestoreModel
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -22,7 +21,14 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
     protected abstract fun DocumentSnapshot.getFsClass(): Class<F>?
     protected abstract fun M.parseToFSModel(): F
 
-    suspend fun getAllFSObject(): List<M> =
+    protected suspend fun getFSObject(objectId: String): M? =
+        firestore.collection(collectionRef)
+            .document(objectId)
+            .get()
+            .withCoroutine()
+            .convertToAppModel()
+
+    protected suspend fun getAllFSObject(): List<M> =
         firestore.collection(collectionRef)
             .get()
             .withCoroutine()
@@ -30,15 +36,22 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
                 document.convertToAppModel()
             }
 
-    fun getFSObjectFlow(id: String): Flow<M> =
+    protected fun getFSObjectFlow(id: String): Flow<M> =
         firestore.collection(collectionRef)
             .document(id)
             .listenToFlow()
 
-    suspend fun saveFSObject(id: String, model: M) {
+    protected suspend fun saveFSObject(id: String, model: M) {
         firestore.collection(collectionRef)
             .document(id)
             .set(model.parseToFSModel())
+            .withCoroutine()
+    }
+
+    protected suspend fun deleteFSObject(id: String) {
+        firestore.collection(collectionRef)
+            .document(id)
+            .delete()
             .withCoroutine()
     }
 
@@ -61,14 +74,10 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
         }
     }
 
-    protected fun DocumentSnapshot.convertToAppModel(): M {
+    protected fun DocumentSnapshot.convertToAppModel(): M? {
         val fsClass = getFsClass() ?: throw CTRemoteError.ParsingFailed(
             message = "Failed to get fsClass, with id ${this.id}"
         )
-        val fsModel = this.toObject(fsClass)
-            ?: throw CTRemoteError.ParsingFailed(
-                message = "Failed to parse snapshot to ${fsClass.simpleName}, with id ${this.id}"
-            )
-        return fsModel.toAppModel()
+        return this.toObject(fsClass)?.toAppModel()
     }
 }

@@ -27,7 +27,7 @@ class CreateAccountUseCase @Inject constructor(
         if (!explorerRepository.isExplorerNameAvailable(explorerName)) {
             throw CTDomainError(CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE)
         }
-        val explorerCreated = explorerRepository.createExplorer(explorer = newExplorer(explorerName))
+        val explorerCreated = explorerRepository.createUserExplorer(explorer = newExplorer(explorerName))
         try {
             authRepository.createAuthAccount(
                 email = email,
@@ -45,5 +45,6 @@ class CreateAccountUseCase @Inject constructor(
     private fun newExplorer(explorerName: String): Explorer = Explorer(
         explorerId = Util.autoId(),
         name = explorerName,
+        cacheIdsFound = emptyList(),
     )
 }

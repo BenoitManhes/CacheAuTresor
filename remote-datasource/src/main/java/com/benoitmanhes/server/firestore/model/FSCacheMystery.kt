@@ -30,6 +30,7 @@ data class FSCacheMystery(
 ) : FSCache<Cache.Mystery> {
 
     constructor(cache: Cache.Mystery) : this(
+        id = cache.cacheId,
         creatorId = cache.creatorId,
         title = cache.title,
         coordinates = cache.coordinates.toFSModel(),

@@ -28,6 +28,7 @@ data class FSCachePiste(
 ) : FSCache<Cache.Piste> {
 
     constructor(cache: Cache.Piste) : this(
+        id = cache.cacheId,
         creatorId = cache.creatorId,
         title = cache.title,
         coordinates = cache.coordinates.toFSModel(),

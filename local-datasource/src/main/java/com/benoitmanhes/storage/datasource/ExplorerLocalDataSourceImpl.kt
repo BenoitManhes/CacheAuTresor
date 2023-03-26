@@ -22,8 +22,8 @@ class ExplorerLocalDataSourceImpl @Inject constructor(
             it.toAppModel()
         } ?: throw CTStorageError.ExplorerNotFound
 
-    override fun getExplorerFlow(explorer: Explorer): Flow<Explorer> =
-        explorerDao.loadByName(explorer.explorerId).map {
+    override fun getExplorerFlow(explorerId: String): Flow<Explorer> =
+        explorerDao.loadByName(explorerId).map {
             it.toAppModel()
         }
 

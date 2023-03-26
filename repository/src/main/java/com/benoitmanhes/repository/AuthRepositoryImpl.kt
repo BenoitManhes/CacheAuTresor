@@ -16,7 +16,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val authRemoteDataSource: AuthRemoteDataSource,
 ) : AuthRepository {
 
-    override fun getAuthAccount(): Flow<Account?> {
+    override fun getAuthAccountFlow(): Flow<Account?> {
         CoroutineScope(Dispatchers.IO).launch {
             authRemoteDataSource.getCurrentAccount()?.let { account ->
                 authLocalDataSource.saveAccount(account)
@@ -24,6 +24,8 @@ class AuthRepositoryImpl @Inject constructor(
         }
         return authLocalDataSource.getAccountFlow()
     }
+
+    override suspend fun getAuthAccount(): Account? = authLocalDataSource.getAccount()
 
     override suspend fun login(email: String, password: String): Account {
         val loginAccount = authRemoteDataSource.login(email = email, password)

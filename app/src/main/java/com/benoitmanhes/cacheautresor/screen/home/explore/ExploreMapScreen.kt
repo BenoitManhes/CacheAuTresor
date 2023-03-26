@@ -25,7 +25,9 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Position
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.extension.similar
+import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.Coordinates
+import com.benoitmanhes.domain.uimodel.UICache
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.CameraPositionState
@@ -82,10 +84,10 @@ internal fun ExploreMapScreen(
         properties = mapProperties,
         uiSettings = mapUiSettings,
     ) {
-        uiState.caches.forEach { _cache ->
+        uiState.caches.forEach { uiCache ->
             Marker(
-                state = MarkerState(position = _cache.coordinates.toLatLng()),
-                icon = CacheMarker.Classical.bitmapDescriptor(context),
+                state = MarkerState(position = uiCache.cache.coordinates.toLatLng()),
+                icon = uiCache.getCacheMarker().bitmapDescriptor(context),
             )
         }
     }
@@ -130,6 +132,19 @@ internal fun ExploreMapScreen(
                     type = FabButtonType.OUTLINED,
                 )
             }
+        }
+    }
+}
+
+private fun UICache.getCacheMarker(): CacheMarker = when (userStatus) {
+    UICache.CacheUserStatus.Owned -> CacheMarker.Owner
+    UICache.CacheUserStatus.Found -> CacheMarker.Found
+    else -> {
+        when (cache) {
+            is Cache.Classical -> CacheMarker.Classical
+            is Cache.Coop -> CacheMarker.Coop
+            is Cache.Mystery -> CacheMarker.Mystery
+            is Cache.Piste -> CacheMarker.Piste
         }
     }
 }

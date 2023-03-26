@@ -8,15 +8,17 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModel
 import com.benoitmanhes.cacheautresor.utils.extension.toModel
+import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.model.Coordinates
+import com.benoitmanhes.domain.usecase.cache.GetAllUICachesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val cacheRepository: CacheRepository,
+    getAllUICacheUseCase: GetAllUICachesUseCase,
     locationManager: LocationManager,
 ) : LocationAccessViewModel(locationManager) {
 
@@ -25,10 +27,17 @@ class ExploreViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val caches = cacheRepository.getAllCaches()
-            uiState = uiState.copy(
-                caches = caches,
-            )
+            getAllUICacheUseCase().collect { result ->
+                when (result) {
+                    is CTResult.Success -> {
+                        uiState = uiState.copy(
+                            caches = result.successData,
+                        )
+                    }
+                    is CTResult.Loading -> {}
+                    is CTResult.Failure -> {}
+                }
+            }
         }
     }
 

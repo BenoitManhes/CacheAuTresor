@@ -8,5 +8,5 @@ import javax.inject.Inject
 class IsAuthenticatedUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
-    operator fun invoke(): Flow<Boolean> = authRepository.getAuthAccount().map { it != null }
+    operator fun invoke(): Flow<Boolean> = authRepository.getAuthAccountFlow().map { it != null }
 }

@@ -4,5 +4,10 @@ import com.benoitmanhes.domain.model.Cache
 
 data class UICache(
     val cache: Cache,
-    val explorerName: String,
-)
+    val explorerName: String?,
+    val userStatus: CacheUserStatus,
+) {
+    enum class CacheUserStatus {
+        Available, Found, Lock, Owned;
+    }
+}

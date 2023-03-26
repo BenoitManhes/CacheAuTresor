@@ -33,6 +33,18 @@ abstract class AbstractUseCase {
             emit(CTResult.Failure(error = domainError))
         }
 
+    protected suspend fun <T> runCatch(
+        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        onError: (CTDomainError) -> T,
+        block: suspend () -> T,
+    ): T = try {
+        block()
+    } catch (t: Throwable) {
+        val error = mapErr(t)
+        logError(error)
+        onError(error)
+    }
+
     @Suppress("MemberVisibilityCanBePrivate")
     protected fun defaultMapError(t: Throwable): CTDomainError {
         val code: CTDomainError.Code = when (t) {
@@ -43,12 +55,14 @@ abstract class AbstractUseCase {
             is CTRemoteError.AuthenticationUserEmailNoExist -> CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST
             is CTRemoteError.NetworkException -> CTDomainError.Code.NO_INTERNET
             is CTRemoteError.ParsingFailed,
-            is CTRemoteError.ObjectNotFound -> CTDomainError.Code.SERVER_ERROR
+            is CTRemoteError.ObjectNotFound,
+            -> CTDomainError.Code.SERVER_ERROR
 
             is CTStorageError.ExplorerNotFound -> CTDomainError.Code.EXPLORER_NOT_FOUND
 
             is CTStorageError.UnexpectedResult,
-            is CTRemoteError.UnexpectedResult -> CTDomainError.Code.UNEXPECTED
+            is CTRemoteError.UnexpectedResult,
+            -> CTDomainError.Code.UNEXPECTED
 
             else -> CTDomainError.Code.UNKNOWN
         }
