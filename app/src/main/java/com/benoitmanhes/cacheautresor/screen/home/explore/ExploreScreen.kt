@@ -57,6 +57,8 @@ fun ExploreRoute(
                 uiState = viewModel.uiState,
                 cameraPositionState = cameraPositionState,
                 updateMapPosition = viewModel::setMapPosition,
+                selectCache = viewModel::selectCache,
+                unselectCache = viewModel::unselectCache,
             )
         } else {
         }

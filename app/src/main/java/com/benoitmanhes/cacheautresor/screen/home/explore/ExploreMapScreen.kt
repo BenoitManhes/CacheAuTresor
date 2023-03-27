@@ -1,10 +1,14 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,14 +18,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalContext
 import com.benoitmanhes.cacheautresor.utils.extension.toLatLng
 import com.benoitmanhes.cacheautresor.utils.extension.toModel
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
-import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.res.icons.iconpack.Layer
 import com.benoitmanhes.designsystem.res.icons.iconpack.Position
+import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.extension.similar
@@ -44,6 +49,8 @@ internal fun ExploreMapScreen(
     uiState: ExploreUIState,
     cameraPositionState: CameraPositionState,
     updateMapPosition: (Coordinates) -> Unit,
+    selectCache: (UICache) -> Unit,
+    unselectCache: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -65,6 +72,7 @@ internal fun ExploreMapScreen(
                 zoomControlsEnabled = false,
                 mapToolbarEnabled = false,
                 myLocationButtonEnabled = false,
+                compassEnabled = false,
             )
         )
     }
@@ -78,59 +86,74 @@ internal fun ExploreMapScreen(
             }
     }
 
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState,
-        properties = mapProperties,
-        uiSettings = mapUiSettings,
-    ) {
-        uiState.caches.forEach { uiCache ->
-            Marker(
-                state = MarkerState(position = uiCache.cache.coordinates.toLatLng()),
-                icon = uiCache.getCacheMarker().bitmapDescriptor(context),
-            )
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(CTTheme.spacing.large),
-        verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large, Alignment.Bottom),
-        horizontalAlignment = Alignment.End,
-    ) {
-        FabIconButton(
-            icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Layer, contentDescription = null),
-            onClick = { /*TODO*/ },
-            type = FabButtonType.OUTLINED,
-        )
-        Crossfade(
-            targetState = uiState.currentPosition similar cameraPositionState.position.target.toModel()
-        ) { isCurrentLocation ->
-            if (isCurrentLocation) {
-                FabIconButton(
-                    icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.PositionCurrent, contentDescription = null),
-                    onClick = {},
-                    type = FabButtonType.COLORED,
-                )
-            } else {
-                FabIconButton(
-                    icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Position, contentDescription = null),
+    Box(modifier = Modifier.fillMaxSize()) {
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            cameraPositionState = cameraPositionState,
+            properties = mapProperties,
+            uiSettings = mapUiSettings,
+            onMapClick = { unselectCache() },
+        ) {
+            uiState.caches.forEach { uiCache ->
+                val isSelectedCache = uiCache == uiState.cacheSelected
+                Marker(
+                    state = MarkerState(position = uiCache.cache.coordinates.toLatLng()),
+                    anchor = if (isSelectedCache) Offset(0.5f, 1.0f) else Offset(0.5f, 0.5f),
+                    icon = uiCache.getCacheMarker().bitmapDescriptor(context = context, isSelected = isSelectedCache),
                     onClick = {
-                        uiState.currentPosition?.toLatLng()?.let {
-                            scope.launch {
-                                val previousCameraPosition = cameraPositionState.position
-                                cameraPositionState.animate(
-                                    update = CameraUpdateFactory.newCameraPosition(
-                                        CameraPosition(it, previousCameraPosition.zoom, 0f, 0f)
-                                    ),
-                                    durationMs = 1000
-                                )
-                            }
-                        }
-                    },
-                    type = FabButtonType.OUTLINED,
+                        selectCache(uiCache)
+                        true
+                    }
                 )
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .animateContentSize()
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(CTTheme.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large, Alignment.Bottom),
+            horizontalAlignment = Alignment.End,
+        ) {
+            FabIconButton(
+                icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Layer, contentDescription = null),
+                onClick = { /*TODO*/ },
+                type = FabButtonType.OUTLINED,
+            )
+            Crossfade(
+                targetState = uiState.currentPosition similar cameraPositionState.position.target.toModel()
+            ) { isCurrentLocation ->
+                if (isCurrentLocation) {
+                    FabIconButton(
+                        icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.PositionCurrent, contentDescription = null),
+                        onClick = {},
+                        type = FabButtonType.COLORED,
+                    )
+                } else {
+                    FabIconButton(
+                        icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Position, contentDescription = null),
+                        onClick = {
+                            uiState.currentPosition?.toLatLng()?.let {
+                                scope.launch {
+                                    val previousCameraPosition = cameraPositionState.position
+                                    cameraPositionState.animate(
+                                        update = CameraUpdateFactory.newCameraPosition(
+                                            CameraPosition(it, previousCameraPosition.zoom, 0f, 0f)
+                                        ),
+                                        durationMs = 1000
+                                    )
+                                }
+                            }
+                        },
+                        type = FabButtonType.OUTLINED,
+                    )
+                }
+            }
+            uiState.cacheSelected?.let { uiCache ->
+                SelectedCacheBanner(uiCache = uiCache)
             }
         }
     }

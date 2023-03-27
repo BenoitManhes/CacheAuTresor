@@ -42,7 +42,7 @@ fun CacheCard(
     difficultyText: TextSpec,
     groundText: TextSpec,
     sizeText: TextSpec,
-    distanceText: TextSpec,
+    distanceText: TextSpec?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
@@ -75,11 +75,13 @@ fun CacheCard(
                 groundText = groundText,
                 sizeText = sizeText,
             )
-            LabelIconMedium(
-                icon = IconSpec.VectorIcon(CTTheme.icon.Location, null),
-                text = distanceText,
-                color = color,
-            )
+            distanceText?.let {
+                LabelIconMedium(
+                    icon = IconSpec.VectorIcon(CTTheme.icon.Location, null),
+                    text = distanceText,
+                    color = color,
+                )
+            }
         }
     }
 }

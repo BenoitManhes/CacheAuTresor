@@ -9,9 +9,10 @@ import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModel
 import com.benoitmanhes.cacheautresor.utils.extension.toModel
 import com.benoitmanhes.core.result.CTResult
-import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.model.Coordinates
+import com.benoitmanhes.domain.uimodel.UICache
 import com.benoitmanhes.domain.usecase.cache.GetAllUICachesUseCase
+import com.benoitmanhes.domain.usecase.cache.UpdateCachesDistancesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
     getAllUICacheUseCase: GetAllUICachesUseCase,
+    private val updateCachesDistancesUseCase: UpdateCachesDistancesUseCase,
     locationManager: LocationManager,
 ) : LocationAccessViewModel(locationManager) {
 
@@ -30,9 +32,14 @@ class ExploreViewModel @Inject constructor(
             getAllUICacheUseCase().collect { result ->
                 when (result) {
                     is CTResult.Success -> {
-                        uiState = uiState.copy(
-                            caches = result.successData,
-                        )
+                        val cachesWithDistance = uiState.currentPosition?.let { _currentPosition ->
+                            updateCachesDistancesUseCase(
+                                currentLocation = _currentPosition,
+                                uiCaches = result.successData,
+                            )
+                        } ?: result.successData
+
+                        uiState = uiState.copy(caches = cachesWithDistance)
                     }
                     is CTResult.Loading -> {}
                     is CTResult.Failure -> {}
@@ -45,6 +52,14 @@ class ExploreViewModel @Inject constructor(
         uiState = uiState.copy(mapPosition = position)
     }
 
+    fun selectCache(uiCache: UICache) {
+        uiState = uiState.copy(cacheSelected = uiCache)
+    }
+
+    fun unselectCache() {
+        uiState = uiState.copy(cacheSelected = null)
+    }
+
     override fun onAccessLocationRefused() {
         uiState = uiState.copy(isAccessPositionGranted = false)
     }
@@ -53,6 +68,10 @@ class ExploreViewModel @Inject constructor(
         uiState = uiState.copy(
             isAccessPositionGranted = true,
             currentPosition = p0.toModel(),
+            caches = updateCachesDistancesUseCase(
+                currentLocation = p0.toModel(),
+                uiCaches = uiState.caches,
+            )
         )
     }
 }

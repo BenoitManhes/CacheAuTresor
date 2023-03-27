@@ -12,6 +12,7 @@ object DayColorScheme : CTColorScheme {
     override val primaryMystery: Color = Colors.MetallicViolet
     override val primaryPiste: Color = Colors.WatermelonRed
     override val primaryOwner: Color = Colors.BlackOlive
+    override val primaryFound: Color = Colors.Marigold
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
     override val onSecondary: Color = Colors.White
@@ -34,6 +35,7 @@ object NightColorScheme : CTColorScheme {
     override val primaryMystery: Color = Colors.MetallicViolet
     override val primaryPiste: Color = Colors.WatermelonRed
     override val primaryOwner: Color = Colors.BlackOlive
+    override val primaryFound: Color = Colors.Marigold
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
     override val onSecondary: Color = Colors.White
@@ -56,6 +58,7 @@ interface CTColorScheme {
     val primaryMystery: Color
     val primaryPiste: Color
     val primaryOwner: Color
+    val primaryFound: Color
     val onPrimary: Color
     val secondary: Color
     val onSecondary: Color

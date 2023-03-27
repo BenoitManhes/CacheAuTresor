@@ -32,4 +32,22 @@
     <string name="authentication_error_emailFormInvalid">Le format de l’adresse mail est incorrecte</string>
     <string name="exploreScreen_selectorItem_map">Carte</string>
     <string name="exploreScreen_selectorItem_list">Liste</string>
+    <string name="cache_difficulty_2">facile</string>
+    <string name="cache_difficulty_1">très facile</string>
+    <string name="cache_difficulty_3">moyen</string>
+    <string name="cache_difficulty_4">difficile</string>
+    <string name="cache_difficulty_5">très difficile</string>
+    <string name="cache_ground_1">paisible</string>
+    <string name="cache_ground_2">accidenté</string>
+    <string name="cache_ground_3">escarpé</string>
+    <string name="cache_ground_4">difficile</string>
+    <string name="cache_ground_5">périlleux</string>
+    <string name="common_unknown">inconnu</string>
+    <string name="cache_size_micro">micro</string>
+    <string name="cache_size_small">petite</string>
+    <string name="cache_size_regular">moyenne</string>
+    <string name="cache_size_big">grosse</string>
+    <string name="cache_size_undifined">indéfine</string>
+    <string name="common_distanceInMeters">%s m</string>
+    <string name="common_distanceInKilometers">%s km</string>
 </resources>

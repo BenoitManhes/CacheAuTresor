@@ -13,13 +13,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
  */
 sealed class CacheMarker(
     @DrawableRes private val iconRes: Int,
+    @DrawableRes private val iconSelectedRes: Int,
 ) {
 
     fun bitmapDescriptor(
+        isSelected: Boolean,
         context: Context,
     ): BitmapDescriptor? {
+        val drawableRes = if (isSelected) iconSelectedRes else iconRes
         // retrieve the actual drawable
-        val drawable = ContextCompat.getDrawable(context, iconRes) ?: return null
+        val drawable = ContextCompat.getDrawable(context, drawableRes) ?: return null
         drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
         val bm = Bitmap.createBitmap(
             drawable.intrinsicWidth,
@@ -33,15 +36,33 @@ sealed class CacheMarker(
         return BitmapDescriptorFactory.fromBitmap(bm)
     }
 
-    object Classical : CacheMarker(iconRes = R.drawable.marker_classical)
+    object Classical : CacheMarker(
+        iconRes = R.drawable.marker_classical,
+        iconSelectedRes = R.drawable.marker_selected_classical,
+    )
 
-    object Piste : CacheMarker(iconRes = R.drawable.marker_piste)
+    object Piste : CacheMarker(
+        iconRes = R.drawable.marker_piste,
+        iconSelectedRes = R.drawable.marker_selected_piste,
+    )
 
-    object Mystery : CacheMarker(iconRes = R.drawable.marker_mystery)
+    object Mystery : CacheMarker(
+        iconRes = R.drawable.marker_mystery,
+        iconSelectedRes = R.drawable.marker_selected_mystery,
+    )
 
-    object Coop : CacheMarker(iconRes = R.drawable.marker_coop)
+    object Coop : CacheMarker(
+        iconRes = R.drawable.marker_coop,
+        iconSelectedRes = R.drawable.marker_selected_coop,
+    )
 
-    object Found : CacheMarker(iconRes = R.drawable.marker_found)
+    object Found : CacheMarker(
+        iconRes = R.drawable.marker_found,
+        iconSelectedRes = R.drawable.marker_selected_found,
+    )
 
-    object Owner : CacheMarker(iconRes = R.drawable.marker_owner)
+    object Owner : CacheMarker(
+        iconRes = R.drawable.marker_owner,
+        iconSelectedRes = R.drawable.marker_selected_owned,
+    )
 }

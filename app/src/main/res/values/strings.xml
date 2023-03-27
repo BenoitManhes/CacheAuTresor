@@ -31,4 +31,22 @@
     <string name="authentication_error_emailFormInvalid">Email form incorrect</string>
     <string name="exploreScreen_selectorItem_map">Map</string>
     <string name="exploreScreen_selectorItem_list">List</string>
+    <string name="cache_difficulty_1">very easy</string>
+    <string name="cache_difficulty_2">easy</string>
+    <string name="cache_difficulty_3">medium</string>
+    <string name="cache_difficulty_4">hard</string>
+    <string name="cache_difficulty_5">very hard</string>
+    <string name="cache_ground_1">peaceful</string>
+    <string name="cache_ground_2">rugged</string>
+    <string name="cache_ground_3">steep</string>
+    <string name="cache_ground_4">hard</string>
+    <string name="cache_ground_5">perilous</string>
+    <string name="common_unknown">unknown</string>
+    <string name="cache_size_micro">micro</string>
+    <string name="cache_size_small">small</string>
+    <string name="cache_size_regular">medium</string>
+    <string name="cache_size_big">big</string>
+    <string name="cache_size_undifined">undifined</string>
+    <string name="common_distanceInMeters">%s m</string>
+    <string name="common_distanceInKilometers">%s km</string>
 </resources>
