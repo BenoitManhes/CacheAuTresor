@@ -12,6 +12,7 @@ import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UICache
 import com.benoitmanhes.domain.usecase.cache.GetAllUICachesUseCase
+import com.benoitmanhes.domain.usecase.cache.SortCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.UpdateCachesDistancesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,9 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
+    locationManager: LocationManager,
     getAllUICacheUseCase: GetAllUICachesUseCase,
     private val updateCachesDistancesUseCase: UpdateCachesDistancesUseCase,
-    locationManager: LocationManager,
+    private val sortCacheUseCase: SortCacheUseCase,
 ) : LocationAccessViewModel(locationManager) {
 
     var uiState: ExploreUIState by mutableStateOf(ExploreUIState())
@@ -39,7 +41,7 @@ class ExploreViewModel @Inject constructor(
                             )
                         } ?: result.successData
 
-                        uiState = uiState.copy(caches = cachesWithDistance)
+                        uiState = uiState.copy(caches = sortCacheUseCase(cachesWithDistance))
                     }
                     is CTResult.Loading -> {}
                     is CTResult.Failure -> {}
@@ -65,13 +67,16 @@ class ExploreViewModel @Inject constructor(
     }
 
     override fun onLocationChanged(p0: Location) {
-        uiState = uiState.copy(
-            isAccessPositionGranted = true,
-            currentPosition = p0.toModel(),
-            caches = updateCachesDistancesUseCase(
+        val caches = sortCacheUseCase(
+            updateCachesDistancesUseCase(
                 currentLocation = p0.toModel(),
                 uiCaches = uiState.caches,
             )
+        )
+        uiState = uiState.copy(
+            isAccessPositionGranted = true,
+            currentPosition = p0.toModel(),
+            caches = caches,
         )
     }
 }

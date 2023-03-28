@@ -14,7 +14,9 @@ class GetMyExplorerUseCase @Inject constructor(
 ) : AbstractUseCase() {
 
     suspend operator fun invoke(): Flow<Explorer> {
-        val myExplorerId = authRepository.getAuthAccount()?.explorerId ?: throw CTDomainError(CTDomainError.Code.NO_AUTHENTICATION)
+        val myExplorerId = authRepository.getAuthAccount()?.explorerId ?: throw CTDomainError(
+            CTDomainError.Code.NO_AUTHENTICATION
+        )
         return explorerRepository.getUserExplorerFlow(myExplorerId)
     }
 }

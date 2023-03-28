@@ -1,12 +1,11 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore
 
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.common.extensions.getColor
 import com.benoitmanhes.cacheautresor.common.extensions.getIconCache
-import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyString
 import com.benoitmanhes.cacheautresor.common.extensions.toDistanceText
-import com.benoitmanhes.cacheautresor.common.extensions.toGroundString
 import com.benoitmanhes.cacheautresor.common.extensions.toOneDecimalFormat
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.designsystem.molecule.caches.CacheCard
@@ -14,7 +13,7 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.uimodel.UICache
 
 @Composable
-fun SelectedCacheBanner(
+fun CacheBanner(
     uiCache: UICache,
     modifier: Modifier = Modifier,
 ) {
@@ -29,4 +28,22 @@ fun SelectedCacheBanner(
         distanceText = uiCache.distance?.toDistanceText(),
         modifier = modifier,
     )
+}
+
+object CacheBanner {
+    fun item(
+        scope: LazyListScope,
+        uiCache: UICache,
+        modifier: Modifier = Modifier,
+        key: Any = uiCache.cache.cacheId,
+    ) {
+        scope.item(
+            key = key,
+            contentType = contentType,
+        ) {
+            CacheBanner(uiCache = uiCache, modifier = modifier)
+        }
+    }
+
+    private const val contentType: String = "CacheBanner"
 }

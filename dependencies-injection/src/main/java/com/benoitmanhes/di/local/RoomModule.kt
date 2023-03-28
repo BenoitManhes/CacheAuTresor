@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.benoitmanhes.storage.dao.ExplorerDao
 import com.benoitmanhes.storage.database.MainDatabase
-import com.benoitmanhes.storage.utils.RoomConverters
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

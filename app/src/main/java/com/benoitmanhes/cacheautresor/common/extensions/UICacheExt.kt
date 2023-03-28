@@ -13,7 +13,6 @@ import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.uimodel.UICache
 
-
 @Composable
 internal fun UICache.getIconCache(): IconSpec {
     val vector = when (userStatus) {

@@ -56,7 +56,7 @@ fun Selector(
     Layout(
         modifier = modifier
             .height(Dimens.Size.selectorHeight)
-            .clip(CTTheme.shape.medium)
+            .clip(CTTheme.shape.circle)
             .background(backgroundColor)
             .padding(CTTheme.spacing.micro),
         content = {
@@ -73,7 +73,7 @@ fun Selector(
             Box(
                 modifier = Modifier
                     .layoutId(SelectorId)
-                    .clip(CTTheme.shape.medium)
+                    .clip(CTTheme.shape.circle)
                     .background(contentColor)
             )
         },

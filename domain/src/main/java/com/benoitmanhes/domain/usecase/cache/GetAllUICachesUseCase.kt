@@ -4,11 +4,9 @@ import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
-import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.uimodel.UICache
 import com.benoitmanhes.domain.usecase.AbstractUseCase
-import com.benoitmanhes.domain.usecase.common.CalculateDistanceUseCase
 import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

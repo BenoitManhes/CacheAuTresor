@@ -128,7 +128,10 @@ internal fun ExploreMapScreen(
             ) { isCurrentLocation ->
                 if (isCurrentLocation) {
                     FabIconButton(
-                        icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.PositionCurrent, contentDescription = null),
+                        icon = IconSpec.VectorIcon(
+                            imageVector = CTTheme.icon.PositionCurrent,
+                            contentDescription = null
+                        ),
                         onClick = {},
                         type = FabButtonType.COLORED,
                     )
@@ -153,7 +156,7 @@ internal fun ExploreMapScreen(
                 }
             }
             uiState.cacheSelected?.let { uiCache ->
-                SelectedCacheBanner(uiCache = uiCache)
+                CacheBanner(uiCache = uiCache)
             }
         }
     }

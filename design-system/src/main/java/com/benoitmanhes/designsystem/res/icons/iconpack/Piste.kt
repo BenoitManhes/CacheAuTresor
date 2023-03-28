@@ -18,12 +18,19 @@ public val CTIconPack.Piste: ImageVector
             return _iconPiste!!
         }
         _iconPiste = Builder(
-            name = "Piste", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
-            viewportWidth = 48.0f, viewportHeight = 48.0f
+            name = "Piste",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
         ).apply {
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(6.0f, 32.0859f)
@@ -65,8 +72,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(13.7344f, 42.0f)
@@ -126,8 +137,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(41.9999f, 32.5078f)
@@ -146,8 +161,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(20.9062f, 42.0f)
@@ -160,8 +179,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(32.8275f, 25.7062f)
@@ -201,8 +224,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(24.8531f, 18.9431f)
@@ -218,8 +245,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(25.5235f, 30.6028f)
@@ -237,8 +268,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(24.0235f, 29.1431f)
@@ -254,8 +289,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(20.7731f, 23.2416f)
@@ -271,8 +310,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(20.2087f, 24.8222f)
@@ -288,8 +331,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(26.4413f, 36.4594f)
@@ -303,8 +350,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(23.6108f, 39.5128f)
@@ -320,8 +371,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(23.1506f, 15.7472f)
@@ -334,8 +389,12 @@ public val CTIconPack.Piste: ImageVector
                 close()
             }
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = NonZero
             ) {
                 moveTo(37.4155f, 23.3119f)
@@ -353,9 +412,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(6.0f, 32.0859f)
                     curveTo(6.0656f, 31.9791f, 6.1388f, 31.8759f, 6.195f, 31.7644f)
@@ -398,9 +461,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(13.7344f, 42.0f)
                     curveTo(13.3594f, 41.7637f, 13.2544f, 41.4187f, 13.2656f, 40.9875f)
@@ -461,9 +528,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(41.9999f, 32.5078f)
                     curveTo(41.8405f, 32.7975f, 41.6399f, 33.0244f, 41.2687f, 33.0103f)
@@ -483,9 +554,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(20.9062f, 42.0f)
                     curveTo(20.5884f, 41.8312f, 20.3437f, 41.6034f, 20.4112f, 41.2069f)
@@ -499,9 +574,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(32.8275f, 25.7062f)
                     curveTo(32.8557f, 26.2594f, 32.8275f, 26.7375f, 32.9138f, 27.1894f)
@@ -542,9 +621,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(24.8531f, 18.9431f)
                     curveTo(24.8531f, 19.5056f, 24.1771f, 20.2875f, 23.7646f, 20.3381f)
@@ -561,9 +644,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(25.5235f, 30.6028f)
                     curveTo(25.7494f, 30.7209f, 25.9294f, 30.7697f, 26.0447f, 30.8841f)
@@ -582,9 +669,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(24.0235f, 29.1431f)
                     curveTo(23.8707f, 29.3306f, 23.7507f, 29.5959f, 23.5547f, 29.6756f)
@@ -601,9 +692,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(20.7731f, 23.2416f)
                     curveTo(20.5931f, 23.0981f, 20.3765f, 22.9819f, 20.2406f, 22.8038f)
@@ -620,9 +715,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(20.2087f, 24.8222f)
                     curveTo(20.35f, 24.8194f, 20.4883f, 24.8633f, 20.6021f, 24.9473f)
@@ -639,9 +738,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(26.4413f, 36.4594f)
                     curveTo(25.8338f, 36.4678f, 25.4973f, 36.0291f, 25.6388f, 35.5556f)
@@ -656,9 +759,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(23.6108f, 39.5128f)
                     curveTo(23.4233f, 39.3647f, 23.1899f, 39.2456f, 23.0483f, 39.06f)
@@ -675,9 +782,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(23.1506f, 15.7472f)
                     curveTo(23.1568f, 15.565f, 23.234f, 15.3924f, 23.3657f, 15.2664f)
@@ -691,9 +802,13 @@ public val CTIconPack.Piste: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = NonZero
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = NonZero
                 ) {
                     moveTo(37.4155f, 23.3119f)
                     curveTo(37.4076f, 23.4952f, 37.3297f, 23.6686f, 37.1979f, 23.7962f)
