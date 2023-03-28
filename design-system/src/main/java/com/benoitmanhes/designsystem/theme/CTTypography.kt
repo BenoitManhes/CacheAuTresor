@@ -15,6 +15,7 @@ private val LeagueSpartan = FontFamily(
     Font(R.font.league_spartan_medium, FontWeight.W500),
 )
 
+@Suppress("DEPRECATION")
 @Immutable
 object CTTypography {
     val header1: TextStyle = TextStyle(
