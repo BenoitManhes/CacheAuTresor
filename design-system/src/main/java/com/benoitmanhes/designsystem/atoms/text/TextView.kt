@@ -1,4 +1,4 @@
-package com.benoitmanhes.designsystem.atoms
+package com.benoitmanhes.designsystem.atoms.text
 
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
 fun CTTextView(
@@ -15,7 +16,7 @@ fun CTTextView(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     style: TextStyle = LocalTextStyle.current,
-    maxLine: Int = Int.MAX_VALUE,
+    maxLine: Int = UiConstants.Text.MaxLineSize,
     overflow: TextOverflow = TextOverflow.Clip,
 ) {
     text.value()?.let { safeValue ->

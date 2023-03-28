@@ -29,6 +29,8 @@ object Dimens {
         val bodyFontSize: TextUnit = 18.sp
         val bodySmallFontSize: TextUnit = 15.sp
         val captionFontSize: TextUnit = 12.sp
+
+        val cacheCardTitleMinFontSize: TextUnit = 18.sp
     }
 
     object Corner {
@@ -61,6 +63,8 @@ object Dimens {
         val selectorHeight: Dp = 36.dp
 
         val lottieAnimationButton: Dp = 24.dp
+        val lottieAnimationSmallLoading: Dp = 36.dp
+        val lottieAnimationBigLoading: Dp = 64.dp
         val primaryButtonMinHeight: Dp = 48.dp
 
         val cacheCardHeight: Dp = 96.dp

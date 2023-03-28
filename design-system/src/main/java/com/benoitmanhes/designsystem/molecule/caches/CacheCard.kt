@@ -18,7 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.benoitmanhes.designsystem.atoms.CTTextView
+import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
+import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.label.LabelIconMedium
 import com.benoitmanhes.designsystem.molecule.label.LabelIconSmall
 import com.benoitmanhes.designsystem.molecule.slot.IconSlotHuge
@@ -104,10 +105,13 @@ private fun RowScope.MainInfoLayout(
         CTTextView(
             text = creatorText,
             style = CTTheme.typography.caption,
+            maxLine = 1,
         )
-        CTTextView(
+        CTResponsiveText(
             text = titleText,
             style = CTTheme.typography.header1,
+            minFontSize = Dimens.Font.cacheCardTitleMinFontSize,
+            maxLines = 1,
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large)
