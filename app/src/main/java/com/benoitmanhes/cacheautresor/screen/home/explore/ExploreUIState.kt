@@ -9,4 +9,5 @@ data class ExploreUIState(
     val isAccessPositionGranted: Boolean? = null,
     val caches: List<UICache> = emptyList(),
     val cacheSelected: UICache? = null,
+    val isLoading: Boolean = false,
 )

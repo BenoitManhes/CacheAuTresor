@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.error.localizedDescription
 import com.benoitmanhes.designsystem.lab.Selector
 import com.benoitmanhes.designsystem.lab.SelectorItem
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
@@ -36,11 +37,13 @@ import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreRoute(
+    showSnackbar: (msg: String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
@@ -50,6 +53,7 @@ fun ExploreRoute(
         position = CameraPosition.fromLatLngZoom(PositionDefault, ZoomDefault)
     }
     val pagerState = rememberPagerState()
+    val snackbarMessage = viewModel.errorSnackbar?.localizedDescription()
 
     LaunchedEffect(true) {
         viewModel.initLocationListener(context)
@@ -58,6 +62,12 @@ fun ExploreRoute(
     LaunchedEffect(selectorScreenItem) {
         val page = selectorItems.indexOf(selectorScreenItem)
         pagerState.animateScrollToPage(page)
+    }
+
+    LaunchedEffect(snackbarMessage) {
+        if (snackbarMessage != null) {
+            showSnackbar(snackbarMessage)
+        }
     }
 
     Box(

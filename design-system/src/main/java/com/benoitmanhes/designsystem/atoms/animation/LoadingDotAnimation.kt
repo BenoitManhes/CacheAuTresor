@@ -1,4 +1,4 @@
-package com.benoitmanhes.designsystem.atoms
+package com.benoitmanhes.designsystem.atoms.animation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

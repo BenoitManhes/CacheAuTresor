@@ -59,6 +59,8 @@ object Dimens {
         val fabButtonSize: Dp = 48.dp
         val fabIconButtonSize: Dp = 42.dp
 
+        val compassButtonSize: Dp = 36.dp
+
         val selectorMinWidth: Dp = 36.dp
         val selectorHeight: Dp = 36.dp
 

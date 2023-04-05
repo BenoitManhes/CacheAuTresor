@@ -16,7 +16,11 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeNavigation(navController: NavHostController, scaffoldPadding: PaddingValues) {
+fun HomeNavigation(
+    navController: NavHostController,
+    scaffoldPadding: PaddingValues,
+    showSnackbar: (String) -> Unit,
+) {
     AnimatedNavHost(
         navController = navController,
         startDestination = HomeDestination.Explore.route
@@ -24,7 +28,8 @@ fun HomeNavigation(navController: NavHostController, scaffoldPadding: PaddingVal
         composable(HomeDestination.News.route) { NewsScreen() }
         composable(HomeDestination.Explore.route) {
             ExploreRoute(
-                Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding())
+                modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),
+                showSnackbar = showSnackbar,
             )
         }
         composable(HomeDestination.Create.route) { CreateScreen() }

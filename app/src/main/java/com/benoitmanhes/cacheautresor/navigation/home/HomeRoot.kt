@@ -50,6 +50,7 @@ fun HomeRoot(
         HomeNavigation(
             navController = navController,
             scaffoldPadding = innerPadding,
+            showSnackbar = showErrorSnackBar,
         )
     }
     Icons.Rounded.Add
