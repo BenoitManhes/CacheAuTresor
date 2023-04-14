@@ -61,6 +61,8 @@ object Dimens {
 
         val compassButtonSize: Dp = 36.dp
 
+        val jaugeSize: Dp = 84.dp
+
         val selectorMinWidth: Dp = 36.dp
         val selectorHeight: Dp = 36.dp
 
