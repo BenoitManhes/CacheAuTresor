@@ -5,8 +5,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,6 +63,7 @@ internal fun ExploreMapScreen(
     updateMapPosition: (Coordinates) -> Unit,
     selectCache: (UICache) -> Unit,
     unselectCache: () -> Unit,
+    navigateToCacheDetail: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -212,7 +211,10 @@ internal fun ExploreMapScreen(
                 }
             }
             uiState.cacheSelected?.let { uiCache ->
-                CacheBanner(uiCache = uiCache)
+                CacheBanner(
+                    uiCache = uiCache,
+                    onClick = navigateToCacheDetail,
+                )
             }
         }
     }

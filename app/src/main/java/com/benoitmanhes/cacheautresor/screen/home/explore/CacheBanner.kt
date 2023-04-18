@@ -16,6 +16,7 @@ import com.benoitmanhes.domain.uimodel.UICache
 fun CacheBanner(
     uiCache: UICache,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     CacheCard(
         icon = uiCache.getIconCache(),
@@ -27,6 +28,7 @@ fun CacheBanner(
         sizeText = uiCache.cache.size.toSizeText(),
         distanceText = uiCache.distance?.toDistanceText(),
         modifier = modifier,
+        onClick = onClick,
     )
 }
 
@@ -36,12 +38,17 @@ object CacheBanner {
         uiCache: UICache,
         modifier: Modifier = Modifier,
         key: Any = uiCache.cache.cacheId,
+        onClick: () -> Unit,
     ) {
         scope.item(
             key = key,
             contentType = contentType,
         ) {
-            CacheBanner(uiCache = uiCache, modifier = modifier)
+            CacheBanner(
+                uiCache = uiCache,
+                modifier = modifier,
+                onClick = onClick,
+            )
         }
     }
 

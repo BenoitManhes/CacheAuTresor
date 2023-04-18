@@ -1,5 +1,5 @@
 package com.benoitmanhes.cacheautresor.navigation
 
-interface AppDestination {
+interface CTDestination {
     val route: String
 }

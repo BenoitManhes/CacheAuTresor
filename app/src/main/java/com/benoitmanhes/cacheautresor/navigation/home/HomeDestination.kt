@@ -1,7 +1,7 @@
 package com.benoitmanhes.cacheautresor.navigation.home
 
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.navigation.AppDestination
+import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomNavBarItemEntry
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.Add
@@ -19,7 +19,7 @@ sealed class HomeDestination(
     override val selectedIcon: IconSpec,
     override val unselectedIcon: IconSpec,
     override val labelText: TextSpec,
-) : BottomNavBarItemEntry, AppDestination {
+) : BottomNavBarItemEntry, CTDestination {
 
     object News : HomeDestination(
         route = "news",
