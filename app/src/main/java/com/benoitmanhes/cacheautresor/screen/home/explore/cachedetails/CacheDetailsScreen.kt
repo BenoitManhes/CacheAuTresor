@@ -11,7 +11,6 @@ fun CacheDetailsRoute() {
 
 @Composable
 private fun CacheDetailsScreen() {
-
 }
 
 @Preview

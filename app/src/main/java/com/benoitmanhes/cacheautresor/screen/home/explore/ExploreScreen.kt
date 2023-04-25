@@ -35,9 +35,6 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.rememberCameraPositionState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -49,9 +46,6 @@ fun ExploreRoute(
 ) {
     val context = LocalContext.current
     var page by rememberSaveable { mutableStateOf(0) }
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(PositionDefault, ZoomDefault)
-    }
     val pagerState = rememberPagerState()
     val snackbarMessage = viewModel.errorSnackbar?.localizedDescription()
 
@@ -81,13 +75,13 @@ fun ExploreRoute(
                 0 -> {
                     ExploreMapScreen(
                         uiState = viewModel.uiState,
-                        cameraPositionState = cameraPositionState,
-                        updateMapPosition = viewModel::setMapPosition,
+                        updateMapPosition = viewModel::onMapPositionChange,
                         selectCache = viewModel::selectCache,
                         unselectCache = viewModel::unselectCache,
                         navigateToCacheDetail = navigateToCacheDetail,
                     )
                 }
+
                 1 -> {
                     ExploreListScreen(
                         uiState = viewModel.uiState,
@@ -129,8 +123,6 @@ fun ExploreRoute(
     }
 }
 
-private const val ZoomDefault: Float = 15f
-private val PositionDefault: LatLng = LatLng(45.76, 4.83)
 private val SelectorItemWidth: Dp = 72.dp
 
 private val selectorItems: List<SelectorItem> = listOf(

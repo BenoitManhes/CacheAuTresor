@@ -50,7 +50,9 @@ fun CTResponsiveText(
                         fontSize = textStyle.fontSize * UiConstants.Text.RatioFontSizeReductionResponsiveText,
                         lineHeight = if (textStyle.lineHeight != TextUnit.Unspecified) {
                             textStyle.lineHeight * UiConstants.Text.RatioLineHeightReductionResponsiveText
-                        } else textStyle.lineHeight,
+                        } else {
+                            textStyle.lineHeight
+                        },
                     )
                 } else {
                     readyToDraw = true

@@ -76,9 +76,8 @@ dependencies {
     implementation(Google.firebase.authenticationKtx)
     implementation(Google.firebase.cloudFirestoreKtx)
 
-    // Google map
-    implementation(Google.android.maps.compose)
-    implementation(Google.android.playServices.maps)
+    // Map
+    implementation("org.osmdroid:osmdroid-android:_")
 
     // Hilt
     implementation(Google.dagger.hilt.android)
