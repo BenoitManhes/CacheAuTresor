@@ -3,6 +3,7 @@ package com.benoitmanhes.cacheautresor.screen.home.explore
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.common.extensions.getColor
 import com.benoitmanhes.cacheautresor.common.extensions.getIconCache
 import com.benoitmanhes.cacheautresor.common.extensions.toDistanceText
@@ -15,12 +16,13 @@ import com.benoitmanhes.domain.uimodel.UICache
 @Composable
 fun CacheBanner(
     uiCache: UICache,
+    color: Color = uiCache.getColor(),
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     CacheCard(
         icon = uiCache.getIconCache(),
-        color = uiCache.getColor(),
+        color = color,
         creatorText = TextSpec.RawString(uiCache.explorerName ?: "-"),
         titleText = TextSpec.RawString(uiCache.cache.title),
         difficultyText = TextSpec.RawString(uiCache.cache.difficulty.toOneDecimalFormat()),

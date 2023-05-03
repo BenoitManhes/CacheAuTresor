@@ -54,6 +54,16 @@ object Dimens {
         val strong: Dp = 3.dp
     }
 
+    /* === Components Size === */
+
+    object Button {
+        val iconButtonSize: Dp = 24.dp
+    }
+
+    object TopBar {
+        val height: Dp = 56.dp
+    }
+
     object Size {
         val bottomBarItemSize: Dp = 28.dp
         val fabButtonSize: Dp = 48.dp

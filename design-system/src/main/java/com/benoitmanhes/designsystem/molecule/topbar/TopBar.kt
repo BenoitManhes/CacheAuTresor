@@ -11,10 +11,10 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CTTopBar(
+fun CTTopBarLegacy(
     title: TextSpec,
     modifier: Modifier = Modifier,
-    options: Set<TopBarOption> = emptySet(),
+    options: Set<CTTopBarOption> = emptySet(),
 ) {
     SmallTopAppBar(
         modifier = modifier,
@@ -25,7 +25,7 @@ fun CTTopBar(
             )
         },
         navigationIcon = {
-            options.filterIsInstance<TopBarOption.NavIcon>().forEach {
+            options.filterIsInstance<CTTopBarOption.NavIcon>().forEach {
                 CTIcon(
                     icon = it.icon,
                     onClick = it.onClick,
@@ -33,7 +33,7 @@ fun CTTopBar(
             }
         },
         actions = {
-            options.filterIsInstance<TopBarOption.ActionIcon>().forEach {
+            options.filterIsInstance<CTTopBarOption.ActionIcon>().forEach {
                 CTIcon(
                     icon = it.icon,
                     onClick = it.onClick,

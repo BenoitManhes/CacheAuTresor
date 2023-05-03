@@ -2,6 +2,7 @@ package com.benoitmanhes.cacheautresor.screen.home.explore
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -26,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.benoitmanhes.cacheautresor.common.extensions.getColor
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
 import com.benoitmanhes.cacheautresor.utils.AppConstants
@@ -212,9 +214,11 @@ internal fun ExploreMapScreen(
                 ) {
 
                     (uiState.cacheSelected ?: lastCacheSelected)?.let { uiCache ->
+                        val cacheBannerColor by animateColorAsState(uiCache.getColor())
                         CacheBanner(
                             uiCache = uiCache,
                             onClick = navigateToCacheDetail,
+                            color = cacheBannerColor,
                         )
                     }
                 }

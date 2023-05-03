@@ -19,7 +19,7 @@ import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
 fun CTResponsiveText(
-    text: TextSpec,
+    text: TextSpec?,
     minFontSize: TextUnit,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
@@ -31,7 +31,7 @@ fun CTResponsiveText(
     var textStyle by remember { mutableStateOf(style) }
     var readyToDraw by remember { mutableStateOf(false) }
 
-    text.value()?.let { _text ->
+    text?.value()?.let { _text ->
         Text(
             modifier = modifier
                 .drawWithContent {
