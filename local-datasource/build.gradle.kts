@@ -6,12 +6,12 @@ plugins {
 
 dependencies {
     // DataStore
-    implementation("androidx.datastore:datastore-preferences:_")
+    implementation(AndroidX.dataStore.preferences)
 
     // Room
-    implementation("androidx.room:room-runtime:_")
-    implementation("androidx.room:room-ktx:_")
-    kapt("androidx.room:room-compiler:_")
+    implementation(AndroidX.room.runtime)
+    implementation(AndroidX.room.ktx)
+    kapt(AndroidX.room.compiler)
 
     // Hilt
     implementation(Google.dagger.hilt.android)

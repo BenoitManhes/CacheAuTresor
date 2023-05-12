@@ -1,37 +1,32 @@
-package com.benoitmanhes.designsystem.molecule.caches
+package com.benoitmanhes.designsystem.molecule.button.iconbutton
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CTMarker(
+fun CTIconButton(
     icon: IconSpec,
-    color: Color,
+    size: Dimens.IconButtonSize,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     Surface(
-        modifier = modifier
-            .size(Dimens.Size.markerSize),
+        modifier = modifier.size(size.button),
         shape = CTTheme.shape.circle,
-        color = color,
-        border = BorderStroke(
-            width = CTTheme.stroke.medium,
-            color = CTTheme.color.onPrimary,
-        ),
+        color = CTTheme.color.surface,
         elevation = CTTheme.elevation.none,
+        onClick = onClick,
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -39,20 +34,8 @@ fun CTMarker(
         ) {
             CTIcon(
                 icon = icon,
-                color = CTTheme.color.onPrimary,
-                size = Dimens.IconSize.Small,
+                size = size.icon,
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewCTMarker() {
-    CTTheme {
-        CTMarker(
-            icon = IconSpec.VectorIcon(CTTheme.icon.Parchment, contentDescription = null),
-            color = CTTheme.color.primary,
-        )
     }
 }

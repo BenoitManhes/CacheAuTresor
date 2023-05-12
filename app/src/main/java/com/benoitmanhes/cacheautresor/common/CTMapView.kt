@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.screen.home.explore
+package com.benoitmanhes.cacheautresor.common
 
 import android.content.Context
 import androidx.compose.runtime.Composable

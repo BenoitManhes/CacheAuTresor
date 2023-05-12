@@ -27,9 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.benoitmanhes.cacheautresor.common.CTMapView
 import com.benoitmanhes.cacheautresor.common.extensions.getColor
+import com.benoitmanhes.cacheautresor.common.extensions.getOSMMarker
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
+import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
@@ -40,7 +43,6 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.extension.similar
-import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UICache
 import kotlinx.coroutines.launch
@@ -54,7 +56,6 @@ import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
@@ -64,7 +65,7 @@ internal fun ExploreMapScreen(
     updateMapPosition: (Coordinates) -> Unit,
     selectCache: (UICache) -> Unit,
     unselectCache: () -> Unit,
-    navigateToCacheDetail: () -> Unit,
+    navigateToCacheDetail: (String) -> Unit,
 ) {
     val mapViewState = rememberMapViewWithLifecycle()
     val context = LocalContext.current
@@ -87,18 +88,12 @@ internal fun ExploreMapScreen(
         markerFolder.items.clear()
 
         uiState.caches.forEach { uiCache ->
-            val marker = Marker(mapViewState).apply {
-                position = uiCache.cache.coordinates.toGeoPoint()
-                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                icon = uiCache.getCacheMarker().getDrawable(
-                    isSelected = uiState.cacheSelected == uiCache,
-                    context = context,
-                )
-                setOnMarkerClickListener { _, _ ->
-                    selectCache(uiCache)
-                    true
-                }
-            }
+            val marker = uiCache.getOSMMarker(
+                context = context,
+                mapViewState = mapViewState,
+                isSelected = uiState.cacheSelected == uiCache,
+                onClick = { selectCache(uiCache) },
+            )
             markerFolder.add(marker)
         }
 
@@ -212,12 +207,11 @@ internal fun ExploreMapScreen(
                         targetOffsetY = { (it * 1.5).toInt() },
                     )
                 ) {
-
                     (uiState.cacheSelected ?: lastCacheSelected)?.let { uiCache ->
                         val cacheBannerColor by animateColorAsState(uiCache.getColor())
                         CacheBanner(
                             uiCache = uiCache,
-                            onClick = navigateToCacheDetail,
+                            onClick = { navigateToCacheDetail(uiCache.cache.cacheId) },
                             color = cacheBannerColor,
                         )
                     }
@@ -237,10 +231,10 @@ private fun MapView.setupMap(
     zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
     controller.setZoom(AppConstants.Map.defaultZoom)
     controller.setCenter(AppConstants.Map.defaultLocation.toGeoPoint())
-    maxZoomLevel = 22.0
-    minZoomLevel = 3.5
+    maxZoomLevel = AppConstants.Map.maxZoom
+    minZoomLevel = AppConstants.Map.minZoom
     isVerticalMapRepetitionEnabled = false
-    setScrollableAreaLimitLatitude(82.0, -82.0, 0)
+    setScrollableAreaLimitLatitude(AppConstants.Map.areaLimitLatNorth, AppConstants.Map.areaLimitLatSouth, 0)
 
     // Setup my location
     val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this).apply {
@@ -271,7 +265,7 @@ private fun MapView.setupMap(
     overlays.add(mapEventOverlay)
 }
 
-private fun MapView.refresh() {
+fun MapView.refresh() {
     if (isAnimating) {
         postInvalidate()
     } else {
@@ -286,16 +280,3 @@ private fun MapView.refresh() {
 // }
 //
 // private val CompassTopPadding: Dp = 200.dp
-
-private fun UICache.getCacheMarker(): CacheMarker = when (userStatus) {
-    UICache.CacheUserStatus.Owned -> CacheMarker.Owner
-    UICache.CacheUserStatus.Found -> CacheMarker.Found
-    else -> {
-        when (cache) {
-            is Cache.Classical -> CacheMarker.Classical
-            is Cache.Coop -> CacheMarker.Coop
-            is Cache.Mystery -> CacheMarker.Mystery
-            is Cache.Piste -> CacheMarker.Piste
-        }
-    }
-}

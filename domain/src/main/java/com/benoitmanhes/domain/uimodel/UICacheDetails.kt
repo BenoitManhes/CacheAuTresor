@@ -2,13 +2,12 @@ package com.benoitmanhes.domain.uimodel
 
 import com.benoitmanhes.domain.model.Cache
 
-data class UICache(
+data class UICacheDetails(
     val cache: Cache,
     val explorerName: String?,
-    val userStatus: CacheUserStatus,
-    val distance: Double?,
+    val userStatus: CacheDetailsUserStatus,
 ) : UIModel {
-    enum class CacheUserStatus {
-        Available, Found, Lock, Owned;
+    enum class CacheDetailsUserStatus {
+        Available, Started, Found, Owned;
     }
 }

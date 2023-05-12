@@ -46,13 +46,13 @@ internal fun RowScope.BottomNavBarItem(
                     if (isSelectedIcon) {
                         CTIcon(
                             icon = selectedIcon,
-                            size = Dimens.Size.bottomBarItemSize,
+                            size = Dimens.IconSize.BottomBarItem,
                             color = selectedContentColor,
                         )
                     } else {
                         CTIcon(
                             icon = unselectedIcon,
-                            size = Dimens.Size.bottomBarItemSize,
+                            size = Dimens.IconSize.BottomBarItem,
                             color = unselectedContentColor,
                         )
                     }

@@ -2,11 +2,11 @@ package com.benoitmanhes.cacheautresor.navigation.explore
 
 import com.benoitmanhes.cacheautresor.navigation.CTDestination
 
-sealed class ExploreDestination(
-    override val route: String,
-) : CTDestination {
+sealed interface ExploreDestination : CTDestination {
 
-    object CacheDetails : ExploreDestination(
-        route = "cache-details",
-    )
+    object CacheDetails : ExploreDestination {
+        const val cacheDetailsArgument: String = "cacheId"
+        override val route: String = "cache-details/{$cacheDetailsArgument}"
+        fun getRoute(cacheId: String): String = route.replace("{$cacheDetailsArgument}", cacheId)
+    }
 }

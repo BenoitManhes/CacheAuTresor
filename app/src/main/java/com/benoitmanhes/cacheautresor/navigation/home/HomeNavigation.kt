@@ -9,13 +9,12 @@ import androidx.navigation.NavHostController
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.navigation.explore.exploreNavGraph
 import com.benoitmanhes.cacheautresor.screen.home.create.CreateScreen
-import com.google.accompanist.navigation.animation.composable
 import com.benoitmanhes.cacheautresor.screen.home.explore.ExploreRoute
 import com.benoitmanhes.cacheautresor.screen.home.instruments.InstrumentScreen
 import com.benoitmanhes.cacheautresor.screen.home.news.NewsScreen
 import com.benoitmanhes.cacheautresor.screen.home.profile.ProfileScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import timber.log.Timber
+import com.google.accompanist.navigation.animation.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -31,9 +30,8 @@ fun HomeNavigation(
         composable(HomeDestination.News.route) { NewsScreen() }
         composable(HomeDestination.Explore.route) {
             ExploreRoute(
-                navigateToCacheDetail = {
-                    Timber.d("navigate to CacheDetail")
-                    navController.navigate(ExploreDestination.CacheDetails.route)
+                navigateToCacheDetail = { cacheSelectedId ->
+                    navController.navigate(ExploreDestination.CacheDetails.getRoute(cacheSelectedId))
                 },
                 showSnackbar = showSnackbar,
                 modifier = Modifier.padding(bottom = scaffoldPadding.calculateBottomPadding()),

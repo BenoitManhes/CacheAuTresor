@@ -22,7 +22,7 @@ import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.label.LabelIconMedium
 import com.benoitmanhes.designsystem.molecule.label.LabelIconSmall
-import com.benoitmanhes.designsystem.molecule.slot.IconSlotHuge
+import com.benoitmanhes.designsystem.atoms.CTIconSlot
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Box
 import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
@@ -63,8 +63,9 @@ fun CacheCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
         ) {
-            IconSlotHuge(
+            CTIconSlot(
                 icon = icon,
+                size = Dimens.IconSlotSize.Huge,
                 backgroundColor = color,
                 contentColor = CTTheme.color.onPrimary,
             )

@@ -55,7 +55,9 @@ dependencies {
 
     // AndroidX
     implementation(AndroidX.core.ktx)
+    implementation(AndroidX.lifecycle.process)
     implementation(AndroidX.lifecycle.runtimeKtx)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:_")
 
     // Compose
     implementation(AndroidX.compose.ui)

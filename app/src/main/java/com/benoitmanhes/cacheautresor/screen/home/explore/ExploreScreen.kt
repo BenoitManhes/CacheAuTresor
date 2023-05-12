@@ -39,7 +39,7 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreRoute(
-    navigateToCacheDetail: () -> Unit,
+    navigateToCacheDetail: (String) -> Unit,
     showSnackbar: (msg: String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),

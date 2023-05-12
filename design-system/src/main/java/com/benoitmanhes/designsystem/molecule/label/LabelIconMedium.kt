@@ -28,7 +28,7 @@ fun LabelIconMedium(
         CTIcon(
             icon = icon,
             color = color,
-            size = Dimens.Size.mediumIconSize,
+            size = Dimens.IconSize.Medium,
         )
         SpacerMicro()
         CTTextView(

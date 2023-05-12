@@ -60,7 +60,7 @@ fun FabButton(
             ) {
                 CTIcon(
                     icon = icon,
-                    size = Dimens.Size.largeIconSize,
+                    size = Dimens.IconSize.Large,
                     color = attribute.contentColor,
                 )
                 text?.let {
@@ -84,6 +84,7 @@ private fun provideFabButtonAttribute(type: FabButtonType, color: Color): FabBut
         backgroundColor = color,
         border = null,
     )
+
     FabButtonType.OUTLINED -> FabButtonParameters(
         contentColor = color,
         backgroundColor = contentColorFor(color),
