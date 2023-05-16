@@ -1,66 +1,48 @@
-package com.benoitmanhes.designsystem.molecule
+package com.benoitmanhes.designsystem.molecule.jauge
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.CTIcons
-import com.benoitmanhes.designsystem.res.icons.iconpack.Favorite
+import com.benoitmanhes.designsystem.res.shapes.JaugeShape
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.UiConstants
-import timber.log.Timber
 
 @Composable
-fun CTJauge(
+internal fun CircularJauge(
     progress: Float,
     modifier: Modifier = Modifier,
     color: Color = CTTheme.color.primary,
-    stepCount: Int = UiConstants.Jauge.stepCount,
+    size: Dp = Dimens.Jauge.size,
 ) {
-    val borderColor = CTTheme.color.surface
-    val backgroundColor = CTTheme.color.placeholder
-    val icon = CTTheme.icon.Favorite
-
-    icon.pat
+    val backgroundColor = CTTheme.color.disable
 
     Canvas(
         modifier = modifier
-            .size(Dimens.Size.jaugeSize)
+            .size(size)
+            .clip(JaugeShape)
+            .background(backgroundColor)
             .then(modifier),
     ) {
-        val borderStroke = Stroke(width = (size.width * UiConstants.Jauge.borderStrokeSizeRatio), cap = StrokeCap.Round)
-        val fillStroke = Stroke(width = borderStroke.width * UiConstants.Jauge.fillStrokeRatio, cap = StrokeCap.Round)
-        for (i in stepCount downTo 1) {
-            val _progress = i / stepCount.toFloat()
-            val progressOffset = if (i != stepCount) {
-                -(borderStroke.width / (size.width * 5))
-            } else 0f
-            drawCircularIndicator(_progress + progressOffset, color = borderColor, stroke = borderStroke)
-            drawCircularIndicator(_progress + progressOffset, color = backgroundColor, stroke = fillStroke, strokeRef = borderStroke)
-        }
-        drawOutline(
-            outline = GenericShape {
-
-            },
-            color = color,
-            style = borderStroke,
-        )
+        val borderStroke = Stroke(width = (this.size.width * UiConstants.Jauge.borderStrokeSizeRatio * 0.54f), cap = StrokeCap.Round)
+        drawCircularIndicator(progress, color = color, stroke = borderStroke)
     }
 }
 
@@ -86,15 +68,26 @@ private fun DrawScope.drawCircularIndicator(
 
 @Preview
 @Composable
-private fun PreviewCTJauge() {
+private fun PreviewCircularJauge() {
     CTTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            CTJauge(
-                progress = 0.4f, modifier = Modifier.background(Color.Cyan)
-            )
+            Column {
+
+                CircularJauge(
+                    progress = 0.4f,
+                )
+                SpacerLarge()
+                CircularJauge(
+                    progress = 0.66f,
+                )
+                SpacerLarge()
+                CircularJauge(
+                    progress = 1f,
+                )
+            }
         }
     }
 }

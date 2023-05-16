@@ -8,6 +8,7 @@ object UiConstants {
         const val stepCount: Int = 5
         const val borderStrokeSizeRatio: Float = 0.15f
         const val fillStrokeRatio: Float = 0.66f
+        const val progressAnimDurationMillis: Int = 1500
     }
 
     object Text {

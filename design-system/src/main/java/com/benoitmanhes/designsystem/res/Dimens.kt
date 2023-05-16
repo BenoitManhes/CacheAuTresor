@@ -1,6 +1,7 @@
 package com.benoitmanhes.designsystem.res
 
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,14 +55,16 @@ object Dimens {
         val strong: Dp = 3.dp
     }
 
+    object Jauge {
+        val size: Dp = 84.dp
+    }
+
     object Size {
         val bottomBarItemSize: Dp = 28.dp
         val fabButtonSize: Dp = 48.dp
         val fabIconButtonSize: Dp = 42.dp
 
         val compassButtonSize: Dp = 36.dp
-
-        val jaugeSize: Dp = 84.dp
 
         val selectorMinWidth: Dp = 36.dp
         val selectorHeight: Dp = 36.dp
