@@ -30,7 +30,7 @@ object Dimens {
         val bodyFontSize: TextUnit = 18.sp
         val bodySmallFontSize: TextUnit = 15.sp
         val captionFontSize: TextUnit = 12.sp
-
+        val captionSmallFontSize: TextUnit = 10.sp
         val cacheCardTitleMinFontSize: TextUnit = 18.sp
     }
 
@@ -88,8 +88,13 @@ object Dimens {
     }
 
     object Jauge {
-        val size: Dp = 84.dp
-	}
+        val size: DpSize = DpSize(
+            width = 84.dp,
+            height = 68.dp,
+        )
+        val circleIndicatorSize: Dp = size.width
+        val maxTextSize: Dp = 60.dp
+    }
 
     object TopBar {
         val height: Dp = 56.dp
@@ -111,11 +116,6 @@ object Dimens {
         val cacheCardHeight: Dp = 96.dp
 
         val markerSize: Dp = 24.dp
-
-        val smallIconSize: Dp = 16.dp
-        val mediumIconSize: Dp = 24.dp
-        val largeIconSize: Dp = 32.dp
-        val hugeIconSize: Dp = 48.dp
 
         val textFieldMinHeight: Dp = 48.dp
         val textFieldMinWidth: Dp = 180.dp

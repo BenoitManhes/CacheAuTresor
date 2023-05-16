@@ -2,6 +2,7 @@ package com.benoitmanhes.designsystem.res.shapes
 
 import androidx.compose.ui.graphics.Shape
 
+@SuppressWarnings("MaxLineLength")
 val JaugeShape: Shape = SvgShape(
     viewportWidth = 238f,
     viewportHeight = 238f,

@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.shapes.JaugeShape
@@ -30,7 +29,7 @@ internal fun CircularJauge(
     progress: Float,
     modifier: Modifier = Modifier,
     color: Color = CTTheme.color.primary,
-    size: Dp = Dimens.Jauge.size,
+    size: Dp = Dimens.Jauge.circleIndicatorSize,
 ) {
     val backgroundColor = CTTheme.color.disable
 
@@ -41,7 +40,10 @@ internal fun CircularJauge(
             .background(backgroundColor)
             .then(modifier),
     ) {
-        val borderStroke = Stroke(width = (this.size.width * UiConstants.Jauge.borderStrokeSizeRatio * 0.54f), cap = StrokeCap.Round)
+        val borderStroke = Stroke(
+            width = (this.size.width * UiConstants.Jauge.borderStrokeSizeRatio * 0.54f),
+            cap = StrokeCap.Round,
+        )
         drawCircularIndicator(progress, color = color, stroke = borderStroke)
     }
 }
@@ -75,7 +77,6 @@ private fun PreviewCircularJauge() {
             contentAlignment = Alignment.Center,
         ) {
             Column {
-
                 CircularJauge(
                     progress = 0.4f,
                 )
