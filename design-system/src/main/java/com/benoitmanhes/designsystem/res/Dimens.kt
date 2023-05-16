@@ -55,8 +55,44 @@ object Dimens {
         val strong: Dp = 3.dp
     }
 
+    /* === Components Size === */
+
+    enum class FloatingButtonSize()
+    enum class IconButtonSize(
+        val icon: IconSize,
+        val button: Dp,
+    ) {
+        Medium(icon = IconSize.Medium, button = 48.dp),
+        ;
+    }
+
+    enum class IconSize(
+        val dp: Dp,
+    ) {
+        Small(dp = 16.dp),
+        Medium(dp = 24.dp),
+        Large(dp = 32.dp),
+        Huge(dp = 48.dp),
+        BottomBarItem(dp = 28.dp),
+    }
+
+    enum class IconSlotSize(
+        val icon: IconSize,
+        val container: Dp,
+    ) {
+        Small(icon = IconSize.Small, container = 24.dp),
+        Medium(icon = IconSize.Medium, container = 36.dp),
+        Large(icon = IconSize.Large, container = 48.dp),
+        Huge(icon = IconSize.Huge, container = 64.dp),
+        ;
+    }
+
     object Jauge {
         val size: Dp = 84.dp
+	}
+
+    object TopBar {
+        val height: Dp = 56.dp
     }
 
     object Size {
@@ -70,8 +106,6 @@ object Dimens {
         val selectorHeight: Dp = 36.dp
 
         val lottieAnimationButton: Dp = 24.dp
-        val lottieAnimationSmallLoading: Dp = 36.dp
-        val lottieAnimationBigLoading: Dp = 64.dp
         val primaryButtonMinHeight: Dp = 48.dp
 
         val cacheCardHeight: Dp = 96.dp
@@ -82,8 +116,6 @@ object Dimens {
         val mediumIconSize: Dp = 24.dp
         val largeIconSize: Dp = 32.dp
         val hugeIconSize: Dp = 48.dp
-
-        val hugeIconSlot: Dp = 64.dp
 
         val textFieldMinHeight: Dp = 48.dp
         val textFieldMinWidth: Dp = 180.dp

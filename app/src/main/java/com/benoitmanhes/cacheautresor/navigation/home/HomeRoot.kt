@@ -1,6 +1,10 @@
 package com.benoitmanhes.cacheautresor.navigation.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
@@ -25,15 +29,30 @@ fun HomeRoot(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     val showFab = remember(currentRoute?.route) { currentRoute?.route == HomeRoot.fabDestination.route }
+    val showBottomBar = remember(currentRoute?.route) {
+        currentRoute?.route in HomeRoot.bottomBarDestinations.map { it.route }
+    }
 
     Scaffold(
         modifier = Modifier.navigationBarsPadding(),
         bottomBar = {
-            CTBottomNavBar(
-                bottomBarItems = HomeRoot.bottomBarDestinations,
-                itemIsSelected = { currentRoute?.route == it.route },
-                onItemSelected = { navController.navigate(it.route) },
-            )
+            AnimatedVisibility(
+                visible = showBottomBar,
+                enter = slideInVertically(
+                    animationSpec = tween(),
+                    initialOffsetY = { it },
+                ),
+                exit = slideOutVertically(
+                    animationSpec = tween(),
+                    targetOffsetY = { it },
+                )
+            ) {
+                CTBottomNavBar(
+                    bottomBarItems = HomeRoot.bottomBarDestinations,
+                    itemIsSelected = { currentRoute?.route == it.route },
+                    onItemSelected = { navController.navigate(it.route) },
+                )
+            }
         },
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {

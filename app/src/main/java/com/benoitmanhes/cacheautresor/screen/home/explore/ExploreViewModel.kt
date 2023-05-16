@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.benoitmanhes.cacheautresor.common.extensions.toModel
 import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModel
-import com.benoitmanhes.cacheautresor.utils.extension.toModel
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.model.Coordinates
@@ -49,9 +49,11 @@ class ExploreViewModel @Inject constructor(
                             isLoading = false,
                         )
                     }
+
                     is CTResult.Loading -> {
                         uiState = uiState.copy(isLoading = true)
                     }
+
                     is CTResult.Failure -> {
                         errorSnackbar = result.error
                         uiState = uiState.copy(isLoading = false)
@@ -61,7 +63,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun setMapPosition(position: Coordinates) {
+    fun onMapPositionChange(position: Coordinates) {
         uiState = uiState.copy(mapPosition = position)
     }
 

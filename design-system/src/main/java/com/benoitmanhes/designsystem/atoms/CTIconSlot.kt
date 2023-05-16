@@ -1,4 +1,4 @@
-package com.benoitmanhes.designsystem.molecule.slot
+package com.benoitmanhes.designsystem.atoms
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,27 +9,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 
 @Composable
-fun IconSlotHuge(
+fun CTIconSlot(
     icon: IconSpec,
-    backgroundColor: Color,
+    size: Dimens.IconSlotSize,
+    backgroundColor: Color = Color.Transparent,
     contentColor: Color = contentColorFor(backgroundColor = backgroundColor),
 ) {
     Box(
         modifier = Modifier
-            .size(Dimens.Size.hugeIconSlot)
+            .size(size.container)
             .clip(CTTheme.shape.circle)
             .background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
         CTIcon(
             icon = icon,
-            size = Dimens.Size.hugeIconSize,
+            size = size.icon,
             color = contentColor,
         )
     }

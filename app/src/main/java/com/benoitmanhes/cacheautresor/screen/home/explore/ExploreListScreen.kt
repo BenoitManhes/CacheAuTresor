@@ -14,6 +14,7 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 @Composable
 fun ExploreListScreen(
     uiState: ExploreUIState,
+    navigateToCacheDetail: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -23,7 +24,11 @@ fun ExploreListScreen(
         verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
     ) {
         uiState.caches.forEach { uiCache ->
-            CacheBanner.item(scope = this, uiCache = uiCache)
+            CacheBanner.item(
+                scope = this,
+                uiCache = uiCache,
+                onClick = { navigateToCacheDetail(uiCache.cache.cacheId) },
+            )
         }
     }
 }

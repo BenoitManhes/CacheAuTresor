@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.atoms.CTIcon
+import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 
@@ -26,6 +27,7 @@ fun BottomBarFloatingButton(
     ) {
         CTIcon(
             icon = icon,
+            size = Dimens.IconSize.Medium,
             color = contentColor,
         )
     }

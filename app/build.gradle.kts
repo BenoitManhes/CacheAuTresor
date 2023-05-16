@@ -55,7 +55,9 @@ dependencies {
 
     // AndroidX
     implementation(AndroidX.core.ktx)
+    implementation(AndroidX.lifecycle.process)
     implementation(AndroidX.lifecycle.runtimeKtx)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:_")
 
     // Compose
     implementation(AndroidX.compose.ui)
@@ -76,9 +78,8 @@ dependencies {
     implementation(Google.firebase.authenticationKtx)
     implementation(Google.firebase.cloudFirestoreKtx)
 
-    // Google map
-    implementation(Google.android.maps.compose)
-    implementation(Google.android.playServices.maps)
+    // Map
+    implementation("org.osmdroid:osmdroid-android:_")
 
     // Hilt
     implementation(Google.dagger.hilt.android)

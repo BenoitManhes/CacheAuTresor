@@ -17,7 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.common.composable.topbar.DefaultTopBar
+import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
+import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
@@ -28,9 +29,9 @@ fun AccountCreationScreen(
 ) {
     Scaffold(
         topBar = {
-            DefaultTopBar(
+            CTTopBar(
                 title = TextSpec.Resources(R.string.accountCreation_topBar_title),
-                onNavBack = onNavigateBack,
+                navAction = CTNavAction.Back(onNavigateBack),
             )
         },
         backgroundColor = CTTheme.color.background,

@@ -2,7 +2,7 @@ package com.benoitmanhes.cacheautresor.navigation.unauthenticated
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import com.benoitmanhes.cacheautresor.navigation.AppDestination
+import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.cacheautresor.navigation.ctComposable
 import com.benoitmanhes.cacheautresor.screen.authentication.accountcreation.AccountCreationScreen
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionScreen
@@ -25,11 +25,11 @@ fun NavGraphBuilder.connectionGraph(
     }
 }
 
-object ConnectionDestination : AppDestination {
+object ConnectionDestination : CTDestination {
     override val route: String = "connection"
 }
 
-object AccountCreationDestination : AppDestination {
+object AccountCreationDestination : CTDestination {
 
     const val accountTokenArgument: String = "accountToken"
 

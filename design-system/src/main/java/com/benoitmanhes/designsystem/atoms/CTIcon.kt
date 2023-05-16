@@ -7,16 +7,15 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.utils.IconSpec
 
 @Composable
 fun CTIcon(
     icon: IconSpec,
+    size: Dimens.IconSize,
     modifier: Modifier = Modifier,
     color: Color = LocalContentColor.current,
-    size: Dp = Dimens.Size.mediumIconSize,
     onClick: (() -> Unit)? = null,
 ) {
     if (onClick != null) {
@@ -24,7 +23,7 @@ fun CTIcon(
             Icon(
                 painter = icon.painter(),
                 contentDescription = icon.contentDescription,
-                modifier = modifier.size(size),
+                modifier = modifier.size(size.dp),
                 tint = color,
             )
         }
@@ -32,7 +31,7 @@ fun CTIcon(
         Icon(
             painter = icon.painter(),
             contentDescription = icon.contentDescription,
-            modifier = modifier.size(size),
+            modifier = modifier.size(size.dp),
             tint = color,
         )
     }

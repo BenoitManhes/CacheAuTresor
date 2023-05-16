@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,23 +35,17 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.snackbar.Snackbar
-import com.google.maps.android.compose.rememberCameraPositionState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreRoute(
+    navigateToCacheDetail: (String) -> Unit,
     showSnackbar: (msg: String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    var selectorScreenItem by remember { mutableStateOf(selectorItems.first()) }
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(PositionDefault, ZoomDefault)
-    }
+    var page by rememberSaveable { mutableStateOf(0) }
     val pagerState = rememberPagerState()
     val snackbarMessage = viewModel.errorSnackbar?.localizedDescription()
 
@@ -59,8 +53,7 @@ fun ExploreRoute(
         viewModel.initLocationListener(context)
     }
 
-    LaunchedEffect(selectorScreenItem) {
-        val page = selectorItems.indexOf(selectorScreenItem)
+    LaunchedEffect(page) {
         pagerState.animateScrollToPage(page)
     }
 
@@ -82,15 +75,17 @@ fun ExploreRoute(
                 0 -> {
                     ExploreMapScreen(
                         uiState = viewModel.uiState,
-                        cameraPositionState = cameraPositionState,
-                        updateMapPosition = viewModel::setMapPosition,
+                        updateMapPosition = viewModel::onMapPositionChange,
                         selectCache = viewModel::selectCache,
                         unselectCache = viewModel::unselectCache,
+                        navigateToCacheDetail = navigateToCacheDetail,
                     )
                 }
+
                 1 -> {
                     ExploreListScreen(
                         uiState = viewModel.uiState,
+                        navigateToCacheDetail = navigateToCacheDetail,
                     )
                 }
             }
@@ -113,9 +108,9 @@ fun ExploreRoute(
         )
         Selector(
             items = selectorItems,
-            selectedItem = selectorScreenItem,
+            selectedItem = selectorItems[page],
             onSelectedItem = {
-                selectorScreenItem = it
+                page = selectorItems.indexOf(it)
             },
             modifier = Modifier
                 .width(SelectorItemWidth * selectorItems.size),
@@ -128,8 +123,6 @@ fun ExploreRoute(
     }
 }
 
-private const val ZoomDefault: Float = 15f
-private val PositionDefault: LatLng = LatLng(45.76, 4.83)
 private val SelectorItemWidth: Dp = 72.dp
 
 private val selectorItems: List<SelectorItem> = listOf(

@@ -8,12 +8,12 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
-fun CTLoadingBig(
+fun CTLoadingView(
     modifier: Modifier = Modifier,
 ) {
     LoadingDotAnimation(
         modifier = modifier
-            .size(Dimens.Size.lottieAnimationBigLoading),
+            .size(Dimens.IconSlotSize.Huge.container),
         color = CTTheme.color.primary,
     )
 }

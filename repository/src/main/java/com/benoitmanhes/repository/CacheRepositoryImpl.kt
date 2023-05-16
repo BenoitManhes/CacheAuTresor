@@ -8,6 +8,8 @@ import javax.inject.Inject
 class CacheRepositoryImpl @Inject constructor(
     private val cacheRemoteDataSource: CacheRemoteDataSource,
 ) : CacheRepository {
+    override suspend fun getCache(cacheId: String): Cache? =
+        cacheRemoteDataSource.getCache(cacheId)
 
     override suspend fun getAllCaches(): List<Cache> =
         cacheRemoteDataSource.getAllCaches()

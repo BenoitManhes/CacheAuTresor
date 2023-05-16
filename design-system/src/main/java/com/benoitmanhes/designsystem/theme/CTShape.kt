@@ -8,4 +8,8 @@ object CTShape {
     val medium: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.medium)
     val large: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.large)
     val circle: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.percentRounded)
+    val bottomSheet: RoundedCornerShape = RoundedCornerShape(
+        topEnd = Dimens.Corner.large,
+        topStart = Dimens.Corner.large
+    )
 }

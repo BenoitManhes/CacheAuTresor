@@ -48,12 +48,12 @@ fun FabIconButton(
             ) {
                 CTIcon(
                     icon = icon,
+                    size = Dimens.IconSize.Large,
                     color = color,
-                    modifier = Modifier
-                        .size(Dimens.Size.largeIconSize),
                 )
             }
         }
+
         FabButtonType.COLORED -> {
             val contentColor = contentColorFor(backgroundColor = color)
             Box(
@@ -71,9 +71,8 @@ fun FabIconButton(
             ) {
                 CTIcon(
                     icon = icon,
+                    size = Dimens.IconSize.Large,
                     color = contentColor,
-                    modifier = Modifier
-                        .size(Dimens.Size.largeIconSize),
                 )
             }
         }

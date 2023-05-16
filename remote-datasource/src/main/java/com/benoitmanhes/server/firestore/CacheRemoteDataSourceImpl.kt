@@ -35,6 +35,9 @@ class CacheRemoteDataSourceImpl @Inject constructor(
     override suspend fun getAllCaches(): List<Cache> =
         getAllFSObject()
 
+    override suspend fun getCache(cacheId: String): Cache? =
+        getFSObject(cacheId)
+
     override suspend fun saveCache(cache: Cache) =
         saveFSObject(id = cache.cacheId, model = cache)
 
