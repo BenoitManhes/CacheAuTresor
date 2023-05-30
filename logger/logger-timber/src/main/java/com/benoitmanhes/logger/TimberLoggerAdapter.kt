@@ -1,7 +1,7 @@
 package com.benoitmanhes.logger
 
 import android.util.Log
-import com.benoitmanhes.logger.timber.BuildConfig
+import com.benoitmanhes.cacheautresor.logger.BuildConfig
 import org.slf4j.Logger
 import org.slf4j.Marker
 import timber.log.Timber

@@ -13,7 +13,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.rememberLottieDynamicProperties
 import com.airbnb.lottie.compose.rememberLottieDynamicProperty
-import com.benoitmanhes.designsystem.R
+import com.benoitmanhes.cacheautresor.designsystem.R
 
 @Composable
 internal fun LoadingDotAnimation(

@@ -1,6 +1,6 @@
 package com.benoitmanhes.logger
 
-import com.benoitmanhes.logger.timber.BuildConfig
+import com.benoitmanhes.cacheautresor.logger.BuildConfig
 import org.slf4j.ILoggerFactory
 import org.slf4j.IMarkerFactory
 import org.slf4j.helpers.BasicMarkerFactory

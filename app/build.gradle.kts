@@ -8,6 +8,8 @@ plugins {
 
 android {
 
+    namespace = "com.benoitmanhes.cacheautresor"
+
     compileSdk = AndroidConfig.COMPILE_SDK
     buildToolsVersion = AndroidConfig.BUILD_TOOLS_VERSION
 
@@ -33,7 +35,16 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility = ProjectConfig.JDK_VERSION
+        targetCompatibility = ProjectConfig.JDK_VERSION
+    }
+    kotlinOptions {
+        jvmTarget = ProjectConfig.JDK_TARGET
     }
 
     composeOptions {

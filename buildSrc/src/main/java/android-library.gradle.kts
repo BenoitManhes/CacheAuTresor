@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -10,9 +11,15 @@ android {
 
     defaultConfig {
         minSdk = AndroidConfig.MIN_SDK
-        targetSdk = AndroidConfig.TARGET_SDK
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility = ProjectConfig.JDK_VERSION
+        targetCompatibility = ProjectConfig.JDK_VERSION
+    }
+    kotlinOptions {
+        jvmTarget = ProjectConfig.JDK_TARGET
     }
 }
 
@@ -21,6 +28,9 @@ kapt {
 }
 
 dependencies {
+    // Hilt
+    implementation(Google.dagger.hilt.android)
+    kapt(Google.dagger.hilt.compiler)
 
     // Kotlin
     implementation(Kotlin.stdlib.jdk8)

@@ -4,7 +4,13 @@ plugins {
 }
 
 android {
+    namespace = "com.benoitmanhes.cacheautresor.logger"
+
     resourcePrefix("logger")
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         buildConfigField(

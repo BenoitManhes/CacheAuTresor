@@ -3,8 +3,18 @@ plugins {
 }
 
 android {
+    namespace = "com.benoitmanhes.cacheautresor.designsystem"
+
     buildFeatures {
         compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility = ProjectConfig.JDK_VERSION
+        targetCompatibility = ProjectConfig.JDK_VERSION
+    }
+    kotlinOptions {
+        jvmTarget = ProjectConfig.JDK_TARGET
     }
 
     composeOptions {

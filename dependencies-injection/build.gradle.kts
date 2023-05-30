@@ -1,17 +1,16 @@
 plugins {
     `android-library`
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+}
+
+android {
+    namespace = "com.benoitmanhes.cacheautresor.di"
 }
 
 dependencies {
 
     // Datastore
     implementation(AndroidX.dataStore.preferences)
-
-    // Hilt
-    implementation(Google.dagger.hilt.android)
-    kapt(Google.dagger.hilt.compiler)
 
     // Room
     implementation(AndroidX.room.ktx)

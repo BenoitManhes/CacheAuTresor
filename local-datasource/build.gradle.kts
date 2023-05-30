@@ -1,7 +1,18 @@
 plugins {
     `android-library`
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+}
+
+android {
+    namespace = "com.benoitmanhes.cacheautresor.storage"
+
+    compileOptions {
+        sourceCompatibility = ProjectConfig.JDK_VERSION
+        targetCompatibility = ProjectConfig.JDK_VERSION
+    }
+    kotlinOptions {
+        jvmTarget = ProjectConfig.JDK_TARGET
+    }
 }
 
 dependencies {
@@ -12,10 +23,6 @@ dependencies {
     implementation(AndroidX.room.runtime)
     implementation(AndroidX.room.ktx)
     kapt(AndroidX.room.compiler)
-
-    // Hilt
-    implementation(Google.dagger.hilt.android)
-    kapt(Google.dagger.hilt.compiler)
 
     implementation(project(":core"))
     implementation(project(":domain"))
