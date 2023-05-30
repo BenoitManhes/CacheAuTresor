@@ -12,14 +12,14 @@ import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
 fun CTTextView(
-    text: TextSpec,
+    text: TextSpec?,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     style: TextStyle = LocalTextStyle.current,
     maxLine: Int = UiConstants.Text.MaxLineSize,
     overflow: TextOverflow = TextOverflow.Clip,
 ) {
-    text.value()?.let { safeValue ->
+    text?.value()?.let { safeValue ->
         Text(
             text = safeValue,
             modifier = modifier,

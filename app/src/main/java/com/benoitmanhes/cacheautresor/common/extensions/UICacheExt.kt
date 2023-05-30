@@ -39,14 +39,7 @@ internal fun UICache.getColor(): Color =
     when (userStatus) {
         UICache.CacheUserStatus.Owned -> CTTheme.color.primaryOwner
         UICache.CacheUserStatus.Found -> CTTheme.color.primaryFound
-        else -> {
-            when (cache) {
-                is Cache.Classical -> CTTheme.color.primaryClassical
-                is Cache.Coop -> CTTheme.color.primaryCoop
-                is Cache.Mystery -> CTTheme.color.primaryMystery
-                is Cache.Piste -> CTTheme.color.primaryPiste
-            }
-        }
+        else -> cache.getCacheColor()
     }
 
 internal fun UICache.getCacheMarker(): CacheMarker = when (userStatus) {

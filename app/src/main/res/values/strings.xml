@@ -46,7 +46,11 @@
     <string name="cache_size_small">small</string>
     <string name="cache_size_regular">medium</string>
     <string name="cache_size_big">big</string>
-    <string name="cache_size_undifined">undifined</string>
+    <string name="cache_size_undifined">other</string>
     <string name="common_distanceInMeters">%s m</string>
     <string name="common_distanceInKilometers">%s km</string>
+    <string name="cache_type_classical">Classical</string>
+    <string name="cache_type_coop">Cooperative</string>
+    <string name="cache_type_mystery">Mystery</string>
+    <string name="cache_type_piste">Track</string>
 </resources>

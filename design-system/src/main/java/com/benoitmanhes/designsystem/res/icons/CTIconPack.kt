@@ -3,6 +3,10 @@ package com.benoitmanhes.designsystem.res.icons
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.benoitmanhes.designsystem.res.icons.iconpack.Add
 import com.benoitmanhes.designsystem.res.icons.iconpack.Box
+import com.benoitmanhes.designsystem.res.icons.iconpack.BoxBig
+import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMedium
+import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMicro
+import com.benoitmanhes.designsystem.res.icons.iconpack.BoxSmall
 import com.benoitmanhes.designsystem.res.icons.iconpack.Compass
 import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
@@ -43,6 +47,10 @@ val CTIconPack.CTIcons: List<ImageVector>
         _CTIcons = listOf(
             Add,
             Box,
+            BoxBig,
+            BoxMedium,
+            BoxMicro,
+            BoxSmall,
             Compass,
             Coop,
             Crown,

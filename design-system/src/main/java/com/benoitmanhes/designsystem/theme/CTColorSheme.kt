@@ -71,4 +71,26 @@ interface CTColorScheme {
     val onDisable: Color
     val error: Color
     val rootBackground: Color
+
+    fun copy(primaryColor: Color? = null): CTColorScheme = object : CTColorScheme {
+        override val primary: Color = primaryColor ?: this@CTColorScheme.primary
+        override val primaryClassical: Color = this@CTColorScheme.primaryClassical
+        override val primaryCoop: Color = this@CTColorScheme.primaryCoop
+        override val primaryMystery: Color = this@CTColorScheme.primaryMystery
+        override val primaryPiste: Color = this@CTColorScheme.primaryPiste
+        override val primaryOwner: Color = this@CTColorScheme.primaryOwner
+        override val primaryFound: Color = this@CTColorScheme.primaryFound
+        override val onPrimary: Color = this@CTColorScheme.onPrimary
+        override val secondary: Color = this@CTColorScheme.secondary
+        override val onSecondary: Color = this@CTColorScheme.onSecondary
+        override val surface: Color = this@CTColorScheme.surface
+        override val onSurface: Color = this@CTColorScheme.onSurface
+        override val background: Color = this@CTColorScheme.background
+        override val onBackground: Color = this@CTColorScheme.onBackground
+        override val placeholder: Color = this@CTColorScheme.placeholder
+        override val disable: Color = this@CTColorScheme.disable
+        override val onDisable: Color = this@CTColorScheme.onDisable
+        override val error: Color = this@CTColorScheme.error
+        override val rootBackground: Color = this@CTColorScheme.rootBackground
+    }
 }

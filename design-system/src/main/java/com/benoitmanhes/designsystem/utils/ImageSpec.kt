@@ -13,7 +13,7 @@ import coil.compose.rememberAsyncImagePainter
 
 sealed interface ImageSpec {
 
-    val contentDescription: String
+    val contentDescription: String?
 
     @Composable
     fun painter(): Painter
@@ -21,7 +21,7 @@ sealed interface ImageSpec {
     data class ResImage(
         @DrawableRes
         private val drawableRes: Int,
-        override val contentDescription: String,
+        override val contentDescription: String?,
     ) : ImageSpec {
 
         @Composable
@@ -30,7 +30,7 @@ sealed interface ImageSpec {
 
     data class BitmapImage(
         val imageBitmap: ImageBitmap,
-        override val contentDescription: String,
+        override val contentDescription: String?,
         private val filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     ) : ImageSpec {
         @Composable
@@ -41,7 +41,7 @@ sealed interface ImageSpec {
 
     data class UrlImage(
         private val url: String,
-        override val contentDescription: String,
+        override val contentDescription: String?,
     ) : ImageSpec {
         @Composable
         override fun painter(): Painter = rememberAsyncImagePainter(

@@ -19,8 +19,8 @@ fun CTDivider(
     )
 }
 
-fun LazyListScope.bbDivider() {
+fun LazyListScope.bbDivider(modifier: Modifier = Modifier) {
     item {
-        CTDivider()
+        CTDivider(modifier)
     }
 }

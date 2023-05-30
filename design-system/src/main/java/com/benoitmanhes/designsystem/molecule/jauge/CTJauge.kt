@@ -31,15 +31,16 @@ import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
 fun CTJauge(
-    step: CTJaugeStep,
+    rate: Float?,
     icon: IconSpec,
-    text: TextSpec,
+    text: TextSpec?,
     modifier: Modifier = Modifier,
 ) {
     val progress = remember { Animatable(0f) }
-    LaunchedEffect(step) {
+    LaunchedEffect(rate) {
+        val targetProgress = JaugeHelper.calculateProgressFromRate(rate ?: 0f)
         progress.animateTo(
-            targetValue = step.progress,
+            targetValue = targetProgress,
             animationSpec = tween(durationMillis = UiConstants.Jauge.progressAnimDurationMillis)
         )
     }
@@ -105,12 +106,12 @@ private fun PreviewCTJauge() {
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(Dimens.Spacing.large)) {
                 CTJauge(
-                    step = CTJaugeStep.TWO_HALF,
+                    rate = 2.5f,
                     icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
                     text = TextSpec.RawString("Dangereux"),
                 )
                 CTJauge(
-                    step = CTJaugeStep.FOUR,
+                    rate = 4f,
                     icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
                     text = TextSpec.RawString("Expert"),
                 )

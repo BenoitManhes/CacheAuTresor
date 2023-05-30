@@ -14,7 +14,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-private val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DayColorScheme }
+val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DayColorScheme }
 private val LocalTypography: ProvidableCompositionLocal<CTTypography> = staticCompositionLocalOf { CTTypography }
 private val LocalShape: ProvidableCompositionLocal<CTShape> = staticCompositionLocalOf { CTShape }
 private val LocalSpacing: ProvidableCompositionLocal<Dimens.Spacing> = staticCompositionLocalOf { Dimens.Spacing }
