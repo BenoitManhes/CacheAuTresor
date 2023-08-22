@@ -13,6 +13,11 @@ object AppConstants {
             get() = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000, replayExpirationMillis = 5_000)
     }
 
+    object Loading {
+        val minRotationAngle: Double = 15.0
+        val maxRotationAngle: Double = 720.0
+    }
+
     object Location {
         val defaultMinDurationInterval: Duration = 5.seconds
         const val defaultMinDistanceIntervalMeter: Float = 5f

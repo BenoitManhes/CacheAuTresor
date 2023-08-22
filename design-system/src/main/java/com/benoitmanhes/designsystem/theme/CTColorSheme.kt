@@ -25,6 +25,7 @@ object DayColorScheme : CTColorScheme {
     override val onDisable: Color = Colors.White
     override val error: Color = Colors.BurntUmber
     override val rootBackground: Color = Colors.Black
+    override val backgroundMask: Color = Colors.TransparentBlack15
 }
 
 @Immutable
@@ -48,6 +49,7 @@ object NightColorScheme : CTColorScheme {
     override val onDisable: Color = Colors.Neutral90
     override val error: Color = Colors.BurntUmber
     override val rootBackground: Color = Colors.Black
+    override val backgroundMask: Color = Colors.TransparentBlack15
 }
 
 @Immutable
@@ -71,6 +73,7 @@ interface CTColorScheme {
     val onDisable: Color
     val error: Color
     val rootBackground: Color
+    val backgroundMask: Color
 
     fun copy(primaryColor: Color? = null): CTColorScheme = object : CTColorScheme {
         override val primary: Color = primaryColor ?: this@CTColorScheme.primary
@@ -92,5 +95,6 @@ interface CTColorScheme {
         override val onDisable: Color = this@CTColorScheme.onDisable
         override val error: Color = this@CTColorScheme.error
         override val rootBackground: Color = this@CTColorScheme.rootBackground
+        override val backgroundMask: Color = this@CTColorScheme.backgroundMask
     }
 }

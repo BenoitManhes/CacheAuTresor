@@ -14,6 +14,7 @@ internal object Colors {
     val White: Color = Color(0xFFFFFFFF)
 
     val TransparentBlack10: Color = Color(0x1A000000)
+    val TransparentBlack15: Color = Color(0x26000000)
     val TransparentBlack35: Color = Color(0x59000000)
     val TransparentWhite10: Color = Color(0x1AFFFFFF)
     val TransparentWhite35: Color = Color(0x59FFFFFF)

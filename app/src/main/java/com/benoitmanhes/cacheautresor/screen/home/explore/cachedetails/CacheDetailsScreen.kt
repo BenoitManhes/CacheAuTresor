@@ -42,6 +42,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.getColor
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
+import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.designsystem.atoms.CTIcon
@@ -81,10 +82,12 @@ fun CacheDetailsRoute(
     val cachePrimaryColor = (uiState as? CacheDetailsUIState.Data)?.uiCacheDetails?.getColor()
 
     CompositionLocalProvider(LocalColor provides LocalColor.current.copy(primaryColor = cachePrimaryColor)) {
-        CacheDetailsScreen(
-            onNavigateBack = onNavigateBack,
-            data = (uiState as? CacheDetailsUIState.Data),
-        )
+        CTScreenWrapper {
+            CacheDetailsScreen(
+                onNavigateBack = onNavigateBack,
+                data = (uiState as? CacheDetailsViewModelState.Data),
+            )
+        }
     }
 }
 
