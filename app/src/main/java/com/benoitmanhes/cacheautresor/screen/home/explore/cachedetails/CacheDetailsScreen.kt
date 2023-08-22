@@ -85,7 +85,7 @@ fun CacheDetailsRoute(
         CTScreenWrapper {
             CacheDetailsScreen(
                 onNavigateBack = onNavigateBack,
-                data = (uiState as? CacheDetailsViewModelState.Data),
+                data = (uiState as? CacheDetailsUIState.Data),
             )
         }
     }

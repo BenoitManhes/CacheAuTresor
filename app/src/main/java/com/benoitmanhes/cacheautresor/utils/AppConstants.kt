@@ -14,8 +14,9 @@ object AppConstants {
     }
 
     object Loading {
-        val minRotationAngle: Double = 15.0
-        val maxRotationAngle: Double = 720.0
+        const val minRotationAngle: Double = 180.0
+        const val maxRotationAngle: Double = 540.0
+        val animationDuration: Duration = 2.seconds
     }
 
     object Location {
