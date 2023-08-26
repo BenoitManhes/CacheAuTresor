@@ -57,7 +57,13 @@ object Dimens {
 
     /* === Components Size === */
 
-    enum class FloatingButtonSize()
+    enum class FloatingButtonSize(
+        val icon: IconSize,
+        val button: Dp,
+    ) {
+        Large(icon = IconSize.Large, button = IconSlotSize.Large.container)
+    }
+
     enum class IconButtonSize(
         val icon: IconSize,
         val button: Dp,
@@ -111,7 +117,7 @@ object Dimens {
 
     object Size {
         val bottomBarItemSize: Dp = 28.dp
-        val fabButtonSize: Dp = 48.dp
+        val fabButtonSize: Dp = 64.dp
         val fabIconButtonSize: Dp = 42.dp
 
         val compassButtonSize: Dp = 36.dp

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeableState
@@ -43,7 +44,7 @@ fun CTBottomSheet(
     topPadding: Dp = Dimens.TopBar.height + CTTheme.spacing.small * 2,
     swipeableState: SwipeableState<BottomSheetState> = rememberSwipeableState(initialValue = BottomSheetState.HALF),
     header: ComposableContent,
-    body: LazyListScope.() -> Unit,
+    body: @Composable (LazyListState) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
 
@@ -130,12 +131,7 @@ fun CTBottomSheet(
                     .background(CTTheme.color.background)
             ) {
                 header()
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = scrollState,
-                ) {
-                    body.invoke(this)
-                }
+                body(scrollState)
             }
         }
     }

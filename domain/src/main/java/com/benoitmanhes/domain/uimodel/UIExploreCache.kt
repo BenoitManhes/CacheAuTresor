@@ -2,7 +2,7 @@ package com.benoitmanhes.domain.uimodel
 
 import com.benoitmanhes.domain.model.Cache
 
-data class UICache(
+data class UIExploreCache(
     val cache: Cache,
     val explorerName: String?,
     val userStatus: CacheUserStatus,

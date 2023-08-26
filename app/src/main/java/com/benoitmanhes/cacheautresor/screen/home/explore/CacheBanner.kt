@@ -4,31 +4,31 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.benoitmanhes.cacheautresor.common.extensions.getColor
 import com.benoitmanhes.cacheautresor.common.extensions.getIconCache
 import com.benoitmanhes.cacheautresor.common.extensions.toDistanceText
 import com.benoitmanhes.cacheautresor.common.extensions.toOneDecimalFormat
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.designsystem.molecule.caches.CacheCard
 import com.benoitmanhes.designsystem.utils.TextSpec
-import com.benoitmanhes.domain.uimodel.UICache
+import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
+import com.benoitmanhes.domain.uimodel.UIExploreCache
 
 @Composable
 fun CacheBanner(
-    uiCache: UICache,
-    color: Color = uiCache.getColor(),
+    uiExploreCache: UIExploreCache,
+    color: Color = uiExploreCache.getPrimaryColor(),
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     CacheCard(
-        icon = uiCache.getIconCache(),
+        icon = uiExploreCache.getIconCache(),
         color = color,
-        creatorText = TextSpec.RawString(uiCache.explorerName ?: "-"),
-        titleText = TextSpec.RawString(uiCache.cache.title),
-        difficultyText = TextSpec.RawString(uiCache.cache.difficulty.toOneDecimalFormat()),
-        groundText = TextSpec.RawString(uiCache.cache.ground.toOneDecimalFormat()),
-        sizeText = uiCache.cache.size.toSizeText(),
-        distanceText = uiCache.distance?.toDistanceText(),
+        creatorText = TextSpec.RawString(uiExploreCache.explorerName ?: "-"),
+        titleText = TextSpec.RawString(uiExploreCache.cache.title),
+        difficultyText = TextSpec.RawString(uiExploreCache.cache.difficulty.toOneDecimalFormat()),
+        groundText = TextSpec.RawString(uiExploreCache.cache.ground.toOneDecimalFormat()),
+        sizeText = uiExploreCache.cache.size.toSizeText(),
+        distanceText = uiExploreCache.distance?.toDistanceText(),
         modifier = modifier,
         onClick = onClick,
     )
@@ -37,9 +37,9 @@ fun CacheBanner(
 object CacheBanner {
     fun item(
         scope: LazyListScope,
-        uiCache: UICache,
+        uiExploreCache: UIExploreCache,
         modifier: Modifier = Modifier,
-        key: Any = uiCache.cache.cacheId,
+        key: Any = uiExploreCache.cache.cacheId,
         onClick: () -> Unit,
     ) {
         scope.item(
@@ -47,7 +47,7 @@ object CacheBanner {
             contentType = contentType,
         ) {
             CacheBanner(
-                uiCache = uiCache,
+                uiExploreCache = uiExploreCache,
                 modifier = modifier,
                 onClick = onClick,
             )

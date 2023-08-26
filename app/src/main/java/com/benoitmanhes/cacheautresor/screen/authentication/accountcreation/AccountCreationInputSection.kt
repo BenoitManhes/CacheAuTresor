@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.error.localizedDescription
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.textfield.CTDoubleTextField
 import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
 import com.benoitmanhes.designsystem.molecule.textfield.InputType
@@ -65,7 +65,7 @@ fun AccountCreationInputSection(
             textFieldTypeBottom = TextFieldType.PASSWORD,
         )
         Spacer(modifier = Modifier.weight(1f))
-        PrimaryButton(
+        CTPrimaryButton(
             modifier = Modifier
                 .fillMaxWidth(),
             text = TextSpec.Resources(R.string.common_validate),

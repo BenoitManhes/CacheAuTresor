@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.res.Colors
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.uimodel.UICacheDetails
+import com.benoitmanhes.domain.uimodel.UIExploreCache
 
 @Composable
 private fun Cache.getCachePaletteColor(): Pair<Color, Color> = when (this) {
@@ -22,5 +23,15 @@ fun UICacheDetails.getPrimaryColor(): Color {
         UICacheDetails.Status.Found -> Colors.Marigold
         UICacheDetails.Status.Available -> availableColor
         UICacheDetails.Status.Started -> startedColor
+    }
+}
+
+@Composable
+fun UIExploreCache.getPrimaryColor(): Color {
+    val (availableColor, startedColor) = cache.getCachePaletteColor()
+    return when (userStatus) {
+        UIExploreCache.CacheUserStatus.Owned -> Colors.BlackOlive
+        UIExploreCache.CacheUserStatus.Found -> Colors.Marigold
+        else -> availableColor
     }
 }

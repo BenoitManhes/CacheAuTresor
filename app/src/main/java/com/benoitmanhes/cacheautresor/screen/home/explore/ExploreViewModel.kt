@@ -11,7 +11,7 @@ import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModel
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.model.Coordinates
-import com.benoitmanhes.domain.uimodel.UICache
+import com.benoitmanhes.domain.uimodel.UIExploreCache
 import com.benoitmanhes.domain.usecase.cache.GetAllUICachesUseCase
 import com.benoitmanhes.domain.usecase.cache.SortCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.UpdateCachesDistancesUseCase
@@ -40,7 +40,7 @@ class ExploreViewModel @Inject constructor(
                         val cachesWithDistance = uiState.currentPosition?.let { _currentPosition ->
                             updateCachesDistancesUseCase(
                                 currentLocation = _currentPosition,
-                                uiCaches = result.successData,
+                                uiExploreCaches = result.successData,
                             )
                         } ?: result.successData
 
@@ -67,8 +67,8 @@ class ExploreViewModel @Inject constructor(
         uiState = uiState.copy(mapPosition = position)
     }
 
-    fun selectCache(uiCache: UICache) {
-        uiState = uiState.copy(cacheSelected = uiCache)
+    fun selectCache(uiExploreCache: UIExploreCache) {
+        uiState = uiState.copy(cacheSelected = uiExploreCache)
     }
 
     fun unselectCache() {
@@ -89,7 +89,7 @@ class ExploreViewModel @Inject constructor(
         val caches = sortCacheUseCase(
             updateCachesDistancesUseCase(
                 currentLocation = p0.toModel(),
-                uiCaches = uiState.caches,
+                uiExploreCaches = uiState.caches,
             )
         )
         uiState = uiState.copy(

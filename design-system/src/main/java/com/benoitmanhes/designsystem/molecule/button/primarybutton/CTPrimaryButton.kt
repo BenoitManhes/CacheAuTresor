@@ -33,9 +33,25 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+@Composable
+fun CTPrimaryButton(
+    state: PrimaryButtonState,
+    modifier: Modifier = Modifier,
+    color: Color = CTTheme.color.primary,
+) {
+    CTPrimaryButton(
+        text = state.text,
+        onClick = state.onClick,
+        modifier = modifier,
+        type = state.type,
+        status = state.status,
+        color = color,
+        options = state.options,
+    )
+}
 
 @Composable
-fun PrimaryButton(
+fun CTPrimaryButton(
     text: TextSpec,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -159,33 +175,33 @@ private fun PreviewCTButton() {
             Column(
                 verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium)
             ) {
-                PrimaryButton(text = TextSpec.RawString("Button"), onClick = { })
-                PrimaryButton(
+                CTPrimaryButton(text = TextSpec.RawString("Button"), onClick = { })
+                CTPrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.COLORED,
                     status = ButtonStatus.ENABLE,
                     onClick = { },
                 )
-                PrimaryButton(
+                CTPrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.COLORED,
                     status = ButtonStatus.LOADING,
                     onClick = { },
                 )
-                PrimaryButton(text = TextSpec.RawString("Button"), type = PrimaryButtonType.OUTLINED, onClick = { })
-                PrimaryButton(
+                CTPrimaryButton(text = TextSpec.RawString("Button"), type = PrimaryButtonType.OUTLINED, onClick = { })
+                CTPrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.OUTLINED,
                     status = ButtonStatus.LOADING,
                     onClick = { },
                 )
-                PrimaryButton(
+                CTPrimaryButton(
                     text = TextSpec.RawString("Button"),
                     type = PrimaryButtonType.OUTLINED,
                     status = ButtonStatus.DISABLE,
                     onClick = { },
                 )
-                PrimaryButton(
+                CTPrimaryButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(CTTheme.spacing.huge),

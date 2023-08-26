@@ -26,7 +26,7 @@ fun ExploreListScreen(
         uiState.caches.forEach { uiCache ->
             CacheBanner.item(
                 scope = this,
-                uiCache = uiCache,
+                uiExploreCache = uiCache,
                 onClick = { navigateToCacheDetail(uiCache.cache.cacheId) },
             )
         }

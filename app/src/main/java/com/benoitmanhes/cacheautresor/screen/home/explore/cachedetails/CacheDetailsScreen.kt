@@ -3,15 +3,23 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 import android.content.Context
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.runtime.Composable
@@ -28,6 +36,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.benoitmanhes.cacheautresor.common.CTMapView
+import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBar
 import com.benoitmanhes.cacheautresor.common.composable.bottomsheet.BottomSheetState
 import com.benoitmanhes.cacheautresor.common.composable.bottomsheet.CTBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
@@ -39,12 +48,14 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
+import com.benoitmanhes.designsystem.molecule.button.fabbutton.CTFabButton
 import com.benoitmanhes.designsystem.molecule.loading.CTLoadingView
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.LocalColor
+import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
 import com.benoitmanhes.domain.model.Coordinates
 import kotlinx.coroutines.launch
 import org.osmdroid.events.MapEventsReceiver
@@ -134,61 +145,98 @@ private fun CacheDetailsScreen(
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        CTBottomSheet(
-            header = {
-                data?.headerState?.let {
-                    CacheDetailHeader(uiState.headerState) {
-                        coroutineScope.launch {
-                            swipeableState.animateTo(BottomSheetState.EXPANDED, bottomSheetAnimation)
-                        }
-                    }
-                }
-            },
-            body = {
-                when (uiState) {
-                    is CacheDetailsViewModelState.Data -> {
-                        cacheDetailsContent(
-                            scope = this,
-                            uiState = uiState,
-                        )
-                    }
-
-                    CacheDetailsViewModelState.Initialize -> {
-                        item {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                CTLoadingView()
+        Column {
+            Box(modifier = Modifier.weight(1f)) {
+                CTBottomSheet(
+                    header = {
+                        data?.headerState?.let {
+                            CacheDetailHeader(uiState.headerState) {
+                                coroutineScope.launch {
+                                    swipeableState.animateTo(BottomSheetState.EXPANDED, bottomSheetAnimation)
+                                }
                             }
                         }
-                    }
+                    },
+                    body = { scrollState ->
+                        when (uiState) {
+                            is CacheDetailsViewModelState.Data -> {
+                                DataContent(uiState = uiState, scrollState = scrollState)
+                            }
 
-                    is CacheDetailsViewModelState.Empty -> {
-                        item {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                CTTextView(
-                                    text = uiState.message,
-                                    style = CTTheme.typography.body,
-                                    color = CTTheme.color.placeholder,
-                                )
+                            CacheDetailsViewModelState.Initialize -> {
+                                InitContent()
+                            }
+
+                            is CacheDetailsViewModelState.Empty -> {
+                                EmptyContent(uiState = uiState)
                             }
                         }
-                    }
-                }
-            },
-            swipeableState = swipeableState,
-            peekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
+                    },
+                    swipeableState = swipeableState,
+                    peekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
+                )
+            }
+
+            data?.bottomBarState?.let { _bottomBarState ->
+                BottomActionBar(
+                    state = _bottomBarState,
+                )
+            }
+        }
+
+
+        AnimatedNullableVisibility(
+            value = data?.fabButtonState,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(CTTheme.spacing.extraLarge),
+            visible = { swipeableState.targetValue != BottomSheetState.COLLAPSED },
+            enter = fadeIn() + slideInVertically { it * 2 },
+            exit = fadeOut() + slideOutVertically { it * 2 },
+        ) { buttonState ->
+            CTFabButton(
+                state = buttonState,
+            )
+        }
+
+        CTTopBar(
+            navAction = CTNavAction.Back(onNavigateBack),
         )
     }
+}
 
-    CTTopBar(
-        modifier = Modifier.statusBarsPadding(),
-        navAction = CTNavAction.Back(onNavigateBack),
-    )
+@Composable
+private fun DataContent(
+    uiState: CacheDetailsViewModelState.Data,
+    scrollState: LazyListState,
+) {
+    Column {
+
+    }
+}
+
+@Composable
+private fun InitContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        CTLoadingView()
+    }
+}
+
+@Composable
+private fun EmptyContent(uiState: CacheDetailsViewModelState.Empty) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        CTTextView(
+            text = uiState.message,
+            style = CTTheme.typography.body,
+            color = CTTheme.color.placeholder,
+        )
+    }
 }
 
 private fun MapView.setupMap(

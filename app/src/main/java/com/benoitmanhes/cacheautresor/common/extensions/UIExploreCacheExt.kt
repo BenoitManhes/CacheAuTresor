@@ -13,15 +13,15 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.model.Cache
-import com.benoitmanhes.domain.uimodel.UICache
+import com.benoitmanhes.domain.uimodel.UIExploreCache
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
 @Composable
-internal fun UICache.getIconCache(): IconSpec {
+internal fun UIExploreCache.getIconCache(): IconSpec {
     val vector = when (userStatus) {
-        UICache.CacheUserStatus.Owned -> CTTheme.icon.Ensign
-        UICache.CacheUserStatus.Found -> CTTheme.icon.Crown
+        UIExploreCache.CacheUserStatus.Owned -> CTTheme.icon.Ensign
+        UIExploreCache.CacheUserStatus.Found -> CTTheme.icon.Crown
         else -> {
             when (cache) {
                 is Cache.Classical -> CTTheme.icon.Parchment
@@ -34,21 +34,13 @@ internal fun UICache.getIconCache(): IconSpec {
     return IconSpec.VectorIcon(vector, null)
 }
 
-@Composable
-internal fun UICache.getColor(): Color =
-    when (userStatus) {
-        UICache.CacheUserStatus.Owned -> CTTheme.color.primaryOwner
-        UICache.CacheUserStatus.Found -> CTTheme.color.primaryFound
-        else -> cache.getCacheColor()
-    }
-
-internal fun UICache.getCacheMarker(): CacheMarker = when (userStatus) {
-    UICache.CacheUserStatus.Owned -> CacheMarker.Owner
-    UICache.CacheUserStatus.Found -> CacheMarker.Found
+internal fun UIExploreCache.getCacheMarker(): CacheMarker = when (userStatus) {
+    UIExploreCache.CacheUserStatus.Owned -> CacheMarker.Owner
+    UIExploreCache.CacheUserStatus.Found -> CacheMarker.Found
     else -> cache.getCacheMarker()
 }
 
-internal fun UICache.getOSMMarker(
+internal fun UIExploreCache.getOSMMarker(
     context: Context,
     mapViewState: MapView,
     isSelected: Boolean,

@@ -24,7 +24,7 @@ import com.benoitmanhes.cacheautresor.error.localizedDescription
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionInputViewModel
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
 import com.benoitmanhes.designsystem.molecule.divider.CTDividerText
 import com.benoitmanhes.designsystem.molecule.textfield.CTDoubleTextField
@@ -82,7 +82,7 @@ internal fun LoginInputSection(
         }
         Crossfade(targetState = uiState.connectionInputState) { state ->
             if (state == ConnectionInputState.Login) {
-                PrimaryButton(
+                CTPrimaryButton(
                     text = TextSpec.Resources(R.string.loginScreen_loginButton_label),
                     onClick = {
                         keyboardController?.hide()
@@ -92,7 +92,7 @@ internal fun LoginInputSection(
                     status = uiState.loginButtonStatus,
                 )
             } else {
-                PrimaryButton(
+                CTPrimaryButton(
                     text = TextSpec.Resources(R.string.loginScreen_loginButton_label),
                     onClick = {
                         keyboardController?.hide()
@@ -125,7 +125,7 @@ internal fun LoginInputSection(
         }
         Crossfade(targetState = uiState.connectionInputState) { state ->
             if (state == ConnectionInputState.Register) {
-                PrimaryButton(
+                CTPrimaryButton(
                     text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
                     onClick = {
                         keyboardController?.hide()
@@ -136,7 +136,7 @@ internal fun LoginInputSection(
                     status = uiState.registerButtonStatus,
                 )
             } else {
-                PrimaryButton(
+                CTPrimaryButton(
                     text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
                     onClick = {
                         keyboardController?.hide()

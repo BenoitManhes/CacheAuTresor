@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.benoitmanhes.cacheautresor.common.CTMapView
-import com.benoitmanhes.cacheautresor.common.extensions.getColor
 import com.benoitmanhes.cacheautresor.common.extensions.getOSMMarker
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
@@ -42,9 +41,10 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Position
 import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
+import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.extension.similar
 import com.benoitmanhes.domain.model.Coordinates
-import com.benoitmanhes.domain.uimodel.UICache
+import com.benoitmanhes.domain.uimodel.UIExploreCache
 import kotlinx.coroutines.launch
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.events.MapListener
@@ -63,14 +63,14 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 internal fun ExploreMapScreen(
     uiState: ExploreUIState,
     updateMapPosition: (Coordinates) -> Unit,
-    selectCache: (UICache) -> Unit,
+    selectCache: (UIExploreCache) -> Unit,
     unselectCache: () -> Unit,
     navigateToCacheDetail: (String) -> Unit,
 ) {
     val mapViewState = rememberMapViewWithLifecycle()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    var lastCacheSelected: UICache? by remember {
+    var lastCacheSelected: UIExploreCache? by remember {
         mutableStateOf(null)
     }
     lastCacheSelected = remember(uiState.cacheSelected) {
@@ -208,9 +208,9 @@ internal fun ExploreMapScreen(
                     )
                 ) {
                     (uiState.cacheSelected ?: lastCacheSelected)?.let { uiCache ->
-                        val cacheBannerColor by animateColorAsState(uiCache.getColor())
+                        val cacheBannerColor by animateColorAsState(uiCache.getPrimaryColor())
                         CacheBanner(
-                            uiCache = uiCache,
+                            uiExploreCache = uiCache,
                             onClick = { navigateToCacheDetail(uiCache.cache.cacheId) },
                             color = cacheBannerColor,
                         )

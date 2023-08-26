@@ -3,10 +3,17 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.core.result.CTResult
+import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
+import com.benoitmanhes.designsystem.res.icons.CTIconPack
+import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
+import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.CTTheme.icon
+import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
@@ -40,7 +47,13 @@ class CacheDetailViewModel @Inject constructor(
                 title = TextSpec.RawString(successData.cache.title),
                 subTitle = TextSpec.RawString(successData.cache.cacheId),
             ),
-            uiMarkers = listOf()
+            uiMarkers = listOf(),
+            bottomBarState = null,
+            fabButtonState = FabButtonState(
+                icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
+                text = TextSpec.RawString("Fab"),
+                onClick = {},
+            )
         )
 
         is CTResult.Loading -> CacheDetailsViewModelState.Initialize

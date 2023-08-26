@@ -7,7 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @Composable
@@ -19,7 +19,7 @@ fun ProfileScreen(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        PrimaryButton(
+        CTPrimaryButton(
             text = TextSpec.RawString("Se déconnecter"),
             onClick = { viewModel.logout() },
         )

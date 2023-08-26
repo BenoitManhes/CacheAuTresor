@@ -1,46 +1,36 @@
 package com.benoitmanhes.designsystem.molecule.button.fabbutton
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Add
-import com.benoitmanhes.designsystem.res.icons.iconpack.Favorite
-import com.benoitmanhes.designsystem.res.icons.iconpack.FavoriteFilled
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FabButton(
-    icon: IconSpec,
-    onClick: () -> Unit,
+fun CTFabButton(
+    state: FabButtonState,
     modifier: Modifier = Modifier,
-    text: TextSpec? = null,
-    type: FabButtonType = FabButtonType.COLORED,
     color: Color = CTTheme.color.primary,
 ) {
-    val attribute = provideFabButtonAttribute(type = type, color = color)
+    val attribute = provideFabButtonAttribute(type = state.type, color = color)
+    val size = remember { Dimens.FloatingButtonSize.Large }
 
     Surface(
-        onClick = onClick,
+        onClick = state.onClick,
         modifier = modifier,
         shape = CTTheme.shape.medium,
         color = attribute.backgroundColor,
@@ -50,23 +40,26 @@ fun FabButton(
     ) {
         Box(
             modifier = Modifier
-                .defaultMinSize(minWidth = Dimens.Size.fabButtonSize, minHeight = Dimens.Size.fabButtonSize),
+                .defaultMinSize(
+                    minWidth = size.button,
+                    minHeight = size.button,
+                ),
             contentAlignment = Alignment.Center
         ) {
             Row(
                 modifier = Modifier
-                    .padding(CTTheme.spacing.small),
+                    .padding(CTTheme.spacing.large),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 CTIcon(
-                    icon = icon,
-                    size = Dimens.IconSize.Large,
+                    icon = state.icon,
+                    size = size.icon,
                     color = attribute.contentColor,
                 )
-                text?.let {
+                state.text?.let {
                     SpacerSmall()
                     CTTextView(
-                        text = text,
+                        text = state.text,
                         style = CTTheme.typography.bodyBold,
                         color = attribute.contentColor,
                     )
@@ -93,42 +86,4 @@ private fun provideFabButtonAttribute(type: FabButtonType, color: Color): FabBut
             color = color,
         ),
     )
-}
-
-@Preview
-@Composable
-private fun PreviewFabButton() {
-    CTTheme {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium)
-            ) {
-                FabButton(
-                    icon = IconSpec.VectorIcon(CTTheme.icon.Favorite, null),
-                    type = FabButtonType.OUTLINED,
-                    onClick = { },
-                )
-                FabButton(
-                    icon = IconSpec.VectorIcon(CTTheme.icon.FavoriteFilled, null),
-                    type = FabButtonType.COLORED,
-                    onClick = { },
-                )
-                FabButton(
-                    icon = IconSpec.VectorIcon(CTTheme.icon.Add, null),
-                    type = FabButtonType.OUTLINED,
-                    text = TextSpec.RawString("Ajouter"),
-                    onClick = { },
-                )
-                FabButton(
-                    icon = IconSpec.VectorIcon(CTTheme.icon.Add, null),
-                    type = FabButtonType.COLORED,
-                    text = TextSpec.RawString("Ajouter"),
-                    onClick = { },
-                )
-            }
-        }
-    }
 }
