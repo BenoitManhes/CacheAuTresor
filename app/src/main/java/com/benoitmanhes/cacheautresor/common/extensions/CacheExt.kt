@@ -28,14 +28,6 @@ internal fun Cache.getCacheMarker(): CacheMarker = when (this) {
 }
 
 @Composable
-internal fun Cache.getCacheColor(): Color = when (this) {
-    is Cache.Classical -> CTTheme.color.primaryClassical
-    is Cache.Coop -> CTTheme.color.primaryCoop
-    is Cache.Mystery -> CTTheme.color.primaryMystery
-    is Cache.Piste -> CTTheme.color.primaryPiste
-}
-
-@Composable
 fun Cache.getIcon(): IconSpec = when (this) {
     is Cache.Classical -> IconSpec.VectorIcon(CTTheme.icon.Parchment, null)
     is Cache.Coop -> IconSpec.VectorIcon(CTTheme.icon.Coop, null)

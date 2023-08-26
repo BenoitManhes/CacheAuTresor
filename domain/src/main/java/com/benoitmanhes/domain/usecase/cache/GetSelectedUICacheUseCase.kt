@@ -5,6 +5,7 @@ import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
+import com.benoitmanhes.domain.model.CacheUserData
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.usecase.AbstractUseCase
@@ -24,7 +25,8 @@ class GetSelectedUICacheUseCase @Inject constructor(
             val uiCacheDetails = UICacheDetails(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
-                userStatus = myExplorer.getCacheDetailsUserStatus(cache)
+                status = myExplorer.getCacheDetailsUserStatus(cache),
+                userData = CacheUserData(cacheId), // TODO complete
             )
             emit(CTResult.Success(uiCacheDetails))
         }
@@ -35,9 +37,9 @@ class GetSelectedUICacheUseCase @Inject constructor(
     }
 
     private fun Explorer.getCacheDetailsUserStatus(cache: Cache) = when {
-        cache.creatorId == this.explorerId -> UICacheDetails.CacheDetailsUserStatus.Owned
-        this.cacheIdsFound.contains(cache.cacheId) -> UICacheDetails.CacheDetailsUserStatus.Found
+        cache.creatorId == this.explorerId -> UICacheDetails.Status.Owned
+        this.cacheIdsFound.contains(cache.cacheId) -> UICacheDetails.Status.Found
         // Handle here cache started
-        else -> UICacheDetails.CacheDetailsUserStatus.Available
+        else -> UICacheDetails.Status.Available
     }
 }

@@ -6,5 +6,7 @@ data class CTStorageError(
 ) : CTError(message, cause) {
 
     object ExplorerNotFound : CTRemoteError(null, "Explorer not found")
+    object CacheNotFound : CTRemoteError(null, "Cache not found")
+    object CacheUserDataNotFound : CTRemoteError(null, "Cache user data not found")
     data class UnexpectedResult(override val message: String) : CTRemoteError(null, message)
 }

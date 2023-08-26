@@ -87,7 +87,7 @@ internal fun ExploreMapScreen(
         mapViewState.overlays.removeAll(markerFolder.items)
         markerFolder.items.clear()
 
-        uiState.caches.forEach { uiCache ->
+        uiState.caches.sortedBy { it == uiState.cacheSelected }.forEach { uiCache ->
             val marker = uiCache.getOSMMarker(
                 context = context,
                 mapViewState = mapViewState,

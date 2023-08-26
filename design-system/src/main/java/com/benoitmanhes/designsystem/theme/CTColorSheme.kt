@@ -7,12 +7,6 @@ import com.benoitmanhes.designsystem.res.Colors
 @Immutable
 object DayColorScheme : CTColorScheme {
     override val primary: Color = Colors.Marigold
-    override val primaryClassical: Color = Colors.LaSalleGreen
-    override val primaryCoop: Color = Colors.LightSeaGreen
-    override val primaryMystery: Color = Colors.MetallicViolet
-    override val primaryPiste: Color = Colors.WatermelonRed
-    override val primaryOwner: Color = Colors.BlackOlive
-    override val primaryFound: Color = Colors.Marigold
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
     override val onSecondary: Color = Colors.White
@@ -31,12 +25,6 @@ object DayColorScheme : CTColorScheme {
 @Immutable
 object NightColorScheme : CTColorScheme {
     override val primary: Color = Colors.Marigold
-    override val primaryClassical: Color = Colors.LaSalleGreen
-    override val primaryCoop: Color = Colors.LightSeaGreen
-    override val primaryMystery: Color = Colors.MetallicViolet
-    override val primaryPiste: Color = Colors.WatermelonRed
-    override val primaryOwner: Color = Colors.BlackOlive
-    override val primaryFound: Color = Colors.Marigold
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
     override val onSecondary: Color = Colors.White
@@ -55,12 +43,6 @@ object NightColorScheme : CTColorScheme {
 @Immutable
 interface CTColorScheme {
     val primary: Color
-    val primaryClassical: Color
-    val primaryCoop: Color
-    val primaryMystery: Color
-    val primaryPiste: Color
-    val primaryOwner: Color
-    val primaryFound: Color
     val onPrimary: Color
     val secondary: Color
     val onSecondary: Color
@@ -75,14 +57,10 @@ interface CTColorScheme {
     val rootBackground: Color
     val backgroundMask: Color
 
-    fun copy(primaryColor: Color? = null): CTColorScheme = object : CTColorScheme {
+    fun copy(
+        primaryColor: Color? = null,
+    ): CTColorScheme = object : CTColorScheme {
         override val primary: Color = primaryColor ?: this@CTColorScheme.primary
-        override val primaryClassical: Color = this@CTColorScheme.primaryClassical
-        override val primaryCoop: Color = this@CTColorScheme.primaryCoop
-        override val primaryMystery: Color = this@CTColorScheme.primaryMystery
-        override val primaryPiste: Color = this@CTColorScheme.primaryPiste
-        override val primaryOwner: Color = this@CTColorScheme.primaryOwner
-        override val primaryFound: Color = this@CTColorScheme.primaryFound
         override val onPrimary: Color = this@CTColorScheme.onPrimary
         override val secondary: Color = this@CTColorScheme.secondary
         override val onSecondary: Color = this@CTColorScheme.onSecondary
