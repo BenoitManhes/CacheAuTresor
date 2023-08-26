@@ -11,6 +11,6 @@ object DomainConstants {
     }
 
     object Loading {
-        val minLoadingDuration: Duration = 500.milliseconds
+        val minLoadingDuration: Duration = 750.milliseconds
     }
 }

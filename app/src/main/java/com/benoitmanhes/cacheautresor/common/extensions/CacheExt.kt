@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarker
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxBig
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMedium
@@ -15,6 +16,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
+import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheSize
 
@@ -48,4 +50,11 @@ fun Cache.getSizeIcon(): IconSpec = when (this.size) {
     CacheSize.Regular -> IconSpec.VectorIcon(CTTheme.icon.BoxMedium, null)
     CacheSize.Big -> IconSpec.VectorIcon(CTTheme.icon.BoxBig, null)
     CacheSize.Undefined -> IconSpec.VectorIcon(Icons.Rounded.QuestionMark, null)
+}
+
+fun Cache.getTypeText(): TextSpec = when (this) {
+    is Cache.Classical -> TextSpec.Resources(R.string.cache_type_classical)
+    is Cache.Coop -> TextSpec.Resources(R.string.cache_type_coop)
+    is Cache.Mystery -> TextSpec.Resources(R.string.cache_type_mystery)
+    is Cache.Piste -> TextSpec.Resources(R.string.cache_type_piste)
 }

@@ -96,6 +96,15 @@ object Dimens {
         val maxTextSize: Dp = 60.dp
     }
 
+    object Loading {
+        val loadingViewSize: Dp = 90.dp
+        val compassBackgroundSize: Dp = 65.dp
+        val aiguilleSize: DpSize = DpSize(
+            width = 18.dp,
+            height = 70.dp,
+        )
+    }
+
     object TopBar {
         val height: Dp = 56.dp
     }

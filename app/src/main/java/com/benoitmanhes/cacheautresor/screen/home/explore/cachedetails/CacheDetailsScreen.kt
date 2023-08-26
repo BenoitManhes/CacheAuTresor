@@ -3,10 +3,7 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 import android.content.Context
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +13,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Surface
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -29,35 +25,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.CTMapView
 import com.benoitmanhes.cacheautresor.common.composable.bottomsheet.BottomSheetState
 import com.benoitmanhes.cacheautresor.common.composable.bottomsheet.CTBottomSheet
-import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
-import com.benoitmanhes.cacheautresor.common.extensions.getColor
-import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.cacheDetailsContent
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
-import com.benoitmanhes.designsystem.atoms.CTIcon
-import com.benoitmanhes.designsystem.atoms.spacer.SpacerExtraSmall
-import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
+import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
+import com.benoitmanhes.designsystem.molecule.loading.CTLoadingView
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.LocalColor
-import com.benoitmanhes.designsystem.utils.TextSpec
-import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.Coordinates
-import com.benoitmanhes.domain.uimodel.UICacheDetails
 import kotlinx.coroutines.launch
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -66,12 +54,9 @@ import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import kotlin.math.roundToInt
-
-private val BottomSheetHeaderHeight: Dp = 64.dp
 
 @Composable
 fun CacheDetailsRoute(
@@ -79,13 +64,14 @@ fun CacheDetailsRoute(
     viewModel: CacheDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val cachePrimaryColor = (uiState as? CacheDetailsUIState.Data)?.uiCacheDetails?.getColor()
 
-    CompositionLocalProvider(LocalColor provides LocalColor.current.copy(primaryColor = cachePrimaryColor)) {
+    CompositionLocalProvider(
+        LocalColor provides LocalColor.current.copy(primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.primaryColor)
+    ) {
         CTScreenWrapper {
             CacheDetailsScreen(
                 onNavigateBack = onNavigateBack,
-                data = (uiState as? CacheDetailsUIState.Data),
+                uiState = uiState,
             )
         }
     }
@@ -95,7 +81,7 @@ fun CacheDetailsRoute(
 @Composable
 private fun CacheDetailsScreen(
     onNavigateBack: () -> Unit,
-    data: CacheDetailsUIState.Data?,
+    uiState: CacheDetailsViewModelState,
 ) {
     val context: Context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -112,6 +98,7 @@ private fun CacheDetailsScreen(
             swipeableState.offset.value.roundToInt().toDp() + Dimens.Corner.large + statusBarHeight
         }
     }
+    val data = uiState as? CacheDetailsViewModelState.Data
 
     LaunchedEffect(mapViewState) {
         mapViewState.setupMap(AppConstants.Map.defaultLocation) {
@@ -121,12 +108,14 @@ private fun CacheDetailsScreen(
         }
     }
 
-    LaunchedEffect(data?.uiCacheDetails?.cache) {
+    LaunchedEffect(data?.uiMarkers) {
         mapViewState.overlays.removeAll(markerFolder.items)
         markerFolder.items.clear()
-        data?.uiCacheDetails?.let { uiCacheDetails ->
-            markerFolder.add(uiCacheDetails.getOSMMarker(context, mapViewState))
-            mapViewState.controller.setCenter(uiCacheDetails.cache.coordinates.toGeoPoint())
+        data?.uiMarkers?.forEach { uiMarker ->
+            markerFolder.add(uiMarker.getOSMMarker(context, mapViewState))
+        }
+        data?.uiMarkers?.firstOrNull()?.let { uiMarker ->
+            mapViewState.controller.setCenter(uiMarker.coordinates.toGeoPoint())
         }
 
         mapViewState.overlays.addAll(markerFolder.items)
@@ -147,20 +136,52 @@ private fun CacheDetailsScreen(
     ) {
         CTBottomSheet(
             header = {
-                Header(data = data) {
-                    coroutineScope.launch {
-                        swipeableState.animateTo(BottomSheetState.EXPANDED, bottomSheetAnimation)
+                data?.headerState?.let {
+                    CacheDetailHeader(uiState.headerState) {
+                        coroutineScope.launch {
+                            swipeableState.animateTo(BottomSheetState.EXPANDED, bottomSheetAnimation)
+                        }
                     }
                 }
             },
             body = {
-                cacheDetailsContent(
-                    scope = this,
-                    data = data,
-                )
+                when (uiState) {
+                    is CacheDetailsViewModelState.Data -> {
+                        cacheDetailsContent(
+                            scope = this,
+                            uiState = uiState,
+                        )
+                    }
+
+                    CacheDetailsViewModelState.Initialize -> {
+                        item {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                CTLoadingView()
+                            }
+                        }
+                    }
+
+                    is CacheDetailsViewModelState.Empty -> {
+                        item {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                CTTextView(
+                                    text = uiState.message,
+                                    style = CTTheme.typography.body,
+                                    color = CTTheme.color.placeholder,
+                                )
+                            }
+                        }
+                    }
+                }
             },
             swipeableState = swipeableState,
-            peekHeight = BottomSheetHeaderHeight,
+            peekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
         )
     }
 
@@ -168,51 +189,6 @@ private fun CacheDetailsScreen(
         modifier = Modifier.statusBarsPadding(),
         navAction = CTNavAction.Back(onNavigateBack),
     )
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun Header(
-    data: CacheDetailsUIState.Data?,
-    onClick: () -> Unit,
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(BottomSheetHeaderHeight),
-        elevation = CTTheme.elevation.none,
-        color = CTTheme.color.primary,
-        onClick = onClick,
-    ) {
-        data?.uiCacheDetails?.cache?.let { cache ->
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CTResponsiveText(
-                    text = TextSpec.RawString(cache.title),
-                    minFontSize = CTTheme.typography.body.fontSize,
-                    color = CTTheme.color.onPrimary,
-                    style = CTTheme.typography.header1,
-                    maxLines = 1,
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    CTIcon(
-                        icon = cache.getIcon(),
-                        size = Dimens.IconSize.Small,
-                        color = CTTheme.color.onPrimary,
-                    )
-                    SpacerExtraSmall()
-                    CTTextView(
-                        text = cache.getTypeText(),
-                        style = CTTheme.typography.caption,
-                        color = CTTheme.color.onPrimary,
-                    )
-                }
-            }
-        }
-    }
 }
 
 private fun MapView.setupMap(
@@ -246,25 +222,6 @@ private fun MapView.setupMap(
         override fun longPressHelper(p: GeoPoint?): Boolean = false
     })
     overlays.add(mapEventOverlay)
-}
-
-private fun UICacheDetails.getOSMMarker(
-    context: Context,
-    mapViewState: MapView,
-): Marker = Marker(mapViewState).apply {
-    position = cache.coordinates.toGeoPoint()
-    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-    icon = getCacheMarker().getDrawable(
-        isSelected = false,
-        context = context,
-    )
-}
-
-private fun Cache.getTypeText(): TextSpec = when (this) {
-    is Cache.Classical -> TextSpec.Resources(R.string.cache_type_classical)
-    is Cache.Coop -> TextSpec.Resources(R.string.cache_type_coop)
-    is Cache.Mystery -> TextSpec.Resources(R.string.cache_type_mystery)
-    is Cache.Piste -> TextSpec.Resources(R.string.cache_type_piste)
 }
 
 private val bottomSheetAnimation: AnimationSpec<Float> = tween(durationMillis = 400)

@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,5 +35,10 @@ class LoadingManager @Inject constructor() {
 
     fun hideLoading() {
         _isLoading.value = false
+    }
+
+    suspend fun hideLoadingWaitDelay() {
+        hideLoading()
+        isLoading.first { it }
     }
 }
