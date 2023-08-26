@@ -1,12 +1,14 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 
 import android.content.Context
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -18,8 +20,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.runtime.Composable
@@ -43,13 +45,13 @@ import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
-import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.cacheDetailsContent
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.CTFabButton
 import com.benoitmanhes.designsystem.molecule.loading.CTLoadingView
+import com.benoitmanhes.designsystem.molecule.selector.CTTabSelector
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.res.Dimens
@@ -210,7 +212,19 @@ private fun DataContent(
     uiState: CacheDetailsViewModelState.Data,
     scrollState: LazyListState,
 ) {
-    Column {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .animateContentSize(),
+        verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
+    ) {
+        uiState.tabSelectorState?.let {
+            CTTabSelector(
+                tabSelectorState = it,
+                modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
+            )
+        }
+        Divider()
 
     }
 }

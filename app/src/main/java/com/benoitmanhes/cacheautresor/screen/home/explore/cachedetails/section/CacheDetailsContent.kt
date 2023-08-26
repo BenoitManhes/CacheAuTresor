@@ -31,40 +31,40 @@ fun CacheDetailsContent(
     uiState: CacheDetailsViewModelState.Data,
 ) {
 
-        spacerLargeItem()
-        specSection(data)
-        spacerLargeItem()
-        bbDivider(modifier = Modifier.horizontalScreenPadding())
-        spacerLargeItem()
-    }
+//        spacerLargeItem()
+//        specSection(data)
+//        spacerLargeItem()
+//        bbDivider(modifier = Modifier.horizontalScreenPadding())
+//        spacerLargeItem()
+//    }
 }
 
 private fun LazyListScope.specSection(data: CacheDetailsViewModelState.Data) {
-    item(key = "specSection", contentType = "specSection") {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScreenPadding(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            CTJauge(
-                rate = data?.uiCacheDetails?.cache?.difficulty,
-                icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
-                text = data?.uiCacheDetails?.cache?.difficulty?.toDifficultyString(),
-            )
-            CTJauge(
-                rate = data?.uiCacheDetails?.cache?.ground,
-                icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
-                text = data?.uiCacheDetails?.cache?.ground?.toDifficultyString(),
-            )
-            CTJauge(
-                rate = data?.uiCacheDetails?.cache?.size?.toJaugeRate(),
-                icon = data?.uiCacheDetails?.cache?.getSizeIcon() ?: IconSpec.VectorIcon(CTTheme.icon.Box, null),
-                text = data?.uiCacheDetails?.cache?.size?.toSizeText(),
-            )
-        }
-    }
+//    item(key = "specSection", contentType = "specSection") {
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .horizontalScreenPadding(),
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.SpaceEvenly,
+//        ) {
+//            CTJauge(
+//                rate = data?.uiCacheDetails?.cache?.difficulty,
+//                icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
+//                text = data?.uiCacheDetails?.cache?.difficulty?.toDifficultyString(),
+//            )
+//            CTJauge(
+//                rate = data?.uiCacheDetails?.cache?.ground,
+//                icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
+//                text = data?.uiCacheDetails?.cache?.ground?.toDifficultyString(),
+//            )
+//            CTJauge(
+//                rate = data?.uiCacheDetails?.cache?.size?.toJaugeRate(),
+//                icon = data?.uiCacheDetails?.cache?.getSizeIcon() ?: IconSpec.VectorIcon(CTTheme.icon.Box, null),
+//                text = data?.uiCacheDetails?.cache?.size?.toSizeText(),
+//            )
+//        }
+//    }
 }
 
 private fun Modifier.horizontalScreenPadding() = composed { this.padding(horizontal = CTTheme.spacing.large) }

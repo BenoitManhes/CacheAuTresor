@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.error.localizedDescription
-import com.benoitmanhes.designsystem.lab.Selector
-import com.benoitmanhes.designsystem.lab.SelectorItem
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
+import com.benoitmanhes.designsystem.molecule.selector.CTSwitchSelector
+import com.benoitmanhes.designsystem.molecule.selector.SelectorItem
 import com.benoitmanhes.designsystem.res.icons.iconpack.Filter
 import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.theme.CTTheme
@@ -106,7 +106,7 @@ fun ExploreRoute(
             onClick = { /*TODO*/ },
             type = FabButtonType.OUTLINED,
         )
-        Selector(
+        CTSwitchSelector(
             items = selectorItems,
             selectedItem = selectorItems[page],
             onSelectedItem = {

@@ -1,4 +1,4 @@
-package com.benoitmanhes.designsystem.lab
+package com.benoitmanhes.designsystem.molecule.selector
 
 import com.benoitmanhes.designsystem.utils.TextSpec
 

@@ -6,6 +6,7 @@ import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBa
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
+import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
@@ -18,6 +19,7 @@ sealed interface CacheDetailsViewModelState {
         val uiMarkers: List<UIMarker>,
         val fabButtonState: FabButtonState?,
         val bottomBarState: BottomActionBarState?,
+        val tabSelectorState: TabSelectorState?,
     ) : CacheDetailsViewModelState {
         val primaryColor: Color
             @Composable

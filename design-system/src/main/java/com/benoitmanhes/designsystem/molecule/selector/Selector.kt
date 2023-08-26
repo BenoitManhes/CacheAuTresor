@@ -1,9 +1,10 @@
-package com.benoitmanhes.designsystem.lab
+package com.benoitmanhes.designsystem.molecule.selector
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,24 +22,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @Composable
-fun Selector(
+internal fun Selector(
     items: List<SelectorItem>,
     selectedItem: SelectorItem,
     onSelectedItem: (SelectorItem) -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = CTTheme.color.primary,
+    shape: Shape = CTTheme.shape.circle,
+    selectorShape: Shape = CTTheme.shape.circle,
+    paddingValues: PaddingValues = PaddingValues(CTTheme.spacing.micro),
     contentColor: Color = contentColorFor(backgroundColor = backgroundColor),
     state: SelectorState = rememberSelectorState(
         items = items,
@@ -56,9 +62,9 @@ fun Selector(
     Layout(
         modifier = modifier
             .height(Dimens.Size.selectorHeight)
-            .clip(CTTheme.shape.circle)
+            .clip(shape)
             .background(backgroundColor)
-            .padding(CTTheme.spacing.micro),
+            .padding(paddingValues),
         content = {
             val itemColor = state.itemsContentColor
 
@@ -73,7 +79,7 @@ fun Selector(
             Box(
                 modifier = Modifier
                     .layoutId(SelectorId)
-                    .clip(CTTheme.shape.circle)
+                    .clip(selectorShape)
                     .background(contentColor)
             )
         },
@@ -122,13 +128,13 @@ private fun SelectorOption(
             ) { onSelectedItem(item) },
         contentAlignment = Alignment.Center,
     ) {
-        CTTextView(
+        CTResponsiveText(
             text = item.text,
+            minFontSize = CTTheme.typography.caption.fontSize,
             style = CTTheme.typography.bodyBold,
             color = contentColor,
             modifier = Modifier.padding(horizontal = CTTheme.spacing.extraSmall, vertical = CTTheme.spacing.small),
-            maxLine = 1,
-            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
         )
     }
 }
