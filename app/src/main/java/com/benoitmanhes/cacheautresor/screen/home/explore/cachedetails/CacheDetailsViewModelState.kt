@@ -24,6 +24,8 @@ sealed interface CacheDetailsViewModelState {
         val primaryColor: Color
             @Composable
             get() = CTTheme.color.primary
+
+        val page: Int get() = (tabSelectorState?.page ?: 0).coerceAtLeast(0)
     }
 
     data class Empty(

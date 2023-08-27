@@ -43,11 +43,10 @@ fun CTBottomSheet(
     halfPeekHeight: Dp = 120.dp,
     topPadding: Dp = Dimens.TopBar.height + CTTheme.spacing.small * 2,
     swipeableState: SwipeableState<BottomSheetState> = rememberSwipeableState(initialValue = BottomSheetState.HALF),
+    scrollState: LazyListState = rememberLazyListState(),
     header: ComposableContent,
-    body: @Composable (LazyListState) -> Unit,
+    body: ComposableContent,
 ) {
-    val scrollState = rememberLazyListState()
-
     BoxWithConstraints(modifier.fillMaxSize()) {
         val constraintsScope = this
         val maxHeight = with(LocalDensity.current) {
@@ -131,7 +130,7 @@ fun CTBottomSheet(
                     .background(CTTheme.color.background)
             ) {
                 header()
-                body(scrollState)
+                body()
             }
         }
     }

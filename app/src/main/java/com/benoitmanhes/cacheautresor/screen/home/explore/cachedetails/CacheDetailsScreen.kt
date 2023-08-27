@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberSwipeableState
@@ -45,6 +49,8 @@ import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailInstructions
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailRecap
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
@@ -104,6 +110,8 @@ private fun CacheDetailsScreen(
     val statusBarHeight = remember {
         systemBarsPadding.calculateTopPadding()
     }
+    val recapLazyListState = rememberLazyListState()
+    val instructionsLazyListState = rememberLazyListState()
     val markerFolder = remember { FolderOverlay() }
 
     val mapHeight = with(LocalDensity.current) {
@@ -112,6 +120,9 @@ private fun CacheDetailsScreen(
         }
     }
     val data = uiState as? CacheDetailsViewModelState.Data
+    val bottomSheetScrollState = remember(data?.page) {
+        if (data?.page == 1) instructionsLazyListState else recapLazyListState
+    }
 
     LaunchedEffect(mapViewState) {
         mapViewState.setupMap(AppConstants.Map.defaultLocation) {
@@ -159,10 +170,14 @@ private fun CacheDetailsScreen(
                             }
                         }
                     },
-                    body = { scrollState ->
+                    body = {
                         when (uiState) {
                             is CacheDetailsViewModelState.Data -> {
-                                DataContent(uiState = uiState, scrollState = scrollState)
+                                DataContent(
+                                    uiState = uiState,
+                                    recapLazyListState = recapLazyListState,
+                                    instructionsLazyListState = instructionsLazyListState,
+                                )
                             }
 
                             CacheDetailsViewModelState.Initialize -> {
@@ -174,6 +189,7 @@ private fun CacheDetailsScreen(
                             }
                         }
                     },
+                    scrollState = bottomSheetScrollState,
                     swipeableState = swipeableState,
                     peekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
                 )
@@ -207,11 +223,22 @@ private fun CacheDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DataContent(
     uiState: CacheDetailsViewModelState.Data,
-    scrollState: LazyListState,
+    recapLazyListState: LazyListState,
+    instructionsLazyListState: LazyListState,
 ) {
+    val pageCount = remember(uiState.tabSelectorState?.items) {
+        uiState.tabSelectorState?.items?.size ?: 1
+    }
+    val pagerState = rememberPagerState()
+
+    LaunchedEffect(uiState.page) {
+        pagerState.animateScrollToPage(uiState.page)
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -226,6 +253,27 @@ private fun DataContent(
         }
         Divider()
 
+        HorizontalPager(
+            pageCount = uiState.tabSelectorState?.items?.size ?: 1,
+            state = pagerState,
+            userScrollEnabled = false,
+        ) { page ->
+            when (page) {
+                0 -> {
+                    CacheDetailRecap(
+                        uiState = uiState,
+                        lazyListState = recapLazyListState,
+                    )
+                }
+
+                1 -> {
+                    CacheDetailInstructions(
+                        uiState = uiState,
+                        lazyListState = instructionsLazyListState,
+                    )
+                }
+            }
+        }
     }
 }
 
