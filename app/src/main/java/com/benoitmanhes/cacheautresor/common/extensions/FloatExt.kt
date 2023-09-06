@@ -2,9 +2,8 @@ package com.benoitmanhes.cacheautresor.common.extensions
 
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.designsystem.utils.TextSpec
-import java.text.DecimalFormat
 
-fun Float.toDifficultyString(): TextSpec {
+fun Float.toDifficultyText(): TextSpec {
     val difficultyRes = when {
         this > 5 -> R.string.common_unknown
         this == 5f -> R.string.cache_difficulty_5
@@ -17,7 +16,7 @@ fun Float.toDifficultyString(): TextSpec {
     return TextSpec.Resources(difficultyRes)
 }
 
-fun Float.toGroundString(): TextSpec {
+fun Float.toGroundText(): TextSpec {
     val difficultyRes = when {
         this > 5 -> R.string.common_unknown
         this == 5f -> R.string.cache_ground_5

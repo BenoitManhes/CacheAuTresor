@@ -93,7 +93,7 @@ object CTInfoCard {
 data class InfoCardState(
     val icon: IconSpec?,
     val message: TextSpec,
-    val trailingText: TextSpec?,
+    val trailingText: TextSpec? = null,
 )
 
 @Preview

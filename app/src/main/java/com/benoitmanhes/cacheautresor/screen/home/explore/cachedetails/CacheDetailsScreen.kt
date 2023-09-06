@@ -133,7 +133,7 @@ private fun CacheDetailsScreen(
     LaunchedEffect(mapViewState) {
         mapViewState.setupMap(AppConstants.Map.defaultLocation) {
             coroutineScope.launch {
-                bottomSheetState.hide()
+                bottomSheetState.partialExpand()
             }
         }
     }
@@ -170,54 +170,56 @@ private fun CacheDetailsScreen(
             )
             SpacerMedium()
 
-            BottomSheetScaffold(
-                scaffoldState = bottomSheetScaffoldState,
-                sheetPeekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
-                sheetContent = {
-                    Column {
-                        Box(modifier = Modifier.weight(1f)) {
-                            Column {
-                                // Header
-                                data?.headerState?.let {
-                                    CacheDetailHeader(uiState.headerState) {
-                                        coroutineScope.launch {
-                                            bottomSheetState.expand()
+            Box(modifier = Modifier.weight(1f)) {
+                BottomSheetScaffold(
+                    scaffoldState = bottomSheetScaffoldState,
+                    sheetPeekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
+                    sheetContent = {
+                        Column {
+                            Box(modifier = Modifier.weight(1f)) {
+                                Column {
+                                    // Header
+                                    data?.headerState?.let {
+                                        CacheDetailHeader(uiState.headerState) {
+                                            coroutineScope.launch {
+                                                bottomSheetState.expand()
+                                            }
                                         }
                                     }
+
+                                    // Body
+                                    when (uiState) {
+                                        is CacheDetailsViewModelState.Data -> {
+                                            DataContent(
+                                                uiState = uiState,
+                                                recapLazyListState = recapLazyListState,
+                                                instructionsLazyListState = instructionsLazyListState,
+                                            )
+                                        }
+
+                                        CacheDetailsViewModelState.Initialize -> {
+                                            InitContent()
+                                        }
+
+                                        is CacheDetailsViewModelState.Empty -> {
+                                            EmptyContent(uiState = uiState)
+                                        }
+                                    }
+
                                 }
-
-                                // Body
-                                when (uiState) {
-                                    is CacheDetailsViewModelState.Data -> {
-                                        DataContent(
-                                            uiState = uiState,
-                                            recapLazyListState = recapLazyListState,
-                                            instructionsLazyListState = instructionsLazyListState,
-                                        )
-                                    }
-
-                                    CacheDetailsViewModelState.Initialize -> {
-                                        InitContent()
-                                    }
-
-                                    is CacheDetailsViewModelState.Empty -> {
-                                        EmptyContent(uiState = uiState)
-                                    }
-                                }
-
-                            }
-
-                            data?.bottomBarState?.let { _bottomBarState ->
-                                BottomActionBar(
-                                    state = _bottomBarState,
-                                )
                             }
                         }
-                    }
-                },
-                sheetDragHandle = null,
-                content = {},
-            )
+                    },
+                    sheetDragHandle = null,
+                    content = {},
+                )
+            }
+
+            data?.bottomBarState?.let { _bottomBarState ->
+                BottomActionBar(
+                    state = _bottomBarState,
+                )
+            }
         }
 
         AnimatedNullableVisibility(

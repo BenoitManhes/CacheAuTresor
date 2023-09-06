@@ -33,6 +33,7 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 @Composable
 fun CTPrimaryButton(
     state: PrimaryButtonState,
@@ -58,6 +59,7 @@ fun CTPrimaryButton(
     type: PrimaryButtonType = PrimaryButtonType.COLORED,
     status: ButtonStatus = ButtonStatus.ENABLE,
     color: Color = CTTheme.color.primary,
+    contentColor: Color = CTTheme.color.onPrimary,
     options: Set<PrimaryButtonOption> = emptySet(),
 ) {
     ButtonFromType(
@@ -65,6 +67,7 @@ fun CTPrimaryButton(
         modifier = modifier.heightIn(Dimens.Size.primaryButtonMinHeight),
         type = type,
         color = color,
+        contentColor = contentColor,
         onClick = onClick,
     ) { buttonColors ->
         if (status == ButtonStatus.LOADING) {
@@ -94,6 +97,7 @@ private fun ButtonFromType(
     type: PrimaryButtonType,
     status: ButtonStatus,
     color: Color,
+    contentColor: Color,
     onClick: () -> Unit,
     content: @Composable (ButtonColors) -> Unit,
 ) {
@@ -107,7 +111,7 @@ private fun ButtonFromType(
         PrimaryButtonType.COLORED -> {
             Button(
                 shape = CTTheme.shape.medium,
-                colors = buttonColorsColored(color),
+                colors = buttonColorsColored(color, contentColor),
                 enabled = status != ButtonStatus.DISABLE,
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = Dimens.Elevation.none,
@@ -119,10 +123,11 @@ private fun ButtonFromType(
                 onClick = safeOnClick,
             ) {
                 ProvideTextStyle(value = CTTheme.typography.bodyBold) {
-                    content(buttonColorsColored(color))
+                    content(buttonColorsColored(color, contentColor))
                 }
             }
         }
+
         PrimaryButtonType.OUTLINED -> {
             OutlinedButton(
                 shape = CTTheme.shape.medium,
@@ -148,8 +153,9 @@ private fun ButtonFromType(
 }
 
 @Composable
-private fun buttonColorsColored(color: Color) = ButtonDefaults.buttonColors(
+private fun buttonColorsColored(color: Color, contentColor: Color) = ButtonDefaults.buttonColors(
     backgroundColor = color,
+    contentColor = contentColor,
     disabledBackgroundColor = CTTheme.color.disable,
     disabledContentColor = CTTheme.color.onDisable,
 )

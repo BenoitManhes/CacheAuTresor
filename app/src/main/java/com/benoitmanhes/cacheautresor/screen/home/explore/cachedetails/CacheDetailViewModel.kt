@@ -5,29 +5,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
+import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.mediumFormat
+import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
+import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
 import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
+import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.extensions.toText
+import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CartographerSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
-import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
+import com.benoitmanhes.designsystem.molecule.card.InfoCardState
 import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
 import com.benoitmanhes.designsystem.molecule.selector.SelectorItem
 import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxSmall
+import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
+import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
 import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
-import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.CTTheme.icon
-import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
@@ -38,9 +43,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -86,12 +88,24 @@ class CacheDetailViewModel @Inject constructor(
                     title = TextSpec.RawString(successData.cache.title),
                     subTitle = TextSpec.RawString(successData.cache.cacheId),
                 ),
-                uiMarkers = listOf(),
-                bottomBarState = null,
+                uiMarkers = listOf(
+                    UIMarker(
+                        coordinates = successData.cache.coordinates,
+                        marker = successData.cache.getCacheMarker(),
+                        isSelected = false,
+                        onClick = {},
+                    )
+                ),
+                bottomBarState = BottomActionBarState(
+                    firstButtonState = PrimaryButtonState(
+                        text = TextSpec.Resources(R.string.cacheDetail_logButton),
+                        onClick = {}
+                    )
+                ),
                 fabButtonState = FabButtonState(
                     icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
-                    text = TextSpec.RawString("Commencer"),
-                    onClick = {},
+                    text = TextSpec.Resources(R.string.cacheDetail_startFab),
+                    onClick = {}, // TODO: start cache
                 ),
                 tabSelectorState = TabSelectorState(
                     items = tabSelectorsItems,
@@ -101,23 +115,25 @@ class CacheDetailViewModel @Inject constructor(
                 difficultyJaugeState = CTJaugeState(
                     rate = successData.cache.difficulty,
                     icon = IconSpec.VectorIcon(CTIconPack.Difficulty),
-                    text = TextSpec.RawString("diff")
+                    text = successData.cache.difficulty.toDifficultyText(),
                 ),
                 groundJaugeState = CTJaugeState(
                     rate = successData.cache.ground,
                     icon = IconSpec.VectorIcon(CTIconPack.Mountain),
-                    text = TextSpec.RawString("terrain"),
+                    text = successData.cache.ground.toGroundText()
                 ),
                 sizeJaugeState = CTJaugeState(
                     rate = successData.cache.size.toJaugeRate(),
                     icon = IconSpec.VectorIcon(CTIconPack.BoxSmall),
-                    text = null,
+                    text = successData.cache.size.toSizeText(),
                 ),
-                infoCardState = null,
+                infoCardState = getInfoCard(successData),
                 typeSectionState = CacheTypeSectionState(
                     typeIcon = IconSpec.VectorIcon(CTIconPack.Logo),
                     typeText = TextSpec.loreumIpsum(1),
-                    stickerLabel = null
+                    stickerLabel = TextSpec.Resources(R.string.cacheDetail_cacheTypeSection_ongoing).takeIf {
+                        successData.status == UICacheDetails.Status.Started
+                    }
                 ),
                 cartographerSectionState = CartographerSectionState(
                     creatorName = TextSpec.RawString(successData.explorerName),
@@ -125,7 +141,7 @@ class CacheDetailViewModel @Inject constructor(
                 ),
                 cacheCoordinates = successData.cache.coordinates,
                 distanceText = 800.421.meters.toText(),
-                description = TextSpec.loreumIpsum(50),
+                description = TextSpec.loreumIpsum(50), // TODO: description
                 characteristics = listOf(
                     CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain), text = TextSpec.RawString("Mountain")),
                     CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste), text = TextSpec.RawString("Sportif")),
@@ -145,6 +161,23 @@ class CacheDetailViewModel @Inject constructor(
         uiStateData?.let {
             _uiState.value = block(it)
         }
+    }
+
+    private fun getInfoCard(uiCacheDetails: UICacheDetails): InfoCardState? = when {
+        uiCacheDetails.status == UICacheDetails.Status.Found -> InfoCardState(
+            icon = IconSpec.VectorIcon(CTIconPack.Crown),
+            message = TextSpec.Resources(R.string.cacheDetail_foundInfoCard_message),
+            trailingText = null, // TODO: points win
+        )
+
+        !uiCacheDetails.cache.discovered -> {
+            InfoCardState(
+                icon = IconSpec.VectorIcon(CTIconPack.Ensign),
+                message = TextSpec.Resources(R.string.cacheDetail_neverFoundInfoCard_message),
+            )
+        }
+
+        else -> null
     }
 }
 
