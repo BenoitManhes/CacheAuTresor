@@ -29,7 +29,3 @@ fun Float.toGroundString(): TextSpec {
     }
     return TextSpec.Resources(difficultyRes)
 }
-
-fun Float.toOneDecimalFormat(): String = roundOneDecimalFormat.format(this)
-
-private val roundOneDecimalFormat: DecimalFormat = DecimalFormat("#.#")

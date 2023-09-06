@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 
 sealed interface TextSpec {
 
@@ -35,5 +36,10 @@ sealed interface TextSpec {
         override fun value(): AnnotatedString {
             return AnnotatedString(stringResource(id, *args))
         }
+    }
+
+    companion object {
+        fun loreumIpsum(words: Int): TextSpec =
+            TextSpec.RawString(LoremIpsum(words).values.joinToString(" "))
     }
 }

@@ -31,14 +31,12 @@ import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
 fun CTJauge(
-    rate: Float?,
-    icon: IconSpec,
-    text: TextSpec?,
+    state: CTJaugeState,
     modifier: Modifier = Modifier,
 ) {
     val progress = remember { Animatable(0f) }
-    LaunchedEffect(rate) {
-        val targetProgress = JaugeHelper.calculateProgressFromRate(rate ?: 0f)
+    LaunchedEffect(state.rate) {
+        val targetProgress = JaugeHelper.calculateProgressFromRate(state.rate ?: 0f)
         progress.animateTo(
             targetValue = targetProgress,
             animationSpec = tween(durationMillis = UiConstants.Jauge.progressAnimDurationMillis)
@@ -54,13 +52,13 @@ fun CTJauge(
         )
 
         CTIcon(
-            icon = icon,
+            icon = state.icon,
             size = Dimens.IconSize.Huge,
             modifier = Modifier.layoutId(IconId),
         )
 
         CTResponsiveText(
-            text = text,
+            text = state.text,
             minFontSize = Dimens.Font.captionSmallFontSize,
             modifier = Modifier
                 .layoutId(TextId)
@@ -106,14 +104,18 @@ private fun PreviewCTJauge() {
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(Dimens.Spacing.large)) {
                 CTJauge(
-                    rate = 2.5f,
-                    icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
-                    text = TextSpec.RawString("Dangereux"),
+                    CTJaugeState(
+                        rate = 2.5f,
+                        icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
+                        text = TextSpec.RawString("Dangereux"),
+                    )
                 )
                 CTJauge(
-                    rate = 4f,
-                    icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
-                    text = TextSpec.RawString("Expert"),
+                    CTJaugeState(
+                        rate = 4f,
+                        icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
+                        text = TextSpec.RawString("Expert"),
+                    )
                 )
             }
         }

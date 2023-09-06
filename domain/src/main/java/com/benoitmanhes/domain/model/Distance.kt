@@ -1,28 +1,43 @@
 package com.benoitmanhes.domain.model
 
 import com.benoitmanhes.domain.interfaces.Model
+import kotlin.math.roundToLong
 
 data class Distance(
-    val rawValue: Long,
+    val millimeters: Long,
 ) : Model {
 
-    fun inMeter(): Double = convertDurationUnit(DistanceUnit.METER)
-    fun inKm(): Double = convertDurationUnit(DistanceUnit.KILOMETER)
+    val meterRounded: Long get() = convertDistanceUnitRound(DistanceUnit.METER)
+    val kmsRounded: Long get() = convertDistanceUnitRound(DistanceUnit.KILOMETER)
 
-    private fun convertDurationUnit(unit: DistanceUnit): Double = rawValue / unit.inMillimeter.toDouble()
+    val meters: Double get() = convertDistanceUnit(DistanceUnit.METER)
+    val kms: Double get() = convertDistanceUnit(DistanceUnit.KILOMETER)
+
+    private fun convertDistanceUnit(unit: DistanceUnit): Double = millimeters / unit.inMillimeter.toDouble()
+    private fun convertDistanceUnitRound(unit: DistanceUnit): Long = millimeters / unit.inMillimeter
 
     companion object {
-        fun Long.meters(): Distance = buildFromDurationUnit(DistanceUnit.METER, this)
-        fun Int.meters(): Distance = buildFromDurationUnit(DistanceUnit.METER, this.toLong())
+        inline val Long.meters: Distance
+            get() = buildFromDurationUnit(DistanceUnit.METER, this)
 
-        private fun buildFromDurationUnit(unit: DistanceUnit, value: Long): Distance =
+        inline val Int.meters: Distance
+            get() = buildFromDurationUnit(DistanceUnit.METER, this.toLong())
+
+        inline val Double.meters: Distance
+            get() = buildFromDurationUnit(DistanceUnit.METER, this)
+        inline val Float.meters: Distance
+            get() = buildFromDurationUnit(DistanceUnit.METER, this.toDouble())
+
+        fun buildFromDurationUnit(unit: DistanceUnit, value: Long): Distance =
             Distance(value * unit.inMillimeter)
+
+        fun buildFromDurationUnit(unit: DistanceUnit, value: Double): Distance =
+            Distance((value * unit.inMillimeter).roundToLong())
 
     }
 }
 
 enum class DistanceUnit(val inMillimeter: Long) {
-    MILLIMETER(1),
     METER(1000),
     KILOMETER(1000000),
 }

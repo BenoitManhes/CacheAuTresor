@@ -19,8 +19,14 @@ fun CTDivider(
     )
 }
 
-fun LazyListScope.bbDivider(modifier: Modifier = Modifier) {
+fun LazyListScope.dividerItem(
+    modifier: Modifier = Modifier,
+    color: @Composable () -> Color,
+) {
     item {
-        CTDivider(modifier)
+        CTDivider(
+            modifier = modifier,
+            color = color(),
+        )
     }
 }

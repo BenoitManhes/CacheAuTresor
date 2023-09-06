@@ -57,6 +57,9 @@ interface CTColorScheme {
     val rootBackground: Color
     val backgroundMask: Color
 
+    val primarySurface: Color
+        get() = primary.copy(alpha = 0.2f)
+
     fun copy(
         primaryColor: Color? = null,
     ): CTColorScheme = object : CTColorScheme {

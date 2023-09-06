@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
@@ -112,6 +113,7 @@ fun CTBottomSheet(
                         swipeableState.offset.value.roundToInt()
                     )
                 }
+                .padding(bottom = peekHeight)
                 .swipeable(
                     state = swipeableState,
                     orientation = Orientation.Vertical,

@@ -12,8 +12,10 @@ fun SpacerLarge() {
     Spacer(modifier = Modifier.size(CTTheme.spacing.large))
 }
 
-fun LazyListScope.spacerLargeItem() {
-    item {
-        SpacerLarge()
+object SpacerLarge {
+    fun item(scope: LazyListScope) {
+        scope.item {
+            SpacerLarge()
+        }
     }
 }

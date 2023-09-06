@@ -93,7 +93,7 @@ fun CTTheme(
 @Composable
 private fun mappedMaterialColorScheme(
     darkTheme: Boolean,
-    localColor: CTColorScheme
+    localColor: CTColorScheme,
 ) = if (darkTheme) {
     darkColorScheme(
         primary = localColor.primary,
@@ -123,7 +123,7 @@ private fun mappedMaterialColorScheme(
 @Composable
 private fun mappedMaterial2Colors(
     darkTheme: Boolean,
-    localColor: CTColorScheme
+    localColor: CTColorScheme,
 ) = if (darkTheme) {
     darkColors(
         primary = localColor.primary,
@@ -148,6 +148,12 @@ private fun mappedMaterial2Colors(
         onBackground = localColor.onBackground,
         error = localColor.error,
     )
+}
+
+fun <T> CTTheme.composed(
+    factory: @Composable CTTheme.() -> T,
+): @Composable () -> T = {
+    this.factory()
 }
 
 @Composable

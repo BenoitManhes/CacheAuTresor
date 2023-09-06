@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section
+package com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,7 +15,7 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @Composable
-fun CacheDetailRecap(
+fun CacheDetailInstructionsScreen(
     uiState: CacheDetailsViewModelState.Data,
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
@@ -26,7 +26,7 @@ fun CacheDetailRecap(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(CTTheme.spacing.large)
-                        .background(CTTheme.color.primary)
+                        .background(CTTheme.color.placeholder)
                 ) {
                     CTTextView(text = TextSpec.RawString(i.toString()))
                 }

@@ -8,6 +8,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import coil.compose.rememberAsyncImagePainter
 
@@ -21,7 +23,7 @@ sealed interface ImageSpec {
     data class ResImage(
         @DrawableRes
         private val drawableRes: Int,
-        override val contentDescription: String?,
+        override val contentDescription: String? = null,
     ) : ImageSpec {
 
         @Composable
@@ -30,7 +32,7 @@ sealed interface ImageSpec {
 
     data class BitmapImage(
         val imageBitmap: ImageBitmap,
-        override val contentDescription: String?,
+        override val contentDescription: String? = null,
         private val filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
     ) : ImageSpec {
         @Composable
@@ -39,9 +41,18 @@ sealed interface ImageSpec {
         }
     }
 
+    data class VectorImage(
+        private val imageVector: ImageVector,
+        override val contentDescription: String? = null,
+    ) : IconSpec {
+
+        @Composable
+        override fun painter(): Painter = rememberVectorPainter(imageVector)
+    }
+
     data class UrlImage(
         private val url: String,
-        override val contentDescription: String?,
+        override val contentDescription: String? = null,
     ) : ImageSpec {
         @Composable
         override fun painter(): Painter = rememberAsyncImagePainter(

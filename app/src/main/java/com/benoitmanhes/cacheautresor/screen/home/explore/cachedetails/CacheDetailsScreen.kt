@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -49,11 +48,12 @@ import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
-import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailInstructions
-import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailRecap
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.CacheDetailInstructionsScreen
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.CTFabButton
 import com.benoitmanhes.designsystem.molecule.loading.CTLoadingView
@@ -85,7 +85,9 @@ fun CacheDetailsRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     CompositionLocalProvider(
-        LocalColor provides LocalColor.current.copy(primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.primaryColor)
+        LocalColor provides LocalColor.current.copy(
+            primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.cacheColor?.invoke(),
+        )
     ) {
         CTScreenWrapper {
             CacheDetailsScreen(
@@ -243,13 +245,13 @@ private fun DataContent(
         Modifier
             .fillMaxSize()
             .animateContentSize(),
-        verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
     ) {
         uiState.tabSelectorState?.let {
             CTTabSelector(
                 tabSelectorState = it,
                 modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             )
+            SpacerMedium()
         }
         Divider()
 
@@ -260,14 +262,14 @@ private fun DataContent(
         ) { page ->
             when (page) {
                 0 -> {
-                    CacheDetailRecap(
+                    CacheDetailRecapScreen(
                         uiState = uiState,
                         lazyListState = recapLazyListState,
                     )
                 }
 
                 1 -> {
-                    CacheDetailInstructions(
+                    CacheDetailInstructionsScreen(
                         uiState = uiState,
                         lazyListState = instructionsLazyListState,
                     )
