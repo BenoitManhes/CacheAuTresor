@@ -6,8 +6,6 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,8 +23,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberSwipeableState
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -38,18 +39,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.benoitmanhes.cacheautresor.common.CTMapView
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBar
-import com.benoitmanhes.cacheautresor.common.composable.bottomsheet.BottomSheetState
-import com.benoitmanhes.cacheautresor.common.composable.bottomsheet.CTBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
-import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.CacheDetailInstructionsScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
@@ -98,7 +98,7 @@ fun CacheDetailsRoute(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CacheDetailsScreen(
     onNavigateBack: () -> Unit,
@@ -107,7 +107,9 @@ private fun CacheDetailsScreen(
     val context: Context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val mapViewState = rememberMapViewWithLifecycle()
-    val swipeableState = rememberSwipeableState(initialValue = BottomSheetState.HALF)
+    val bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(bottomSheetState)
+
     val systemBarsPadding = WindowInsets.systemBars.asPaddingValues()
     val statusBarHeight = remember {
         systemBarsPadding.calculateTopPadding()
@@ -118,18 +120,20 @@ private fun CacheDetailsScreen(
 
     val mapHeight = with(LocalDensity.current) {
         derivedStateOf {
-            swipeableState.offset.value.roundToInt().toDp() + Dimens.Corner.large + statusBarHeight
+            try {
+                bottomSheetState.requireOffset().roundToInt().toDp() +
+                    Dimens.Corner.large + statusBarHeight + Dimens.TopBar.height
+            } catch (e: Exception) {
+                0.dp
+            }
         }
     }
     val data = uiState as? CacheDetailsViewModelState.Data
-    val bottomSheetScrollState = remember(data?.page) {
-        if (data?.page == 1) instructionsLazyListState else recapLazyListState
-    }
 
     LaunchedEffect(mapViewState) {
         mapViewState.setupMap(AppConstants.Map.defaultLocation) {
             coroutineScope.launch {
-                swipeableState.animateTo(BottomSheetState.COLLAPSED, bottomSheetAnimation)
+                bottomSheetState.hide()
             }
         }
     }
@@ -158,70 +162,77 @@ private fun CacheDetailsScreen(
     Box(
         modifier = Modifier
             .statusBarsPadding()
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         Column {
-            Box(modifier = Modifier.weight(1f)) {
-                CTBottomSheet(
-                    header = {
-                        data?.headerState?.let {
-                            CacheDetailHeader(uiState.headerState) {
-                                coroutineScope.launch {
-                                    swipeableState.animateTo(BottomSheetState.EXPANDED, bottomSheetAnimation)
+            CTTopBar(
+                navAction = CTNavAction.Back(onNavigateBack),
+            )
+            SpacerMedium()
+
+            BottomSheetScaffold(
+                scaffoldState = bottomSheetScaffoldState,
+                sheetPeekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
+                sheetContent = {
+                    Column {
+                        Box(modifier = Modifier.weight(1f)) {
+                            Column {
+                                // Header
+                                data?.headerState?.let {
+                                    CacheDetailHeader(uiState.headerState) {
+                                        coroutineScope.launch {
+                                            bottomSheetState.expand()
+                                        }
+                                    }
                                 }
+
+                                // Body
+                                when (uiState) {
+                                    is CacheDetailsViewModelState.Data -> {
+                                        DataContent(
+                                            uiState = uiState,
+                                            recapLazyListState = recapLazyListState,
+                                            instructionsLazyListState = instructionsLazyListState,
+                                        )
+                                    }
+
+                                    CacheDetailsViewModelState.Initialize -> {
+                                        InitContent()
+                                    }
+
+                                    is CacheDetailsViewModelState.Empty -> {
+                                        EmptyContent(uiState = uiState)
+                                    }
+                                }
+
                             }
-                        }
-                    },
-                    body = {
-                        when (uiState) {
-                            is CacheDetailsViewModelState.Data -> {
-                                DataContent(
-                                    uiState = uiState,
-                                    recapLazyListState = recapLazyListState,
-                                    instructionsLazyListState = instructionsLazyListState,
+
+                            data?.bottomBarState?.let { _bottomBarState ->
+                                BottomActionBar(
+                                    state = _bottomBarState,
                                 )
                             }
-
-                            CacheDetailsViewModelState.Initialize -> {
-                                InitContent()
-                            }
-
-                            is CacheDetailsViewModelState.Empty -> {
-                                EmptyContent(uiState = uiState)
-                            }
                         }
-                    },
-                    scrollState = bottomSheetScrollState,
-                    swipeableState = swipeableState,
-                    peekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
-                )
-            }
-
-            data?.bottomBarState?.let { _bottomBarState ->
-                BottomActionBar(
-                    state = _bottomBarState,
-                )
-            }
+                    }
+                },
+                sheetDragHandle = null,
+                content = {},
+            )
         }
-
 
         AnimatedNullableVisibility(
             value = data?.fabButtonState,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(CTTheme.spacing.extraLarge),
-            visible = { swipeableState.targetValue != BottomSheetState.COLLAPSED },
-            enter = fadeIn() + slideInVertically { it * 2 },
-            exit = fadeOut() + slideOutVertically { it * 2 },
+            visible = { bottomSheetState.targetValue != SheetValue.PartiallyExpanded },
+            enter = fadeIn(),
+            exit = fadeOut(),
         ) { buttonState ->
             CTFabButton(
                 state = buttonState,
             )
         }
-
-        CTTopBar(
-            navAction = CTNavAction.Back(onNavigateBack),
-        )
     }
 }
 

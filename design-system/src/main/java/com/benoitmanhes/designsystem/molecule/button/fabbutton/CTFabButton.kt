@@ -25,8 +25,9 @@ fun CTFabButton(
     state: FabButtonState,
     modifier: Modifier = Modifier,
     color: Color = CTTheme.color.primary,
+    contentColor: Color = CTTheme.color.onPrimary,
 ) {
-    val attribute = provideFabButtonAttribute(type = state.type, color = color)
+    val attribute = provideFabButtonAttribute(type = state.type, color = color, contentColor = contentColor)
     val size = remember { Dimens.FloatingButtonSize.Large }
 
     Surface(
@@ -71,9 +72,9 @@ fun CTFabButton(
 }
 
 @Composable
-private fun provideFabButtonAttribute(type: FabButtonType, color: Color): FabButtonParameters = when (type) {
+private fun provideFabButtonAttribute(type: FabButtonType, color: Color, contentColor: Color): FabButtonParameters = when (type) {
     FabButtonType.COLORED -> FabButtonParameters(
-        contentColor = contentColorFor(color),
+        contentColor = contentColor,
         backgroundColor = color,
         border = null,
     )

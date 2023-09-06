@@ -90,7 +90,7 @@ class CacheDetailViewModel @Inject constructor(
                 bottomBarState = null,
                 fabButtonState = FabButtonState(
                     icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
-                    text = TextSpec.RawString("Fab"),
+                    text = TextSpec.RawString("Commencer"),
                     onClick = {},
                 ),
                 tabSelectorState = TabSelectorState(
@@ -98,7 +98,6 @@ class CacheDetailViewModel @Inject constructor(
                     selectedItem = uiStateData?.tabSelectorState?.selectedItem ?: tabSelectorsItems.first(),
                     onSelectedItem = ::switchTab,
                 ),
-
                 difficultyJaugeState = CTJaugeState(
                     rate = successData.cache.difficulty,
                     icon = IconSpec.VectorIcon(CTIconPack.Difficulty),

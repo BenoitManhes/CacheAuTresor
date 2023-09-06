@@ -18,6 +18,7 @@ fun CTTabSelector(
         onSelectedItem = tabSelectorState.onSelectedItem,
         modifier = modifier.fillMaxWidth(),
         shape = CTTheme.shape.medium,
+        contentColor = CTTheme.color.onPrimary,
         selectorShape = RoundedCornerShape(Dimens.Corner.medium - Dimens.Spacing.micro)
     )
 }
