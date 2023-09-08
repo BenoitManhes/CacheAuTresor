@@ -31,11 +31,11 @@
     <string name="authentication_error_emailFormInvalid">Email form incorrect</string>
     <string name="exploreScreen_selectorItem_map">Map</string>
     <string name="exploreScreen_selectorItem_list">List</string>
-    <string name="cache_difficulty_1">very easy</string>
-    <string name="cache_difficulty_2">easy</string>
-    <string name="cache_difficulty_3">medium</string>
-    <string name="cache_difficulty_4">hard</string>
-    <string name="cache_difficulty_5">very hard</string>
+    <string name="cache_difficulty_1">easy</string>
+    <string name="cache_difficulty_2">accessible</string>
+    <string name="cache_difficulty_3">moderate</string>
+    <string name="cache_difficulty_4">complex</string>
+    <string name="cache_difficulty_5">enigmatic</string>
     <string name="cache_ground_1">peaceful</string>
     <string name="cache_ground_2">rugged</string>
     <string name="cache_ground_3">steep</string>

@@ -32,11 +32,11 @@
     <string name="authentication_error_emailFormInvalid">Le format de l’adresse mail est incorrecte</string>
     <string name="exploreScreen_selectorItem_map">Carte</string>
     <string name="exploreScreen_selectorItem_list">Liste</string>
-    <string name="cache_difficulty_2">facile</string>
-    <string name="cache_difficulty_1">très facile</string>
-    <string name="cache_difficulty_3">moyen</string>
-    <string name="cache_difficulty_4">difficile</string>
-    <string name="cache_difficulty_5">très difficile</string>
+    <string name="cache_difficulty_2">accessible</string>
+    <string name="cache_difficulty_1">facile</string>
+    <string name="cache_difficulty_3">modéré</string>
+    <string name="cache_difficulty_4">complexe</string>
+    <string name="cache_difficulty_5">énigmatique</string>
     <string name="cache_ground_1">paisible</string>
     <string name="cache_ground_2">accidenté</string>
     <string name="cache_ground_3">escarpé</string>

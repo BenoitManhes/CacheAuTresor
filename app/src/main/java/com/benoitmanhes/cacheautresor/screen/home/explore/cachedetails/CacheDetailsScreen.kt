@@ -269,7 +269,7 @@ private fun DataContent(
         Divider()
 
         HorizontalPager(
-            pageCount = uiState.tabSelectorState?.items?.size ?: 1,
+            pageCount = pageCount,
             state = pagerState,
             userScrollEnabled = false,
         ) { page ->

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.benoitmanhes.cacheautresor.designsystem"
+    namespace = "com.benoitmanhes.common.compose"
 
     buildFeatures {
         compose = true
@@ -48,9 +48,4 @@ dependencies {
     androidTestImplementation(AndroidX.test.ext.junit)
     androidTestImplementation(AndroidX.test.espresso.core)
     androidTestImplementation(AndroidX.compose.ui.testJunit4)
-
-    implementation(project(":domain"))
-    implementation(project(":core"))
-    implementation(project(":common_bm:compose"))
-    implementation(project(":logger:logger-timber"))
 }

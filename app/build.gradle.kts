@@ -105,6 +105,7 @@ dependencies {
     androidTestImplementation(AndroidX.test.espresso.core)
     androidTestImplementation(AndroidX.compose.ui.testJunit4)
 
+    implementation(project(":common_bm:compose"))
     implementation(project(":core"))
     implementation(project(":dependencies-injection"))
     implementation(project(":design-system"))

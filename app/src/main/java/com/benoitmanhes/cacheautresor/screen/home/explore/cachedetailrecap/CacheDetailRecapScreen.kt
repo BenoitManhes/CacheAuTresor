@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
