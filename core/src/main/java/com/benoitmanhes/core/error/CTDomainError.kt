@@ -13,6 +13,7 @@ data class CTDomainError(
         AUTHENTICATION_EMAIL_INVALID_FORM,
         EXPLORER_NOT_FOUND,
         CACHE_NOT_FOUND,
+        CACHE_STEP_NOT_FOUND,
         NO_AUTHENTICATION,
         NO_INTERNET,
         SERVER_ERROR,

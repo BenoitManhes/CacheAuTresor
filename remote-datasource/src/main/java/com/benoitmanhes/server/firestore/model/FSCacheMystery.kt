@@ -19,14 +19,13 @@ data class FSCacheMystery(
     val ground: Float? = null,
     val size: String? = null,
     val discovered: Boolean? = null,
-    val logCode: String? = null,
     val description: String? = null,
     val createDate: Timestamp? = null,
-    val finalCoordinates: GeoPoint? = null,
-    val instructionRef: String? = null,
-    val clue: String? = null,
     val tagIds: List<String>? = null,
     val cacheIdsRequired: List<String>? = null,
+    val enigmaStepRef: String,
+    val finalStepRef: String
+
 ) : FSCache<Cache.Mystery> {
 
     constructor(cache: Cache.Mystery) : this(
@@ -39,12 +38,11 @@ data class FSCacheMystery(
         size = cache.size.value,
         discovered = cache.discovered,
         cacheIdsRequired = cache.cacheIdsRequired,
-        clue = cache.clue,
-        finalCoordinates = cache.finalCoordinates.toFSModel(),
-        instructionRef = cache.instructionRef,
         tagIds = cache.tagIds,
-        logCode = cache.logCode,
         createDate = Timestamp(cache.createDate),
+        enigmaStepRef = cache.enigmaStepRef,
+        finalStepRef = cache.finalStepRef,
+        description = cache.description,
     )
 
     override fun toAppModel(): Cache.Mystery = Cache.Mystery(
@@ -58,10 +56,9 @@ data class FSCacheMystery(
         discovered = discovered.requiredField(),
         cacheIdsRequired = cacheIdsRequired ?: emptyList(),
         createDate = createDate.requiredField().toDate(),
-        logCode = logCode.requiredField(),
         tagIds = tagIds ?: emptyList(),
-        instructionRef = instructionRef.requiredField(),
-        clue = clue,
-        finalCoordinates = Coordinates(latitude = 0.0, longitude = 0.0),
+        finalStepRef = finalStepRef.requiredField(),
+        enigmaStepRef = enigmaStepRef.requiredField(),
+        description = description.requiredField(),
     )
 }

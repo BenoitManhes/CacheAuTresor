@@ -1,6 +1,7 @@
 package com.benoitmanhes.domain.usecase.cache
 
 import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.extensions.error
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
@@ -17,16 +18,21 @@ class GetSelectedUICacheUseCase @Inject constructor(
     private val cacheRepository: CacheRepository,
     private val explorerRepository: ExplorerRepository,
     private val getMyExplorerUseCase: GetMyExplorerUseCase,
+    private val getUIStepUseCase: GetUIStepUseCase,
 ) : AbstractUseCase() {
     operator fun invoke(cacheId: String): Flow<CTResult<UICacheDetails>> = useCaseFlow {
-        val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError(CTDomainError.Code.CACHE_NOT_FOUND)
+        val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
+        val userData = CacheUserData(cacheId) // TODO complete
 
         getMyExplorerUseCase().collect { myExplorer ->
             val uiCacheDetails = UICacheDetails(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
                 status = myExplorer.getCacheDetailsUserStatus(cache),
-                userData = CacheUserData(cacheId), // TODO complete
+                userData = userData,
+                steps = getCacheStepsRefs(cache, userData).map {
+                    getUIStepUseCase(stepId = it, userData = userData)
+                },
             )
             emit(CTResult.Success(uiCacheDetails))
         }
@@ -41,5 +47,15 @@ class GetSelectedUICacheUseCase @Inject constructor(
         this.cacheIdsFound.contains(cache.cacheId) -> UICacheDetails.Status.Found
         // Handle here cache started
         else -> UICacheDetails.Status.Available
+    }
+
+    private fun getCacheStepsRefs(cache: Cache, userData: CacheUserData): List<String> = when (cache) {
+        is Cache.Classical -> listOf(cache.finalStepRef)
+        is Cache.Mystery -> listOf(cache.enigmaStepRef, cache.finalStepRef)
+        is Cache.Piste -> cache.intermediaryStepRefs + listOf(cache.finalStepRef)
+        is Cache.Coop -> listOf(
+            cache.crewStepRefs.firstOrNull { it == userData.coopStepRef } ?: cache.crewStepRefs.first(),
+            cache.finalStepRef,
+        )
     }
 }

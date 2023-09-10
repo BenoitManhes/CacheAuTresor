@@ -20,11 +20,10 @@ data class FSCachePiste(
     val discovered: Boolean? = null,
     val cacheIdsRequired: List<String>? = null,
     val createDate: Timestamp? = null,
-    val logCode: String? = null,
     val tagIds: List<String>? = null,
     val description: String? = null,
-    val stepRefs: List<String>? = null,
-    val finalCoordinates: GeoPoint? = null,
+    val intermediaryStepRefs: List<String>? = null,
+    val finalStepRef: String? = null,
 ) : FSCache<Cache.Piste> {
 
     constructor(cache: Cache.Piste) : this(
@@ -38,11 +37,10 @@ data class FSCachePiste(
         discovered = cache.discovered,
         cacheIdsRequired = cache.cacheIdsRequired,
         createDate = Timestamp(cache.createDate),
-        logCode = cache.logCode,
         tagIds = cache.tagIds,
         description = cache.description,
-        stepRefs = cache.steps.map { it.stepId },
-        finalCoordinates = cache.finalCoordinates.toFSModel(),
+        intermediaryStepRefs = cache.intermediaryStepRefs,
+        finalStepRef = cache.finalStepRef,
     )
 
     override fun toAppModel(): Cache.Piste = Cache.Piste(
@@ -56,10 +54,9 @@ data class FSCachePiste(
         discovered = discovered.requiredField(),
         cacheIdsRequired = cacheIdsRequired ?: emptyList(),
         createDate = createDate.requiredField().toDate(),
-        logCode = logCode.requiredField(),
         tagIds = tagIds ?: emptyList(),
         description = description.requiredField(),
-        steps = emptyList(),
-        finalCoordinates = finalCoordinates.requiredField().toModel(),
+        intermediaryStepRefs = intermediaryStepRefs.requiredField(),
+        finalStepRef = finalStepRef.requiredField(),
     )
 }

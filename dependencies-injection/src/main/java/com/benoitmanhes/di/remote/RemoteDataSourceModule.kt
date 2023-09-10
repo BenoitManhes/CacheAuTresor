@@ -3,6 +3,8 @@ package com.benoitmanhes.di.remote
 import com.benoitmanhes.domain.interfaces.remotedatasource.AuthRemoteDataSource
 import com.benoitmanhes.domain.interfaces.remotedatasource.CacheRemoteDataSource
 import com.benoitmanhes.domain.interfaces.remotedatasource.ExplorerRemoteDataSource
+import com.benoitmanhes.domain.interfaces.remotedatasource.StepRemoteDataSource
+import com.benoitmanhes.server.extensions.StepRemoteDataSourceImpl
 import com.benoitmanhes.server.firestore.AuthRemoteDataSourceImpl
 import com.benoitmanhes.server.firestore.CacheRemoteDataSourceImpl
 import com.benoitmanhes.server.firestore.ExplorerRemoteDataSourceImpl
@@ -27,4 +29,8 @@ interface RemoteDataSourceModule {
     @Binds
     @ActivityRetainedScoped
     fun bindCacheRemoteDataSource(cacheRemoteDataSourceImpl: CacheRemoteDataSourceImpl): CacheRemoteDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindInstructionRemoteDataSource(dataSourceImpl: StepRemoteDataSourceImpl): StepRemoteDataSource
 }

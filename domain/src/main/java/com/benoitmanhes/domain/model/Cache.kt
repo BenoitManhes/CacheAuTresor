@@ -14,9 +14,10 @@ sealed interface Cache : Model {
     val size: CacheSize
     val discovered: Boolean
     val createDate: Date
-    val logCode: String
     val cacheIdsRequired: List<String>
     val tagIds: List<String>
+    val finalStepRef: String
+    val description: String
 
     data class Classical(
         override val cacheId: String,
@@ -29,10 +30,9 @@ sealed interface Cache : Model {
         override val discovered: Boolean,
         override val cacheIdsRequired: List<String>,
         override val createDate: Date,
-        override val logCode: String,
+        override val finalStepRef: String,
         override val tagIds: List<String>,
-        val instructionRef: String,
-        val clue: String?,
+        override val description: String,
     ) : Cache
 
     data class Piste(
@@ -46,11 +46,10 @@ sealed interface Cache : Model {
         override val discovered: Boolean,
         override val cacheIdsRequired: List<String>,
         override val createDate: Date,
-        override val logCode: String,
+        override val finalStepRef: String,
         override val tagIds: List<String>,
-        val description: String,
-        val steps: List<CacheStep>,
-        val finalCoordinates: Coordinates,
+        override val description: String,
+        val intermediaryStepRefs: List<String>,
     ) : Cache
 
     data class Mystery(
@@ -64,11 +63,10 @@ sealed interface Cache : Model {
         override val discovered: Boolean,
         override val cacheIdsRequired: List<String>,
         override val createDate: Date,
-        override val logCode: String,
+        override val finalStepRef: String,
         override val tagIds: List<String>,
-        val instructionRef: String,
-        val clue: String?,
-        val finalCoordinates: Coordinates,
+        override val description: String,
+        val enigmaStepRef: String,
     ) : Cache
 
     data class Coop(
@@ -82,10 +80,9 @@ sealed interface Cache : Model {
         override val discovered: Boolean,
         override val cacheIdsRequired: List<String>,
         override val createDate: Date,
-        override val logCode: String,
+        override val finalStepRef: String,
         override val tagIds: List<String>,
-        val description: String,
-        val instructionRefs: List<String>,
-        val finalCoordinates: Coordinates,
+        override val description: String,
+        val crewStepRefs: List<String>,
     ) : Cache
 }

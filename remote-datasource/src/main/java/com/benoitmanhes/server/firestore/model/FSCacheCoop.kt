@@ -21,10 +21,10 @@ data class FSCacheCoop(
     val logCode: String? = null,
     val description: String? = null,
     val createDate: Timestamp? = null,
-    val finalCoordinates: GeoPoint? = null,
     val tagIds: List<String>? = null,
-    val instructionRefs: List<String>? = null,
     val cacheIdsRequired: List<String>? = null,
+    val finalStepRef: String? = null,
+    val crewStepRefs: List<String>? = null,
 ) : FSCache<Cache.Coop> {
 
     constructor(cache: Cache.Coop) : this(
@@ -37,12 +37,11 @@ data class FSCacheCoop(
         size = cache.size.value,
         discovered = cache.discovered,
         cacheIdsRequired = cache.cacheIdsRequired,
-        logCode = cache.logCode,
         description = cache.description,
         tagIds = cache.tagIds,
-        finalCoordinates = cache.finalCoordinates.toFSModel(),
-        instructionRefs = cache.instructionRefs,
         createDate = Timestamp(cache.createDate),
+        finalStepRef = cache.finalStepRef,
+        crewStepRefs = cache.crewStepRefs,
     )
 
     override fun toAppModel(): Cache.Coop = Cache.Coop(
@@ -55,11 +54,10 @@ data class FSCacheCoop(
         size = CacheSize.build(size.requiredField()),
         discovered = discovered.requiredField(),
         createDate = createDate.requiredField().toDate(),
-        logCode = logCode.requiredField(),
-        description = description.requiredField(),
-        finalCoordinates = finalCoordinates.requiredField().toModel(),
         tagIds = tagIds ?: emptyList(),
-        instructionRefs = instructionRefs ?: emptyList(),
         cacheIdsRequired = cacheIdsRequired ?: emptyList(),
+        description = description.requiredField(),
+        finalStepRef = finalStepRef.requiredField(),
+        crewStepRefs = crewStepRefs.requiredField(),
     )
 }

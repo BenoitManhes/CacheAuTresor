@@ -3,9 +3,11 @@ package com.benoitmanhes.di.repository
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
+import com.benoitmanhes.domain.interfaces.repository.StepRepository
 import com.benoitmanhes.repository.AuthRepositoryImpl
 import com.benoitmanhes.repository.CacheRepositoryImpl
 import com.benoitmanhes.repository.ExplorerRepositoryImpl
+import com.benoitmanhes.repository.StepRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,4 +29,8 @@ interface RepositoryModule {
     @Binds
     @ActivityRetainedScoped
     fun bindCacheRepository(cacheRepositoryImpl: CacheRepositoryImpl): CacheRepository
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindInstructionRepository(repoImpl: StepRepositoryImpl): StepRepository
 }

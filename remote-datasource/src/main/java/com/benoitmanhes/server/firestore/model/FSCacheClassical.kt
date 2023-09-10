@@ -19,11 +19,10 @@ data class FSCacheClassical(
     val size: String? = null,
     val discovered: Boolean? = null,
     val createDate: Timestamp? = null,
-    val logCode: String? = null,
     val cacheIdsRequired: List<String>? = null,
     val tagIds: List<String>? = null,
-    val instructionRef: String? = null,
-    val clue: String? = null,
+    val finalStepRef: String? = null,
+    val description: String? = null,
 ) : FSCache<Cache.Classical> {
 
     constructor(cache: Cache.Classical) : this(
@@ -36,11 +35,10 @@ data class FSCacheClassical(
         size = cache.size.value,
         discovered = cache.discovered,
         createDate = Timestamp(cache.createDate),
-        logCode = cache.logCode,
         cacheIdsRequired = cache.cacheIdsRequired,
         tagIds = cache.tagIds,
-        clue = cache.clue,
-        instructionRef = cache.instructionRef,
+        finalStepRef = cache.finalStepRef,
+        description = cache.description,
     )
 
     override fun toAppModel(): Cache.Classical = Cache.Classical(
@@ -52,11 +50,10 @@ data class FSCacheClassical(
         ground = ground.requiredField(),
         size = CacheSize.build(size.requiredField()),
         discovered = discovered.requiredField(),
-        logCode = logCode.requiredField(),
         createDate = createDate.requiredField().toDate(),
         cacheIdsRequired = cacheIdsRequired ?: emptyList(),
         tagIds = tagIds ?: emptyList(),
-        instructionRef = instructionRef.requiredField(),
-        clue = clue,
+        finalStepRef = finalStepRef.requiredField(),
+        description = description.requiredField(),
     )
 }
