@@ -1,3 +1,9 @@
 package com.benoitmanhes.designsystem.molecule.button.primarybutton
 
-sealed interface PrimaryButtonOption
+import androidx.compose.runtime.Stable
+import com.benoitmanhes.designsystem.utils.IconSpec
+
+@Stable
+sealed interface PrimaryButtonOption {
+    data class LeadingIcon(val icon: IconSpec) : PrimaryButtonOption
+}

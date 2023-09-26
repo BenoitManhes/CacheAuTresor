@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -15,6 +16,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,10 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.atoms.animation.LoadingDotAnimation
 import com.benoitmanhes.designsystem.res.Dimens
+import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -78,15 +83,26 @@ fun CTPrimaryButton(
                     .size(Dimens.Size.lottieAnimationButton)
             )
         } else {
-            // Text
-            CTTextView(
-                text = text,
-                style = LocalTextStyle.current,
-                color = buttonColors.contentColor(enabled = status != ButtonStatus.DISABLE).value,
+            Row(
                 modifier = Modifier.padding(horizontal = CTTheme.spacing.medium),
-                maxLine = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+                horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                options.filterIsInstance<PrimaryButtonOption.LeadingIcon>().firstOrNull()?.let { leadingIcon ->
+                    CTIcon(
+                        icon = leadingIcon.icon,
+                        size = Dimens.IconSize.Medium,
+                    )
+                }
+                // Text
+                CTTextView(
+                    text = text,
+                    style = LocalTextStyle.current,
+                    color = buttonColors.contentColor(enabled = status != ButtonStatus.DISABLE).value,
+                    maxLine = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
     }
 }
@@ -149,6 +165,20 @@ private fun ButtonFromType(
                 }
             }
         }
+
+        PrimaryButtonType.TEXT -> {
+            TextButton(
+                shape = CTTheme.shape.medium,
+                colors = buttonTextColors(color),
+                enabled = status != ButtonStatus.DISABLE,
+                modifier = modifier,
+                onClick = safeOnClick,
+            ) {
+                ProvideTextStyle(value = CTTheme.typography.bodyBold) {
+                    content(buttonTextColors(color))
+                }
+            }
+        }
     }
 }
 
@@ -166,6 +196,12 @@ private val buttonColorsOutlined
         contentColor = CTTheme.color.onSurface,
         disabledContentColor = CTTheme.color.disable,
     )
+
+@Composable
+private fun buttonTextColors(color: Color) = ButtonDefaults.textButtonColors(
+    contentColor = color,
+    disabledContentColor = CTTheme.color.disable,
+)
 
 @Preview
 @Composable
@@ -187,6 +223,19 @@ private fun PreviewCTButton() {
                     type = PrimaryButtonType.COLORED,
                     status = ButtonStatus.ENABLE,
                     onClick = { },
+                    options = setOf(PrimaryButtonOption.LeadingIcon(IconSpec.VectorIcon(CTTheme.icon.Mountain))),
+                )
+                CTPrimaryButton(
+                    text = TextSpec.RawString("Outlined Button"),
+                    onClick = { },
+                    type = PrimaryButtonType.OUTLINED,
+                    options = setOf(PrimaryButtonOption.LeadingIcon(IconSpec.VectorIcon(CTTheme.icon.Mountain))),
+                )
+                CTPrimaryButton(
+                    text = TextSpec.RawString("Text Button"),
+                    onClick = { },
+                    type = PrimaryButtonType.TEXT,
+                    options = setOf(PrimaryButtonOption.LeadingIcon(IconSpec.VectorIcon(CTTheme.icon.Mountain))),
                 )
                 CTPrimaryButton(
                     text = TextSpec.RawString("Button"),

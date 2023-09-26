@@ -13,7 +13,7 @@ class StepRemoteDataSourceImpl @Inject constructor(
 ) : FSRemoteDataSource<CacheStep, FSCacheStep>(firestore),
     StepRemoteDataSource {
 
-    override val collectionRef: String = "cache-steps"
+    override val collectionRef: String = "cache-step"
 
     override fun DocumentSnapshot.getFsClass(): Class<FSCacheStep> = FSCacheStep::class.java
 

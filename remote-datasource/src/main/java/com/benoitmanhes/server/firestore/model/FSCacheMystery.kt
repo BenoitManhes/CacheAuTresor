@@ -23,8 +23,8 @@ data class FSCacheMystery(
     val createDate: Timestamp? = null,
     val tagIds: List<String>? = null,
     val cacheIdsRequired: List<String>? = null,
-    val enigmaStepRef: String,
-    val finalStepRef: String
+    val enigmaStepRef: String? = null,
+    val finalStepRef: String? = null,
 
 ) : FSCache<Cache.Mystery> {
 

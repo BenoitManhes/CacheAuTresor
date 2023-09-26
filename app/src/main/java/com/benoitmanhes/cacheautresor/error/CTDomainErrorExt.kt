@@ -15,6 +15,7 @@ fun CTDomainError.localizedTitle(): String = when (code) {
     CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM -> null
     CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST -> null
     CTDomainError.Code.CACHE_NOT_FOUND -> null
+    CTDomainError.Code.CACHE_STEP_NOT_FOUND -> null
     CTDomainError.Code.EXPLORER_NOT_FOUND -> null
     CTDomainError.Code.NO_AUTHENTICATION -> null
     CTDomainError.Code.NO_INTERNET -> stringResource(id = R.string.error_networkConnection_title)
@@ -30,16 +31,21 @@ fun CTDomainError.localizedDescription(): String = when (code) {
     CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE -> stringResource(
         id = R.string.accountCreation_name_error
     )
+
     CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> stringResource(
         id = R.string.authentication_error_invalidPassword
     )
+
     CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM -> stringResource(
         id = R.string.authentication_error_emailFormInvalid
     )
+
     CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST -> stringResource(
         id = R.string.authentication_error_noUserEmail
     )
+
     CTDomainError.Code.CACHE_NOT_FOUND -> null
+    CTDomainError.Code.CACHE_STEP_NOT_FOUND -> null
     CTDomainError.Code.EXPLORER_NOT_FOUND -> null
     CTDomainError.Code.NO_AUTHENTICATION -> null
     CTDomainError.Code.NO_INTERNET -> stringResource(id = R.string.error_networkConnection_description)

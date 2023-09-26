@@ -1,47 +1,46 @@
 package com.benoitmanhes.cacheautresor.common.composable.section
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
+import com.benoitmanhes.common.compose.extensions.thenIf
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.ComposableContent
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @Composable
-fun Section(
+fun SectionHeader(
     title: TextSpec,
     modifier: Modifier = Modifier,
-    content: ComposableContent,
+    horizontalPadding: Boolean = true,
 ) {
-    Column(modifier) {
-        SectionHeader(title = title)
-        SpacerSmall()
-        content()
-    }
+    CTTextView(
+        text = title,
+        modifier = modifier.thenIf(horizontalPadding) {
+            padding(horizontal = CTTheme.spacing.large)
+        },
+        style = CTTheme.typography.bodySmall,
+        color = CTTheme.color.placeholder,
+    )
 }
 
-object Section {
-    private const val contentType: String = "Section"
+object SectionHeader {
+    private const val contentType: String = "SectionHeader"
 
     fun item(
         scope: LazyListScope,
         title: TextSpec,
         key: Any? = title.hashCode(),
         modifier: Modifier = Modifier,
-        content: ComposableContent,
     ) {
         scope.item(
             key = key,
             contentType = contentType,
         ) {
-            Section(
+            SectionHeader(
                 title = title,
                 modifier = modifier,
-                content = content,
             )
         }
     }

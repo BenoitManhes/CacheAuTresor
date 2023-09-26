@@ -20,6 +20,7 @@ object DayColorScheme : CTColorScheme {
     override val error: Color = Colors.BurntUmber
     override val rootBackground: Color = Colors.Black
     override val backgroundMask: Color = Colors.TransparentBlack15
+    override val critical: Color = Colors.BurntUmber
 }
 
 @Immutable
@@ -38,6 +39,7 @@ object NightColorScheme : CTColorScheme {
     override val error: Color = Colors.BurntUmber
     override val rootBackground: Color = Colors.Black
     override val backgroundMask: Color = Colors.TransparentBlack15
+    override val critical: Color = Colors.BurntUmber
 }
 
 @Immutable
@@ -56,6 +58,7 @@ interface CTColorScheme {
     val error: Color
     val rootBackground: Color
     val backgroundMask: Color
+    val critical: Color
 
     val primarySurface: Color
         get() = primary.copy(alpha = 0.2f)
@@ -77,5 +80,6 @@ interface CTColorScheme {
         override val error: Color = this@CTColorScheme.error
         override val rootBackground: Color = this@CTColorScheme.rootBackground
         override val backgroundMask: Color = this@CTColorScheme.backgroundMask
+        override val critical: Color = this@CTColorScheme.critical
     }
 }

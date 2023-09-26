@@ -30,6 +30,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
 import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
+import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.res.icons.iconpack.Globe
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
@@ -63,6 +64,7 @@ val CTIconPack.CTIcons: List<ImageVector>
             EyeOpen,
             Favorite,
             FavoriteFilled,
+            Flag,
             Globe,
             Home,
             HomeFilled,
