@@ -4,6 +4,7 @@ import com.benoitmanhes.domain.interfaces.Model
 import kotlinx.serialization.Serializable
 
 typealias CacheInstructions = List<InstructionContent>
+
 @Serializable
 sealed interface InstructionContent : Model {
     @Serializable

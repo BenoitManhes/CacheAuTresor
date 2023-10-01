@@ -33,7 +33,6 @@ data class Distance(
 
         fun buildFromDurationUnit(unit: DistanceUnit, value: Double): Distance =
             Distance((value * unit.inMillimeter).roundToLong())
-
     }
 }
 

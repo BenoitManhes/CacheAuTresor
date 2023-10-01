@@ -48,6 +48,5 @@ fun CacheDetailHeader(
                 color = CTTheme.color.onSurface,
             )
         }
-
     }
 }

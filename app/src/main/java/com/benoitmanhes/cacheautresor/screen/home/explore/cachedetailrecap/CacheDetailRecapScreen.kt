@@ -1,5 +1,6 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -16,7 +17,6 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.secti
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.jaugesSection
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.CacheDetailsViewModelState
 import com.benoitmanhes.designsystem.atoms.dividerItem
-import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.molecule.card.CTInfoCard
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
@@ -28,8 +28,8 @@ fun CacheDetailRecapScreen(
 ) {
     LazyColumn(
         state = lazyListState,
+        contentPadding = PaddingValues(vertical = CTTheme.spacing.large),
     ) {
-        SpacerLarge.item(this)
         jaugesSection(this, uiState)
         divider()
 
@@ -53,8 +53,6 @@ fun CacheDetailRecapScreen(
         uiState.characteristics.takeIf { it.isNotEmpty() }?.let {
             CacheCharacteristicsSection.item(scope = this, characteristics = uiState.characteristics)
         }
-
-        SpacerLarge.item(this)
     }
 }
 

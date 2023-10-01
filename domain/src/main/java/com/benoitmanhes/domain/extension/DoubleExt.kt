@@ -1,6 +1,5 @@
 package com.benoitmanhes.domain.extension
 
-import com.benoitmanhes.domain.utils.DomainConstants
 import java.math.BigDecimal
 import java.math.RoundingMode
 

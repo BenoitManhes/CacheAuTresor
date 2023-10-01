@@ -3,7 +3,6 @@ package com.benoitmanhes.cacheautresor.common.extensions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarker
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxBig

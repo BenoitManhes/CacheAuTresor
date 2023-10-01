@@ -2,8 +2,6 @@ package com.benoitmanhes.domain.model
 
 import com.benoitmanhes.domain.interfaces.Model
 import kotlinx.serialization.Serializable
-import kotlin.math.absoluteValue
-import kotlin.math.roundToInt
 
 typealias DecimalDegree = Double
 typealias DegreeMinutes = Pair<Int, Double>

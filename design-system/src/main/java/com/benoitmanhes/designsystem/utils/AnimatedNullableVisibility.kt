@@ -19,7 +19,9 @@ fun <T> AnimatedNullableVisibility(
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
     label: String = "AnimatedVisibility",
-    content: @Composable() AnimatedVisibilityScope.(T) -> Unit,
+    content:
+    @Composable()
+    AnimatedVisibilityScope.(T) -> Unit,
 ) {
     val ref = remember { Ref<T>() }
     ref.value = value ?: ref.value

@@ -7,6 +7,7 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.mediumFormat
+import com.benoitmanhes.cacheautresor.common.extensions.textSpec
 import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
 import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
 import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
@@ -14,6 +15,8 @@ import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.extensions.toText
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CartographerSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
@@ -38,6 +41,7 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.model.Distance.Companion.meters
 import com.benoitmanhes.domain.uimodel.UICacheDetails
+import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,7 +81,6 @@ class CacheDetailViewModel @Inject constructor(
                 )
             )
         }
-
     }
 
     private fun CTResult<UICacheDetails>.mapToUIState(): CacheDetailsViewModelState {
@@ -99,14 +102,14 @@ class CacheDetailViewModel @Inject constructor(
                 bottomBarState = BottomActionBarState(
                     firstButtonState = PrimaryButtonState(
                         text = TextSpec.Resources(R.string.cacheDetail_logButton),
-                        onClick = {}
+                        onClick = {} // TODO Log
                     )
-                ),
+                ).takeIf { successData.status == UICacheDetails.Status.Started },
                 fabButtonState = FabButtonState(
                     icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
                     text = TextSpec.Resources(R.string.cacheDetail_startFab),
                     onClick = {}, // TODO: start cache
-                ),
+                ).takeIf { successData.status == UICacheDetails.Status.Available },
                 tabSelectorState = TabSelectorState(
                     items = tabSelectorsItems,
                     selectedItem = uiStateData?.tabSelectorState?.selectedItem ?: tabSelectorsItems.first(),
@@ -143,23 +146,54 @@ class CacheDetailViewModel @Inject constructor(
                 distanceText = 800.421.meters.toText(),
                 description = TextSpec.loreumIpsum(50), // TODO: description
                 characteristics = listOf(
-                    CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain), text = TextSpec.RawString("Mountain")),
-                    CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste), text = TextSpec.RawString("Sportif")),
-                    CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty), text = TextSpec.RawString("Rapide")),
-                    CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain), text = TextSpec.RawString("Mountain2")),
-                    CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste), text = TextSpec.RawString("Sportif2")),
-                    CTRowState(leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty), text = TextSpec.RawString("Rapide2")),
+                    CTRowState(
+                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain),
+                        text = TextSpec.RawString("Mountain")
+                    ),
+                    CTRowState(
+                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste),
+                        text = TextSpec.RawString("Sportif")
+                    ),
+                    CTRowState(
+                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty),
+                        text = TextSpec.RawString("Rapide")
+                    ),
+                    CTRowState(
+                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain),
+                        text = TextSpec.RawString("Mountain2")
+                    ),
+                    CTRowState(
+                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste),
+                        text = TextSpec.RawString("Sportif2")
+                    ),
+                    CTRowState(
+                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty),
+                        text = TextSpec.RawString("Rapide2")
+                    ),
+                ),
+                instructionsSectionState = InstructionSectionState(
+                    title = TextSpec.Resources(R.string.cacheDetail_instructionsSection_title), // TODO
+                    cacheInstructions = successData.currentStep.instructions,
+                    clue = successData.currentStep.getClueSection(),
+                    onReport = {}, // TODO
+                ),
+                noteSectionState = NoteSectionState(
+                    initialNoteValue = "", // TODO
+                    onNoteSaved = { noteSaved ->
+                        updateData {
+                            it.copy(
+                                // TODO: saved note
+                                noteSectionState = it.noteSectionState.copy(initialNoteValue = noteSaved)
+                            )
+                        }
+                    },
+                    onClickInstruments = {}, // TODO
+                    onClickMarker = {}, // TODO
                 )
             )
 
             is CTResult.Loading -> CacheDetailsViewModelState.Initialize
             is CTResult.Failure -> CacheDetailsViewModelState.Empty(TextSpec.RawString(error?.message))
-        }
-    }
-
-    private fun updateData(block: (CacheDetailsViewModelState.Data) -> CacheDetailsViewModelState.Data) {
-        uiStateData?.let {
-            _uiState.value = block(it)
         }
     }
 
@@ -179,6 +213,29 @@ class CacheDetailViewModel @Inject constructor(
 
         else -> null
     }
+
+    private fun updateData(block: (CacheDetailsViewModelState.Data) -> CacheDetailsViewModelState) {
+        val value = _uiState.value
+        _uiState.value = when (value) {
+            is CacheDetailsViewModelState.Data -> block(value)
+            is CacheDetailsViewModelState.Empty -> value
+            is CacheDetailsViewModelState.Initialize -> value
+        }
+    }
+
+    private fun UIStep.getClueSection(): InstructionSectionState.Clue? = clue?.let { _clue ->
+        if (showClue) {
+            InstructionSectionState.Clue.Revealed(_clue.textSpec())
+        } else {
+            InstructionSectionState.Clue.Unrevealed {
+                // TODO Reveal clue
+            }
+        }
+    }
+
+    //    private fun UICacheDetails.getStepTitle(): TextSpec {
+    //
+    //    }
 }
 
 private val tabSelectorsItems: List<SelectorItem> = listOf(

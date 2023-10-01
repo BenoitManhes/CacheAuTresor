@@ -1,13 +1,10 @@
 package com.benoitmanhes.cacheautresor.common.composable.section
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
-import com.benoitmanhes.designsystem.atoms.text.CTTextView
-import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ComposableContent
 import com.benoitmanhes.designsystem.utils.TextSpec
 

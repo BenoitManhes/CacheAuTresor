@@ -83,7 +83,7 @@ private fun PreviewAccountCreationInputSection() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            AccountCreationInputSection() {}
+            AccountCreationInputSection {}
         }
     }
 }

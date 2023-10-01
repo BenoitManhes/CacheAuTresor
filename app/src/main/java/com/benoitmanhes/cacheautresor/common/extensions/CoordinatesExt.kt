@@ -18,7 +18,7 @@ internal fun IGeoPoint.toModel(): Coordinates = Coordinates(
     longitude = longitude,
 )
 
-internal fun Coordinates.format(format: Coordinates.Format): TextSpec = when(format) {
+internal fun Coordinates.format(format: Coordinates.Format): TextSpec = when (format) {
     Coordinates.Format.DD -> toDDText()
     Coordinates.Format.DM -> toDMText()
     Coordinates.Format.DMS -> toDMSText()

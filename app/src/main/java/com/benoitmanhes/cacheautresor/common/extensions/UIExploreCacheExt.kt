@@ -2,7 +2,6 @@ package com.benoitmanhes.cacheautresor.common.extensions
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarker
 import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
 import com.benoitmanhes.designsystem.res.icons.iconpack.Crown

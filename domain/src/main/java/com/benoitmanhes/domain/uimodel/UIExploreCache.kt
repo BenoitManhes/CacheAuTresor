@@ -9,6 +9,6 @@ data class UIExploreCache(
     val distance: Double?,
 ) : UIModel {
     enum class CacheUserStatus {
-        Available, Found, Lock, Owned;
+        Available, Found, Lock, Owned
     }
 }

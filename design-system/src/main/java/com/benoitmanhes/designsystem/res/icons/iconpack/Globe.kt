@@ -18,12 +18,19 @@ val CTIconPack.Globe: ImageVector
             return _globe!!
         }
         _globe = Builder(
-            name = "Globe", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
-            viewportWidth = 48.0f, viewportHeight = 48.0f
+            name = "Globe",
+            defaultWidth = 48.0.dp,
+            defaultHeight = 48.0.dp,
+            viewportWidth = 48.0f,
+            viewportHeight = 48.0f
         ).apply {
             path(
-                fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
-                strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                fill = SolidColor(Color(0xFF000000)),
+                stroke = null,
+                strokeLineWidth = 0.0f,
+                strokeLineCap = Butt,
+                strokeLineJoin = Miter,
+                strokeLineMiter = 4.0f,
                 pathFillType = EvenOdd
             ) {
                 moveTo(20.645f, 4.1547f)
@@ -157,9 +164,13 @@ val CTIconPack.Globe: ImageVector
             }
             group {
                 path(
-                    fill = SolidColor(Color(0x00000000)), stroke = SolidColor(Color(0xFF000000)),
-                    strokeLineWidth = 0.6f, strokeLineCap = Butt, strokeLineJoin = Miter,
-                    strokeLineMiter = 4.0f, pathFillType = EvenOdd
+                    fill = SolidColor(Color(0x00000000)),
+                    stroke = SolidColor(Color(0xFF000000)),
+                    strokeLineWidth = 0.6f,
+                    strokeLineCap = Butt,
+                    strokeLineJoin = Miter,
+                    strokeLineMiter = 4.0f,
+                    pathFillType = EvenOdd
                 ) {
                     moveTo(20.645f, 4.1547f)
                     curveTo(17.7429f, 4.627f, 14.8867f, 5.9266f, 14.8867f, 6.7747f)

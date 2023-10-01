@@ -69,7 +69,6 @@ object Dimens {
         val button: Dp,
     ) {
         Medium(icon = IconSize.Medium, button = 48.dp),
-        ;
     }
 
     enum class IconSize(
@@ -90,7 +89,6 @@ object Dimens {
         Medium(icon = IconSize.Medium, container = 36.dp),
         Large(icon = IconSize.Large, container = 48.dp),
         Huge(icon = IconSize.Huge, container = 64.dp),
-        ;
     }
 
     object Jauge {
@@ -109,6 +107,10 @@ object Dimens {
             width = 18.dp,
             height = 70.dp,
         )
+    }
+
+    object Text {
+        val zoneTextFieldMinHeight: Dp = 200.dp
     }
 
     object TopBar {

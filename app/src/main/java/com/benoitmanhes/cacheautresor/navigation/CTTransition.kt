@@ -27,7 +27,9 @@ fun NavGraphBuilder.ctComposable(
     deepLinks: List<NavDeepLink> = emptyList(),
     enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { CTTransition.defaultEnter },
     exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { CTTransition.defaultExit },
-    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { CTTransition.defaultPopEnter },
+    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = {
+        CTTransition.defaultPopEnter
+    },
     popExitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { CTTransition.defaultPopExit },
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {

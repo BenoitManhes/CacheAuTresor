@@ -2,7 +2,6 @@ package com.benoitmanhes.server.firestore.model
 
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheSize
-import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.server.extensions.toFSModel
 import com.benoitmanhes.server.extensions.toModel
 import com.google.firebase.Timestamp

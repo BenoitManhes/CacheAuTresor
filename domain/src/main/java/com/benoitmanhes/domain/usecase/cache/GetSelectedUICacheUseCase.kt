@@ -23,16 +23,17 @@ class GetSelectedUICacheUseCase @Inject constructor(
     operator fun invoke(cacheId: String): Flow<CTResult<UICacheDetails>> = useCaseFlow {
         val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
         val userData = CacheUserData(cacheId) // TODO complete
+        val uiStep = getCacheStepsRefs(cache, userData).map {
+            getUIStepUseCase(stepId = it, userData = userData)
+        }
 
         getMyExplorerUseCase().collect { myExplorer ->
             val uiCacheDetails = UICacheDetails(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
                 status = myExplorer.getCacheDetailsUserStatus(cache),
-                userData = userData,
-                steps = getCacheStepsRefs(cache, userData).map {
-                    getUIStepUseCase(stepId = it, userData = userData)
-                },
+                steps = uiStep,
+                currentStep = uiStep.first(), // TODO handle current step
             )
             emit(CTResult.Success(uiCacheDetails))
         }
@@ -46,7 +47,8 @@ class GetSelectedUICacheUseCase @Inject constructor(
         cache.creatorId == this.explorerId -> UICacheDetails.Status.Owned
         this.cacheIdsFound.contains(cache.cacheId) -> UICacheDetails.Status.Found
         // Handle here cache started
-        else -> UICacheDetails.Status.Available
+        else -> UICacheDetails.Status.Started
+        //        else -> UICacheDetails.Status.Available
     }
 
     private fun getCacheStepsRefs(cache: Cache, userData: CacheUserData): List<String> = when (cache) {

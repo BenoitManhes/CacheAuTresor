@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.common.composable.bottombar
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +32,6 @@ fun BottomActionBar(
                     .padding(CTTheme.spacing.large),
                 horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
             ) {
-
                 CTPrimaryButton(
                     modifier = Modifier.weight(1f),
                     state = state.firstButtonState.copy(type = PrimaryButtonType.COLORED)

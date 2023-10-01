@@ -3,6 +3,7 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructio
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -10,8 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
@@ -23,7 +22,6 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
-import com.benoitmanhes.designsystem.res.icons.iconpack.Explore
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
@@ -40,8 +38,27 @@ fun InstructionSection(
         Column(
             modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            state.cacheInstructions.forEach { instructionContent ->
+                when (instructionContent) {
+                    is InstructionContent.Image -> {
+                        CTImage(
+                            image = ImageSpec.UrlImage(instructionContent.imageUrl),
+                            modifier = Modifier.heightIn(max = AppDimens.CacheDetail.instructionImageMaxHeight)
+                        )
+                    }
 
+                    is InstructionContent.Text -> {
+                        CTTextView(
+                            text = instructionContent.value.textSpec(),
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            maxLine = Int.MAX_VALUE,
+                        )
+                    }
+                }
+            }
         }
     }
     SpacerLarge()
@@ -56,8 +73,7 @@ fun InstructionSection(
         modifier = Modifier
             .padding(horizontal = CTTheme.spacing.large),
         horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
-    )
-    {
+    ) {
         (state.clue as? InstructionSectionState.Clue.Unrevealed)?.let { clue ->
             CTPrimaryButton(
                 text = TextSpec.Resources(R.string.cacheDetail_clueButton),
@@ -79,6 +95,23 @@ fun InstructionSection(
     }
 }
 
+object InstructionSection {
+    private const val contentType: String = "InstructionSection"
+
+    fun item(
+        scope: LazyListScope,
+        state: InstructionSectionState,
+        key: Any? = contentType,
+    ) {
+        scope.item(
+            key = key,
+            contentType = contentType,
+        ) {
+            InstructionSection(state)
+        }
+    }
+}
+
 @Stable
 data class InstructionSectionState(
     val title: TextSpec,
@@ -88,6 +121,6 @@ data class InstructionSectionState(
 ) {
     sealed interface Clue {
         data class Unrevealed(val onClickClue: () -> Unit) : Clue
-        data class Revealed(val text: TextSpec)
+        data class Revealed(val text: TextSpec) : Clue
     }
 }
