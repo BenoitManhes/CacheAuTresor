@@ -19,6 +19,9 @@ dependencies {
     // DataStore
     implementation(AndroidX.dataStore.preferences)
 
+    // GSON
+    implementation("com.google.code.gson:gson:_")
+
     // Room
     implementation(AndroidX.room.runtime)
     implementation(AndroidX.room.ktx)

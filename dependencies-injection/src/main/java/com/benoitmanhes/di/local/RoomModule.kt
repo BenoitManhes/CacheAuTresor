@@ -2,6 +2,7 @@ package com.benoitmanhes.di.local
 
 import android.content.Context
 import androidx.room.Room
+import com.benoitmanhes.storage.dao.CacheUserDataDao
 import com.benoitmanhes.storage.dao.ExplorerDao
 import com.benoitmanhes.storage.database.MainDatabase
 import dagger.Module
@@ -36,4 +37,8 @@ internal object RoomDaoModule {
     fun provideExplorerDao(mainDatabase: MainDatabase): ExplorerDao {
         return mainDatabase.explorerDao()
     }
+
+    @Provides
+    fun provideCacheUserDataDao(mainDatabase: MainDatabase): CacheUserDataDao =
+        mainDatabase.cacheUserDataDao()
 }

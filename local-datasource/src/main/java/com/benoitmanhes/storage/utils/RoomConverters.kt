@@ -1,6 +1,9 @@
 package com.benoitmanhes.storage.utils
 
 import androidx.room.TypeConverter
+import com.benoitmanhes.domain.model.CacheUserData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.util.Date
 
 object RoomConverters {
@@ -21,4 +24,18 @@ object RoomConverters {
     @TypeConverter
     fun stringToListString(rawList: String): List<String> =
         rawList.split(LocalConstants.Room.listSeparator)
+
+    @TypeConverter
+    fun fromCacheUserDataMarkerList(list: List<CacheUserData.Marker>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<CacheUserData.Marker>>() {}.type
+        return gson.toJson(list, type)
+    }
+
+    @TypeConverter
+    fun toCacheUserDataMarkerList(value: String): List<CacheUserData.Marker> {
+        val gson = Gson()
+        val type = object : TypeToken<List<CacheUserData.Marker>>() {}.type
+        return gson.fromJson(value, type)
+    }
 }
