@@ -1,5 +1,6 @@
 package com.benoitmanhes.designsystem.res
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
@@ -57,6 +58,13 @@ object Dimens {
 
     /* === Components Size === */
 
+    object SecondaryButton {
+        val padding: PaddingValues = PaddingValues(
+            vertical = 6.dp,
+            horizontal = 12.dp,
+        )
+    }
+
     enum class FloatingButtonSize(
         val icon: IconSize,
         val button: Dp,
@@ -110,7 +118,7 @@ object Dimens {
     }
 
     object Text {
-        val zoneTextFieldMinHeight: Dp = 200.dp
+        val zoneTextFieldMinHeight: Dp = 100.dp
     }
 
     object TopBar {

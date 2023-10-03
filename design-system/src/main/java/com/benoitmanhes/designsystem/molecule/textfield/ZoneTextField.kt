@@ -49,7 +49,6 @@ fun ZoneTextField(
 
     Column(
         modifier = modifier
-            .imePadding()
             .animateContentSize(),
         verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
         horizontalAlignment = Alignment.End,

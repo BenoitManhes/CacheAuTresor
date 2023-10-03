@@ -2,6 +2,7 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructio
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
@@ -13,6 +14,8 @@ import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
+import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
+import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
 import com.benoitmanhes.designsystem.molecule.textfield.ZoneTextField
 import com.benoitmanhes.designsystem.molecule.textfield.ZoneTextFieldState
 import com.benoitmanhes.designsystem.res.icons.iconpack.Add
@@ -38,19 +41,21 @@ fun NoteSection(
             modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
         ) {
-            CTPrimaryButton(
+            SecondaryButtonState(
                 text = TextSpec.Resources(R.string.cacheDetail_addMarkerButton),
                 onClick = state.onClickMarker,
+                type = SecondaryButtonType.Colored,
+                leadingIcon = CTTheme.icon.Add.toIconSpec(),
+            ).Composable(
                 modifier = Modifier.weight(1f),
-                type = PrimaryButtonType.COLORED,
-                options = setOf(PrimaryButtonOption.LeadingIcon(CTTheme.icon.Add.toIconSpec())),
             )
-            CTPrimaryButton(
+            SecondaryButtonState(
                 text = TextSpec.Resources(R.string.cacheDetail_instrumentsButton),
                 onClick = state.onClickMarker,
+                type = SecondaryButtonType.Outlined,
+                leadingIcon = CTTheme.icon.Compass.toIconSpec(),
+            ).Composable(
                 modifier = Modifier.weight(1f),
-                type = PrimaryButtonType.OUTLINED,
-                options = setOf(PrimaryButtonOption.LeadingIcon(CTTheme.icon.Compass.toIconSpec())),
             )
         }
     }

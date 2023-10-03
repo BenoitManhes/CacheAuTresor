@@ -22,6 +22,8 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
+import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
+import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
@@ -75,22 +77,22 @@ fun InstructionSection(
         horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
     ) {
         (state.clue as? InstructionSectionState.Clue.Unrevealed)?.let { clue ->
-            CTPrimaryButton(
+            SecondaryButtonState(
                 text = TextSpec.Resources(R.string.cacheDetail_clueButton),
                 onClick = clue.onClickClue,
+                type = SecondaryButtonType.Colored,
+            ).Composable(
                 modifier = Modifier.weight(1f),
-                type = PrimaryButtonType.OUTLINED,
             )
         }
-        CTPrimaryButton(
+        SecondaryButtonState(
             text = TextSpec.Resources(R.string.cacheDetail_reportButton),
             onClick = state.onReport,
+            type = SecondaryButtonType.Text,
+            color = { CTTheme.color.critical },
+            leadingIcon = CTTheme.icon.Flag.toIconSpec(),
+        ).Composable(
             modifier = Modifier.weight(1f),
-            type = PrimaryButtonType.TEXT,
-            color = CTTheme.color.critical,
-            options = setOf(
-                PrimaryButtonOption.LeadingIcon(CTTheme.icon.Flag.toIconSpec()),
-            )
         )
     }
 }

@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
@@ -110,25 +112,10 @@ private fun CacheDetailsScreen(
     val mapViewState = rememberMapViewWithLifecycle()
     val bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(bottomSheetState)
-
-    val systemBarsPadding = WindowInsets.systemBars.asPaddingValues()
-    val statusBarHeight = remember {
-        systemBarsPadding.calculateTopPadding()
-    }
     val recapLazyListState = rememberLazyListState()
     val instructionsLazyListState = rememberLazyListState()
     val markerFolder = remember { FolderOverlay() }
 
-    val mapHeight = with(LocalDensity.current) {
-        derivedStateOf {
-            try {
-                bottomSheetState.requireOffset().roundToInt().toDp() +
-                    Dimens.Corner.large + statusBarHeight + Dimens.TopBar.height
-            } catch (e: Exception) {
-                0.dp
-            }
-        }
-    }
     val data = uiState as? CacheDetailsViewModelState.Data
 
     LaunchedEffect(mapViewState) {
@@ -155,15 +142,14 @@ private fun CacheDetailsScreen(
 
     CTMapView(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(mapHeight.value),
+            .fillMaxWidth(),
         mapViewState = mapViewState,
     )
 
     Box(
         modifier = Modifier
             .statusBarsPadding()
-            .navigationBarsPadding(),
+            .navigationBarsPadding()
     ) {
         Column {
             CTTopBar(
@@ -179,35 +165,31 @@ private fun CacheDetailsScreen(
                         Column(
                             modifier = Modifier.background(CTTheme.color.background),
                         ) {
-                            Box(modifier = Modifier.weight(1f)) {
-                                Column {
-                                    // Header
-                                    data?.headerState?.let {
-                                        CacheDetailHeader(uiState.headerState) {
-                                            coroutineScope.launch {
-                                                bottomSheetState.expand()
-                                            }
-                                        }
+                            // Header
+                            data?.headerState?.let {
+                                CacheDetailHeader(uiState.headerState) {
+                                    coroutineScope.launch {
+                                        bottomSheetState.expand()
                                     }
+                                }
+                            }
 
-                                    // Body
-                                    when (uiState) {
-                                        is CacheDetailsViewModelState.Data -> {
-                                            DataContent(
-                                                uiState = uiState,
-                                                recapLazyListState = recapLazyListState,
-                                                instructionsLazyListState = instructionsLazyListState,
-                                            )
-                                        }
+                            // Body
+                            when (uiState) {
+                                is CacheDetailsViewModelState.Data -> {
+                                    DataContent(
+                                        uiState = uiState,
+                                        recapLazyListState = recapLazyListState,
+                                        instructionsLazyListState = instructionsLazyListState,
+                                    )
+                                }
 
-                                        CacheDetailsViewModelState.Initialize -> {
-                                            InitContent()
-                                        }
+                                CacheDetailsViewModelState.Initialize -> {
+                                    InitContent()
+                                }
 
-                                        is CacheDetailsViewModelState.Empty -> {
-                                            EmptyContent(uiState = uiState)
-                                        }
-                                    }
+                                is CacheDetailsViewModelState.Empty -> {
+                                    EmptyContent(uiState = uiState)
                                 }
                             }
                         }

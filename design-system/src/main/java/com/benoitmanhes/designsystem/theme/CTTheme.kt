@@ -14,6 +14,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
+typealias ComposeProvider<T> = @Composable () -> T
+
 val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DayColorScheme }
 private val LocalTypography: ProvidableCompositionLocal<CTTypography> = staticCompositionLocalOf { CTTypography }
 private val LocalShape: ProvidableCompositionLocal<CTShape> = staticCompositionLocalOf { CTShape }
@@ -152,7 +154,7 @@ private fun mappedMaterial2Colors(
 
 fun <T> CTTheme.composed(
     factory: @Composable CTTheme.() -> T,
-): @Composable () -> T = {
+): ComposeProvider<T> = {
     this.factory()
 }
 
