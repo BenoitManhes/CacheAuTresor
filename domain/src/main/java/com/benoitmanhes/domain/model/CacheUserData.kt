@@ -8,10 +8,6 @@ data class CacheUserData(
     val isStarted: Boolean = false,
     val note: String? = null,
     val markers: List<Marker> = emptyList(),
-    val stepDoneRefs: Set<String> = emptySet(),
-    val currentStepRef: String? = null,
-    val clueUnlockedStepRef: Set<String> = emptySet(),
-    val coopStepRef: String? = null,
 ) : Model {
 
     @Serializable

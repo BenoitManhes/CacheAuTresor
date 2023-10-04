@@ -13,7 +13,6 @@ import com.benoitmanhes.storage.utils.RoomConverters
 @Database(
     version = 1,
     entities = [
-        RoomExplorer::class
         RoomExplorer::class,
         RoomCacheUserData::class,
     ],
