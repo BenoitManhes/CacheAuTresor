@@ -2,7 +2,6 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructio
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
@@ -11,9 +10,6 @@ import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
 import com.benoitmanhes.designsystem.molecule.textfield.ZoneTextField

@@ -19,9 +19,6 @@ import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.CTImage
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag

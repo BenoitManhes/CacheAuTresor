@@ -4,6 +4,7 @@ import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.error.CTRemoteError
 import com.benoitmanhes.core.error.CTStorageError
 import com.benoitmanhes.core.result.CTResult
+import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.logger.CTLogger
 import com.benoitmanhes.logger.e
 import com.benoitmanhes.logger.i
@@ -13,15 +14,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import org.slf4j.Logger
+import javax.inject.Inject
 
-@Suppress("UnnecessaryAbstractClass")
-abstract class AbstractUseCase {
+class CTUseCaseImpl @Inject constructor() : CTUseCase {
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    protected val logger: Logger = CTLogger.get(this::class.java.simpleName)
+    private val logger: Logger = CTLogger.get(this::class.java.simpleName)
 
-    fun <T> useCaseFlow(
-        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+    override fun <T> useCaseFlow(
+        mapErr: (Throwable) -> CTDomainError,
         block: suspend FlowCollector<CTResult<T>>.() -> Unit,
     ): Flow<CTResult<T>> = flow {
         block(this)
@@ -33,8 +33,8 @@ abstract class AbstractUseCase {
             emit(CTResult.Failure(error = domainError))
         }
 
-    protected suspend fun <T> runCatch(
-        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+    override suspend fun <T> runCatch(
+        mapErr: (Throwable) -> CTDomainError,
         onError: (CTDomainError) -> T,
         block: suspend () -> T,
     ): T = try {
@@ -45,8 +45,13 @@ abstract class AbstractUseCase {
         onError(error)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    protected fun defaultMapError(t: Throwable): CTDomainError {
+    override suspend fun <T> runCatchSuspendResult(
+        mapErr: (Throwable) -> CTDomainError,
+        onError: (CTDomainError) -> CTSuspendResult<T>,
+        block: suspend () -> CTSuspendResult<T>,
+    ): CTSuspendResult<T> = runCatch(mapErr, onError, block)
+
+    override fun defaultMapError(t: Throwable): CTDomainError {
         val code: CTDomainError.Code = when (t) {
             is CTDomainError -> t.code
 

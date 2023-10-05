@@ -27,5 +27,5 @@ data class SecondaryButtonState(
 }
 
 enum class SecondaryButtonType {
-    Colored, Outlined, Text;
+    Colored, Outlined, Text
 }

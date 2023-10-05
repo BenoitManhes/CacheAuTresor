@@ -161,7 +161,6 @@ private fun buttonTextColors(color: Color) = ButtonDefaults.textButtonColors(
     disabledContentColor = CTTheme.color.disable,
 )
 
-
 @Preview
 @Composable
 private fun PreviewSecondaryButton() {

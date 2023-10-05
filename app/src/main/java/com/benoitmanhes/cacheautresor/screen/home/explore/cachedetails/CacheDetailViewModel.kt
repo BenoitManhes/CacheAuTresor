@@ -20,6 +20,7 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstruction
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CartographerSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
+import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
@@ -43,6 +44,7 @@ import com.benoitmanhes.domain.model.Distance.Companion.meters
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
+import com.benoitmanhes.domain.usecase.cache.StartCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,6 +54,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CacheDetailViewModel @Inject constructor(
+    private val startCacheUseCase: StartCacheUseCase,
+    private val loadingManager: LoadingManager,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -67,6 +71,14 @@ class CacheDetailViewModel @Inject constructor(
                 .collect { result ->
                     _uiState.emit(result.mapToUIState())
                 }
+        }
+    }
+
+    private fun startCache() {
+        viewModelScope.launch {
+            loadingManager.showLoading()
+            startCacheUseCase(cacheId)
+            loadingManager.hideLoading()
         }
     }
 
@@ -108,7 +120,7 @@ class CacheDetailViewModel @Inject constructor(
                 fabButtonState = FabButtonState(
                     icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
                     text = TextSpec.Resources(R.string.cacheDetail_startFab),
-                    onClick = {}, // TODO: start cache
+                    onClick = ::startCache,
                 ).takeIf { successData.status == UICacheDetails.Status.Available },
                 tabSelectorState = TabSelectorState(
                     items = tabSelectorsItems,

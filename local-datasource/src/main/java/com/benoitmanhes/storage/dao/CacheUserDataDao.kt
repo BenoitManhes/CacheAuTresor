@@ -19,5 +19,5 @@ interface CacheUserDataDao {
     suspend fun findWithId(cacheId: String): RoomCacheUserData?
 
     @Query("SELECT * FROM `cache-user-data` WHERE cacheId = :cacheId")
-    fun findWithIdFlow(cacheId: String): Flow<RoomCacheUserData>
+    fun findWithIdFlow(cacheId: String): Flow<RoomCacheUserData?>
 }

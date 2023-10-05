@@ -3,7 +3,6 @@ package com.benoitmanhes.domain.usecase.cache
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.extensions.error
 import com.benoitmanhes.domain.interfaces.repository.StepRepository
-import com.benoitmanhes.domain.model.CacheUserData
 import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.uimodel.UIStep
 import javax.inject.Inject
