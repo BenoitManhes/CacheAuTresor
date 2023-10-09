@@ -278,7 +278,9 @@ private fun InitContent() {
 @Composable
 private fun EmptyContent(uiState: CacheDetailsViewModelState.Empty) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(CTTheme.spacing.large),
         contentAlignment = Alignment.Center,
     ) {
         CTTextView(

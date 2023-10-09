@@ -73,7 +73,7 @@
     <string name="cacheDetail_addMarkerButton">Marker</string>
     <string name="cacheDetail_instrumentsButton">Instruments</string>
     <string name="cacheDetail_foundInfoCard_message">Found on %s</string>
-    <string name="cacheDetail_foundInfoCard_points">%s pts</string>
+    <string name="cacheDetail_foundInfoCard_points">%d pts</string>
     <string name="cacheDetail_neverFoundInfoCard_message">This cache has not been found yet. Be the first one !</string>
     <string name="coordinates_DD_format">%.6f\u00B0 \u2219 %.6f\u00B0</string>
     <string name="coordinates_DM_format">N %2d\u00B0 %05.3f\u0027 \u2219 E %2d\u00B0 %05.3f\u0027</string>

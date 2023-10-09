@@ -79,6 +79,7 @@ class CacheDetailViewModel @Inject constructor(
             loadingManager.showLoading()
             startCacheUseCase(cacheId)
             loadingManager.hideLoading()
+            switchTab(tabSelectorsItems.last())
         }
     }
 
@@ -107,7 +108,7 @@ class CacheDetailViewModel @Inject constructor(
                     UIMarker(
                         coordinates = successData.cache.coordinates,
                         marker = successData.cache.getCacheMarker(),
-                        isSelected = false,
+                        isSelected = false, // TODO markerselection
                         onClick = {},
                     )
                 ),
@@ -126,7 +127,7 @@ class CacheDetailViewModel @Inject constructor(
                     items = tabSelectorsItems,
                     selectedItem = uiStateData?.tabSelectorState?.selectedItem ?: tabSelectorsItems.first(),
                     onSelectedItem = ::switchTab,
-                ),
+                ).takeIf { successData.status != UICacheDetails.Status.Available },
                 difficultyJaugeState = CTJaugeState(
                     rate = successData.cache.difficulty,
                     icon = IconSpec.VectorIcon(CTIconPack.Difficulty),
@@ -155,9 +156,9 @@ class CacheDetailViewModel @Inject constructor(
                     creationDateText = TextSpec.RawString(successData.cache.createDate.mediumFormat()),
                 ),
                 cacheCoordinates = successData.cache.coordinates,
-                distanceText = 800.421.meters.toText(),
-                description = TextSpec.loreumIpsum(50), // TODO: description
-                characteristics = listOf(
+                distanceText = 800.421.meters.toText(), // TODO distance
+                description = successData.cache.description.textSpec(),
+                characteristics = listOf( // TODO Tags
                     CTRowState(
                         leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain),
                         text = TextSpec.RawString("Mountain")
@@ -190,7 +191,7 @@ class CacheDetailViewModel @Inject constructor(
                     onReport = {}, // TODO
                 ),
                 noteSectionState = NoteSectionState(
-                    initialNoteValue = "", // TODO
+                    initialNoteValue = successData.userData.note,
                     onNoteSaved = { noteSaved ->
                         updateData {
                             it.copy(
@@ -212,8 +213,13 @@ class CacheDetailViewModel @Inject constructor(
     private fun getInfoCard(uiCacheDetails: UICacheDetails): InfoCardState? = when {
         uiCacheDetails.status == UICacheDetails.Status.Found -> InfoCardState(
             icon = IconSpec.VectorIcon(CTIconPack.Crown),
-            message = TextSpec.Resources(R.string.cacheDetail_foundInfoCard_message),
-            trailingText = null, // TODO: points win
+            message = TextSpec.Resources(
+                R.string.cacheDetail_foundInfoCard_message,
+                uiCacheDetails.cacheProgress.foundDate!!.mediumFormat(),
+            ),
+            trailingText = uiCacheDetails.cacheProgress.ptsWin?.let { pts ->
+                TextSpec.Resources(R.string.cacheDetail_foundInfoCard_points, pts)
+            },
         )
 
         !uiCacheDetails.cache.discovered -> {

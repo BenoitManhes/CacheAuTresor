@@ -2,9 +2,11 @@ package com.benoitmanhes.di.local
 
 import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserDataLocalDataSource
+import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserProgressLocaleDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
 import com.benoitmanhes.storage.datasource.AuthLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserDataLocalDataSourceImpl
+import com.benoitmanhes.storage.datasource.CacheUserProgressLocaleDataSourceImpl
 import com.benoitmanhes.storage.datasource.ExplorerLocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -27,4 +29,8 @@ interface LocalDataSourceModule {
     @Binds
     @ActivityRetainedScoped
     fun bindCacheUserDataLocalDataSource(dataSourceImpl: CacheUserDataLocalDataSourceImpl): CacheUserDataLocalDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindCacheUserProgressLocaleDataSource(dataSourceImpl: CacheUserProgressLocaleDataSourceImpl): CacheUserProgressLocaleDataSource
 }
