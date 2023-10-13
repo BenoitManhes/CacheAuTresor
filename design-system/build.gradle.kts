@@ -52,5 +52,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":core"))
     implementation(project(":common_bm:compose"))
+    implementation(project(":common_bm:kotlin"))
     implementation(project(":logger:logger-timber"))
 }

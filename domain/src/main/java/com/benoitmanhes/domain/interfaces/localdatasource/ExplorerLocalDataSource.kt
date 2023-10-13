@@ -7,5 +7,5 @@ interface ExplorerLocalDataSource {
     suspend fun saveExplorer(explorer: Explorer)
     suspend fun getExplorer(explorerId: String): Explorer
     fun getExplorerFlow(explorerId: String): Flow<Explorer>
-    fun deleteExplorer(explorerId: String)
+    suspend fun deleteExplorer(explorerId: String)
 }

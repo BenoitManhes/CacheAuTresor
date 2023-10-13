@@ -14,6 +14,7 @@ data class CTDomainError(
         EXPLORER_NOT_FOUND,
         CACHE_NOT_FOUND,
         CACHE_STEP_NOT_FOUND,
+        CACHE_USER_PROGRESS_NOT_FOUND,
         NO_AUTHENTICATION,
         NO_INTERNET,
         SERVER_ERROR,

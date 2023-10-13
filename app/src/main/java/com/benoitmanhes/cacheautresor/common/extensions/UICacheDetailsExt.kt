@@ -5,6 +5,6 @@ import com.benoitmanhes.domain.uimodel.UICacheDetails
 
 internal fun UICacheDetails.getCacheMarker(): CacheMarker = when (status) {
     UICacheDetails.Status.Owned -> CacheMarker.Owner
-    UICacheDetails.Status.Found -> CacheMarker.Found
+    is UICacheDetails.Status.Found -> CacheMarker.Found
     else -> cache.getCacheMarker()
 }

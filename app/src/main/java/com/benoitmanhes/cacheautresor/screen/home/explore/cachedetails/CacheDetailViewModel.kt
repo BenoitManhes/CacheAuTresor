@@ -43,6 +43,7 @@ import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.model.Distance.Companion.meters
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
+import com.benoitmanhes.domain.usecase.UseClueUseCase
 import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
 import com.benoitmanhes.domain.usecase.cache.StartCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,6 +56,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CacheDetailViewModel @Inject constructor(
     private val startCacheUseCase: StartCacheUseCase,
+    private val useClueUseCase: UseClueUseCase,
     private val loadingManager: LoadingManager,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
     savedStateHandle: SavedStateHandle,
@@ -64,6 +66,8 @@ class CacheDetailViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<CacheDetailsViewModelState>(CacheDetailsViewModelState.Initialize)
     val uiState: StateFlow<CacheDetailsViewModelState> get() = _uiState.asStateFlow()
+
+    private var switchToInstruction = false
 
     init {
         viewModelScope.launch {
@@ -77,9 +81,9 @@ class CacheDetailViewModel @Inject constructor(
     private fun startCache() {
         viewModelScope.launch {
             loadingManager.showLoading()
+            switchToInstruction = true
             startCacheUseCase(cacheId)
             loadingManager.hideLoading()
-            switchTab(tabSelectorsItems.last())
         }
     }
 
@@ -117,7 +121,7 @@ class CacheDetailViewModel @Inject constructor(
                         text = TextSpec.Resources(R.string.cacheDetail_logButton),
                         onClick = {} // TODO Log
                     )
-                ).takeIf { successData.status == UICacheDetails.Status.Started },
+                ).takeIf { successData.status is UICacheDetails.Status.Started },
                 fabButtonState = FabButtonState(
                     icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
                     text = TextSpec.Resources(R.string.cacheDetail_startFab),
@@ -125,7 +129,12 @@ class CacheDetailViewModel @Inject constructor(
                 ).takeIf { successData.status == UICacheDetails.Status.Available },
                 tabSelectorState = TabSelectorState(
                     items = tabSelectorsItems,
-                    selectedItem = uiStateData?.tabSelectorState?.selectedItem ?: tabSelectorsItems.first(),
+                    selectedItem = if (switchToInstruction) {
+                        switchToInstruction = false
+                        tabSelectorsItems.last()
+                    } else {
+                        uiStateData?.tabSelectorState?.selectedItem ?: tabSelectorsItems.first()
+                    },
                     onSelectedItem = ::switchTab,
                 ).takeIf { successData.status != UICacheDetails.Status.Available },
                 difficultyJaugeState = CTJaugeState(
@@ -148,7 +157,7 @@ class CacheDetailViewModel @Inject constructor(
                     typeIcon = IconSpec.VectorIcon(CTIconPack.Logo),
                     typeText = TextSpec.loreumIpsum(1),
                     stickerLabel = TextSpec.Resources(R.string.cacheDetail_cacheTypeSection_ongoing).takeIf {
-                        successData.status == UICacheDetails.Status.Started
+                        successData.status is UICacheDetails.Status.Started
                     }
                 ),
                 cartographerSectionState = CartographerSectionState(
@@ -158,7 +167,8 @@ class CacheDetailViewModel @Inject constructor(
                 cacheCoordinates = successData.cache.coordinates,
                 distanceText = 800.421.meters.toText(), // TODO distance
                 description = successData.cache.description.textSpec(),
-                characteristics = listOf( // TODO Tags
+                characteristics = listOf(
+                    // TODO Tags
                     CTRowState(
                         leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain),
                         text = TextSpec.RawString("Mountain")
@@ -187,7 +197,7 @@ class CacheDetailViewModel @Inject constructor(
                 instructionsSectionState = InstructionSectionState(
                     title = TextSpec.Resources(R.string.cacheDetail_instructionsSection_title), // TODO
                     cacheInstructions = successData.currentStep.instructions,
-                    clue = successData.currentStep.getClueSection(),
+                    clue = successData.currentStep.getClueSection(successData.cache.cacheId),
                     onReport = {}, // TODO
                 ),
                 noteSectionState = NoteSectionState(
@@ -210,26 +220,29 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 
-    private fun getInfoCard(uiCacheDetails: UICacheDetails): InfoCardState? = when {
-        uiCacheDetails.status == UICacheDetails.Status.Found -> InfoCardState(
-            icon = IconSpec.VectorIcon(CTIconPack.Crown),
-            message = TextSpec.Resources(
-                R.string.cacheDetail_foundInfoCard_message,
-                uiCacheDetails.cacheProgress.foundDate!!.mediumFormat(),
-            ),
-            trailingText = uiCacheDetails.cacheProgress.ptsWin?.let { pts ->
-                TextSpec.Resources(R.string.cacheDetail_foundInfoCard_points, pts)
-            },
-        )
-
-        !uiCacheDetails.cache.discovered -> {
-            InfoCardState(
-                icon = IconSpec.VectorIcon(CTIconPack.Ensign),
-                message = TextSpec.Resources(R.string.cacheDetail_neverFoundInfoCard_message),
+    private fun getInfoCard(uiCacheDetails: UICacheDetails): InfoCardState? {
+        val status = uiCacheDetails.status
+        return when {
+            status is UICacheDetails.Status.Found -> InfoCardState(
+                icon = IconSpec.VectorIcon(CTIconPack.Crown),
+                message = TextSpec.Resources(
+                    R.string.cacheDetail_foundInfoCard_message,
+                    status.foundDate.mediumFormat(),
+                ),
+                trailingText = status.pts?.let { pts ->
+                    TextSpec.Resources(R.string.cacheDetail_foundInfoCard_points, pts)
+                },
             )
-        }
 
-        else -> null
+            !uiCacheDetails.cache.discovered -> {
+                InfoCardState(
+                    icon = IconSpec.VectorIcon(CTIconPack.Ensign),
+                    message = TextSpec.Resources(R.string.cacheDetail_neverFoundInfoCard_message),
+                )
+            }
+
+            else -> null
+        }
     }
 
     private fun updateData(block: (CacheDetailsViewModelState.Data) -> CacheDetailsViewModelState) {
@@ -241,13 +254,21 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 
-    private fun UIStep.getClueSection(): InstructionSectionState.Clue? = clue?.let { _clue ->
+    private fun UIStep.getClueSection(cacheId: String): InstructionSectionState.Clue? = clue?.let { _clue ->
         if (showClue) {
             InstructionSectionState.Clue.Revealed(_clue.textSpec())
         } else {
             InstructionSectionState.Clue.Unrevealed {
-                // TODO Reveal clue
+                revealClue(stepId = stepId, cacheId = cacheId)
             }
+        }
+    }
+
+    private fun revealClue(stepId: String, cacheId: String) {
+        viewModelScope.launch {
+            loadingManager.showLoading()
+            useClueUseCase(cacheStepId = stepId, cacheId = cacheId)
+            loadingManager.hideLoading()
         }
     }
 

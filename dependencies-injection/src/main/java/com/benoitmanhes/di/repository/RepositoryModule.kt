@@ -4,7 +4,7 @@ import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.CacheUserDataRepository
 import com.benoitmanhes.domain.interfaces.repository.CacheUserProgressRepository
-import com.benoitmanhes.domain.interfaces.repository.CacheUserProgressRepositoryImpl
+import com.benoitmanhes.repository.CacheUserProgressRepositoryImpl
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.interfaces.repository.StepRepository
 import com.benoitmanhes.repository.AuthRepositoryImpl

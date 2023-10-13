@@ -40,7 +40,7 @@ fun NoteSection(
             SecondaryButtonState(
                 text = TextSpec.Resources(R.string.cacheDetail_addMarkerButton),
                 onClick = state.onClickMarker,
-                type = SecondaryButtonType.Colored,
+                type = SecondaryButtonType.Outlined,
                 leadingIcon = CTTheme.icon.Add.toIconSpec(),
             ).Composable(
                 modifier = Modifier.weight(1f),

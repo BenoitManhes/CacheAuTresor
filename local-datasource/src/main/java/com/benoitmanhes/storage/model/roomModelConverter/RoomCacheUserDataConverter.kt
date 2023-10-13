@@ -6,7 +6,6 @@ import com.benoitmanhes.storage.model.RoomCacheUserData
 object RoomCacheUserDataConverter : AbstractRoomModelConverter<CacheUserData, RoomCacheUserData> {
     override fun buildRoomModel(appModel: CacheUserData): RoomCacheUserData = RoomCacheUserData(
         cacheId = appModel.cacheId,
-        isStarted = appModel.isStarted,
         note = appModel.note,
         markers = appModel.markers,
     )

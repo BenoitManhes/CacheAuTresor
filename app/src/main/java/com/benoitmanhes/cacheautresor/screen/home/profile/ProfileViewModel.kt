@@ -3,7 +3,6 @@ package com.benoitmanhes.cacheautresor.screen.home.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.domain.usecase.authentication.LogoutUseCase
-import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect

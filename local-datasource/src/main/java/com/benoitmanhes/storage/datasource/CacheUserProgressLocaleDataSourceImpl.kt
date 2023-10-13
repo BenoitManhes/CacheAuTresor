@@ -4,8 +4,11 @@ import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserProgressLocal
 import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.storage.dao.CacheUserProgressDao
 import com.benoitmanhes.storage.model.roomModelConverter.RoomCacheUserProgressConverter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CacheUserProgressLocaleDataSourceImpl @Inject constructor(
@@ -13,12 +16,24 @@ class CacheUserProgressLocaleDataSourceImpl @Inject constructor(
 ) : CacheUserProgressLocaleDataSource {
 
     override fun getCacheUserProgressFlow(cacheId: String, explorerId: String): Flow<CacheUserProgress?> =
-        cacheUserProgressDao.findWithIdFlow(explorerId = explorerId, cacheId = cacheId).map { it?.toAppModel() }
+        cacheUserProgressDao
+            .findWithIdFlow(explorerId = explorerId, cacheId = cacheId)
+            .map { it?.toAppModel() }
+            .flowOn(Dispatchers.IO)
 
-    override suspend fun saveCacheUserProgress(userProgress: CacheUserProgress): Unit =
+    override suspend fun getCacheUserProgress(cacheId: String, explorerId: String): CacheUserProgress? = withContext(
+        Dispatchers.IO
+    ) {
+        cacheUserProgressDao.findWithId(cacheId = cacheId, explorerId = explorerId)?.toAppModel()
+    }
+
+    override suspend fun saveCacheUserProgress(userProgress: CacheUserProgress): Unit = withContext(Dispatchers.IO) {
         cacheUserProgressDao.insert(RoomCacheUserProgressConverter.buildRoomModel(userProgress))
+    }
 
-    override suspend fun deleteCacheUserProgress(cacheId: String, explorerId: String) {
+    override suspend fun deleteCacheUserProgress(cacheId: String, explorerId: String): Unit = withContext(
+        Dispatchers.IO
+    ) {
         cacheUserProgressDao.delete(cacheId = cacheId, explorerId = explorerId)
     }
 }

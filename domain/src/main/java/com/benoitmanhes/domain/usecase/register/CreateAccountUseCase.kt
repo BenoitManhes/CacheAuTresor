@@ -7,15 +7,13 @@ import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.usecase.CTUseCase
-import com.benoitmanhes.domain.usecase.CTUseCaseImpl
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CreateAccountUseCase @Inject constructor(
     private val explorerRepository: ExplorerRepository,
     private val authRepository: AuthRepository,
-    useCaseImpl: CTUseCaseImpl,
-) : CTUseCase by useCaseImpl {
+) : CTUseCase() {
 
     operator fun invoke(
         tokenAccount: String,

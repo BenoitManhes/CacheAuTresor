@@ -20,9 +20,9 @@ fun UICacheDetails.getPrimaryColor(): Color {
     val (availableColor, startedColor) = cache.getCachePaletteColor()
     return when (status) {
         UICacheDetails.Status.Owned -> Colors.BlackOlive
-        UICacheDetails.Status.Found -> Colors.Marigold
+        is UICacheDetails.Status.Found -> Colors.Marigold
         UICacheDetails.Status.Available -> availableColor
-        UICacheDetails.Status.Started -> startedColor
+        is UICacheDetails.Status.Started -> startedColor
     }
 }
 

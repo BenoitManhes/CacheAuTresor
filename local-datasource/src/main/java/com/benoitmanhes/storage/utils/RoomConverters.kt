@@ -19,11 +19,13 @@ object RoomConverters {
 
     @TypeConverter
     fun listStringToString(list: List<String>): String =
-        list.joinToString(LocalConstants.Room.listSeparator)
+        Gson().toJson(list)
 
     @TypeConverter
-    fun stringToListString(rawList: String): List<String> =
-        rawList.split(LocalConstants.Room.listSeparator)
+    fun stringToListString(rawList: String): List<String> {
+        val listType = object : TypeToken<List<String>>() {}.type
+        return Gson().fromJson(rawList, listType)
+    }
 
     @TypeConverter
     fun fromCacheUserDataMarkerList(list: List<CacheUserData.Marker>): String {

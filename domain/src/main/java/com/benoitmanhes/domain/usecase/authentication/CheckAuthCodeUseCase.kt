@@ -4,14 +4,13 @@ import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.usecase.CTUseCase
-import com.benoitmanhes.domain.usecase.CTUseCaseImpl
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CheckAuthCodeUseCase @Inject constructor(
     private val authRepository: AuthRepository,
-    useCaseImpl: CTUseCaseImpl,
-) : CTUseCase by useCaseImpl {
+) : CTUseCase() {
+
     operator fun invoke(code: String): Flow<CTResult<String>> = useCaseFlow {
         if (authRepository.isAuthCodeValid(code)) {
             emit(CTResult.Success(code))

@@ -22,6 +22,7 @@ fun CTDomainError.localizedTitle(): String = when (code) {
     CTDomainError.Code.SERVER_ERROR -> null
     CTDomainError.Code.UNEXPECTED -> null
     CTDomainError.Code.UNKNOWN -> null
+    CTDomainError.Code.CACHE_USER_PROGRESS_NOT_FOUND -> null
 } ?: stringResource(id = R.string.error_defaultTitle)
 
 @Composable
@@ -52,4 +53,5 @@ fun CTDomainError.localizedDescription(): String = when (code) {
     CTDomainError.Code.SERVER_ERROR -> null
     CTDomainError.Code.UNEXPECTED -> null
     CTDomainError.Code.UNKNOWN -> null
+    CTDomainError.Code.CACHE_USER_PROGRESS_NOT_FOUND -> null
 } ?: stringResource(id = R.string.error_defaultMessage)

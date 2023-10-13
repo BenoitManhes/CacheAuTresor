@@ -64,9 +64,13 @@ fun InstructionSection(
     (state.clue as? InstructionSectionState.Clue.Revealed)?.let { clue ->
         SectionHeader(
             title = TextSpec.Resources(R.string.cacheDetail_clueSection_title),
-            horizontalPadding = false,
         )
         SpacerLarge()
+        CTTextView(
+            modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
+            text = clue.text,
+            style = CTTheme.typography.body,
+        )
     }
     Row(
         modifier = Modifier
@@ -77,7 +81,7 @@ fun InstructionSection(
             SecondaryButtonState(
                 text = TextSpec.Resources(R.string.cacheDetail_clueButton),
                 onClick = clue.onClickClue,
-                type = SecondaryButtonType.Colored,
+                type = SecondaryButtonType.Outlined,
             ).Composable(
                 modifier = Modifier.weight(1f),
             )

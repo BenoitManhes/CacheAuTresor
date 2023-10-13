@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 data class CacheUserData(
     val cacheId: String,
-    val isStarted: Boolean = false,
     val note: String? = null,
     val markers: List<Marker> = emptyList(),
 ) : Model {

@@ -7,7 +7,6 @@ import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 import com.benoitmanhes.domain.usecase.CTUseCase
-import com.benoitmanhes.domain.usecase.CTUseCaseImpl
 import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,8 +15,7 @@ class GetAllUICachesUseCase @Inject constructor(
     private val cacheRepository: CacheRepository,
     private val explorerRepository: ExplorerRepository,
     private val getMyExplorerUseCase: GetMyExplorerUseCase,
-    useCaseImpl: CTUseCaseImpl,
-) : CTUseCase by useCaseImpl {
+) : CTUseCase() {
 
     operator fun invoke(): Flow<CTResult<List<UIExploreCache>>> = useCaseFlow {
         val allCaches = cacheRepository.getAllCaches()

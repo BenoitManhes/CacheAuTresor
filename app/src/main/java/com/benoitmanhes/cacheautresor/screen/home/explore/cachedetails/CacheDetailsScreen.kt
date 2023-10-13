@@ -2,8 +2,6 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 
 import android.content.Context
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -323,5 +321,3 @@ private fun MapView.setupMap(
     })
     overlays.add(mapEventOverlay)
 }
-
-private val bottomSheetAnimation: AnimationSpec<Float> = tween(durationMillis = 400)

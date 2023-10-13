@@ -4,6 +4,7 @@ import com.benoitmanhes.domain.model.CacheInstructions
 import com.benoitmanhes.domain.model.Coordinates
 
 data class UIStep(
+    val stepId: String,
     val clue: String?,
     val showClue: Boolean,
     val instructions: CacheInstructions,
