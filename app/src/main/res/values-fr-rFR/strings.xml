@@ -80,4 +80,5 @@
     <string name="coordinates_DM_format">N %2d\u00B0 %05.3f\u0027 \u2219 E %2d\u00B0 %05.3f\u0027</string>
     <string name="coordinates_DMS_format">N %2d\u00B0 %2d\u0027%05.3f\u0022 \u2219 E %2d\u00B0 %2d\u0027%05.3f\u0022</string>
     <string name="cacheDetail_clueSection_title">Indice</string>
+    <string name="editNote_topBar_title">Notes</string>
 </resources>

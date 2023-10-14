@@ -35,7 +35,7 @@ sealed interface CacheDetailsViewModelState {
         val typeSectionState: CacheTypeSectionState,
         val cartographerSectionState: CartographerSectionState,
         val cacheCoordinates: Coordinates,
-        val distanceText: TextSpec,
+        val distanceText: TextSpec?,
         val description: TextSpec,
         val characteristics: List<CTRowState>,
         val instructionsSectionState: InstructionSectionState,

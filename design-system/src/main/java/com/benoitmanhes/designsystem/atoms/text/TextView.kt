@@ -8,7 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import com.benoitmanhes.designsystem.utils.TextSpec
-import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
 fun CTTextView(
@@ -16,7 +15,8 @@ fun CTTextView(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     style: TextStyle = LocalTextStyle.current,
-    maxLine: Int = UiConstants.Text.MaxLineSize,
+    minLines: Int = 1,
+    maxLine: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
 ) {
     text?.value()?.let { safeValue ->
@@ -27,6 +27,7 @@ fun CTTextView(
             style = style,
             maxLines = maxLine,
             overflow = overflow,
+            minLines = minLines,
         )
     }
 }

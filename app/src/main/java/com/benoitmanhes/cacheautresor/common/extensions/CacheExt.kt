@@ -14,6 +14,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.model.Cache
@@ -26,12 +27,11 @@ internal fun Cache.getCacheMarker(): CacheMarker = when (this) {
     is Cache.Piste -> CacheMarker.Piste
 }
 
-@Composable
 fun Cache.getIcon(): IconSpec = when (this) {
-    is Cache.Classical -> IconSpec.VectorIcon(CTTheme.icon.Parchment, null)
-    is Cache.Coop -> IconSpec.VectorIcon(CTTheme.icon.Coop, null)
-    is Cache.Mystery -> IconSpec.VectorIcon(CTTheme.icon.Mystery, null)
-    is Cache.Piste -> IconSpec.VectorIcon(CTTheme.icon.Piste, null)
+    is Cache.Classical -> IconSpec.ComposeIcon(CTTheme.composed { icon.Parchment })
+    is Cache.Coop -> IconSpec.ComposeIcon(CTTheme.composed { icon.Coop })
+    is Cache.Mystery -> IconSpec.ComposeIcon(CTTheme.composed { icon.Mystery })
+    is Cache.Piste -> IconSpec.ComposeIcon(CTTheme.composed { icon.Piste })
 }
 
 @Composable

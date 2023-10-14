@@ -68,6 +68,7 @@ internal fun CTBasicTextField(
         },
     ),
     singleLine: Boolean = false,
+    minLines: Int = 1,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape =
@@ -111,6 +112,7 @@ internal fun CTBasicTextField(
                 keyboardActions = keyboardActions,
                 interactionSource = interactionSource,
                 singleLine = singleLine,
+                minLines = minLines,
                 maxLines = maxLines,
                 decorationBox = @Composable { innerTextField ->
                     // places leading icon, text field with label and placeholder, trailing icon

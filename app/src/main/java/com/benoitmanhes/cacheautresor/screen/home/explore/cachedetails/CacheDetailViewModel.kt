@@ -6,13 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
+import com.benoitmanhes.cacheautresor.common.extensions.getIcon
+import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
 import com.benoitmanhes.cacheautresor.common.extensions.mediumFormat
 import com.benoitmanhes.cacheautresor.common.extensions.textSpec
 import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
 import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
 import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
-import com.benoitmanhes.cacheautresor.common.extensions.toText
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
@@ -40,7 +41,6 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
-import com.benoitmanhes.domain.model.Distance.Companion.meters
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
@@ -67,6 +67,9 @@ class CacheDetailViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<CacheDetailsViewModelState>(CacheDetailsViewModelState.Initialize)
     val uiState: StateFlow<CacheDetailsViewModelState> get() = _uiState.asStateFlow()
 
+    private val _navigation = MutableStateFlow<CacheDetailNavigation?>(null)
+    val navigation: StateFlow<CacheDetailNavigation?> get() = _navigation.asStateFlow()
+
     private var switchToInstruction = false
 
     init {
@@ -76,6 +79,10 @@ class CacheDetailViewModel @Inject constructor(
                     _uiState.emit(result.mapToUIState())
                 }
         }
+    }
+
+    fun consumeNavigation() {
+        _navigation.value = null
     }
 
     private fun startCache() {
@@ -112,7 +119,7 @@ class CacheDetailViewModel @Inject constructor(
                     UIMarker(
                         coordinates = successData.cache.coordinates,
                         marker = successData.cache.getCacheMarker(),
-                        isSelected = false, // TODO markerselection
+                        isSelected = false,
                         onClick = {},
                     )
                 ),
@@ -154,8 +161,8 @@ class CacheDetailViewModel @Inject constructor(
                 ),
                 infoCardState = getInfoCard(successData),
                 typeSectionState = CacheTypeSectionState(
-                    typeIcon = IconSpec.VectorIcon(CTIconPack.Logo),
-                    typeText = TextSpec.loreumIpsum(1),
+                    typeIcon = successData.cache.getIcon(),
+                    typeText = successData.cache.getTypeText(),
                     stickerLabel = TextSpec.Resources(R.string.cacheDetail_cacheTypeSection_ongoing).takeIf {
                         successData.status is UICacheDetails.Status.Started
                     }
@@ -165,7 +172,7 @@ class CacheDetailViewModel @Inject constructor(
                     creationDateText = TextSpec.RawString(successData.cache.createDate.mediumFormat()),
                 ),
                 cacheCoordinates = successData.cache.coordinates,
-                distanceText = 800.421.meters.toText(), // TODO distance
+                distanceText = null, // TODO distance
                 description = successData.cache.description.textSpec(),
                 characteristics = listOf(
                     // TODO Tags
@@ -195,23 +202,18 @@ class CacheDetailViewModel @Inject constructor(
                     ),
                 ),
                 instructionsSectionState = InstructionSectionState(
-                    title = TextSpec.Resources(R.string.cacheDetail_instructionsSection_title), // TODO
+                    title = TextSpec.Resources(R.string.cacheDetail_instructionsSection_title), // TODO UIStep
                     cacheInstructions = successData.currentStep.instructions,
                     clue = successData.currentStep.getClueSection(successData.cache.cacheId),
-                    onReport = {}, // TODO
+                    onReport = {}, // TODO Report
                 ),
                 noteSectionState = NoteSectionState(
-                    initialNoteValue = successData.userData.note,
-                    onNoteSaved = { noteSaved ->
-                        updateData {
-                            it.copy(
-                                // TODO: saved note
-                                noteSectionState = it.noteSectionState.copy(initialNoteValue = noteSaved)
-                            )
-                        }
+                    initialNoteValue = successData.userData.note.orEmpty().textSpec(),
+                    onClickNote = {
+                        _navigation.value = CacheDetailNavigation.EditNote(successData.cache.cacheId)
                     },
-                    onClickInstruments = {}, // TODO
-                    onClickMarker = {}, // TODO
+                    onClickInstruments = {}, // TODO Instrument
+                    onClickMarker = {}, // TODO Add marker
                 )
             )
 

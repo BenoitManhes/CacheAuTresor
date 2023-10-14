@@ -22,6 +22,7 @@ fun CTTopBar(
     modifier: Modifier = Modifier,
     title: TextSpec? = null,
     navAction: CTNavAction? = null,
+    trailingAction: CTTopBarAction? = null,
     horizontalArrangement: Arrangement.Horizontal = if (title != null) Arrangement.SpaceEvenly else Arrangement.SpaceBetween,
     content: @Composable (RowScope.() -> Unit)? = null,
 ) {
@@ -54,5 +55,13 @@ fun CTTopBar(
         }
 
         content?.invoke(this)
+
+        trailingAction?.let {
+            CTIconButton(
+                icon = trailingAction.icon,
+                size = Dimens.IconButtonSize.Medium,
+                onClick = trailingAction.onClick
+            )
+        }
     }
 }

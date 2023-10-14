@@ -3,7 +3,6 @@ package com.benoitmanhes.designsystem.molecule.sticker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,7 +17,7 @@ fun CTSticker(
     label: TextSpec,
     modifier: Modifier = Modifier,
     color: Color = CTTheme.color.primary,
-    textColor: Color = contentColorFor(backgroundColor = color),
+    textColor: Color = CTTheme.color.onPrimary,
 ) {
     Box(
         modifier = modifier

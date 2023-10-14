@@ -26,6 +26,7 @@ import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -70,9 +71,19 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 @Composable
 fun CacheDetailsRoute(
     onNavigateBack: () -> Unit,
+    navigateToEditNote: (cacheId: String) -> Unit,
     viewModel: CacheDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigation by viewModel.navigation.collectAsState()
+
+    LaunchedEffect(key1 = navigation) {
+        val navValue = navigation ?: return@LaunchedEffect
+        when (navValue) {
+            is CacheDetailNavigation.EditNote -> navigateToEditNote(navValue.cacheId)
+        }
+        viewModel.consumeNavigation()
+    }
 
     CompositionLocalProvider(
         LocalColor provides LocalColor.current.copy(

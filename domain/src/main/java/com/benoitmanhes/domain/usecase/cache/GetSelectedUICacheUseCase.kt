@@ -5,7 +5,6 @@ import com.benoitmanhes.core.extensions.error
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.CacheUserDataRepository
-import com.benoitmanhes.domain.interfaces.repository.CacheUserProgressRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserData
@@ -13,7 +12,6 @@ import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.usecase.CTUseCase
-import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
 import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -27,18 +25,16 @@ class GetSelectedUICacheUseCase @Inject constructor(
     private val getMyExplorerUseCase: GetMyExplorerUseCase,
     private val getUIStepsUseCase: GetUIStepsUseCase,
     private val cacheUserDataRepository: CacheUserDataRepository,
-    private val cacheUserProgressRepository: CacheUserProgressRepository,
-    private val getMyExplorerIdUseCase: GetMyExplorerIdUseCase,
+    private val getUserProgressUseCase: GetUserProgressUseCase,
 ) : CTUseCase() {
 
     operator fun invoke(cacheId: String): Flow<CTResult<UICacheDetails>> = useCaseFlow {
-        val myExplorerId = getMyExplorerIdUseCase()
         val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
 
         combine(
             getMyExplorerUseCase(),
             cacheUserDataRepository.getCacheUserDataFlow(cacheId).map { it ?: CacheUserData(cacheId) },
-            cacheUserProgressRepository.getCacheUserProgressFlow(explorerId = myExplorerId, cacheId = cacheId),
+            getUserProgressUseCase(cacheId),
         ) { myExplorer, userData, userProgress ->
             val uiCacheDetails = UICacheDetails(
                 cache = cache,

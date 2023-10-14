@@ -14,20 +14,22 @@ object CacheGeoSection {
     fun item(
         scope: LazyListScope,
         coordinates: Coordinates,
-        distanceText: TextSpec,
+        distanceText: TextSpec?,
     ) {
         CoordinatesRow.item(
             scope = scope,
             coordinates = coordinates,
             key = "CoordinatesRow",
         )
-        CTRow.item(
-            scope = scope,
-            state = CTRowState(
-                leadingIcon = IconSpec.VectorIcon(CTIconPack.Location),
-                text = distanceText,
-            ),
-            key = "LocationRow",
-        )
+        distanceText?.let {
+            CTRow.item(
+                scope = scope,
+                state = CTRowState(
+                    leadingIcon = IconSpec.VectorIcon(CTIconPack.Location),
+                    text = distanceText,
+                ),
+                key = "LocationRow",
+            )
+        }
     }
 }
