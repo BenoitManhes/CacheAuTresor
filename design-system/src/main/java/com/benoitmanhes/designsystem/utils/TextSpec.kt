@@ -1,5 +1,6 @@
 package com.benoitmanhes.designsystem.utils
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -11,11 +12,18 @@ sealed interface TextSpec {
     @Composable
     fun value(): AnnotatedString?
 
+    @Composable
+    fun string(): String? = value()?.text
+
+    fun string(context: Context): String?
+
     data class RawString(val value: String?) : TextSpec {
         @Composable
         override fun value(): AnnotatedString? {
             return value?.let(::AnnotatedString)
         }
+
+        override fun string(context: Context): String? = value
     }
 
     data class RawAnnotatedString(val value: AnnotatedString) : TextSpec {
@@ -23,6 +31,8 @@ sealed interface TextSpec {
         override fun value(): AnnotatedString {
             return value
         }
+
+        override fun string(context: Context): String = value.text
     }
 
     class Resources(
@@ -36,10 +46,12 @@ sealed interface TextSpec {
         override fun value(): AnnotatedString {
             return AnnotatedString(stringResource(id, *args))
         }
+
+        override fun string(context: Context): String = context.getString(id, *args)
     }
 
     companion object {
         fun loreumIpsum(words: Int): TextSpec =
-            TextSpec.RawString(LoremIpsum(words).values.joinToString(" "))
+            RawString(LoremIpsum(words).values.joinToString(" "))
     }
 }

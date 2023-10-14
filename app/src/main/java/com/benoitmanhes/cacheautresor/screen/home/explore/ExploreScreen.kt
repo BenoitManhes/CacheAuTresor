@@ -47,7 +47,7 @@ fun ExploreRoute(
     val context = LocalContext.current
     var page by rememberSaveable { mutableStateOf(0) }
     val pagerState = rememberPagerState()
-    val snackbarMessage = viewModel.errorSnackbar?.localizedDescription()
+    val snackbarMessage = viewModel.errorSnackbar?.localizedDescription()?.value()?.text
 
     LaunchedEffect(true) {
         viewModel.initLocationListener(context)

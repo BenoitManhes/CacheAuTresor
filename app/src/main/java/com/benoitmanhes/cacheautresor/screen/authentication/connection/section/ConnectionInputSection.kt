@@ -44,7 +44,7 @@ internal fun LoginInputSection(
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ) {
     val uiState = viewModel.uiState
-    val snackbarMessage = uiState.errorSnackbar?.localizedDescription()
+    val snackbarMessage = uiState.errorSnackbar?.localizedDescription()?.value()?.text
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {
             showErrorSnackBar(snackbarMessage)
@@ -68,7 +68,7 @@ internal fun LoginInputSection(
                     valueBottom = uiState.valueLoginPwd,
                     labelTop = TextSpec.Resources(R.string.loginScreen_login_emailTextField_label),
                     labelBottom = TextSpec.Resources(R.string.loginScreen_login_passwordTextField_label),
-                    errorText = TextSpec.RawString(uiState.errorLogin?.localizedDescription()),
+                    errorText = uiState.errorLogin?.localizedDescription(),
                     isError = uiState.errorLogin != null,
                     onValueTopChanged = { viewModel.updateLoginEmail(it) },
                     onValueBottomChanged = { viewModel.updateLoginPassword(it) },
@@ -118,12 +118,12 @@ internal fun LoginInputSection(
                     modifier = Modifier.fillMaxWidth(),
                     color = CTTheme.color.secondary,
                     labelText = TextSpec.Resources(R.string.loginScreen_register_codeText_label),
-                    errorText = TextSpec.RawString(uiState.errorRegister?.localizedDescription()),
+                    errorText = uiState.errorRegister?.localizedDescription(),
                 )
                 SpacerSmall()
             }
         }
-        Crossfade(targetState = uiState.connectionInputState) { state ->
+        Crossfade(targetState = uiState.connectionInputState, label = "crossfade") { state ->
             if (state == ConnectionInputState.Register) {
                 CTPrimaryButton(
                     text = TextSpec.Resources(R.string.loginScreen_registerButton_label),

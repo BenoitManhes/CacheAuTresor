@@ -31,7 +31,7 @@ fun AccountCreationInputSection(
     viewModel: AccountCreationInputViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
 ) {
-    val snackbarMessage = viewModel.uiState.errorSnackbar?.localizedDescription()
+    val snackbarMessage = viewModel.uiState.errorSnackbar?.localizedDescription()?.value()?.text
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {
             showSnackbar(snackbarMessage)
@@ -48,7 +48,7 @@ fun AccountCreationInputSection(
             value = viewModel.uiState.valueName,
             onValueChange = { viewModel.updateName(it) },
             labelText = TextSpec.Resources(R.string.accountCreation_name_label),
-            errorText = TextSpec.RawString(viewModel.uiState.errorUserName?.localizedDescription()),
+            errorText = viewModel.uiState.errorUserName?.localizedDescription(),
             imeAction = ImeAction.Next,
         )
         Spacer(modifier = Modifier.weight(0.2f))
@@ -59,7 +59,7 @@ fun AccountCreationInputSection(
             onValueBottomChanged = { viewModel.updatePwd(it) },
             labelTop = TextSpec.Resources(R.string.accountCreation_email_label),
             labelBottom = TextSpec.Resources(R.string.accountCreation_password_label),
-            errorText = TextSpec.RawString(viewModel.uiState.errorCredential?.localizedDescription()),
+            errorText = viewModel.uiState.errorCredential?.localizedDescription(),
             inputTypeTop = InputType.Email,
             inputTypeBottom = InputType.Password,
             textFieldTypeBottom = TextFieldType.PASSWORD,

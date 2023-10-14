@@ -3,9 +3,14 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.editnote
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
+import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
+import com.benoitmanhes.cacheautresor.screen.snackbar.showError
+import com.benoitmanhes.cacheautresor.screen.snackbar.showInfo
 import com.benoitmanhes.core.result.CTSuspendResult
+import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.usecase.note.GetCacheNoteUseCase
 import com.benoitmanhes.domain.usecase.note.SaveNoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +24,7 @@ import javax.inject.Inject
 class EditNoteViewModel @Inject constructor(
     private val loadingManager: LoadingManager,
     private val saveNoteUseCase: SaveNoteUseCase,
+    private val snackbarManager: SnackbarManager,
     getCacheNoteUseCase: GetCacheNoteUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -47,6 +53,7 @@ class EditNoteViewModel @Inject constructor(
                 }
 
                 is CTSuspendResult.Failure -> {
+                    result.error?.let(snackbarManager::showError)
                 }
             }
         }
@@ -57,6 +64,7 @@ class EditNoteViewModel @Inject constructor(
             loadingManager.showLoading()
             saveNoteUseCase(cacheId = cacheId, note = uiState.value.note)
             loadingManager.hideLoading()
+            snackbarManager.showInfo(TextSpec.Resources(R.string.editNote_save_successMessage))
             _navigation.value = EditNoteNavigation.Back
         }
     }

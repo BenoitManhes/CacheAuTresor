@@ -46,6 +46,7 @@ fun NoteSection(
                         vertical = CTTheme.spacing.medium,
                         horizontal = CTTheme.spacing.large,
                     ),
+                minLines = 3,
             )
         }
         SpacerLarge()
