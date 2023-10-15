@@ -24,27 +24,35 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 @Composable
 fun CTSecondaryButton(
-    state: SecondaryButtonState,
+    text: TextSpec,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    type: SecondaryButtonType = SecondaryButtonType.Colored,
+    enabled: Boolean = true,
+    leadingIcon: IconSpec? = null,
+    color: ComposeProvider<Color> = CTTheme.composed { this.color.primary },
+    contentColor: ComposeProvider<Color> = CTTheme.composed { this.color.onPrimary },
 ) {
     ButtonFromType(
         modifier = modifier,
-        type = state.type,
-        enabled = state.enabled,
-        color = state.color(),
-        contentColor = state.contentColor(),
-        onClick = state.onClick,
+        type = type,
+        enabled = enabled,
+        color = color(),
+        contentColor = contentColor(),
+        onClick = onClick,
     ) { buttonColors ->
         Row(
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            state.leadingIcon?.let { leadingIcon ->
+            leadingIcon?.let { leadingIcon ->
                 CTIcon(
                     icon = leadingIcon,
                     size = Dimens.IconSize.Medium,
@@ -52,9 +60,9 @@ fun CTSecondaryButton(
             }
             // Text
             CTTextView(
-                text = state.text,
+                text = text,
                 style = LocalTextStyle.current,
-                color = buttonColors.contentColor(enabled = state.enabled).value,
+                color = buttonColors.contentColor(enabled = enabled).value,
                 maxLine = 1,
                 overflow = TextOverflow.Ellipsis,
             )

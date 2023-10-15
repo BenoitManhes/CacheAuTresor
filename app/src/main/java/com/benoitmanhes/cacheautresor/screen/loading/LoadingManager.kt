@@ -24,12 +24,14 @@ class LoadingManager @Inject constructor() {
             forceLoading.asStateFlow(),
         ) { (a, b) -> a || b }
 
-    fun showLoading() {
+    fun showLoading(forceMinDelay: Boolean = false) {
         _isLoading.value = true
-        CoroutineScope(Dispatchers.IO).launch {
-            forceLoading.emit(true)
-            delay(DomainConstants.Loading.minLoadingDuration.inWholeMilliseconds)
-            forceLoading.emit(false)
+        if (forceMinDelay) {
+            CoroutineScope(Dispatchers.IO).launch {
+                forceLoading.emit(true)
+                delay(DomainConstants.Loading.minLoadingDuration.inWholeMilliseconds)
+                forceLoading.emit(false)
+            }
         }
     }
 

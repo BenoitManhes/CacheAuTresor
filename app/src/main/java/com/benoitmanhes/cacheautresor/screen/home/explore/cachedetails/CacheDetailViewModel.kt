@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StartCoopAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.StartCoopModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
@@ -17,6 +18,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
+import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
@@ -49,6 +51,7 @@ import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
 import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
 import com.benoitmanhes.domain.usecase.cache.StartCacheUseCase
+import com.benoitmanhes.domain.usecase.cache.StartCoopCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,9 +62,11 @@ import javax.inject.Inject
 @HiltViewModel
 class CacheDetailViewModel @Inject constructor(
     private val startCacheUseCase: StartCacheUseCase,
+    private val startCoopCacheUseCase: StartCoopCacheUseCase,
     private val useClueUseCase: UseClueUseCase,
     private val loadingManager: LoadingManager,
     private val modalBottomSheetManager: ModalBottomSheetManager,
+    private val alertDialogManager: AlertDialogManager,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -94,18 +99,34 @@ class CacheDetailViewModel @Inject constructor(
     private fun startCache() {
         val currentCache = cache
         when (currentCache) {
-            is Cache.Coop -> startCoopCache(currentCache)
+            is Cache.Coop -> {
+                modalBottomSheetManager.showModal(
+                    StartCoopModalBottomSheet(
+                        crewPositions = currentCache.crewStepRefs.keys,
+                        onClickCrewPosition = { position ->
+                            alertDialogManager.showDialog(
+                                StartCoopAlertDialog(
+                                    cacheTitle = currentCache.title,
+                                    crewPosition = position,
+                                    onConfirm = { startCoopCache(position) },
+                                )
+                            )
+                        },
+                    )
+                )
+            }
+
             else -> startRegularCache()
         }
     }
 
-    private fun startCoopCache(cache: Cache.Coop) {
-        modalBottomSheetManager.showModal(
-            StartCoopModalBottomSheet(
-                memberPositions = cache.crewStepRefs.keys,
-                onClickMemberPosition = {},
-            )
-        )
+    private fun startCoopCache(crewPosition: String) {
+        viewModelScope.launch {
+            loadingManager.showLoading()
+            switchToInstruction = true
+            startCoopCacheUseCase(cacheId = cacheId, crewPosition = crewPosition)
+            loadingManager.hideLoading()
+        }
     }
 
     private fun startRegularCache() {

@@ -22,7 +22,16 @@ data class SecondaryButtonState(
 ) {
     @Composable
     fun Composable(modifier: Modifier = Modifier) {
-        CTSecondaryButton(this, modifier)
+        CTSecondaryButton(
+            text = text,
+            onClick = onClick,
+            type = type,
+            enabled = enabled,
+            leadingIcon = leadingIcon,
+            color = color,
+            contentColor = contentColor,
+            modifier = modifier,
+        )
     }
 }
 

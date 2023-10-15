@@ -17,8 +17,8 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
 
 data class StartCoopModalBottomSheet(
-    val memberPositions: Set<String>,
-    val onClickMemberPosition: (String) -> Unit,
+    val crewPositions: Set<String>,
+    val onClickCrewPosition: (String) -> Unit,
     override val onDismiss: () -> Unit = {},
 ) : ModalBottomSheetState {
 
@@ -35,12 +35,12 @@ data class StartCoopModalBottomSheet(
         SpacerMedium()
         CTDivider()
         SpacerMedium()
-        memberPositions.map { position ->
+        crewPositions.map { position ->
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        onClickMemberPosition(position)
+                        onClickCrewPosition(position)
                         hide()
                     }
                     .padding(CTTheme.spacing.large),

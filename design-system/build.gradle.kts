@@ -36,6 +36,9 @@ dependencies {
     implementation(AndroidX.compose.foundation)
     implementation(AndroidX.constraintLayout.compose)
 
+    // Compose Markdown
+    implementation("com.github.jeziellago:compose-markdown:_")
+
     // Lottie
     implementation("com.airbnb.android:lottie-compose:_")
 

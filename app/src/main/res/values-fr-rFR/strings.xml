@@ -83,4 +83,8 @@
     <string name="editNote_topBar_title">Notes</string>
     <string name="editNote_save_successMessage">Note sauvegardée</string>
     <string name="startCoopModal_message">Quel poste voulez vous occuper dans l’équipage ?</string>
+    <string name="common_alertDialog_action_no">Euh..non</string>
+    <string name="common_alertDialog_action_letsGo">C’est parti !</string>
+    <string name="startCoopAlert_message">Vous êtes sur le point de commencez la cache coopérative **%1$s** en tant que membre **%2$s**.\n\nConfirmez vous ?</string>
+    <string name="startCoopAlert_warning">Attention le choix est définitif pour cette cache</string>
 </resources>
