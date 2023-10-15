@@ -81,4 +81,5 @@
     <string name="cacheDetail_clueSection_title">Clue</string>
     <string name="editNote_topBar_title">Notes</string>
     <string name="editNote_save_successMessage">Note saved</string>
+    <string name="startCoopModal_message">What position would you like to hold in the crew?</string>
 </resources>

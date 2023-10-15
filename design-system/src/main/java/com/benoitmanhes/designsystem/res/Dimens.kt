@@ -117,8 +117,8 @@ object Dimens {
         )
     }
 
-    object Text {
-        val zoneTextFieldMinHeight: Dp = 100.dp
+    object ModalBottomSheet {
+        val minHeight: Dp = 300.dp
     }
 
     object TopBar {

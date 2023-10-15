@@ -82,4 +82,5 @@
     <string name="cacheDetail_clueSection_title">Indice</string>
     <string name="editNote_topBar_title">Notes</string>
     <string name="editNote_save_successMessage">Note sauvegardée</string>
+    <string name="startCoopModal_message">Quel poste voulez vous occuper dans l’équipage ?</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
+import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.StartCoopModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
@@ -22,6 +23,7 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.secti
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CartographerSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
+import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
@@ -41,6 +43,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
+import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
@@ -58,6 +61,7 @@ class CacheDetailViewModel @Inject constructor(
     private val startCacheUseCase: StartCacheUseCase,
     private val useClueUseCase: UseClueUseCase,
     private val loadingManager: LoadingManager,
+    private val modalBottomSheetManager: ModalBottomSheetManager,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -71,11 +75,13 @@ class CacheDetailViewModel @Inject constructor(
     val navigation: StateFlow<CacheDetailNavigation?> get() = _navigation.asStateFlow()
 
     private var switchToInstruction = false
+    private var cache: Cache? = null
 
     init {
         viewModelScope.launch {
             getSelectedUICacheUseCase(cacheId)
                 .collect { result ->
+                    cache = result.data?.cache
                     _uiState.emit(result.mapToUIState())
                 }
         }
@@ -86,6 +92,23 @@ class CacheDetailViewModel @Inject constructor(
     }
 
     private fun startCache() {
+        val currentCache = cache
+        when (currentCache) {
+            is Cache.Coop -> startCoopCache(currentCache)
+            else -> startRegularCache()
+        }
+    }
+
+    private fun startCoopCache(cache: Cache.Coop) {
+        modalBottomSheetManager.showModal(
+            StartCoopModalBottomSheet(
+                memberPositions = cache.crewStepRefs.keys,
+                onClickMemberPosition = {},
+            )
+        )
+    }
+
+    private fun startRegularCache() {
         viewModelScope.launch {
             loadingManager.showLoading()
             switchToInstruction = true
