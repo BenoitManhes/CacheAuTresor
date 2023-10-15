@@ -40,7 +40,7 @@ class GetSelectedUICacheUseCase @Inject constructor(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
                 status = myExplorer.getCacheDetailsUserStatus(cache, userProgress),
-                steps = getCacheStepsRefs(cache).map { getUIStepsUseCase(it, userProgress) },
+                steps = getCacheStepsRefs(cache, userProgress).map { getUIStepsUseCase(it, userProgress) },
                 userData = userData,
             )
             emit(CTResult.Success(uiCacheDetails))
@@ -58,16 +58,19 @@ class GetSelectedUICacheUseCase @Inject constructor(
             foundDate = userProgress.foundDate,
             pts = userProgress.ptsWin
         )
+
         else -> UICacheDetails.Status.Started(userProgress)
     }
 
-    private fun getCacheStepsRefs(cache: Cache): List<String> = when (cache) {
+    private fun getCacheStepsRefs(cache: Cache, userProgress: CacheUserProgress?): List<String> = when (cache) {
         is Cache.Classical -> listOf(cache.finalStepRef)
         is Cache.Mystery -> listOf(cache.enigmaStepRef, cache.finalStepRef)
         is Cache.Piste -> cache.intermediaryStepRefs + listOf(cache.finalStepRef)
         is Cache.Coop -> buildList {
-            add(cache.initialCrewStepRef)
-            addAll(cache.crewStepRefs)
+            val myCrewSteps = userProgress?.let {
+                cache.crewStepRefs[userProgress.coopMemberRef]
+            }.orEmpty()
+            addAll(myCrewSteps)
             add(cache.finalStepRef)
         }
     }

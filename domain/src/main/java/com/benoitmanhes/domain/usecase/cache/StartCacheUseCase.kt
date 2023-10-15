@@ -38,7 +38,7 @@ class StartCacheUseCase @Inject constructor(
     }
 
     private fun Cache.getInitialStepRef(): String = when (this) {
-        is Cache.Coop -> initialCrewStepRef
+        is Cache.Coop -> throw CTDomainError.Code.UNEXPECTED.error()
         is Cache.Classical -> finalStepRef
         is Cache.Piste -> intermediaryStepRefs.first()
         is Cache.Mystery -> enigmaStepRef

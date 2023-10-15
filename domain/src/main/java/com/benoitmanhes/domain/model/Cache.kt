@@ -83,7 +83,6 @@ sealed interface Cache : Model {
         override val finalStepRef: String,
         override val tagIds: List<String>,
         override val description: String,
-        val initialCrewStepRef: String,
-        val crewStepRefs: List<String>,
+        val crewStepRefs: Map<String, List<String>>,
     ) : Cache
 }

@@ -10,7 +10,7 @@ data class CacheUserProgress(
     val stepDoneRefs: Set<String> = emptySet(),
     val currentStepRef: String? = null,
     val clueUnlockedStepRef: Set<String> = emptySet(),
-    val coopStepRef: String? = null,
+    val coopMemberRef: String? = null,
     val ptsWin: Int? = null,
     val foundDate: Date? = null,
 ) : Model

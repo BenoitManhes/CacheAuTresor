@@ -13,7 +13,7 @@ data class RoomCacheUserProgress(
     val stepDoneRefs: List<String> = emptyList(),
     val currentStepRef: String? = null,
     val clueUnlockedStepRef: List<String> = emptyList(),
-    val coopStepRef: String? = null,
+    val coopMemberRef: String? = null,
     val ptsWin: Int? = null,
     val foundDate: Date? = null,
 ) : RoomModel<CacheUserProgress> {
@@ -25,7 +25,7 @@ data class RoomCacheUserProgress(
         stepDoneRefs = stepDoneRefs.toSet(),
         currentStepRef = currentStepRef,
         clueUnlockedStepRef = clueUnlockedStepRef.toSet(),
-        coopStepRef = coopStepRef,
+        coopMemberRef = coopMemberRef,
         ptsWin = ptsWin,
         foundDate = foundDate,
     )

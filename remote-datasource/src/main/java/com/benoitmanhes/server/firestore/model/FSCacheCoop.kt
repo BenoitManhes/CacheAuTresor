@@ -24,8 +24,7 @@ data class FSCacheCoop(
     val tagIds: List<String>? = null,
     val cacheIdsRequired: List<String>? = null,
     val finalStepRef: String? = null,
-    val crewStepRefs: List<String>? = null,
-    val initialCrewStepRef: String? = null,
+    val crewStepRefs: Map<String, List<String>>? = null,
 ) : FSCache<Cache.Coop> {
 
     constructor(cache: Cache.Coop) : this(
@@ -43,7 +42,6 @@ data class FSCacheCoop(
         createDate = Timestamp(cache.createDate),
         finalStepRef = cache.finalStepRef,
         crewStepRefs = cache.crewStepRefs,
-        initialCrewStepRef = cache.initialCrewStepRef,
     )
 
     override fun toAppModel(): Cache.Coop = Cache.Coop(
@@ -61,6 +59,5 @@ data class FSCacheCoop(
         description = description.requiredField(),
         finalStepRef = finalStepRef.requiredField(),
         crewStepRefs = crewStepRefs.requiredField(),
-        initialCrewStepRef = initialCrewStepRef.requiredField(),
     )
 }

@@ -11,7 +11,7 @@ object RoomCacheUserProgressConverter : AbstractRoomModelConverter<CacheUserProg
         stepDoneRefs = appModel.stepDoneRefs.toList(),
         currentStepRef = appModel.currentStepRef,
         clueUnlockedStepRef = appModel.clueUnlockedStepRef.toList(),
-        coopStepRef = appModel.coopStepRef,
+        coopMemberRef = appModel.coopMemberRef,
         ptsWin = appModel.ptsWin,
         foundDate = appModel.foundDate,
     )

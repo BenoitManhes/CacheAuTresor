@@ -12,7 +12,7 @@ data class FSCacheUserProgress(
     val stepDoneRefs: List<String>? = null,
     val currentStepRef: String? = null,
     val clueUnlockedStepRef: List<String>? = null,
-    val coopStepRef: String? = null,
+    val coopMemberRef: String? = null,
     val ptsWin: Int? = null,
     val foundDate: Timestamp? = null,
 ) : FirestoreModel<CacheUserProgress> {
@@ -24,7 +24,7 @@ data class FSCacheUserProgress(
         stepDoneRefs = appModel.stepDoneRefs.toList().ifEmpty { null },
         currentStepRef = appModel.currentStepRef,
         clueUnlockedStepRef = appModel.clueUnlockedStepRef.toList().ifEmpty { null },
-        coopStepRef = appModel.coopStepRef,
+        coopMemberRef = appModel.coopMemberRef,
         ptsWin = appModel.ptsWin,
         foundDate = appModel.foundDate?.let(::Timestamp),
     )
@@ -36,7 +36,7 @@ data class FSCacheUserProgress(
         stepDoneRefs = stepDoneRefs?.toSet() ?: emptySet(),
         currentStepRef = currentStepRef,
         clueUnlockedStepRef = clueUnlockedStepRef?.toSet() ?: emptySet(),
-        coopStepRef = coopStepRef,
+        coopMemberRef = coopMemberRef,
         ptsWin = ptsWin,
         foundDate = foundDate?.toDate(),
     )
