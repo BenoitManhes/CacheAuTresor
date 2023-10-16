@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StartCoopAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
+import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.LogModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.StartCoopModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
@@ -50,6 +51,7 @@ import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
 import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
+import com.benoitmanhes.domain.usecase.cache.LogCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.StartCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.StartCoopCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -67,6 +69,7 @@ class CacheDetailViewModel @Inject constructor(
     private val loadingManager: LoadingManager,
     private val modalBottomSheetManager: ModalBottomSheetManager,
     private val alertDialogManager: AlertDialogManager,
+    private val logCacheUseCase: LogCacheUseCase,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -138,6 +141,15 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 
+    private fun logCache(codeLog: String) {
+        viewModelScope.launch {
+            loadingManager.showLoading()
+            logCacheUseCase(cacheId = cacheId, codeLog = codeLog)
+            // TODO handle error and success alert/snackbar
+            loadingManager.hideLoading()
+        }
+    }
+
     private val uiStateData: CacheDetailsViewModelState.Data?
         get() = uiState.value as? CacheDetailsViewModelState.Data
 
@@ -170,7 +182,11 @@ class CacheDetailViewModel @Inject constructor(
                 bottomBarState = BottomActionBarState(
                     firstButtonState = PrimaryButtonState(
                         text = TextSpec.Resources(R.string.cacheDetail_logButton),
-                        onClick = {} // TODO Log
+                        onClick = {
+                            modalBottomSheetManager.showModal(
+                                LogModalBottomSheet(validateCode = ::logCache)
+                            )
+                        }
                     )
                 ).takeIf { successData.status is UICacheDetails.Status.Started },
                 fabButtonState = FabButtonState(

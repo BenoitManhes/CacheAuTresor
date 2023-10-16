@@ -15,6 +15,10 @@ dependencies {
 
     implementation("io.github.microutils:kotlin-logging-jvm:_")
 
+    testImplementation("org.jetbrains.kotlin:kotlin-test:_")
+    testImplementation(Testing.junit4)
+    testImplementation(Testing.mockK)
+
     implementation(project(":common_bm:kotlin"))
     implementation(project(":core"))
     implementation(project(":logger"))
