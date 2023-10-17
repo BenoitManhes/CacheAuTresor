@@ -27,7 +27,11 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.secti
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeaderState
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
+import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
+import com.benoitmanhes.cacheautresor.screen.snackbar.showError
+import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
+import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.card.InfoCardState
@@ -69,6 +73,7 @@ class CacheDetailViewModel @Inject constructor(
     private val loadingManager: LoadingManager,
     private val modalBottomSheetManager: ModalBottomSheetManager,
     private val alertDialogManager: AlertDialogManager,
+    private val snackbarManager: SnackbarManager,
     private val logCacheUseCase: LogCacheUseCase,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
     savedStateHandle: SavedStateHandle,
@@ -81,6 +86,9 @@ class CacheDetailViewModel @Inject constructor(
 
     private val _navigation = MutableStateFlow<CacheDetailNavigation?>(null)
     val navigation: StateFlow<CacheDetailNavigation?> get() = _navigation.asStateFlow()
+
+    private val _logModalState = MutableStateFlow<LogModalBottomSheet?>(null)
+    val logModalState: StateFlow<LogModalBottomSheet?> get() = _logModalState.asStateFlow()
 
     private var switchToInstruction = false
     private var cache: Cache? = null
@@ -141,11 +149,24 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 
-    private fun logCache(codeLog: String) {
+    private fun logCache(uiStep: UIStep, codeLog: String) {
         viewModelScope.launch {
+            _logModalState.value = null
             loadingManager.showLoading()
-            logCacheUseCase(cacheId = cacheId, codeLog = codeLog)
-            // TODO handle error and success alert/snackbar
+            val result = logCacheUseCase(cacheId = cacheId, codeLog = codeLog)
+            when (result) {
+                is CTSuspendResult.Success -> {
+                    // TODO show alert success
+                    _logModalState.value = null
+                }
+
+                is CTSuspendResult.Failure -> {
+                    when (result.error?.code) {
+                        CTDomainError.Code.CACHE_INVALID_LOG_CODE -> showLogModalBottomSheet(uiStep, isError = true)
+                        else -> result.error?.let(snackbarManager::showError)
+                    }
+                }
+            }
             loadingManager.hideLoading()
         }
     }
@@ -181,12 +202,10 @@ class CacheDetailViewModel @Inject constructor(
                 ),
                 bottomBarState = BottomActionBarState(
                     firstButtonState = PrimaryButtonState(
-                        text = TextSpec.Resources(R.string.cacheDetail_logButton),
+                        text = successData.currentStep.getLogButtonLabel(),
                         onClick = {
-                            modalBottomSheetManager.showModal(
-                                LogModalBottomSheet(validateCode = ::logCache)
-                            )
-                        }
+                            showLogModalBottomSheet(uiStep = successData.currentStep, isError = false)
+                        },
                     )
                 ).takeIf { successData.status is UICacheDetails.Status.Started },
                 fabButtonState = FabButtonState(
@@ -262,7 +281,7 @@ class CacheDetailViewModel @Inject constructor(
                     ),
                 ),
                 instructionsSectionState = InstructionSectionState(
-                    title = TextSpec.Resources(R.string.cacheDetail_instructionsSection_title), // TODO UIStep
+                    title = successData.currentStep.getStepTitle(),
                     cacheInstructions = successData.currentStep.instructions,
                     clue = successData.currentStep.getClueSection(successData.cache.cacheId),
                     onReport = {}, // TODO Report
@@ -334,9 +353,62 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 
-    //    private fun UICacheDetails.getStepTitle(): TextSpec {
-    //
-    //    }
+    private fun UIStep.getStepTitle(): TextSpec =
+        if (type.isFinal && type != UIStep.Type.Classical) {
+            TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_final)
+        } else {
+            val cacheType = type
+            when (cacheType) {
+                is UIStep.Type.Classical -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_classical)
+                is UIStep.Type.Mystery -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_mystery)
+                is UIStep.Type.Piste -> TextSpec.Resources(
+                    R.string.cacheDetail_instructionsSection_title_piste,
+                    cacheType.index + 1
+                )
+                is UIStep.Type.Coop -> TextSpec.Resources(
+                    R.string.cacheDetail_instructionsSection_title_piste,
+                    cacheType.crewPosition,
+                    cacheType.index + 1,
+                )
+            }
+        }
+
+    private fun showLogModalBottomSheet(uiStep: UIStep, isError: Boolean) {
+        _logModalState.value =
+            LogModalBottomSheet(
+                message = uiStep.getLogBottomSheetMessage(),
+                errorMessage = uiStep.getLogBottomSheetError(),
+                isError = isError,
+                onDismiss = {
+                    _logModalState.value = null
+                },
+                onValidate = { logCache(uiStep, codeLog = it) },
+                hideError = {
+                    _logModalState.value = logModalState.value?.copy(isError = false)
+                },
+            )
+    }
+
+    private fun UIStep.getLogButtonLabel(): TextSpec =
+        if (type.isFinal) {
+            TextSpec.Resources(R.string.cacheDetail_logButton_validate)
+        } else {
+            TextSpec.Resources(R.string.cacheDetail_logButton_answer)
+        }
+
+    private fun UIStep.getLogBottomSheetMessage(): TextSpec =
+        if (type.isFinal) {
+            TextSpec.Resources(R.string.logModal_message_final)
+        } else {
+            TextSpec.Resources(R.string.logModal_message_step)
+        }
+
+    private fun UIStep.getLogBottomSheetError(): TextSpec =
+        if (type.isFinal) {
+            TextSpec.Resources(R.string.logModal_error_final)
+        } else {
+            TextSpec.Resources(R.string.logModal_error_step)
+        }
 }
 
 private val tabSelectorsItems: List<SelectorItem> = listOf(

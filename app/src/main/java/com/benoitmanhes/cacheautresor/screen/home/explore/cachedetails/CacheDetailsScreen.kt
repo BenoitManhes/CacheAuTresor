@@ -44,6 +44,7 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstruction
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
 import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
+import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.CTModalBottomSheetView
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
@@ -68,6 +69,7 @@ import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CacheDetailsRoute(
     onNavigateBack: () -> Unit,
@@ -75,6 +77,7 @@ fun CacheDetailsRoute(
     viewModel: CacheDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val logModalState by viewModel.logModalState.collectAsState()
     val navigation by viewModel.navigation.collectAsState()
 
     LaunchedEffect(key1 = navigation) {
@@ -84,6 +87,8 @@ fun CacheDetailsRoute(
         }
         viewModel.consumeNavigation()
     }
+
+    CTModalBottomSheetView(modalBottomSheetState = logModalState)
 
     CompositionLocalProvider(
         LocalColor provides LocalColor.current.copy(

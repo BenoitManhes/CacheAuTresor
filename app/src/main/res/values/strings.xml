@@ -62,10 +62,10 @@
     <string name="cacheDetail_characteristicSection_title">Characteristics</string>
     <string name="cacheDetail_startFab">Start</string>
     <string name="cacheDetail_cacheTypeSection_ongoing">ongoing ...</string>
-    <string name="cacheDetail_logButton">Log</string>
+    <string name="cacheDetail_logButton_validate">Validate the cache</string>
     <string name="cacheDetail_tabSelector_recap">Recap</string>
     <string name="cacheDetail_tabSelector_instructions">Instructions</string>
-    <string name="cacheDetail_instructionsSection_title">Instructions</string>
+    <string name="cacheDetail_instructionsSection_title_classical">Instructions</string>
     <string name="cacheDetail_enigmaSection_title">Enigma</string>
     <string name="cacheDetail_clueButton">Clue</string>
     <string name="cacheDetail_reportButton">Report</string>
@@ -86,4 +86,13 @@
     <string name="common_alertDialog_action_letsGo">Let’s go!</string>
     <string name="startCoopAlert_message">You are about to start the **%1$s** cooperative cache as a **%2$s** member.\n\nWould you like to confirm?</string>
     <string name="startCoopAlert_warning">Please note that the choice is definitive for this cache</string>
+    <string name="cacheDetail_instructionsSection_title_mystery">Enigma</string>
+    <string name="cacheDetail_instructionsSection_title_piste">Step %d</string>
+    <string name="cacheDetail_instructionsSection_title_coop">Step %1$s %2$d</string>
+    <string name="cacheDetail_instructionsSection_title_final">Final step</string>
+    <string name="cacheDetail_logButton_answer">Answer</string>
+    <string name="logModal_message_final">Cache secret code :</string>
+    <string name="logModal_message_step">Step answer :</string>
+    <string name="logModal_error_final">Invalid code</string>
+    <string name="logModal_error_step">Wrong answer</string>
 </resources>

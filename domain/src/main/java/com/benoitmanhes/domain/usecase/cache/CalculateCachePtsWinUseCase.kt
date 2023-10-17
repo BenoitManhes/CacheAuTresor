@@ -32,7 +32,9 @@ class CalculateCachePtsWinUseCase @Inject constructor(
     private fun Cache.getFinalStepCoef(clueUsed: Set<String>): Float =
         if (clueUsed.contains(finalStepRef)) {
             DomainConstants.Cache.ptsWinPenaltyCoef
-        } else 1f
+        } else {
+            1f
+        }
 
     private fun Cache.getIntermediaryStepCoef(userProgress: CacheUserProgress): Float {
         val intermediaryClueUsed = (userProgress.clueUnlockedStepRef - finalStepRef).count()
@@ -43,5 +45,4 @@ class CalculateCachePtsWinUseCase @Inject constructor(
             1 + (intermediaryClueUsed.toFloat() / intermediaryStepCount) * (DomainConstants.Cache.ptsWinPenaltyCoef - 1)
         }
     }
-
 }

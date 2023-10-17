@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,15 +27,27 @@ import kotlinx.coroutines.launch
 fun ModalBottomSheetView(
     viewModel: ModalBottomSheetViewModel = hiltViewModel(),
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState by viewModel.modalState.collectAsState()
 
+    CTModalBottomSheetView(
+        modalBottomSheetState = modalBottomSheetState,
+        onDismiss = viewModel::consumeModal,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CTModalBottomSheetView(
+    modalBottomSheetState: ModalBottomSheetState?,
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    onDismiss: () -> Unit = {},
+) {
     modalBottomSheetState?.let { uiState ->
         ModalBottomSheet(
             onDismissRequest = {
                 uiState.onDismiss()
-                viewModel.consumeModal()
+                onDismiss()
             },
             sheetState = sheetState,
             shape = CTTheme.shape.bottomSheet,
@@ -53,7 +67,7 @@ fun ModalBottomSheetView(
                     coroutineScope.launch {
                         sheetState.hide()
                         uiState.onDismiss()
-                        viewModel.consumeModal()
+                        onDismiss()
                     }
                 }
             }

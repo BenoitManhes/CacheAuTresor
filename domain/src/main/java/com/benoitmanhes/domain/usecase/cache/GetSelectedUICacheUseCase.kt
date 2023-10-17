@@ -40,7 +40,9 @@ class GetSelectedUICacheUseCase @Inject constructor(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
                 status = myExplorer.getCacheDetailsUserStatus(cache, userProgress),
-                steps = getCacheStepsRefs(cache, userProgress).map { getUIStepsUseCase(it, userProgress) },
+                steps = getCacheStepsRefs(cache, userProgress).map {
+                    getUIStepsUseCase(it, cache, userProgress)
+                },
                 userData = userData,
             )
             emit(CTResult.Success(uiCacheDetails))

@@ -32,7 +32,7 @@ class LogCacheUseCase @Inject constructor(
             stepRepository.getStep(userProgress.currentStepRef)
         } ?: throw CTDomainError.Code.UNEXPECTED.error()
 
-        if (currentStep.validationCode != codeLog) {
+        if (currentStep.validationCode.lowercase() != codeLog.lowercase()) {
             throw CTDomainError.Code.CACHE_INVALID_LOG_CODE.error()
         }
         val newProgress = finishStep(userProgress, cache)
@@ -66,7 +66,8 @@ class LogCacheUseCase @Inject constructor(
                 ptsWin = calculateCachePtsWinUseCase(cache = cache, userProgress = userProgress),
                 foundDate = Date(),
             )
-        } else userProgressUpdated
+        } else {
+            userProgressUpdated
+        }
     }
-
 }
