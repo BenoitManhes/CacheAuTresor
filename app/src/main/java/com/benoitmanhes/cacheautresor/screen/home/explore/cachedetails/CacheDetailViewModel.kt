@@ -4,7 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.CacheFinishAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StartCoopAlertDialog
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StepCompleteAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.LogModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.StartCoopModalBottomSheet
@@ -29,6 +31,7 @@ import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
+import com.benoitmanhes.common.kotlin.safeLet
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
@@ -91,6 +94,7 @@ class CacheDetailViewModel @Inject constructor(
     val logModalState: StateFlow<LogModalBottomSheet?> get() = _logModalState.asStateFlow()
 
     private var switchToInstruction = false
+    private var showAlertSuccess: UIStep? = null
     private var cache: Cache? = null
 
     init {
@@ -99,6 +103,9 @@ class CacheDetailViewModel @Inject constructor(
                 .collect { result ->
                     cache = result.data?.cache
                     _uiState.emit(result.mapToUIState())
+                    safeLet(result.data, showAlertSuccess) { cacheDetail, uiStep ->
+                        showAlertSuccess(cacheDetail, uiStep)
+                    }
                 }
         }
     }
@@ -156,8 +163,7 @@ class CacheDetailViewModel @Inject constructor(
             val result = logCacheUseCase(cacheId = cacheId, codeLog = codeLog)
             when (result) {
                 is CTSuspendResult.Success -> {
-                    // TODO show alert success
-                    _logModalState.value = null
+                    showAlertSuccess = uiStep
                 }
 
                 is CTSuspendResult.Failure -> {
@@ -353,25 +359,24 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 
-    private fun UIStep.getStepTitle(): TextSpec =
-        if (type.isFinal && type != UIStep.Type.Classical) {
-            TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_final)
-        } else {
-            val cacheType = type
-            when (cacheType) {
-                is UIStep.Type.Classical -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_classical)
-                is UIStep.Type.Mystery -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_mystery)
-                is UIStep.Type.Piste -> TextSpec.Resources(
-                    R.string.cacheDetail_instructionsSection_title_piste,
-                    cacheType.index + 1
-                )
-                is UIStep.Type.Coop -> TextSpec.Resources(
-                    R.string.cacheDetail_instructionsSection_title_piste,
-                    cacheType.crewPosition,
-                    cacheType.index + 1,
-                )
-            }
+    private fun UIStep.getStepTitle(): TextSpec {
+        val cacheType = type
+        return when (cacheType) {
+            is UIStep.Type.Classical -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_classical)
+            is UIStep.Type.Mystery -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_mystery)
+            is UIStep.Type.Final -> TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_final)
+            is UIStep.Type.Piste -> TextSpec.Resources(
+                R.string.cacheDetail_instructionsSection_title_piste,
+                cacheType.index + 1
+            )
+
+            is UIStep.Type.Coop -> TextSpec.Resources(
+                R.string.cacheDetail_instructionsSection_title_coop,
+                cacheType.crewPosition,
+                cacheType.index + 1,
+            )
         }
+    }
 
     private fun showLogModalBottomSheet(uiStep: UIStep, isError: Boolean) {
         _logModalState.value =
@@ -389,26 +394,48 @@ class CacheDetailViewModel @Inject constructor(
             )
     }
 
+    private fun UIStep.isLast(): Boolean =
+        type in setOf(UIStep.Type.Classical, UIStep.Type.Final)
+
     private fun UIStep.getLogButtonLabel(): TextSpec =
-        if (type.isFinal) {
+        if (isLast()) {
             TextSpec.Resources(R.string.cacheDetail_logButton_validate)
         } else {
             TextSpec.Resources(R.string.cacheDetail_logButton_answer)
         }
 
     private fun UIStep.getLogBottomSheetMessage(): TextSpec =
-        if (type.isFinal) {
+        if (isLast()) {
             TextSpec.Resources(R.string.logModal_message_final)
         } else {
             TextSpec.Resources(R.string.logModal_message_step)
         }
 
     private fun UIStep.getLogBottomSheetError(): TextSpec =
-        if (type.isFinal) {
+        if (isLast()) {
             TextSpec.Resources(R.string.logModal_error_final)
         } else {
             TextSpec.Resources(R.string.logModal_error_step)
         }
+
+    private fun showAlertSuccess(
+        uiCacheDetails: UICacheDetails,
+        uiStep: UIStep,
+    ) {
+        val cacheStatus = uiCacheDetails.status
+        val alertDialog = when (cacheStatus) {
+            is UICacheDetails.Status.Found -> CacheFinishAlertDialog(
+                cacheName = cache?.title.orEmpty(),
+                ptsWin = TextSpec.Resources(R.string.cacheDetail_cacheFinish_alertDialog_pts, cacheStatus.pts ?: 0),
+            )
+
+            else -> {
+                StepCompleteAlertDialog(stepName = uiStep.getStepTitle())
+            }
+        }
+        showAlertSuccess = null
+        alertDialogManager.showDialog(alertDialog)
+    }
 }
 
 private val tabSelectorsItems: List<SelectorItem> = listOf(

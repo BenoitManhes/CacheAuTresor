@@ -21,7 +21,7 @@ class LogCacheUseCase @Inject constructor(
     private val getAllMyStepUseCase: GetAllMyStepUseCase,
     private val calculateCachePtsWinUseCase: CalculateCachePtsWinUseCase,
 ) : CTUseCase() {
-    suspend operator fun invoke(cacheId: String, codeLog: String): CTSuspendResult<Unit> = runCatchSuspendResult {
+    suspend operator fun invoke(cacheId: String, codeLog: String): CTSuspendResult<CacheUserProgress> = runCatchSuspendResult {
         val myExplorerId = getMyExplorerIdUseCase()
         val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
         val userProgress = userProgressRepository.getFetchedCacheUserProgress(
@@ -51,7 +51,7 @@ class LogCacheUseCase @Inject constructor(
             CTSuspendResult.Success(Unit)
         }
 
-        CTSuspendResult.Success(Unit)
+        CTSuspendResult.Success(newProgress)
     }
 
     private fun finishStep(userProgress: CacheUserProgress, cache: Cache): CacheUserProgress {

@@ -32,22 +32,31 @@ class GetUIStepsUseCase @Inject constructor(
                 else -> UIStep.Status.Lock
             },
             coordinates = step.coordinates,
-            type = getUIStepType(cache, step, userProgress),
+            type = getUIStepType(cache, step),
         )
     }
 
-    private fun getUIStepType(cache: Cache, step: CacheStep, userProgress: CacheUserProgress?): UIStep.Type = when (cache) {
-        is Cache.Classical -> UIStep.Type.Classical
-        is Cache.Mystery -> UIStep.Type.Mystery(isFinal = cache.finalStepRef == step.stepId)
-        is Cache.Piste -> UIStep.Type.Piste(
-            isFinal = cache.finalStepRef == step.stepId,
-            index = cache.intermediaryStepRefs.indexOf(step.stepId),
-        )
+    private fun getUIStepType(cache: Cache, step: CacheStep): UIStep.Type =
+        if (cache !is Cache.Classical && cache.finalStepRef == step.stepId) {
+            UIStep.Type.Final
+        } else {
+            when (cache) {
+                is Cache.Classical -> UIStep.Type.Classical
+                is Cache.Mystery -> UIStep.Type.Mystery
+                is Cache.Piste -> UIStep.Type.Piste(
+                    index = cache.intermediaryStepRefs.indexOf(step.stepId),
+                )
 
-        is Cache.Coop -> UIStep.Type.Coop(
-            isFinal = cache.finalStepRef == step.stepId,
-            index = cache.crewStepRefs[userProgress?.coopMemberRef]!!.indexOf(step.stepId),
-            crewPosition = userProgress?.coopMemberRef!!,
-        )
-    }
+                is Cache.Coop -> {
+                    val crewRef = cache.crewStepRefs.filterValues { list ->
+                        list.contains(step.stepId)
+                    }.keys.first()
+
+                    UIStep.Type.Coop(
+                        index = cache.crewStepRefs[crewRef]!!.indexOf(step.stepId),
+                        crewPosition = crewRef,
+                    )
+                }
+            }
+        }
 }

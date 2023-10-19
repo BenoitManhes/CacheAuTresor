@@ -14,26 +14,21 @@ data class UIStep(
 ) {
 
     sealed interface Type {
-        val isFinal: Boolean
 
-        object Classical : Type {
-            override val isFinal: Boolean = true
-        }
+        object Classical : Type
 
-        data class Mystery(
-            override val isFinal: Boolean,
-        ) : Type
+        object Mystery : Type
 
         data class Piste(
-            override val isFinal: Boolean,
             val index: Int,
         ) : Type
 
         data class Coop(
-            override val isFinal: Boolean,
             val index: Int,
             val crewPosition: String,
         ) : Type
+
+        object Final : Type
     }
 
     enum class Status {

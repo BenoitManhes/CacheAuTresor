@@ -95,4 +95,11 @@
     <string name="logModal_message_step">Step answer :</string>
     <string name="logModal_error_final">Invalid code</string>
     <string name="logModal_error_step">Wrong answer</string>
+    <string name="cacheDetail_stepComplete_alertDialog_title">Good answer</string>
+    <string name="cacheDetail_stepComplete_alertDialog_message">Well done! You pass the **%s**</string>
+    <string name="cacheDetail_stepComplete_alertDialog_action">Next step</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_title">Congratulation!</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_message">You have finish the cache **%s**</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_action">Nice!</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_pts">+ %d pts</string>
 </resources>

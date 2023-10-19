@@ -86,6 +86,7 @@ object Dimens {
         Medium(dp = 24.dp),
         Large(dp = 32.dp),
         Huge(dp = 48.dp),
+        Immense(dp = 64.dp),
         BottomBarItem(dp = 28.dp),
     }
 

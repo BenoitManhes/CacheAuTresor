@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.TextSpec
@@ -16,27 +15,19 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 fun CTSticker(
     label: TextSpec,
     modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.primary,
-    textColor: Color = CTTheme.color.onPrimary,
+    surfaceColor: Color = CTTheme.color.primarySurface,
+    textColor: Color = CTTheme.color.primary,
 ) {
     Box(
         modifier = modifier
             .clip(CTTheme.shape.circle)
-            .background(color)
-            .padding(vertical = CTTheme.spacing.micro, horizontal = CTTheme.spacing.small),
+            .background(surfaceColor)
+            .padding(vertical = CTTheme.spacing.extraSmall, horizontal = CTTheme.spacing.small),
     ) {
         CTTextView(
             text = label,
             color = textColor,
-            style = CTTheme.typography.captionBold,
+            style = CTTheme.typography.bodySmallBold,
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewCTSticker() {
-    CTTheme {
-        CTSticker(TextSpec.RawString("en cours ..."))
     }
 }

@@ -29,6 +29,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
 import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
+import com.benoitmanhes.designsystem.res.icons.iconpack.DoneStamp
 import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.res.icons.iconpack.Globe
@@ -57,6 +58,7 @@ val CTIconPack.CTIcons: List<ImageVector>
             Coop,
             Crown,
             Difficulty,
+            DoneStamp,
             Ensign,
             Explore,
             ExploreFilled,

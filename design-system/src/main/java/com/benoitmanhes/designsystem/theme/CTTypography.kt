@@ -36,15 +36,15 @@ object CTTypography {
         fontSize = Dimens.Font.bodyFontSize,
         platformStyle = PlatformTextStyle(includeFontPadding = false),
     )
-    val bodyXBold: TextStyle = TextStyle(
-        fontFamily = LeagueSpartan,
-        fontWeight = FontWeight.W600,
-        fontSize = Dimens.Font.bodyFontSize,
-        platformStyle = PlatformTextStyle(includeFontPadding = false),
-    )
     val bodySmall: TextStyle = TextStyle(
         fontFamily = LeagueSpartan,
         fontWeight = FontWeight.W400,
+        fontSize = Dimens.Font.bodySmallFontSize,
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+    )
+    val bodySmallBold: TextStyle = TextStyle(
+        fontFamily = LeagueSpartan,
+        fontWeight = FontWeight.W500,
         fontSize = Dimens.Font.bodySmallFontSize,
         platformStyle = PlatformTextStyle(includeFontPadding = false),
     )

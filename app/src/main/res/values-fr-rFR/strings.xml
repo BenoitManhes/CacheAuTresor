@@ -96,4 +96,11 @@
     <string name="logModal_message_step">Réponse de l’étape</string>
     <string name="logModal_error_final">Code invalide</string>
     <string name="logModal_error_step">Mauvaise réponse</string>
+    <string name="cacheDetail_stepComplete_alertDialog_title">Bonne réponse</string>
+    <string name="cacheDetail_stepComplete_alertDialog_message">Bien joué vous avez réussi l’**%s**</string>
+    <string name="cacheDetail_stepComplete_alertDialog_action">Prochaine étape</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_title">Félicitation !</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_message">Vous avez terminé la cache **%s**</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_action">Super !</string>
+    <string name="cacheDetail_cacheFinish_alertDialog_pts">+ %d pts</string>
 </resources>

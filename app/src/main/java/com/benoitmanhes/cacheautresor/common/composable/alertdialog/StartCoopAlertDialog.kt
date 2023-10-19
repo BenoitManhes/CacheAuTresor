@@ -1,7 +1,9 @@
 package com.benoitmanhes.cacheautresor.common.composable.alertdialog
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogState
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerExtraSmall
@@ -28,7 +30,9 @@ data class StartCoopAlertDialog(
         CTAlertDialog(
             title = null,
             content = {
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                     CTMarkdownText(
                         markdown = TextSpec.Resources(
                             R.string.startCoopAlert_message,

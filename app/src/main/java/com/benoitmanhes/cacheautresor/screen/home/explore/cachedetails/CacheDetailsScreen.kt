@@ -88,13 +88,12 @@ fun CacheDetailsRoute(
         viewModel.consumeNavigation()
     }
 
-    CTModalBottomSheetView(modalBottomSheetState = logModalState)
-
     CompositionLocalProvider(
         LocalColor provides LocalColor.current.copy(
             primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.cacheColor?.invoke(),
         )
     ) {
+        CTModalBottomSheetView(modalBottomSheetState = logModalState)
         CTScreenWrapper {
             CacheDetailsScreen(
                 onNavigateBack = onNavigateBack,
