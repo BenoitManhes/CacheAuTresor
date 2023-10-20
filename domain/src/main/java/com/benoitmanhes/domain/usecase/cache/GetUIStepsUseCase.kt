@@ -37,23 +37,23 @@ class GetUIStepsUseCase @Inject constructor(
     }
 
     private fun getUIStepType(cache: Cache, step: CacheStep): UIStep.Type =
-        if (cache !is Cache.Classical && cache.finalStepRef == step.stepId) {
+        if (cache.type !is Cache.Type.Classical && cache.finalStepRef == step.stepId) {
             UIStep.Type.Final
         } else {
-            when (cache) {
-                is Cache.Classical -> UIStep.Type.Classical
-                is Cache.Mystery -> UIStep.Type.Mystery
-                is Cache.Piste -> UIStep.Type.Piste(
-                    index = cache.intermediaryStepRefs.indexOf(step.stepId),
+            when (cache.type) {
+                is Cache.Type.Classical -> UIStep.Type.Classical
+                is Cache.Type.Mystery -> UIStep.Type.Mystery
+                is Cache.Type.Piste -> UIStep.Type.Piste(
+                    index = cache.type.intermediateStepIds.indexOf(step.stepId),
                 )
 
-                is Cache.Coop -> {
-                    val crewRef = cache.crewStepRefs.filterValues { list ->
+                is Cache.Type.Coop -> {
+                    val crewRef = cache.type.crewStepsMap.filterValues { list ->
                         list.contains(step.stepId)
                     }.keys.first()
 
                     UIStep.Type.Coop(
-                        index = cache.crewStepRefs[crewRef]!!.indexOf(step.stepId),
+                        index = cache.type.crewStepsMap[crewRef]!!.indexOf(step.stepId),
                         crewPosition = crewRef,
                     )
                 }

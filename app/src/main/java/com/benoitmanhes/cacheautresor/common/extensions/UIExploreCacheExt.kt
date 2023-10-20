@@ -22,11 +22,11 @@ internal fun UIExploreCache.getIconCache(): IconSpec {
         UIExploreCache.CacheUserStatus.Owned -> CTTheme.icon.Ensign
         UIExploreCache.CacheUserStatus.Found -> CTTheme.icon.Crown
         else -> {
-            when (cache) {
-                is Cache.Classical -> CTTheme.icon.Parchment
-                is Cache.Coop -> CTTheme.icon.Coop
-                is Cache.Mystery -> CTTheme.icon.Mystery
-                is Cache.Piste -> CTTheme.icon.Piste
+            when (cache.type) {
+                is Cache.Type.Classical -> CTTheme.icon.Parchment
+                is Cache.Type.Coop -> CTTheme.icon.Coop
+                is Cache.Type.Mystery -> CTTheme.icon.Mystery
+                is Cache.Type.Piste -> CTTheme.icon.Piste
             }
         }
     }

@@ -20,18 +20,18 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheSize
 
-internal fun Cache.getCacheMarker(): CacheMarker = when (this) {
-    is Cache.Classical -> CacheMarker.Classical
-    is Cache.Coop -> CacheMarker.Coop
-    is Cache.Mystery -> CacheMarker.Mystery
-    is Cache.Piste -> CacheMarker.Piste
+internal fun Cache.getCacheMarker(): CacheMarker = when (type) {
+    is Cache.Type.Classical -> CacheMarker.Classical
+    is Cache.Type.Coop -> CacheMarker.Coop
+    is Cache.Type.Mystery -> CacheMarker.Mystery
+    is Cache.Type.Piste -> CacheMarker.Piste
 }
 
-fun Cache.getIcon(): IconSpec = when (this) {
-    is Cache.Classical -> IconSpec.ComposeIcon(CTTheme.composed { icon.Parchment })
-    is Cache.Coop -> IconSpec.ComposeIcon(CTTheme.composed { icon.Coop })
-    is Cache.Mystery -> IconSpec.ComposeIcon(CTTheme.composed { icon.Mystery })
-    is Cache.Piste -> IconSpec.ComposeIcon(CTTheme.composed { icon.Piste })
+fun Cache.getIcon(): IconSpec = when (type) {
+    is Cache.Type.Classical -> IconSpec.ComposeIcon(CTTheme.composed { icon.Parchment })
+    is Cache.Type.Coop -> IconSpec.ComposeIcon(CTTheme.composed { icon.Coop })
+    is Cache.Type.Mystery -> IconSpec.ComposeIcon(CTTheme.composed { icon.Mystery })
+    is Cache.Type.Piste -> IconSpec.ComposeIcon(CTTheme.composed { icon.Piste })
 }
 
 @Composable
@@ -43,9 +43,9 @@ fun Cache.getSizeIcon(): IconSpec = when (this.size) {
     CacheSize.Undefined -> IconSpec.VectorIcon(Icons.Rounded.QuestionMark, null)
 }
 
-fun Cache.getTypeText(): TextSpec = when (this) {
-    is Cache.Classical -> TextSpec.Resources(R.string.cache_type_classical)
-    is Cache.Coop -> TextSpec.Resources(R.string.cache_type_coop)
-    is Cache.Mystery -> TextSpec.Resources(R.string.cache_type_mystery)
-    is Cache.Piste -> TextSpec.Resources(R.string.cache_type_piste)
+fun Cache.getTypeText(): TextSpec = when (type) {
+    is Cache.Type.Classical -> TextSpec.Resources(R.string.cache_type_classical)
+    is Cache.Type.Coop -> TextSpec.Resources(R.string.cache_type_coop)
+    is Cache.Type.Mystery -> TextSpec.Resources(R.string.cache_type_mystery)
+    is Cache.Type.Piste -> TextSpec.Resources(R.string.cache_type_piste)
 }

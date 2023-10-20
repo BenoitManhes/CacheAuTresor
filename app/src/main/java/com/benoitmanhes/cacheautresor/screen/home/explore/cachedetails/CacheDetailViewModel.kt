@@ -115,16 +115,16 @@ class CacheDetailViewModel @Inject constructor(
     }
 
     private fun startCache() {
-        val currentCache = cache
-        when (currentCache) {
-            is Cache.Coop -> {
+        val currentCacheType = cache?.type
+        when (currentCacheType) {
+            is Cache.Type.Coop -> {
                 modalBottomSheetManager.showModal(
                     StartCoopModalBottomSheet(
-                        crewPositions = currentCache.crewStepRefs.keys,
+                        crewPositions = currentCacheType.crewStepsMap.keys,
                         onClickCrewPosition = { position ->
                             alertDialogManager.showDialog(
                                 StartCoopAlertDialog(
-                                    cacheTitle = currentCache.title,
+                                    cacheTitle = cache!!.title,
                                     crewPosition = position,
                                     onConfirm = { startCoopCache(position) },
                                 )

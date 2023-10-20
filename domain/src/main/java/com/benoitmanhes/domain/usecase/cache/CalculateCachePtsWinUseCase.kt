@@ -20,12 +20,12 @@ class CalculateCachePtsWinUseCase @Inject constructor(
     private fun Cache.getScoreMax(): Float =
         ((difficulty + ground)) * max(difficulty, ground) * sqrt(getStepCoeficient().toFloat())
 
-    private fun Cache.getStepCoeficient(): Int = when (this) {
-        is Cache.Classical -> listOf(finalStepRef).count()
-        is Cache.Mystery -> listOf(enigmaStepRef, finalStepRef).count()
-        is Cache.Piste -> (intermediaryStepRefs + finalStepRef).count()
-        is Cache.Coop -> {
-            crewStepRefs.values.flatten().count() / crewStepRefs.keys.count() + listOf(finalStepRef).count()
+    private fun Cache.getStepCoeficient(): Int = when (type) {
+        is Cache.Type.Classical -> listOf(finalStepRef).count()
+        is Cache.Type.Mystery -> listOf(type.enigmaStepId, finalStepRef).count()
+        is Cache.Type.Piste -> (type.intermediateStepIds + finalStepRef).count()
+        is Cache.Type.Coop -> {
+            type.crewStepsMap.values.flatten().count() / type.crewStepsMap.keys.count() + listOf(finalStepRef).count()
         }
     }
 

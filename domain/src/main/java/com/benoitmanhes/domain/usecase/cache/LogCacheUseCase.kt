@@ -40,12 +40,7 @@ class LogCacheUseCase @Inject constructor(
 
         runCatchSuspendResult {
             if (newProgress.foundDate != null && !cache.discovered) {
-                val newCache = when (cache) {
-                    is Cache.Classical -> cache.copy(discovered = true)
-                    is Cache.Coop -> cache.copy(discovered = true)
-                    is Cache.Mystery -> cache.copy(discovered = true)
-                    is Cache.Piste -> cache.copy(discovered = true)
-                }
+                val newCache = cache.copy(discovered = true)
                 cacheRepository.saveCache(newCache)
             }
             CTSuspendResult.Success(Unit)

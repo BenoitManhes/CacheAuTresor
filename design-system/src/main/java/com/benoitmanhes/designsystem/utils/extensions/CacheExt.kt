@@ -8,11 +8,11 @@ import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 
 @Composable
-private fun Cache.getCachePaletteColor(): Pair<Color, Color> = when (this) {
-    is Cache.Classical -> Colors.LaSalleGreen to Colors.MiddleGreen
-    is Cache.Coop -> Colors.LightSeaGreen to Colors.PewterBlue
-    is Cache.Mystery -> Colors.MetallicViolet to Colors.FrenchLilac
-    is Cache.Piste -> Colors.WatermelonRed to Colors.NewYorkPink
+private fun Cache.getCachePaletteColor(): Pair<Color, Color> = when (type) {
+    is Cache.Type.Classical -> Colors.LaSalleGreen to Colors.MiddleGreen
+    is Cache.Type.Coop -> Colors.LightSeaGreen to Colors.PewterBlue
+    is Cache.Type.Mystery -> Colors.MetallicViolet to Colors.FrenchLilac
+    is Cache.Type.Piste -> Colors.WatermelonRed to Colors.NewYorkPink
 }
 
 @Composable

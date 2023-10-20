@@ -37,10 +37,10 @@ class StartCacheUseCase @Inject constructor(
         CTSuspendResult.Success(Unit)
     }
 
-    private fun Cache.getInitialStepRef(): String = when (this) {
-        is Cache.Coop -> throw CTDomainError.Code.UNEXPECTED.error()
-        is Cache.Classical -> finalStepRef
-        is Cache.Piste -> intermediaryStepRefs.first()
-        is Cache.Mystery -> enigmaStepRef
+    private fun Cache.getInitialStepRef(): String = when (this.type) {
+        is Cache.Type.Coop -> throw CTDomainError.Code.UNEXPECTED.error()
+        is Cache.Type.Classical -> finalStepRef
+        is Cache.Type.Piste -> type.intermediateStepIds.first()
+        is Cache.Type.Mystery -> type.enigmaStepId
     }
 }

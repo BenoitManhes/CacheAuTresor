@@ -19,7 +19,8 @@ class StartCoopCacheUseCase @Inject constructor(
 
     suspend operator fun invoke(cacheId: String, crewPosition: String): CTSuspendResult<Unit> = runCatchSuspendResult {
         val myExplorerId = getMyExplorerIdUseCase()
-        val cache = cacheRepository.getCache(cacheId) as? Cache.Coop ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
+        val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
+        val cacheType = cache.type as Cache.Type.Coop
         val newUserProgress = userProgressRepository.getFetchedCacheUserProgress(
             cacheId = cacheId,
             explorerId = myExplorerId,
@@ -30,7 +31,7 @@ class StartCoopCacheUseCase @Inject constructor(
                     id = "$myExplorerId-$cacheId",
                     explorerId = myExplorerId,
                     cacheId = cacheId,
-                    currentStepRef = cache.crewStepRefs[crewPosition]?.first() ?: throw CTDomainError.Code.UNEXPECTED.error(),
+                    currentStepRef = cacheType.crewStepsMap[crewPosition]?.first() ?: throw CTDomainError.Code.UNEXPECTED.error(),
                     coopMemberRef = crewPosition,
                 )
             )

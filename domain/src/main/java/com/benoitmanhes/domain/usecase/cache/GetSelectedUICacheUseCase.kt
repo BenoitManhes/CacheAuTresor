@@ -64,13 +64,13 @@ class GetSelectedUICacheUseCase @Inject constructor(
         else -> UICacheDetails.Status.Started(userProgress)
     }
 
-    private fun getCacheStepsRefs(cache: Cache, userProgress: CacheUserProgress?): List<String> = when (cache) {
-        is Cache.Classical -> listOf(cache.finalStepRef)
-        is Cache.Mystery -> listOf(cache.enigmaStepRef, cache.finalStepRef)
-        is Cache.Piste -> cache.intermediaryStepRefs + listOf(cache.finalStepRef)
-        is Cache.Coop -> buildList {
+    private fun getCacheStepsRefs(cache: Cache, userProgress: CacheUserProgress?): List<String> = when (cache.type) {
+        is Cache.Type.Classical -> listOf(cache.finalStepRef)
+        is Cache.Type.Mystery -> listOf(cache.type.enigmaStepId, cache.finalStepRef)
+        is Cache.Type.Piste -> cache.type.intermediateStepIds + listOf(cache.finalStepRef)
+        is Cache.Type.Coop -> buildList {
             val myCrewSteps = userProgress?.let {
-                cache.crewStepRefs[userProgress.coopMemberRef]
+                cache.type.crewStepsMap[userProgress.coopMemberRef]
             }.orEmpty()
             addAll(myCrewSteps)
             add(cache.finalStepRef)
