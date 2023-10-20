@@ -67,7 +67,7 @@ fun rememberSelectorState(
     selectedItem: SelectorItem,
     selectedColor: Color,
     unselectedColor: Color,
-) = remember {
+): SelectorStateImpl = remember(items, selectedItem, selectedColor, unselectedColor) {
     SelectorStateImpl(
         items,
         selectedItem,
