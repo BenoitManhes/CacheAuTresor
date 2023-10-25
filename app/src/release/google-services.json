@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "491695085641",
+    "project_id": "cacheautresor---release",
+    "storage_bucket": "cacheautresor---release.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491695085641:android:5e5113ddbd9e0f3e9c0798",
+        "android_client_info": {
+          "package_name": "com.benoitmanhes.cacheautresor.release"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzKbARczL1PaavKwAmzzzcZpO8xEeH1xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

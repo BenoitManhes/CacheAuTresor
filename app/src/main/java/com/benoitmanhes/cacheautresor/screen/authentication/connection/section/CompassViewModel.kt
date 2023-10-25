@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.benoitmanhes.cacheautresor.utils.CompassHelper
+import com.benoitmanhes.common.kotlin.extensions.safeNaN
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -32,6 +33,6 @@ class CompassViewModel @Inject constructor() : ViewModel() {
         heading = CompassHelper.convertRadToDeg(heading)
         heading = CompassHelper.map180to360(heading)
 
-        compassRotation = heading * -1
+        compassRotation = heading.safeNaN() * -1
     }
 }

@@ -6,6 +6,6 @@ import androidx.compose.ui.unit.dp
 object AppDimens {
     object CacheDetail {
         val bottomSheetHeaderHeight: Dp = 64.dp
-        val instructionImageMaxHeight: Dp = 180.dp
+        val instructionImageMaxHeight: Dp = 380.dp
     }
 }

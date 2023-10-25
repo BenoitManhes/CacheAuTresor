@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.common.kotlin.extensions.safeNaN
 import com.benoitmanhes.designsystem.theme.CTTheme
 import kotlinx.coroutines.flow.collectLatest
 
@@ -72,11 +73,12 @@ fun CompassSection(
             durationMillis = CompassAnimationDuration,
             easing = LinearEasing,
         ),
+        label = "rotation",
     )
 
     Image(
         modifier = modifier
-            .rotate(angle),
+            .rotate(angle.safeNaN()),
         painter = painterResource(id = R.drawable.logo_monochrome),
         contentDescription = null,
         colorFilter = ColorFilter.tint(CTTheme.color.onBackground),

@@ -29,8 +29,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            /* Disable obfusquated because of Firebase issue : */
+            // https://stackoverflow.com/questions/77268928/class-does-not-define-a-no-argument-constructor-with-isminifyenabled /*
+            //            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".release"
         }
         debug {
             applicationIdSuffix = ".debug"
