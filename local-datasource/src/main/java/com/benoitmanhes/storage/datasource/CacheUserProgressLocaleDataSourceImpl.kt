@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,6 +22,12 @@ class CacheUserProgressLocaleDataSourceImpl @Inject constructor(
             .map { it?.toAppModel() }
             .flowOn(Dispatchers.IO)
 
+    override fun getAllUserProgressFlow(explorerId: String): Flow<List<CacheUserProgress>> =
+        cacheUserProgressDao
+            .findAllForExplorer(explorerId = explorerId)
+            .mapNotNull { list -> list.map { it.toAppModel() } }
+            .flowOn(Dispatchers.IO)
+
     override suspend fun getCacheUserProgress(cacheId: String, explorerId: String): CacheUserProgress? = withContext(
         Dispatchers.IO
     ) {
@@ -29,6 +36,14 @@ class CacheUserProgressLocaleDataSourceImpl @Inject constructor(
 
     override suspend fun saveCacheUserProgress(userProgress: CacheUserProgress): Unit = withContext(Dispatchers.IO) {
         cacheUserProgressDao.insert(RoomCacheUserProgressConverter.buildRoomModel(userProgress))
+    }
+
+    override suspend fun saveCacheUserProgress(userProgressList: List<CacheUserProgress>): Unit = withContext(
+        Dispatchers.IO
+    ) {
+        cacheUserProgressDao.insert(
+            userProgressList.map(RoomCacheUserProgressConverter::buildRoomModel)
+        )
     }
 
     override suspend fun deleteCacheUserProgress(cacheId: String, explorerId: String): Unit = withContext(

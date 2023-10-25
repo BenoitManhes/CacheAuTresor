@@ -8,12 +8,10 @@ import com.benoitmanhes.domain.model.Explorer
 data class RoomExplorer(
     @PrimaryKey val id: String,
     val name: String,
-    val cacheIdsFound: List<String>,
 ) : RoomModel<Explorer> {
 
     override fun toAppModel(): Explorer = Explorer(
         explorerId = id,
         name = name,
-        cacheIdsFound = cacheIdsFound,
     )
 }

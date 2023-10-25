@@ -45,6 +45,15 @@ abstract class CTUseCase {
         onError(error)
     }
 
+    protected suspend fun runCatch(
+        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        block: suspend () -> Unit,
+    ): Unit = runCatch(
+        mapErr = mapErr,
+        onError = {},
+        block = block,
+    )
+
     protected suspend fun <T> runCatchSuspendResult(
         mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
         onError: (CTDomainError) -> CTSuspendResult<T> = { CTSuspendResult.Failure(it) },

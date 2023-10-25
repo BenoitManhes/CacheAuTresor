@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.common
+package com.benoitmanhes.cacheautresor.common.maps
 
 import android.content.Context
 import androidx.compose.runtime.Composable

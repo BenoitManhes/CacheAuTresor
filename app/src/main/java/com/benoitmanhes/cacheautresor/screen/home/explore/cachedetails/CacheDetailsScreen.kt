@@ -35,10 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.benoitmanhes.cacheautresor.common.CTMapView
+import com.benoitmanhes.cacheautresor.common.maps.CTMapView
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBar
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
-import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
+import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.CacheDetailInstructionsScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
@@ -132,7 +132,7 @@ private fun CacheDetailsScreen(
         mapViewState.overlays.removeAll(markerFolder.items)
         markerFolder.items.clear()
         data?.uiMarkers?.forEach { uiMarker ->
-            markerFolder.add(uiMarker.getOSMMarker(context, mapViewState))
+            markerFolder.add(uiMarker.getOSMMarker(mapViewState))
         }
         data?.uiMarkers?.firstOrNull()?.let { uiMarker ->
             mapViewState.controller.setCenter(uiMarker.coordinates.toGeoPoint())

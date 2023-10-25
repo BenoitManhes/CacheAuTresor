@@ -47,6 +47,7 @@ sealed interface TextSpec {
             return AnnotatedString(stringResource(id, *args))
         }
 
+        @Suppress("SpreadOperator")
         override fun string(context: Context): String = context.getString(id, *args)
     }
 

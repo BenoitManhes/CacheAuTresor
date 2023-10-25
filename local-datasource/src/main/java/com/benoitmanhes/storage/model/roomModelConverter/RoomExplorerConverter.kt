@@ -7,6 +7,5 @@ object RoomExplorerConverter : AbstractRoomModelConverter<Explorer, RoomExplorer
     override fun buildRoomModel(appModel: Explorer): RoomExplorer = RoomExplorer(
         id = appModel.explorerId,
         name = appModel.name,
-        cacheIdsFound = appModel.cacheIdsFound,
     )
 }

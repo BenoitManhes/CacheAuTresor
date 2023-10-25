@@ -1,10 +1,12 @@
 package com.benoitmanhes.di.local
 
 import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
+import com.benoitmanhes.domain.interfaces.localdatasource.CacheLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserDataLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserProgressLocaleDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
 import com.benoitmanhes.storage.datasource.AuthLocalDataSourceImpl
+import com.benoitmanhes.storage.datasource.CacheLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserDataLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserProgressLocaleDataSourceImpl
 import com.benoitmanhes.storage.datasource.ExplorerLocalDataSourceImpl
@@ -25,6 +27,10 @@ interface LocalDataSourceModule {
     @Binds
     @ActivityRetainedScoped
     fun bindExplorerLocalDataSource(explorerLocalDataSource: ExplorerLocalDataSourceImpl): ExplorerLocalDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindCacheLocalDataSource(dataSourceImpl: CacheLocalDataSourceImpl): CacheLocalDataSource
 
     @Binds
     @ActivityRetainedScoped

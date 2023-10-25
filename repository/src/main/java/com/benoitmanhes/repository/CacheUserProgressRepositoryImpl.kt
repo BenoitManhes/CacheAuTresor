@@ -5,6 +5,8 @@ import com.benoitmanhes.domain.interfaces.remotedatasource.CacheUserProgressRemo
 import com.benoitmanhes.domain.interfaces.repository.CacheUserProgressRepository
 import com.benoitmanhes.domain.model.CacheUserProgress
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CacheUserProgressRepositoryImpl @Inject constructor(
@@ -12,10 +14,13 @@ class CacheUserProgressRepositoryImpl @Inject constructor(
     private val localeDataSource: CacheUserProgressLocaleDataSource,
 ) : CacheUserProgressRepository {
 
-    override suspend fun getCacheUserProgressFlow(explorerId: String, cacheId: String): Flow<CacheUserProgress?> {
+    override fun getCacheUserProgressFlow(explorerId: String, cacheId: String): Flow<CacheUserProgress?> = flow {
         fetchCacheUserProgress(explorerId = explorerId, cacheId = cacheId)
-        return localeDataSource.getCacheUserProgressFlow(explorerId = explorerId, cacheId = cacheId)
+        emitAll(localeDataSource.getCacheUserProgressFlow(explorerId = explorerId, cacheId = cacheId))
     }
+
+    override fun getAllCacheUserProgressFlow(explorerId: String): Flow<List<CacheUserProgress>> =
+        localeDataSource.getAllUserProgressFlow(explorerId)
 
     override suspend fun getFetchedCacheUserProgress(explorerId: String, cacheId: String): CacheUserProgress? {
         fetchCacheUserProgress(explorerId = explorerId, cacheId = cacheId)
@@ -34,5 +39,10 @@ class CacheUserProgressRepositoryImpl @Inject constructor(
         } else {
             localeDataSource.saveCacheUserProgress(remoteObject)
         }
+    }
+
+    override suspend fun fetchedAllUserProgress(explorerId: String) {
+        val remoteList = remoteDataSource.getAllCacheUserProgress(explorerId)
+        localeDataSource.saveCacheUserProgress(remoteList)
     }
 }

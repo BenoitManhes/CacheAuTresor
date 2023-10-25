@@ -1,6 +1,5 @@
 package com.benoitmanhes.storage.datasource
 
-import com.benoitmanhes.core.error.CTStorageError
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.storage.dao.ExplorerDao
@@ -20,10 +19,8 @@ class ExplorerLocalDataSourceImpl @Inject constructor(
         explorerDao.insert(RoomExplorerConverter.buildRoomModel(explorer))
     }
 
-    override suspend fun getExplorer(explorerId: String): Explorer = withContext(Dispatchers.IO) {
-        explorerDao.findWithId(explorerId)?.let {
-            it.toAppModel()
-        } ?: throw CTStorageError.ExplorerNotFound
+    override suspend fun getExplorer(explorerId: String): Explorer? = withContext(Dispatchers.IO) {
+        explorerDao.findWithId(explorerId)?.toAppModel()
     }
 
     override fun getExplorerFlow(explorerId: String): Flow<Explorer> =

@@ -27,11 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.benoitmanhes.cacheautresor.common.CTMapView
-import com.benoitmanhes.cacheautresor.common.extensions.getOSMMarker
+import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
-import com.benoitmanhes.cacheautresor.common.rememberMapViewWithLifecycle
+import com.benoitmanhes.cacheautresor.common.maps.CTMapView
+import com.benoitmanhes.cacheautresor.common.maps.CacheMarker
+import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
@@ -88,9 +89,10 @@ internal fun ExploreMapScreen(
         markerFolder.items.clear()
 
         uiState.caches.sortedBy { it == uiState.cacheSelected }.forEach { uiCache ->
-            val marker = uiCache.getOSMMarker(
-                context = context,
-                mapViewState = mapViewState,
+            val marker = CacheMarker(
+                mapView = mapViewState,
+                cacheIcon = uiCache.getCacheMarker(),
+                coordinates = uiCache.cache.coordinates,
                 isSelected = uiState.cacheSelected == uiCache,
                 onClick = { selectCache(uiCache) },
             )

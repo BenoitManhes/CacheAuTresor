@@ -33,5 +33,6 @@ object AppConstants {
         const val myLocationZoom: Double = 18.0
         const val areaLimitLatNorth: Double = 82.0
         const val areaLimitLatSouth: Double = -82.0
+        const val markerTouchMargin: Int = 12
     }
 }

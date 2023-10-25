@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.runtime.Composable
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarker
+import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarkerIcon
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxBig
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMedium
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMicro
@@ -20,11 +20,18 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheSize
 
-internal fun Cache.getCacheMarker(): CacheMarker = when (type) {
-    is Cache.Type.Classical -> CacheMarker.Classical
-    is Cache.Type.Coop -> CacheMarker.Coop
-    is Cache.Type.Mystery -> CacheMarker.Mystery
-    is Cache.Type.Piste -> CacheMarker.Piste
+internal fun Cache.getCacheMarker(): CacheMarkerIcon = when (type) {
+    is Cache.Type.Classical -> CacheMarkerIcon.Classical
+    is Cache.Type.Coop -> CacheMarkerIcon.Coop
+    is Cache.Type.Mystery -> CacheMarkerIcon.Mystery
+    is Cache.Type.Piste -> CacheMarkerIcon.Piste
+}
+
+internal fun Cache.getCacheMarkerStarted(): CacheMarkerIcon = when (type) {
+    is Cache.Type.Classical -> CacheMarkerIcon.ClassicalStarted
+    is Cache.Type.Coop -> CacheMarkerIcon.CoopStarted
+    is Cache.Type.Mystery -> CacheMarkerIcon.MysteryStarted
+    is Cache.Type.Piste -> CacheMarkerIcon.PisteStarted
 }
 
 fun Cache.getIcon(): IconSpec = when (type) {

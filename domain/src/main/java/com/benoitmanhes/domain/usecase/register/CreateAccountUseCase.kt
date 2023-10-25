@@ -45,6 +45,5 @@ class CreateAccountUseCase @Inject constructor(
     private fun newExplorer(explorerName: String): Explorer = Explorer(
         explorerId = Util.autoId(),
         name = explorerName,
-        cacheIdsFound = emptyList(),
     )
 }

@@ -9,7 +9,7 @@ import com.benoitmanhes.cacheautresor.R
 /**
  * [DrawableRes] is use instead of Composable, because google map marker does not support composable icon for now
  */
-sealed class CacheMarker(
+sealed class CacheMarkerIcon(
     @DrawableRes private val iconRes: Int,
     @DrawableRes private val iconSelectedRes: Int,
 ) {
@@ -22,32 +22,52 @@ sealed class CacheMarker(
         return ContextCompat.getDrawable(context, drawableRes)
     }
 
-    object Classical : CacheMarker(
+    object Classical : CacheMarkerIcon(
         iconRes = R.drawable.marker_classical,
         iconSelectedRes = R.drawable.marker_selected_classical,
     )
 
-    object Piste : CacheMarker(
+    object Piste : CacheMarkerIcon(
         iconRes = R.drawable.marker_piste,
         iconSelectedRes = R.drawable.marker_selected_piste,
     )
 
-    object Mystery : CacheMarker(
+    object Mystery : CacheMarkerIcon(
         iconRes = R.drawable.marker_mystery,
         iconSelectedRes = R.drawable.marker_selected_mystery,
     )
 
-    object Coop : CacheMarker(
+    object Coop : CacheMarkerIcon(
         iconRes = R.drawable.marker_coop,
         iconSelectedRes = R.drawable.marker_selected_coop,
     )
 
-    object Found : CacheMarker(
+    object ClassicalStarted : CacheMarkerIcon(
+        iconRes = R.drawable.marker_classical_started,
+        iconSelectedRes = R.drawable.marker_selected_classical_started,
+    )
+
+    object PisteStarted : CacheMarkerIcon(
+        iconRes = R.drawable.marker_piste_started,
+        iconSelectedRes = R.drawable.marker_selected_piste_started,
+    )
+
+    object MysteryStarted : CacheMarkerIcon(
+        iconRes = R.drawable.marker_mystery_started,
+        iconSelectedRes = R.drawable.marker_selected_mystery_started,
+    )
+
+    object CoopStarted : CacheMarkerIcon(
+        iconRes = R.drawable.marker_coop_started,
+        iconSelectedRes = R.drawable.marker_selected_coop_started,
+    )
+
+    object Found : CacheMarkerIcon(
         iconRes = R.drawable.marker_found,
         iconSelectedRes = R.drawable.marker_selected_found,
     )
 
-    object Owner : CacheMarker(
+    object Owner : CacheMarkerIcon(
         iconRes = R.drawable.marker_owner,
         iconSelectedRes = R.drawable.marker_selected_owned,
     )

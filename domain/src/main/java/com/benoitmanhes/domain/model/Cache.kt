@@ -1,6 +1,7 @@
 package com.benoitmanhes.domain.model
 
 import com.benoitmanhes.domain.interfaces.Model
+import kotlinx.serialization.Serializable
 import java.util.Date
 
 data class Cache(
@@ -20,8 +21,9 @@ data class Cache(
     val type: Type,
 ) : Model {
 
-    sealed interface Type {
+    sealed interface Type : Model {
 
+        @Serializable
         object Classical : Type
         data class Piste(
             val intermediateStepIds: List<String>,

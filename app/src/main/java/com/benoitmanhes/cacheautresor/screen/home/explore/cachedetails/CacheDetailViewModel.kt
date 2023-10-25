@@ -201,7 +201,7 @@ class CacheDetailViewModel @Inject constructor(
                 uiMarkers = listOf(
                     UIMarker(
                         coordinates = successData.cache.coordinates,
-                        marker = successData.cache.getCacheMarker(),
+                        iconMarker = successData.getCacheMarker(),
                         isSelected = false,
                         onClick = {},
                     )

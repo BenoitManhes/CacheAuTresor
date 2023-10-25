@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExplorerLocalDataSource {
     suspend fun saveExplorer(explorer: Explorer)
-    suspend fun getExplorer(explorerId: String): Explorer
+    suspend fun getExplorer(explorerId: String): Explorer?
     fun getExplorerFlow(explorerId: String): Flow<Explorer>
     suspend fun deleteExplorer(explorerId: String)
 }

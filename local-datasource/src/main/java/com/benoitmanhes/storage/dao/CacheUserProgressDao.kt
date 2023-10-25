@@ -13,6 +13,9 @@ interface CacheUserProgressDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: RoomCacheUserProgress)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(entities: List<RoomCacheUserProgress>)
+
     @Query("DELETE FROM `cache-user-progress` WHERE cacheId = :cacheId AND explorerId = :explorerId")
     fun delete(explorerId: String, cacheId: String)
 
@@ -21,4 +24,7 @@ interface CacheUserProgressDao {
 
     @Query("SELECT * FROM `cache-user-progress` WHERE cacheId = :cacheId AND explorerId = :explorerId")
     fun findWithIdFlow(explorerId: String, cacheId: String): Flow<RoomCacheUserProgress?>
+
+    @Query("SELECT * FROM `cache-user-progress` WHERE explorerId = :explorerId")
+    fun findAllForExplorer(explorerId: String): Flow<List<RoomCacheUserProgress>>
 }

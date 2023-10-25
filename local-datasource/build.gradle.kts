@@ -27,6 +27,9 @@ dependencies {
     implementation(AndroidX.room.ktx)
     kapt(AndroidX.room.compiler)
 
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:_")
+
     implementation(project(":common_bm:kotlin"))
     implementation(project(":core"))
     implementation(project(":domain"))

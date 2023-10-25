@@ -47,9 +47,11 @@ data class Coordinates(
         return Triple(degrees, minutes, seconds)
     }
 
+    @Suppress("unused")
     private fun dmsToDecimalDegrees(dms: DegreeMinutesSeconds): DecimalDegree =
         dms.first + dms.second / MINUTES_IN_DEGREE + dms.third / SECOND_IN_DEGREE
 
+    @Suppress("unused")
     private fun degreeMinutesToDecimalDegree(dm: DegreeMinutes): DecimalDegree =
         dm.first + dm.second / MINUTES_IN_DEGREE
 

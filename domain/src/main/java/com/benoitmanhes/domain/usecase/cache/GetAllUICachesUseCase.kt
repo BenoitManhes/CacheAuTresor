@@ -4,44 +4,60 @@ import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
-import com.benoitmanhes.domain.model.Explorer
+import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 import com.benoitmanhes.domain.usecase.CTUseCase
-import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
+import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class GetAllUICachesUseCase @Inject constructor(
     private val cacheRepository: CacheRepository,
     private val explorerRepository: ExplorerRepository,
-    private val getMyExplorerUseCase: GetMyExplorerUseCase,
+    private val getMyExplorerIdUseCase: GetMyExplorerIdUseCase,
+    private val getMyCacheProgressUseCase: GetMyCacheProgressUseCase,
 ) : CTUseCase() {
 
     operator fun invoke(): Flow<CTResult<List<UIExploreCache>>> = useCaseFlow {
-        val allCaches = cacheRepository.getAllCaches()
-
-        getMyExplorerUseCase().collect { myExplorer ->
+        val myExplorerId = getMyExplorerIdUseCase()
+        combine(
+            cacheRepository.getAllCachesFlow(),
+            getMyCacheProgressUseCase(),
+        ) { allCaches, myCachesProgress ->
             val uiExploreCaches = allCaches
-                .filter { cache -> cache.isAvailableForExplorer(myExplorer) }
                 .map { cache ->
                     UIExploreCache(
                         cache = cache,
                         explorerName = cache.getCreatorName(),
-                        userStatus = cache.getUserStatus(myExplorer),
+                        userStatus = cache.getUserStatus(
+                            explorerId = myExplorerId,
+                            cachesProgress = myCachesProgress,
+                        ),
                         distance = null,
                     )
                 }
+                .filter { it.userStatus != UIExploreCache.CacheUserStatus.Lock }
             emit(CTResult.Success(uiExploreCaches))
-        }
+        }.collect {}
     }
 
-    private fun Cache.isAvailableForExplorer(explorer: Explorer) = getUserStatus(explorer) != UIExploreCache.CacheUserStatus.Lock
+    private fun Cache.getUserStatus(explorerId: String, cachesProgress: List<CacheUserProgress>): UIExploreCache.CacheUserStatus {
+        val cacheIdsFound = cachesProgress
+            .filter { it.foundDate != null }
+            .map { it.cacheId }
+            .toSet()
+        val cacheStarted = cachesProgress
+            .map { it.cacheId }
+            .toSet()
 
-    private fun Cache.getUserStatus(explorer: Explorer): UIExploreCache.CacheUserStatus = when {
-        explorer.explorerId == this.creatorId -> UIExploreCache.CacheUserStatus.Owned
-        explorer.cacheIdsFound.contains(this.cacheId) -> UIExploreCache.CacheUserStatus.Found
-        explorer.cacheIdsFound.containsAll(this.cacheIdsRequired) -> UIExploreCache.CacheUserStatus.Available
-        else -> UIExploreCache.CacheUserStatus.Lock
+        return when {
+            explorerId == this.creatorId -> UIExploreCache.CacheUserStatus.Owned
+            cacheIdsFound.contains(this.cacheId) -> UIExploreCache.CacheUserStatus.Found
+            !cacheIdsFound.containsAll(this.cacheIdsRequired) -> UIExploreCache.CacheUserStatus.Lock
+            cacheStarted.contains(this.cacheId) -> UIExploreCache.CacheUserStatus.Started
+            else -> UIExploreCache.CacheUserStatus.Available
+        }
     }
 
     private suspend fun Cache.getCreatorName(): String? = runCatch(onError = { null }) {

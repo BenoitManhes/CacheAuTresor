@@ -28,6 +28,13 @@ class CacheUserProgressRemoteDataSourceImpl @Inject constructor(
             .firstOrNull()
             ?.convertToAppModel()
 
+    override suspend fun getAllCacheUserProgress(explorerId: String): List<CacheUserProgress> =
+        firestore.collection(collectionRef)
+            .whereEqualTo(FSCacheUserProgress::explorerId.name, explorerId)
+            .get()
+            .withCoroutine()
+            .mapNotNull { it.convertToAppModel() }
+
     override suspend fun saveCacheUserProgress(userProgress: CacheUserProgress): Unit =
         saveFSObject(userProgress.id, userProgress)
 }

@@ -7,18 +7,15 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 data class FSExplorer(
     override val id: String? = null,
     val name: String? = null,
-    val cacheIdsFound: List<String>? = null,
 ) : FirestoreModel<Explorer> {
 
     constructor(explorer: Explorer) : this(
         id = explorer.explorerId,
         name = explorer.name,
-        cacheIdsFound = explorer.cacheIdsFound,
     )
 
     override fun toAppModel(): Explorer = Explorer(
         explorerId = id.requiredField(),
         name = name.requiredField(),
-        cacheIdsFound = cacheIdsFound ?: emptyList(),
     )
 }

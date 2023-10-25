@@ -6,6 +6,8 @@ import com.benoitmanhes.domain.interfaces.remotedatasource.ExplorerRemoteDataSou
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ExplorerRepositoryImpl @Inject constructor(
@@ -22,7 +24,7 @@ class ExplorerRepositoryImpl @Inject constructor(
             if (remoteExplorer == null) throw CTRepositoryError.UnexpectedResult()
             localDataSource.saveExplorer(remoteExplorer)
         }
-        return localDataSource.getExplorer(explorer.explorerId)
+        return localDataSource.getExplorer(explorer.explorerId) ?: throw CTRepositoryError.UserExplorerNotFound
     }
 
     override suspend fun deleteExplorer(explorerId: String) {
@@ -30,17 +32,29 @@ class ExplorerRepositoryImpl @Inject constructor(
         localDataSource.deleteExplorer(explorerId)
     }
 
-    override suspend fun getUserExplorerFlow(explorerId: String): Flow<Explorer> {
+    override fun getUserExplorerFlow(explorerId: String): Flow<Explorer> = flow {
+        localDataSource.getExplorer(explorerId)?.let { emit(it) }
         val remoteExplorer = remoteDataSource.getExplorer(explorerId) ?: throw CTRepositoryError.UserExplorerNotFound
         localDataSource.saveExplorer(remoteExplorer)
-        return localDataSource.getExplorerFlow(explorerId)
+        emitAll(localDataSource.getExplorerFlow(explorerId))
     }
 
     override suspend fun getUserExplorer(explorerId: String): Explorer {
         val remoteExplorer = remoteDataSource.getExplorer(explorerId) ?: throw CTRepositoryError.UserExplorerNotFound
         localDataSource.saveExplorer(remoteExplorer)
-        return localDataSource.getExplorer(explorerId)
+        return localDataSource.getExplorer(explorerId) ?: throw CTRepositoryError.UserExplorerNotFound
     }
 
-    override suspend fun getExplorer(explorerId: String): Explorer? = remoteDataSource.getExplorer(explorerId)
+    override suspend fun getExplorer(explorerId: String): Explorer? =
+        localDataSource.getExplorer(explorerId) ?: kotlin.run {
+            val remoteExplorer = remoteDataSource.getExplorer(explorerId)
+            remoteExplorer?.let { localDataSource.saveExplorer(it) }
+            remoteExplorer
+        }
+
+    override suspend fun getExplorerFetched(explorerId: String): Explorer? {
+        val remoteExplorer = remoteDataSource.getExplorer(explorerId)
+        remoteExplorer?.let { localDataSource.saveExplorer(it) }
+        return localDataSource.getExplorer(explorerId)
+    }
 }
