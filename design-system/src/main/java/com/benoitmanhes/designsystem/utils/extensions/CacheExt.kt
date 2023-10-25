@@ -32,6 +32,7 @@ fun UIExploreCache.getPrimaryColor(): Color {
     return when (userStatus) {
         UIExploreCache.CacheUserStatus.Owned -> Colors.BlackOlive
         UIExploreCache.CacheUserStatus.Found -> Colors.Marigold
+        UIExploreCache.CacheUserStatus.Started -> startedColor
         else -> availableColor
     }
 }

@@ -7,6 +7,7 @@ data class UIExploreCache(
     val explorerName: String?,
     val userStatus: CacheUserStatus,
     val distance: Double?,
+    val ptsWin: Int?,
 ) : UIModel {
     enum class CacheUserStatus {
         Available, Started, Found, Lock, Owned

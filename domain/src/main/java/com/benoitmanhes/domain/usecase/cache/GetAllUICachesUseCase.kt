@@ -35,6 +35,7 @@ class GetAllUICachesUseCase @Inject constructor(
                             cachesProgress = myCachesProgress,
                         ),
                         distance = null,
+                        ptsWin = myCachesProgress.firstOrNull { it.cacheId == cache.cacheId }?.ptsWin,
                     )
                 }
                 .filter { it.userStatus != UIExploreCache.CacheUserStatus.Lock }

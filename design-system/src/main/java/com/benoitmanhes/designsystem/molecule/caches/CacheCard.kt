@@ -23,6 +23,7 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.label.LabelIconMedium
 import com.benoitmanhes.designsystem.molecule.label.LabelIconSmall
 import com.benoitmanhes.designsystem.atoms.CTIconSlot
+import com.benoitmanhes.designsystem.molecule.sticker.CTSticker
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Box
 import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
@@ -37,14 +38,15 @@ import com.benoitmanhes.designsystem.utils.TextSpec
 @Composable
 fun CacheCard(
     icon: IconSpec,
-    color: Color,
     creatorText: TextSpec,
     titleText: TextSpec,
     difficultyText: TextSpec,
     groundText: TextSpec,
     sizeText: TextSpec,
     distanceText: TextSpec?,
+    stickerText: TextSpec?,
     modifier: Modifier = Modifier,
+    color: Color = CTTheme.color.primary,
     onClick: () -> Unit = {},
 ) {
     Surface(
@@ -83,6 +85,9 @@ fun CacheCard(
                     text = distanceText,
                     color = color,
                 )
+            }
+            stickerText?.let {
+                CTSticker(label = stickerText)
             }
         }
     }
@@ -155,6 +160,7 @@ private fun PreviewCacheCard() {
                 groundText = TextSpec.RawString("ground"),
                 sizeText = TextSpec.RawString("size"),
                 distanceText = TextSpec.RawString("800m"),
+                stickerText = null,
             )
         }
     }

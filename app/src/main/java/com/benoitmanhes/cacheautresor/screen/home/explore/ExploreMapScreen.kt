@@ -41,6 +41,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Layer
 import com.benoitmanhes.designsystem.res.icons.iconpack.Position
 import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.extension.similar
@@ -69,15 +70,7 @@ internal fun ExploreMapScreen(
     navigateToCacheDetail: (String) -> Unit,
 ) {
     val mapViewState = rememberMapViewWithLifecycle()
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    var lastCacheSelected: UIExploreCache? by remember {
-        mutableStateOf(null)
-    }
-    lastCacheSelected = remember(uiState.cacheSelected) {
-        uiState.cacheSelected ?: lastCacheSelected
-    }
-
     val markerFolder = remember { FolderOverlay() }
 
     LaunchedEffect(mapViewState) {
@@ -195,11 +188,12 @@ internal fun ExploreMapScreen(
                     )
                 }
             }
+
             Box(Modifier.wrapContentHeight()) {
                 Box(modifier = Modifier.height(height = Dimens.Size.cacheCardHeight)) {}
 
-                this@Column.AnimatedVisibility(
-                    visible = uiState.cacheSelected != null,
+                AnimatedNullableVisibility(
+                    value = uiState.cacheSelected,
                     enter = slideInVertically(
                         animationSpec = tween(),
                         initialOffsetY = { (it * 1.5).toInt() },
@@ -208,15 +202,11 @@ internal fun ExploreMapScreen(
                         animationSpec = tween(),
                         targetOffsetY = { (it * 1.5).toInt() },
                     )
-                ) {
-                    (uiState.cacheSelected ?: lastCacheSelected)?.let { uiCache ->
-                        val cacheBannerColor by animateColorAsState(uiCache.getPrimaryColor())
-                        CacheBanner(
-                            uiExploreCache = uiCache,
-                            onClick = { navigateToCacheDetail(uiCache.cache.cacheId) },
-                            color = cacheBannerColor,
-                        )
-                    }
+                ) { value ->
+                    CacheBanner(
+                        uiExploreCache = value,
+                        onClick = { navigateToCacheDetail(value.cache.cacheId) },
+                    )
                 }
             }
         }
