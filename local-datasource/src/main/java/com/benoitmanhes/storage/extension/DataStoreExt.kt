@@ -13,3 +13,13 @@ suspend fun DataStore<Preferences>.editString(value: String?, keyPref: Preferenc
         }
     }
 }
+
+suspend fun DataStore<Preferences>.editLong(value: Long?, keyPref: Preferences.Key<Long>) {
+    this.edit { pref ->
+        value?.let {
+            pref[keyPref] = value
+        } ?: kotlin.run {
+            pref.remove(keyPref)
+        }
+    }
+}

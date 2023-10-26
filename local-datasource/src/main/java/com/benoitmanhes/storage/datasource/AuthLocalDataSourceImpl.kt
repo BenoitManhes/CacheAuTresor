@@ -16,6 +16,6 @@ class AuthLocalDataSourceImpl @Inject constructor(
         authDataStore.saveAccount(account)
     }
 
-    override suspend fun removeAccount() = authDataStore.removeAccount()
+    override suspend fun removeAccount(): Unit = authDataStore.removeAccount()
     override suspend fun getAccount(): Account? = authDataStore.getAccountFlow().firstOrNull()
 }

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.toDistanceText
@@ -43,7 +42,9 @@ fun CacheBanner(
                     TextSpec.Resources(R.string.cacheDetail_foundInfoCard_points, it)
                 }
 
-                UIExploreCache.CacheUserStatus.Started -> TextSpec.Resources(R.string.cacheDetail_cacheTypeSection_ongoing)
+                UIExploreCache.CacheUserStatus.Started -> TextSpec.Resources(
+                    R.string.cacheDetail_cacheTypeSection_ongoing
+                )
                 else -> null
             },
             modifier = modifier,

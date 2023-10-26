@@ -27,6 +27,12 @@ class ExplorerRepositoryImpl @Inject constructor(
         return localDataSource.getExplorer(explorer.explorerId) ?: throw CTRepositoryError.UserExplorerNotFound
     }
 
+    override suspend fun saveExplorer(explorer: Explorer, remoteOnly: Boolean) {
+        remoteDataSource.saveExplorer(explorer)
+        if (remoteOnly) return
+        localDataSource.saveExplorer(explorer)
+    }
+
     override suspend fun deleteExplorer(explorerId: String) {
         remoteDataSource.deleteExplorer(explorerId)
         localDataSource.deleteExplorer(explorerId)
@@ -52,8 +58,9 @@ class ExplorerRepositoryImpl @Inject constructor(
             remoteExplorer
         }
 
-    override suspend fun getExplorerFetched(explorerId: String): Explorer? {
+    override suspend fun getExplorerFetched(explorerId: String, remoteOnly: Boolean): Explorer? {
         val remoteExplorer = remoteDataSource.getExplorer(explorerId)
+        if (remoteOnly) return remoteExplorer
         remoteExplorer?.let { localDataSource.saveExplorer(it) }
         return localDataSource.getExplorer(explorerId)
     }

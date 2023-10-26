@@ -2,7 +2,6 @@ package com.benoitmanhes.cacheautresor.screen.home.explore
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,13 +19,11 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
@@ -43,7 +40,6 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.extension.similar
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UIExploreCache

@@ -6,10 +6,11 @@ import kotlinx.coroutines.flow.Flow
 interface ExplorerRepository {
     suspend fun isExplorerNameAvailable(explorerName: String): Boolean
     suspend fun createUserExplorer(explorer: Explorer): Explorer
+    suspend fun saveExplorer(explorer: Explorer, remoteOnly: Boolean = false)
     suspend fun getUserExplorer(explorerId: String): Explorer
     fun getUserExplorerFlow(explorerId: String): Flow<Explorer>
 
     suspend fun deleteExplorer(explorerId: String)
     suspend fun getExplorer(explorerId: String): Explorer?
-    suspend fun getExplorerFetched(explorerId: String): Explorer?
+    suspend fun getExplorerFetched(explorerId: String, remoteOnly: Boolean = false): Explorer?
 }

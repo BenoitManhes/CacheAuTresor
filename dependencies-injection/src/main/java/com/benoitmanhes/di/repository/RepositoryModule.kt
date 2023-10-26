@@ -7,11 +7,13 @@ import com.benoitmanhes.domain.interfaces.repository.CacheUserProgressRepository
 import com.benoitmanhes.repository.CacheUserProgressRepositoryImpl
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.interfaces.repository.StepRepository
+import com.benoitmanhes.domain.interfaces.repository.SyncRepository
 import com.benoitmanhes.repository.AuthRepositoryImpl
 import com.benoitmanhes.repository.CacheRepositoryImpl
 import com.benoitmanhes.repository.CacheUserDataRepositoryImpl
 import com.benoitmanhes.repository.ExplorerRepositoryImpl
 import com.benoitmanhes.repository.StepRepositoryImpl
+import com.benoitmanhes.repository.SyncRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -45,4 +47,8 @@ interface RepositoryModule {
     @Binds
     @ActivityRetainedScoped
     fun bindCacheUserProgressRepository(repoImpl: CacheUserProgressRepositoryImpl): CacheUserProgressRepository
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindSyncRepository(repoImpl: SyncRepositoryImpl): SyncRepository
 }

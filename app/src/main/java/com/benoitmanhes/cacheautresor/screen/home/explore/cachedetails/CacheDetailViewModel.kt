@@ -31,7 +31,6 @@ import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
-import com.benoitmanhes.common.kotlin.safeLet
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
@@ -54,6 +53,7 @@ import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.model.Cache
+import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
@@ -94,7 +94,6 @@ class CacheDetailViewModel @Inject constructor(
     val logModalState: StateFlow<LogModalBottomSheet?> get() = _logModalState.asStateFlow()
 
     private var switchToInstruction = false
-    private var showAlertSuccess: UIStep? = null
     private var cache: Cache? = null
 
     init {
@@ -103,9 +102,6 @@ class CacheDetailViewModel @Inject constructor(
                 .collect { result ->
                     cache = result.data?.cache
                     _uiState.emit(result.mapToUIState())
-                    safeLet(result.data, showAlertSuccess) { cacheDetail, uiStep ->
-                        showAlertSuccess(cacheDetail, uiStep)
-                    }
                 }
         }
     }
@@ -163,7 +159,7 @@ class CacheDetailViewModel @Inject constructor(
             val result = logCacheUseCase(cacheId = cacheId, codeLog = codeLog)
             when (result) {
                 is CTSuspendResult.Success -> {
-                    showAlertSuccess = uiStep
+                    showAlertSuccess(uiStep, result.successData)
                 }
 
                 is CTSuspendResult.Failure -> {
@@ -419,21 +415,17 @@ class CacheDetailViewModel @Inject constructor(
         }
 
     private fun showAlertSuccess(
-        uiCacheDetails: UICacheDetails,
         uiStep: UIStep,
+        userProgress: CacheUserProgress,
     ) {
-        val cacheStatus = uiCacheDetails.status
-        val alertDialog = when (cacheStatus) {
-            is UICacheDetails.Status.Found -> CacheFinishAlertDialog(
+        val alertDialog = if (userProgress.foundDate != null) {
+            CacheFinishAlertDialog(
                 cacheName = cache?.title.orEmpty(),
-                ptsWin = TextSpec.Resources(R.string.cacheDetail_cacheFinish_alertDialog_pts, cacheStatus.pts ?: 0),
+                ptsWin = TextSpec.Resources(R.string.cacheDetail_cacheFinish_alertDialog_pts, userProgress.ptsWin ?: 0),
             )
-
-            else -> {
-                StepCompleteAlertDialog(stepName = uiStep.getStepTitle())
-            }
+        } else {
+            StepCompleteAlertDialog(stepName = uiStep.getStepTitle())
         }
-        showAlertSuccess = null
         alertDialogManager.showDialog(alertDialog)
     }
 }

@@ -7,6 +7,7 @@ interface CacheUserProgressRepository {
     fun getCacheUserProgressFlow(explorerId: String, cacheId: String): Flow<CacheUserProgress?>
     fun getAllCacheUserProgressFlow(explorerId: String): Flow<List<CacheUserProgress>>
     suspend fun getFetchedCacheUserProgress(explorerId: String, cacheId: String): CacheUserProgress?
+    suspend fun getAllUserProgressRemote(explorerId: String, remoteOnly: Boolean): List<CacheUserProgress>
+    suspend fun getAllUserProgressByCache(creatorId: String): List<CacheUserProgress>
     suspend fun saveCacheUserProgress(userProgress: CacheUserProgress)
-    suspend fun fetchedAllUserProgress(explorerId: String)
 }

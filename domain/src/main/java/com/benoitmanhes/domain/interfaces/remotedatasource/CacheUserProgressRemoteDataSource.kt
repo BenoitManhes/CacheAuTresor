@@ -6,4 +6,5 @@ interface CacheUserProgressRemoteDataSource {
     suspend fun getCacheUserProgress(explorerId: String, cacheId: String): CacheUserProgress?
     suspend fun saveCacheUserProgress(userProgress: CacheUserProgress)
     suspend fun getAllCacheUserProgress(explorerId: String): List<CacheUserProgress>
+    suspend fun getAllUserProgressByCache(cacheId: String): List<CacheUserProgress>
 }

@@ -5,11 +5,13 @@ import com.benoitmanhes.domain.interfaces.localdatasource.CacheLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserDataLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserProgressLocaleDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
+import com.benoitmanhes.domain.interfaces.localdatasource.SyncLocalDataSource
 import com.benoitmanhes.storage.datasource.AuthLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserDataLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserProgressLocaleDataSourceImpl
 import com.benoitmanhes.storage.datasource.ExplorerLocalDataSourceImpl
+import com.benoitmanhes.storage.datasource.SyncLocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -39,4 +41,8 @@ interface LocalDataSourceModule {
     @Binds
     @ActivityRetainedScoped
     fun bindCacheUserProgressLocaleDataSource(dataSourceImpl: CacheUserProgressLocaleDataSourceImpl): CacheUserProgressLocaleDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindSyncLocaleDataSource(dataSourceImpl: SyncLocalDataSourceImpl): SyncLocalDataSource
 }

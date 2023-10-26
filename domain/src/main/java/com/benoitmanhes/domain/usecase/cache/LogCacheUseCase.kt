@@ -10,6 +10,8 @@ import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.usecase.CTUseCase
 import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
+import com.benoitmanhes.domain.usecase.explorer.UpdateCartographyPointsUseCase
+import com.benoitmanhes.domain.usecase.explorer.UpdateExplorationPointsUseCase
 import java.util.Date
 import javax.inject.Inject
 
@@ -20,6 +22,8 @@ class LogCacheUseCase @Inject constructor(
     private val getMyExplorerIdUseCase: GetMyExplorerIdUseCase,
     private val getAllMyStepUseCase: GetAllMyStepUseCase,
     private val calculateCachePtsWinUseCase: CalculateCachePtsWinUseCase,
+    private val updateExplorationPointsUseCase: UpdateExplorationPointsUseCase,
+    private val updateCartographyPointsUseCase: UpdateCartographyPointsUseCase,
 ) : CTUseCase() {
     suspend operator fun invoke(cacheId: String, codeLog: String): CTSuspendResult<CacheUserProgress> = runCatchSuspendResult {
         val myExplorerId = getMyExplorerIdUseCase()
@@ -39,13 +43,20 @@ class LogCacheUseCase @Inject constructor(
         userProgressRepository.saveCacheUserProgress(userProgress = newProgress)
 
         runCatchSuspendResult {
-            if (newProgress.foundDate != null && !cache.discovered) {
-                val newCache = cache.copy(discovered = true)
-                cacheRepository.saveCache(newCache)
+            if (newProgress.foundDate != null) {
+                updateExplorationPointsUseCase(myExplorerId, true)
+                updateCartographyPointsUseCase(
+                    explorerId = cache.creatorId,
+                    cacheIds = listOf(cacheId),
+                    isMyExplorer = false
+                )
+                if (!cache.discovered) {
+                    val newCache = cache.copy(discovered = true)
+                    cacheRepository.saveCache(newCache)
+                }
             }
             CTSuspendResult.Success(Unit)
         }
-
         CTSuspendResult.Success(newProgress)
     }
 

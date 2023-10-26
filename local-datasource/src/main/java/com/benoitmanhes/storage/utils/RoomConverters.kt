@@ -29,6 +29,16 @@ object RoomConverters {
     }
 
     @TypeConverter
+    fun mapStringIntToString(map: Map<String, Int>): String =
+        Gson().toJson(map)
+
+    @TypeConverter
+    fun stringToMapStringInt(rawList: String): Map<String, Int> {
+        val listType = object : TypeToken<Map<String, Int>>() {}.type
+        return Gson().fromJson(rawList, listType)
+    }
+
+    @TypeConverter
     fun fromCacheUserDataMarkerList(list: List<CacheUserData.Marker>): String {
         val gson = Gson()
         val type = object : TypeToken<List<CacheUserData.Marker>>() {}.type
@@ -65,11 +75,13 @@ object RoomConverters {
                 wrapper.rawData,
                 Cache.Type.Classical::class.java
             )
+
             Cache.Type.Coop::class.java.simpleName -> Gson().fromJson(wrapper.rawData, Cache.Type.Coop::class.java)
             Cache.Type.Mystery::class.java.simpleName -> Gson().fromJson(
                 wrapper.rawData,
                 Cache.Type.Mystery::class.java
             )
+
             Cache.Type.Piste::class.java.simpleName -> Gson().fromJson(wrapper.rawData, Cache.Type.Piste::class.java)
             else -> throw IllegalArgumentException("Unsupported type")
         }
