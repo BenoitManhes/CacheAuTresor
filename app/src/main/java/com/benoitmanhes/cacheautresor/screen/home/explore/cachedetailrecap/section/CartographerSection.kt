@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.rounded.Event
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -19,7 +18,7 @@ import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun CartographerSection(

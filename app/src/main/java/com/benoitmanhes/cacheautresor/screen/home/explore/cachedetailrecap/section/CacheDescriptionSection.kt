@@ -8,7 +8,7 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun CacheDescriptionSection(

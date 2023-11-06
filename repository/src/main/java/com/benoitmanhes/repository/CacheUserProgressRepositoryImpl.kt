@@ -29,7 +29,7 @@ class CacheUserProgressRepositoryImpl @Inject constructor(
 
     override suspend fun getAllUserProgressRemote(explorerId: String, remoteOnly: Boolean): List<CacheUserProgress> {
         val remoteData = remoteDataSource.getAllCacheUserProgress(explorerId)
-        if (remoteOnly) {
+        if (!remoteOnly) {
             localeDataSource.saveCacheUserProgress(remoteData)
         }
         return remoteData
@@ -43,7 +43,7 @@ class CacheUserProgressRepositoryImpl @Inject constructor(
         localeDataSource.saveCacheUserProgress(userProgress)
     }
 
-    private suspend fun fetchCacheUserProgress(explorerId: String, cacheId: String) {
+    override suspend fun fetchCacheUserProgress(explorerId: String, cacheId: String) {
         val remoteObject = remoteDataSource.getCacheUserProgress(explorerId = explorerId, cacheId = cacheId)
         if (remoteObject == null) {
             localeDataSource.deleteCacheUserProgress(explorerId = explorerId, cacheId = cacheId)

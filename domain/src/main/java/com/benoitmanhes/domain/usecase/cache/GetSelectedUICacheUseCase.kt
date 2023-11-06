@@ -9,10 +9,9 @@ import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserData
 import com.benoitmanhes.domain.model.CacheUserProgress
-import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.usecase.CTUseCase
-import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
+import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -22,7 +21,7 @@ import javax.inject.Inject
 class GetSelectedUICacheUseCase @Inject constructor(
     private val cacheRepository: CacheRepository,
     private val explorerRepository: ExplorerRepository,
-    private val getMyExplorerUseCase: GetMyExplorerUseCase,
+    private val getMyExplorerIdUseCase: GetMyExplorerIdUseCase,
     private val getUIStepsUseCase: GetUIStepsUseCase,
     private val cacheUserDataRepository: CacheUserDataRepository,
     private val getUserProgressUseCase: GetUserProgressUseCase,
@@ -32,14 +31,17 @@ class GetSelectedUICacheUseCase @Inject constructor(
         val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
 
         combine(
-            getMyExplorerUseCase(),
             cacheUserDataRepository.getCacheUserDataFlow(cacheId).map { it ?: CacheUserData(cacheId) },
             getUserProgressUseCase(cacheId),
-        ) { myExplorer, userData, userProgress ->
+        ) { userData, userProgress ->
             val uiCacheDetails = UICacheDetails(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
-                status = myExplorer.getCacheDetailsUserStatus(cache, userProgress),
+                status = getCacheDetailsUserStatus(
+                    explorerId = getMyExplorerIdUseCase(),
+                    cache = cache,
+                    userProgress = userProgress,
+                ),
                 steps = getCacheStepsRefs(cache, userProgress).map {
                     getUIStepsUseCase(it, cache, userProgress)
                 },
@@ -53,8 +55,8 @@ class GetSelectedUICacheUseCase @Inject constructor(
         explorerRepository.getExplorer(this.creatorId)?.name
     }
 
-    private fun Explorer.getCacheDetailsUserStatus(cache: Cache, userProgress: CacheUserProgress?) = when {
-        cache.creatorId == this.explorerId -> UICacheDetails.Status.Owned
+    private fun getCacheDetailsUserStatus(explorerId: String, cache: Cache, userProgress: CacheUserProgress?) = when {
+        cache.creatorId == explorerId -> UICacheDetails.Status.Owned
         userProgress == null -> UICacheDetails.Status.Available
         userProgress.foundDate != null -> UICacheDetails.Status.Found(
             foundDate = userProgress.foundDate,

@@ -44,11 +44,10 @@ class LogCacheUseCase @Inject constructor(
 
         runCatchSuspendResult {
             if (newProgress.foundDate != null) {
-                updateExplorationPointsUseCase(myExplorerId, true)
+                updateExplorationPointsUseCase(myExplorerId)
                 updateCartographyPointsUseCase(
                     explorerId = cache.creatorId,
                     cacheIds = listOf(cacheId),
-                    isMyExplorer = false
                 )
                 if (!cache.discovered) {
                     val newCache = cache.copy(discovered = true)

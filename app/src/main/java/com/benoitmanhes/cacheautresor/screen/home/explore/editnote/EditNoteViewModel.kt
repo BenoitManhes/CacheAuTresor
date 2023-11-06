@@ -10,7 +10,7 @@ import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
 import com.benoitmanhes.cacheautresor.screen.snackbar.showInfo
 import com.benoitmanhes.core.result.CTSuspendResult
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.domain.usecase.note.GetCacheNoteUseCase
 import com.benoitmanhes.domain.usecase.note.SaveNoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -8,6 +8,6 @@ object RoomExplorerConverter : AbstractRoomModelConverter<Explorer, RoomExplorer
         id = appModel.explorerId,
         name = appModel.name,
         cachesMap = appModel.cachesMap,
-        explorationPts = appModel.explorationPts,
+        cachesFoundMap = appModel.cachesFoundMap,
     )
 }

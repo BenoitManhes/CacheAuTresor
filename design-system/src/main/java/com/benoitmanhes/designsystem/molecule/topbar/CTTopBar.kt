@@ -15,7 +15,7 @@ import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.molecule.button.iconbutton.CTIconButton
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun CTTopBar(

@@ -2,7 +2,7 @@ package com.benoitmanhes.cacheautresor.error
 
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.core.error.CTDomainError
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 fun CTDomainError.localizedTitle(): TextSpec = when (code) {
     CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> null

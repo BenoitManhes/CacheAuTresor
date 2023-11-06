@@ -13,21 +13,24 @@ class UpdateExplorationPointsUseCase @Inject constructor(
     private val progressRepository: CacheUserProgressRepository,
 ) : CTUseCase() {
 
-    suspend operator fun invoke(explorerId: String, isMyExplorer: Boolean): Unit = runCatch {
-        val explorer = explorerRepository.getExplorerFetched(explorerId = explorerId, remoteOnly = true)
+    suspend operator fun invoke(explorerId: String): Unit = runCatch {
+        val explorer = explorerRepository.getExplorerFetched(explorerId = explorerId)
             ?: throw CTDomainError.Code.EXPLORER_NOT_FOUND.error()
-        this(explorer = explorer, isMyExplorer = isMyExplorer)
+        this(explorer = explorer)
     }
 
-    suspend operator fun invoke(explorer: Explorer, isMyExplorer: Boolean): Unit = runCatch {
+    suspend operator fun invoke(explorer: Explorer): Unit = runCatch {
         val explorationPoints = progressRepository.getAllUserProgressRemote(
             explorerId = explorer.explorerId,
-            remoteOnly = !isMyExplorer,
-        ).mapNotNull { it.ptsWin }.sum()
-        if (explorer.explorationPts != explorationPoints) {
+            remoteOnly = false,
+        )
+            .filter { it.ptsWin != null }
+            .associate { userProgress ->
+                userProgress.cacheId to userProgress.ptsWin!!
+            }
+        if (explorer.cachesFoundMap != explorationPoints) {
             explorerRepository.saveExplorer(
-                explorer = explorer.copy(explorationPts = explorationPoints),
-                remoteOnly = !isMyExplorer,
+                explorer = explorer.copy(cachesFoundMap = explorationPoints),
             )
         }
     }

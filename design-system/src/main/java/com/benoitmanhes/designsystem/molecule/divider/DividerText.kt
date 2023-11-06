@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun CTDividerText(

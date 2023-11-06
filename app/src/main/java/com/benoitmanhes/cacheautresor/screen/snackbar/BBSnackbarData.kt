@@ -1,6 +1,6 @@
 package com.benoitmanhes.cacheautresor.screen.snackbar
 
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 sealed interface BBSnackbarData {
     val message: TextSpec
 

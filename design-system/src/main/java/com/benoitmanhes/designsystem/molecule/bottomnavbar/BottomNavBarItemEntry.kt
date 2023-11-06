@@ -1,7 +1,7 @@
 package com.benoitmanhes.designsystem.molecule.bottomnavbar
 
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 interface BottomNavBarItemEntry {
     val selectedIcon: IconSpec

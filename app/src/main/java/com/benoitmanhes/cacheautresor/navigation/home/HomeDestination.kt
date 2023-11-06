@@ -12,7 +12,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Newspaper
 import com.benoitmanhes.designsystem.res.icons.iconpack.Profile
 import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 sealed class HomeDestination(
     override val route: String,

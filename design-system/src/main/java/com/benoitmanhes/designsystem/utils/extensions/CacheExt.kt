@@ -3,6 +3,7 @@ package com.benoitmanhes.designsystem.utils.extensions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.res.Colors
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIExploreCache
@@ -19,8 +20,8 @@ private fun Cache.getCachePaletteColor(): Pair<Color, Color> = when (type) {
 fun UICacheDetails.getPrimaryColor(): Color {
     val (availableColor, startedColor) = cache.getCachePaletteColor()
     return when (status) {
-        UICacheDetails.Status.Owned -> Colors.BlackOlive
-        is UICacheDetails.Status.Found -> Colors.Marigold
+        UICacheDetails.Status.Owned -> CTTheme.color.cacheOwned
+        is UICacheDetails.Status.Found -> CTTheme.color.cacheFound
         UICacheDetails.Status.Available -> availableColor
         is UICacheDetails.Status.Started -> startedColor
     }
@@ -30,8 +31,8 @@ fun UICacheDetails.getPrimaryColor(): Color {
 fun UIExploreCache.getPrimaryColor(): Color {
     val (availableColor, startedColor) = cache.getCachePaletteColor()
     return when (userStatus) {
-        UIExploreCache.CacheUserStatus.Owned -> Colors.BlackOlive
-        UIExploreCache.CacheUserStatus.Found -> Colors.Marigold
+        UIExploreCache.CacheUserStatus.Owned -> CTTheme.color.cacheOwned
+        UIExploreCache.CacheUserStatus.Found -> CTTheme.color.cacheFound
         UIExploreCache.CacheUserStatus.Started -> startedColor
         else -> availableColor
     }

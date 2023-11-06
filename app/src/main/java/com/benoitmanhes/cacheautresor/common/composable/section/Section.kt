@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
 import com.benoitmanhes.designsystem.utils.ComposableContent
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun Section(

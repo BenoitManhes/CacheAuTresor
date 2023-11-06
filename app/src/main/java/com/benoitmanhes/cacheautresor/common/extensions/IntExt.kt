@@ -1,7 +1,7 @@
 package com.benoitmanhes.cacheautresor.common.extensions
 
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import kotlin.math.abs
 import kotlin.math.roundToInt
 

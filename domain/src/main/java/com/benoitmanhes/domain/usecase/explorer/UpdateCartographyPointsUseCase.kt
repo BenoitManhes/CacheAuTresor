@@ -12,13 +12,13 @@ class UpdateCartographyPointsUseCase @Inject constructor(
     private val explorerRepository: ExplorerRepository,
     private val progressRepository: CacheUserProgressRepository,
 ) : CTUseCase() {
-    suspend operator fun invoke(explorerId: String, cacheIds: List<String>, isMyExplorer: Boolean): Unit = runCatch {
-        val explorer = explorerRepository.getExplorerFetched(explorerId = explorerId, remoteOnly = true)
+    suspend operator fun invoke(explorerId: String, cacheIds: List<String>): Unit = runCatch {
+        val explorer = explorerRepository.getExplorerFetched(explorerId = explorerId)
             ?: throw CTDomainError.Code.EXPLORER_NOT_FOUND.error()
-        this(explorer = explorer, cacheIds = cacheIds, isMyExplorer = isMyExplorer)
+        this(explorer = explorer, cacheIds = cacheIds)
     }
 
-    suspend operator fun invoke(explorer: Explorer, cacheIds: List<String>, isMyExplorer: Boolean): Unit = runCatch {
+    suspend operator fun invoke(explorer: Explorer, cacheIds: List<String>): Unit = runCatch {
         val cachePoints = cacheIds.associateWith { cacheId ->
             progressRepository.getAllUserProgressByCache(cacheId).mapNotNull { it.ptsWin }.sum()
         }
@@ -29,7 +29,6 @@ class UpdateCartographyPointsUseCase @Inject constructor(
         if (explorer.cachesMap != mapUpdated) {
             explorerRepository.saveExplorer(
                 explorer = explorer.copy(cachesMap = mapUpdated),
-                remoteOnly = !isMyExplorer,
             )
         }
     }

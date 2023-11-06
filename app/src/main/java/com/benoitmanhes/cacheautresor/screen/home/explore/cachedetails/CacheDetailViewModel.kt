@@ -14,7 +14,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
 import com.benoitmanhes.cacheautresor.common.extensions.mediumFormat
-import com.benoitmanhes.cacheautresor.common.extensions.textSpec
+import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
 import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
 import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
@@ -50,7 +50,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress

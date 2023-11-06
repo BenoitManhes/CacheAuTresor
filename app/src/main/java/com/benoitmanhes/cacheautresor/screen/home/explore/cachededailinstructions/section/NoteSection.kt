@@ -21,7 +21,7 @@ import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryBu
 import com.benoitmanhes.designsystem.res.icons.iconpack.Add
 import com.benoitmanhes.designsystem.res.icons.iconpack.Compass
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @OptIn(ExperimentalMaterialApi::class)

@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.benoitmanhes.designsystem.molecule.snackbar.ErrorSnackbar
 import com.benoitmanhes.designsystem.molecule.snackbar.InfoSnackbar
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun SnackbarView(

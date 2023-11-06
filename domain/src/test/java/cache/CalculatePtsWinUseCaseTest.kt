@@ -8,6 +8,7 @@ import org.junit.Test
 import utils.CacheMock
 import utils.CacheUserProgressMock
 import kotlin.test.assertEquals
+import com.benoitmanhes.domain.model.Cache
 
 class CalculatePtsWinUseCaseTest {
 
@@ -30,7 +31,7 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts classical 1,1 no clue`() {
-        val cache = CacheMock.classical(
+        val cache = CacheMock.mock(
             ground = 1f,
             difficulty = 1f,
             finalStepRef = finalStepRef,
@@ -44,7 +45,7 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts classical 1,1 with clue`() {
-        val cache = CacheMock.classical(
+        val cache = CacheMock.mock(
             ground = 1f,
             difficulty = 1f,
             finalStepRef = finalStepRef,
@@ -58,7 +59,7 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts classical 2,3 no clue`() {
-        val cache = CacheMock.classical(
+        val cache = CacheMock.mock(
             ground = 2f,
             difficulty = 3f,
             finalStepRef = finalStepRef,
@@ -72,7 +73,7 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts classical 4,5 with clue`() {
-        val cache = CacheMock.classical(
+        val cache = CacheMock.mock(
             ground = 4.5f,
             difficulty = 5f,
             finalStepRef = finalStepRef,
@@ -86,11 +87,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts mystery 3,1 no clue`() {
-        val cache = CacheMock.mystery(
+        val cache = CacheMock.mock(
             ground = 3f,
             difficulty = 1.5f,
             finalStepRef = finalStepRef,
-            enigmaStepRef = enigmaStepRef,
+            type = Cache.Type.Mystery(enigmaStepRef),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = setOf(),
@@ -101,11 +102,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts mystery 5,5 enigma clue`() {
-        val cache = CacheMock.mystery(
+        val cache = CacheMock.mock(
             ground = 5f,
             difficulty = 5f,
             finalStepRef = finalStepRef,
-            enigmaStepRef = enigmaStepRef,
+            type = Cache.Type.Mystery(enigmaStepRef),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = setOf(enigmaStepRef),
@@ -116,11 +117,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts mystery 1,3 full clue`() {
-        val cache = CacheMock.mystery(
+        val cache = CacheMock.mock(
             ground = 1f,
             difficulty = 3.5f,
             finalStepRef = finalStepRef,
-            enigmaStepRef = enigmaStepRef,
+            type = Cache.Type.Mystery(enigmaStepRef),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = setOf(enigmaStepRef, finalStepRef),
@@ -131,11 +132,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts coop 2,2 no clue`() {
-        val cache = CacheMock.coop(
+        val cache = CacheMock.mock(
             ground = 2f,
             difficulty = 2f,
             finalStepRef = finalStepRef,
-            crewStepRefs = crewStepRefs,
+            type = Cache.Type.Coop(crewStepRefs),
         )
         val userProgress = CacheUserProgressMock.mock(
             coopMemberRef = crewPosition,
@@ -147,11 +148,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts coop 2,2 one clue`() {
-        val cache = CacheMock.coop(
+        val cache = CacheMock.mock(
             ground = 2f,
             difficulty = 2f,
             finalStepRef = finalStepRef,
-            crewStepRefs = crewStepRefs,
+            type = Cache.Type.Coop(crewStepRefs),
         )
         val userProgress = CacheUserProgressMock.mock(
             coopMemberRef = crewPosition,
@@ -163,11 +164,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts coop 2,2 full clue`() {
-        val cache = CacheMock.coop(
+        val cache = CacheMock.mock(
             ground = 2f,
             difficulty = 2f,
             finalStepRef = finalStepRef,
-            crewStepRefs = crewStepRefs,
+            type = Cache.Type.Coop(crewStepRefs),
         )
         val userProgress = CacheUserProgressMock.mock(
             coopMemberRef = crewPosition,
@@ -179,11 +180,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts piste 3,1 no clue`() {
-        val cache = CacheMock.piste(
+        val cache = CacheMock.mock(
             ground = 3f,
             difficulty = 1.5f,
             finalStepRef = finalStepRef,
-            intermediaryStepRefs = intermediateStep,
+            type = Cache.Type.Piste(intermediateStep),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = emptySet(),
@@ -194,11 +195,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts piste 3,1 clue final`() {
-        val cache = CacheMock.piste(
+        val cache = CacheMock.mock(
             ground = 3f,
             difficulty = 1.5f,
             finalStepRef = finalStepRef,
-            intermediaryStepRefs = intermediateStep,
+            type = Cache.Type.Piste(intermediateStep),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = setOf(finalStepRef),
@@ -209,11 +210,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts piste 3,1 clue mix`() {
-        val cache = CacheMock.piste(
+        val cache = CacheMock.mock(
             ground = 3f,
             difficulty = 1.5f,
             finalStepRef = finalStepRef,
-            intermediaryStepRefs = intermediateStep,
+            type = Cache.Type.Piste(intermediateStep),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = setOf(finalStepRef, intermediateStep[0], intermediateStep[2]),
@@ -224,11 +225,11 @@ class CalculatePtsWinUseCaseTest {
 
     @Test
     fun `calculate pts piste 3,1 clue full`() {
-        val cache = CacheMock.piste(
+        val cache = CacheMock.mock(
             ground = 3f,
             difficulty = 1.5f,
             finalStepRef = finalStepRef,
-            intermediaryStepRefs = intermediateStep,
+            type = Cache.Type.Piste(intermediateStep),
         )
         val userProgress = CacheUserProgressMock.mock(
             clueUnlockedStepRef = intermediateStep.toSet() + finalStepRef,

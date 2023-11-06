@@ -5,7 +5,7 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.designsystem.molecule.row.CTRow
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 object CacheCharacteristicsSection {
     fun item(scope: LazyListScope, characteristics: List<CTRowState>) {

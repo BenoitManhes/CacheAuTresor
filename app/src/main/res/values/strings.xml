@@ -102,4 +102,12 @@
     <string name="cacheDetail_cacheFinish_alertDialog_message">You have finish the cache **%s**</string>
     <string name="cacheDetail_cacheFinish_alertDialog_action">Nice!</string>
     <string name="cacheDetail_cacheFinish_alertDialog_pts">+ %d pts</string>
+    <string name="common_pointsUnit">pts</string>
+    <plurals name="common_cache">
+        <item quantity="one">cache</item>
+        <item quantity="other">caches</item>
+    </plurals>
+    <string name="profile_explorationSection_title">Exploration</string>
+    <string name="profile_cartographySection_title">Cartography</string>
+    <string name="profile_logoutButton">Log out</string>
 </resources>

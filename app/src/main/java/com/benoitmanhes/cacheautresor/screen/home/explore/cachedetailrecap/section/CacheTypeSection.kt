@@ -17,7 +17,7 @@ import com.benoitmanhes.designsystem.molecule.sticker.CTSticker
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun CacheTypeSection(

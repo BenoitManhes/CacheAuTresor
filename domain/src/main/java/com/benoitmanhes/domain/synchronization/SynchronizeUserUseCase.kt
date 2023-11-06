@@ -22,11 +22,10 @@ class SynchronizeUserUseCase @Inject constructor(
         val myExplorerId = getMyExplorerIdUseCase()
         val myExplorer = explorerRepository.getExplorerFetched(myExplorerId) ?: throw CTDomainError.Code.EXPLORER_NOT_FOUND.error()
         if (syncRepository.needToSyncUserPoints()) {
-            updateExplorationPointsUseCase(explorer = myExplorer, isMyExplorer = true)
+            updateExplorationPointsUseCase(explorer = myExplorer)
             updateCartographyPointsUseCase(
                 explorer = myExplorer,
                 cacheIds = myExplorer.cachesMap.keys.toList(),
-                isMyExplorer = true
             )
             syncRepository.resetLastSyncUserPoints()
         }

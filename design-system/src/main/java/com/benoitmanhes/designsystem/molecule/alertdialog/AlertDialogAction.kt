@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.CTSecondaryButton
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 data class AlertDialogAction(
     val text: TextSpec,

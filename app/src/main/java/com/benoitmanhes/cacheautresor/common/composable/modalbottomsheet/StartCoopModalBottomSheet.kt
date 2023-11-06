@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.cacheautresor.common.extensions.textSpec
+import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetState
 import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 data class StartCoopModalBottomSheet(
     val crewPositions: Set<String>,

@@ -24,6 +24,7 @@ object Dimens {
         val none: Dp = 0.dp
         val small: Dp = 2.dp
         val medium: Dp = 8.dp
+        val large: Dp = 12.dp
     }
 
     object Font {
@@ -69,7 +70,7 @@ object Dimens {
         val icon: IconSize,
         val button: Dp,
     ) {
-        Large(icon = IconSize.Large, button = IconSlotSize.Large.container)
+        Large(icon = IconSize.Large, button = 48.dp)
     }
 
     enum class IconButtonSize(
@@ -95,7 +96,7 @@ object Dimens {
         val container: Dp,
     ) {
         Small(icon = IconSize.Small, container = 24.dp),
-        Medium(icon = IconSize.Medium, container = 36.dp),
+        Medium(icon = IconSize.Medium, container = 40.dp),
         Large(icon = IconSize.Large, container = 48.dp),
         Huge(icon = IconSize.Huge, container = 64.dp),
     }

@@ -34,7 +34,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Filter
 import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -12,7 +12,7 @@ import com.benoitmanhes.cacheautresor.screen.home.create.CreateScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.ExploreRoute
 import com.benoitmanhes.cacheautresor.screen.home.instruments.InstrumentScreen
 import com.benoitmanhes.cacheautresor.screen.home.news.NewsScreen
-import com.benoitmanhes.cacheautresor.screen.home.profile.ProfileScreen
+import com.benoitmanhes.cacheautresor.screen.home.profile.ProfileRoute
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 
@@ -39,7 +39,7 @@ fun HomeNavigation(
         }
         composable(HomeDestination.Create.route) { CreateScreen() }
         composable(HomeDestination.Instruments.route) { InstrumentScreen() }
-        composable(HomeDestination.Profile.route) { ProfileScreen(Modifier.padding(scaffoldPadding)) }
+        composable(HomeDestination.Profile.route) { ProfileRoute(scaffoldPadding) }
 
         exploreNavGraph(navController)
     }

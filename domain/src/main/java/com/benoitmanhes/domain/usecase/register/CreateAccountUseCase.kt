@@ -46,6 +46,6 @@ class CreateAccountUseCase @Inject constructor(
         explorerId = Util.autoId(),
         name = explorerName,
         cachesMap = emptyMap(),
-        explorationPts = 0,
+        cachesFoundMap = emptyMap(),
     )
 }

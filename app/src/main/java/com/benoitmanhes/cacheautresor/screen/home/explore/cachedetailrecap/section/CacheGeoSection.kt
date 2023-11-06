@@ -7,7 +7,7 @@ import com.benoitmanhes.designsystem.molecule.row.CTRowState
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.Location
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.domain.model.Coordinates
 
 object CacheGeoSection {

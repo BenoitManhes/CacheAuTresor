@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
-import com.benoitmanhes.cacheautresor.common.extensions.textSpec
+import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.CTImage
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
@@ -24,7 +24,7 @@ import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryBu
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.CacheInstructions
 import com.benoitmanhes.domain.model.InstructionContent

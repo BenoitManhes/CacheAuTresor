@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="bottomBar_home">Accueil</string>
     <string name="bottomBar_favourites">Favoris</string>
     <string name="bottomBar_explore">Explorer</string>
@@ -103,4 +103,13 @@
     <string name="cacheDetail_cacheFinish_alertDialog_message">Vous avez terminé la cache **%s**</string>
     <string name="cacheDetail_cacheFinish_alertDialog_action">Super !</string>
     <string name="cacheDetail_cacheFinish_alertDialog_pts">+ %d pts</string>
+    <string name="common_pointsUnit">pts</string>
+    <plurals name="common_cache">
+        <item quantity="one" tools:ignore="ImpliedQuantity">cache</item>
+        <item quantity="other">caches</item>
+        <item quantity="many">caches</item>
+    </plurals>
+    <string name="profile_explorationSection_title">Exploration</string>
+    <string name="profile_cartographySection_title">Cartographie</string>
+    <string name="profile_logoutButton">Déconnexion</string>
 </resources>

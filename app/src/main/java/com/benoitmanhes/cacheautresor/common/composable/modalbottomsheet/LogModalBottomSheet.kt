@@ -21,7 +21,7 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.ButtonStatus
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 data class LogModalBottomSheet(
     val message: TextSpec,

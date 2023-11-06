@@ -2,7 +2,7 @@ package com.benoitmanhes.cacheautresor.common.composable.alertdialog
 
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.designsystem.molecule.alertdialog.AlertDialogAction
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 object CommonAlertDialogAction {
     fun no(onClick: () -> Unit): AlertDialogAction {

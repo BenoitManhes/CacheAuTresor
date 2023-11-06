@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.Dp
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerExtraSmall
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

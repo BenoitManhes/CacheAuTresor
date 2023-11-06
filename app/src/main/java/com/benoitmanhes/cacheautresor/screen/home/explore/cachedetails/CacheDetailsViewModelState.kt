@@ -14,7 +14,7 @@ import com.benoitmanhes.designsystem.molecule.card.InfoCardState
 import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
 import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.domain.model.Coordinates
 
 sealed interface CacheDetailsViewModelState {

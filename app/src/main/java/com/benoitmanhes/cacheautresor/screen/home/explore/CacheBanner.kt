@@ -14,7 +14,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.designsystem.molecule.caches.CacheCard
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.LocalColor
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 

@@ -35,26 +35,9 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-@Composable
-fun CTPrimaryButton(
-    state: PrimaryButtonState,
-    modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.primary,
-) {
-    CTPrimaryButton(
-        text = state.text,
-        onClick = state.onClick,
-        modifier = modifier,
-        type = state.type,
-        status = state.status,
-        color = color,
-        options = state.options,
-    )
-}
 
 @Composable
 fun CTPrimaryButton(

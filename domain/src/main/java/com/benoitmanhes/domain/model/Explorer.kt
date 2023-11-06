@@ -6,5 +6,5 @@ data class Explorer(
     val explorerId: String,
     val name: String,
     val cachesMap: Map<String, Int>,
-    val explorationPts: Int,
+    val cachesFoundMap: Map<String, Int>,
 ) : Model

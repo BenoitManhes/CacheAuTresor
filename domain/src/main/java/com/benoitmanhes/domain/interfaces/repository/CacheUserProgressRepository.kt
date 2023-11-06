@@ -10,4 +10,5 @@ interface CacheUserProgressRepository {
     suspend fun getAllUserProgressRemote(explorerId: String, remoteOnly: Boolean): List<CacheUserProgress>
     suspend fun getAllUserProgressByCache(creatorId: String): List<CacheUserProgress>
     suspend fun saveCacheUserProgress(userProgress: CacheUserProgress)
+    suspend fun fetchCacheUserProgress(explorerId: String, cacheId: String)
 }

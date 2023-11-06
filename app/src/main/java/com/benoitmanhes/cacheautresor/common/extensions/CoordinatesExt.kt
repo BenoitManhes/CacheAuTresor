@@ -2,7 +2,7 @@ package com.benoitmanhes.cacheautresor.common.extensions
 
 import android.location.Location
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.domain.model.Coordinates
 import org.osmdroid.api.IGeoPoint
 import org.osmdroid.util.GeoPoint

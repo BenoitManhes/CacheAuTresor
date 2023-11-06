@@ -10,7 +10,7 @@ import com.benoitmanhes.designsystem.molecule.alertdialog.AlertDialogAction
 import com.benoitmanhes.designsystem.molecule.alertdialog.CTAlertDialog
 import com.benoitmanhes.designsystem.res.icons.iconpack.DoneStamp
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.TextSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class StepCompleteAlertDialog(

@@ -10,7 +10,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.designsystem.atoms.CTDivider
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.CTPrimaryButton
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
 import com.benoitmanhes.designsystem.theme.CTTheme
 
@@ -32,17 +31,17 @@ fun BottomActionBar(
                     .padding(CTTheme.spacing.large),
                 horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
             ) {
-                CTPrimaryButton(
-                    modifier = Modifier.weight(1f),
-                    state = state.firstButtonState.copy(type = PrimaryButtonType.COLORED)
-                )
-
-                state.secondButtonState?.let { buttonState ->
-                    CTPrimaryButton(
+                state.firstButtonState
+                    .copy(type = PrimaryButtonType.COLORED)
+                    .Content(
                         modifier = Modifier.weight(1f),
-                        state = buttonState.copy(type = PrimaryButtonType.OUTLINED)
                     )
-                }
+
+                state.secondButtonState
+                    ?.copy(type = PrimaryButtonType.OUTLINED)
+                    ?.Content(
+                        modifier = Modifier.weight(1f),
+                    )
             }
         }
     }
