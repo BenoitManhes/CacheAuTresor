@@ -10,4 +10,5 @@ interface CacheUserProgressLocaleDataSource {
     suspend fun saveCacheUserProgress(userProgress: CacheUserProgress)
     suspend fun saveCacheUserProgress(userProgressList: List<CacheUserProgress>)
     suspend fun deleteCacheUserProgress(cacheId: String, explorerId: String)
+    suspend fun clearCacheUserProgress()
 }

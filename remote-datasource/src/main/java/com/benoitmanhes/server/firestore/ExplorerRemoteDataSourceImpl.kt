@@ -31,5 +31,7 @@ class ExplorerRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getExplorer(explorerId: String): Explorer? = getFSObject(explorerId)
 
+    override suspend fun getAllExplorers(): List<Explorer> = getAllFSObject()
+
     override suspend fun deleteExplorer(explorerId: String): Unit = deleteFSObject(explorerId)
 }

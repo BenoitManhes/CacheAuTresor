@@ -9,7 +9,9 @@ import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserData
 import com.benoitmanhes.domain.model.CacheUserProgress
+import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.uimodel.UICacheDetails
+import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.CTUseCase
 import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
 import kotlinx.coroutines.flow.Flow
@@ -34,19 +36,24 @@ class GetSelectedUICacheUseCase @Inject constructor(
             cacheUserDataRepository.getCacheUserDataFlow(cacheId).map { it ?: CacheUserData(cacheId) },
             getUserProgressUseCase(cacheId),
         ) { userData, userProgress ->
+            val status = getCacheDetailsUserStatus(
+                explorerId = getMyExplorerIdUseCase(),
+                cache = cache,
+                userProgress = userProgress,
+            )
+
             val uiCacheDetails = UICacheDetails(
                 cache = cache,
                 explorerName = cache.getCreatorName(),
-                status = getCacheDetailsUserStatus(
-                    explorerId = getMyExplorerIdUseCase(),
-                    cache = cache,
-                    userProgress = userProgress,
-                ),
+                status = status,
                 steps = getCacheStepsRefs(cache, userProgress).map {
-                    getUIStepsUseCase(it, cache, userProgress)
+                    getUIStepsUseCase(it, cache, userProgress, status.cacheUserStatus)
+                }.filterNot {
+                    it.status == UIStep.Status.Lock && it.type == UIStep.Type.Final && status.cacheUserStatus != CacheUserStatus.Available
                 },
                 userData = userData,
             )
+
             emit(CTResult.Success(uiCacheDetails))
         }.collect()
     }
@@ -55,9 +62,13 @@ class GetSelectedUICacheUseCase @Inject constructor(
         explorerRepository.getExplorer(this.creatorId)?.name
     }
 
-    private fun getCacheDetailsUserStatus(explorerId: String, cache: Cache, userProgress: CacheUserProgress?) = when {
+    private fun getCacheDetailsUserStatus(
+        explorerId: String,
+        cache: Cache,
+        userProgress: CacheUserProgress?,
+    ): UICacheDetails.Status = when {
         cache.creatorId == explorerId -> UICacheDetails.Status.Owned
-        userProgress == null -> UICacheDetails.Status.Available
+        userProgress?.currentStepRef == null -> UICacheDetails.Status.Available
         userProgress.foundDate != null -> UICacheDetails.Status.Found(
             foundDate = userProgress.foundDate,
             pts = userProgress.ptsWin

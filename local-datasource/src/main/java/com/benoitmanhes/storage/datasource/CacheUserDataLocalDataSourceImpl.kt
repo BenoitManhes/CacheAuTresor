@@ -31,4 +31,8 @@ class CacheUserDataLocalDataSourceImpl @Inject constructor(
     override suspend fun deleteCacheUserData(cacheId: String): Unit = withContext(Dispatchers.IO) {
         cacheUserDataDao.delete(cacheId)
     }
+
+    override suspend fun clearCacheUserData(): Unit = withContext(Dispatchers.IO) {
+        cacheUserDataDao.clear()
+    }
 }

@@ -19,6 +19,9 @@ interface CacheUserProgressDao {
     @Query("DELETE FROM `cache-user-progress` WHERE cacheId = :cacheId AND explorerId = :explorerId")
     fun delete(explorerId: String, cacheId: String)
 
+    @Query("DELETE FROM `cache-user-progress`")
+    suspend fun clear()
+
     @Query("SELECT * FROM `cache-user-progress` WHERE cacheId = :cacheId AND explorerId = :explorerId")
     suspend fun findWithId(explorerId: String, cacheId: String): RoomCacheUserProgress?
 

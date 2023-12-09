@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 
-import android.content.Context
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -32,19 +31,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.benoitmanhes.cacheautresor.common.maps.CTMapView
+import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBar
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
+import com.benoitmanhes.cacheautresor.common.maps.CTMapView
 import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.CacheDetailInstructionsScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
-import com.benoitmanhes.cacheautresor.screen.home.explore.refresh
-import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.CTModalBottomSheetView
+import com.benoitmanhes.cacheautresor.screen.home.explore.explore.refresh
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
@@ -69,7 +69,6 @@ import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CacheDetailsRoute(
     onNavigateBack: () -> Unit,
@@ -77,7 +76,6 @@ fun CacheDetailsRoute(
     viewModel: CacheDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val logModalState by viewModel.logModalState.collectAsState()
     val navigation by viewModel.navigation.collectAsState()
 
     LaunchedEffect(key1 = navigation) {
@@ -90,10 +88,9 @@ fun CacheDetailsRoute(
 
     CompositionLocalProvider(
         LocalColor provides LocalColor.current.copy(
-            primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.cacheColor?.invoke(),
+            primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.cacheColor,
         )
     ) {
-        CTModalBottomSheetView(modalBottomSheetState = logModalState)
         CTScreenWrapper {
             CacheDetailsScreen(
                 onNavigateBack = onNavigateBack,
@@ -109,7 +106,6 @@ private fun CacheDetailsScreen(
     onNavigateBack: () -> Unit,
     uiState: CacheDetailsViewModelState,
 ) {
-    val context: Context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val mapViewState = rememberMapViewWithLifecycle()
     val bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
@@ -159,53 +155,52 @@ private fun CacheDetailsScreen(
             )
             SpacerMedium()
 
-            Box(modifier = Modifier.weight(1f)) {
-                BottomSheetScaffold(
-                    scaffoldState = bottomSheetScaffoldState,
-                    sheetPeekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
-                    sheetContent = {
-                        Column(
-                            modifier = Modifier.background(CTTheme.color.background),
-                        ) {
-                            // Header
-                            data?.headerState?.let {
-                                CacheDetailHeader(uiState.headerState) {
-                                    coroutineScope.launch {
-                                        bottomSheetState.expand()
-                                    }
-                                }
-                            }
-
-                            // Body
-                            when (uiState) {
-                                is CacheDetailsViewModelState.Data -> {
-                                    DataContent(
-                                        uiState = uiState,
-                                        recapLazyListState = recapLazyListState,
-                                        instructionsLazyListState = instructionsLazyListState,
-                                    )
-                                }
-
-                                CacheDetailsViewModelState.Initialize -> {
-                                    InitContent()
-                                }
-
-                                is CacheDetailsViewModelState.Empty -> {
-                                    EmptyContent(uiState = uiState)
+            BottomSheetScaffold(
+                scaffoldState = bottomSheetScaffoldState,
+                sheetPeekHeight = AppDimens.CacheDetail.bottomSheetHeaderHeight,
+                sheetContent = {
+                    Column(
+                        modifier = Modifier.background(CTTheme.color.background),
+                    ) {
+                        // Header
+                        data?.headerState?.let {
+                            CacheDetailHeader(uiState.headerState) {
+                                coroutineScope.launch {
+                                    bottomSheetState.expand()
                                 }
                             }
                         }
-                    },
-                    sheetDragHandle = null,
-                    content = {},
-                )
-            }
 
-            data?.bottomBarState?.let { _bottomBarState ->
-                BottomActionBar(
-                    state = _bottomBarState,
-                )
-            }
+                        // Body
+                        when (uiState) {
+                            is CacheDetailsViewModelState.Data -> {
+                                DataContent(
+                                    uiState = uiState,
+                                    recapLazyListState = recapLazyListState,
+                                    instructionsLazyListState = instructionsLazyListState,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
+
+                            CacheDetailsViewModelState.Initialize -> {
+                                InitContent()
+                            }
+
+                            is CacheDetailsViewModelState.Empty -> {
+                                EmptyContent(uiState = uiState)
+                            }
+                        }
+
+                        data?.bottomBarState?.let { _bottomBarState ->
+                            BottomActionBar(
+                                state = _bottomBarState,
+                            )
+                        }
+                    }
+                },
+                sheetDragHandle = null,
+                content = {},
+            )
         }
 
         AnimatedNullableVisibility(
@@ -230,6 +225,7 @@ private fun DataContent(
     uiState: CacheDetailsViewModelState.Data,
     recapLazyListState: LazyListState,
     instructionsLazyListState: LazyListState,
+    modifier: Modifier = Modifier,
 ) {
     val pageCount = remember(uiState.tabSelectorState?.items) {
         uiState.tabSelectorState?.items?.size ?: 1
@@ -241,8 +237,8 @@ private fun DataContent(
     }
 
     Column(
-        Modifier
-            .fillMaxSize()
+        modifier
+            .fillMaxWidth()
             .animateContentSize(),
     ) {
         uiState.tabSelectorState?.let {
@@ -258,6 +254,7 @@ private fun DataContent(
             pageCount = pageCount,
             state = pagerState,
             userScrollEnabled = false,
+            beyondBoundsPageCount = 1,
         ) { page ->
             when (page) {
                 0 -> {
@@ -322,6 +319,10 @@ private fun MapView.setupMap(
     // Setup my location
     val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this).apply {
         enableMyLocation()
+        setPersonIcon(
+            ContextCompat.getDrawable(context, R.drawable.marker_me)?.toBitmap()
+        )
+        setPersonAnchor(0.5f, 0.5f)
     }
     overlays.add(locationOverlay)
 

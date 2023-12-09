@@ -1,20 +1,20 @@
 <resources>
-    <string name="app_name">Cache Au Trésor</string>
+    <string name="app_name">Compass</string>
     <string name="bottomBar_home">Home</string>
     <string name="bottomBar_favourites">Favourites</string>
     <string name="bottomBar_explore">Explore</string>
-    <string name="bottomBar_instruments">Instruments</string>
+    <string name="bottomBar_encyclopedia">Encyclopedia</string>
     <string name="bottomBar_profile">Profile</string>
     <string name="loginScreen_login_emailTextField_label">Identifier</string>
     <string name="loginScreen_login_passwordTextField_label">Password</string>
     <string name="loginScreen_loginButton_label">Login</string>
-    <string name="loginScreen_registerButton_label">Create my account</string>
+    <string name="loginScreen_registerButton_label">Create an account</string>
     <string name="logenScreen_register_emailTextField_label">Email</string>
     <string name="logenScreen_register_passwordTextField_label">New password</string>
     <string name="orSeparator_label">or</string>
     <string name="bottomBar_news">News</string>
     <string name="bottomBar_create">Create</string>
-    <string name="loginScreen_register_codeText_label">Code</string>
+    <string name="loginScreen_register_codeText_label">Activation code</string>
     <string name="accountCreation_topBar_title">Create your account</string>
     <string name="accountCreation_name_label">Explorater name</string>
     <string name="accountCreation_email_label">Email</string>
@@ -110,4 +110,32 @@
     <string name="profile_explorationSection_title">Exploration</string>
     <string name="profile_cartographySection_title">Cartography</string>
     <string name="profile_logoutButton">Log out</string>
+    <string name="profile_logoutModal_title">Log out</string>
+    <string name="profile_logoutModal_message">You are about to disconnect. This action will cause the notes to be lost.\n\nDo you confirm?</string>
+    <string name="profile_logoutModal_confirmAction">I log out</string>
+    <string name="cacheDetail_clueModal_title">Unlock a clue</string>
+    <string name="cacheDetail_clueModal_message">You can unlock a clue for this step. However, the cache bring you less point.\n\nDo you confirm ?</string>
+    <string name="common_finallyNo">Finally .. no</string>
+    <string name="cacheDetail_clueModal_confirmMessage">I want a clue</string>
+    <string name="cacheDetail_startCoopModal_title">Crew position choice</string>
+    <string name="cacheDetail_startCoopModal_message">This is a **cooperative** cache. It requires a crew of %d members, each with a different role, to solve it.\n\nWhat position do you want to occupy in the crew?</string>
+    <string name="locationModal_title">Authorise geolocation</string>
+    <string
+        name="locationModal_message">To locate yourself on the map and find the caches closest to you, you need to activate geolocation.\n\nTo do this, authorise the position in the application settings.</string>
+    <string name="locationModal_confirmAction">Open app settings</string>
+    <string name="common_refuse">Refuse</string>
+    <string name="encyclopedia_lock_message">The encyclopedia is not still availlable</string>
+    <string name="create_lock_message">You\'re not yet experienced enough to unlock cartography</string>
+    <string name="news_eliteCard_rankButton">Rank</string>
+    <string name="news_eliteExplorersCard_title">Elite explorers</string>
+    <string name="news_eliteCartographersCard_title">Elite cartographers</string>
+    <string name="news_title">News</string>
+    <string name="rankModal_exploraters_title">Exploraters</string>
+    <string name="rankModal_cartographers_title">Cartographers</string>
+    <string name="explore_tooFarDialog_title">Too far away!</string>
+    <string name="explore_tooFarDialog_message">To load the cache, you need to be close to its location.</string>
+    <string name="common_alertDialog_action_gotIt">Got it</string>
+    <string name="modalUnlock_title">Load the cache</string>
+    <string name="dialog_cacheUnlocked_title">Cache unlocked!</string>
+    <string name="dialog_cacheUnlocked_message">You have just unlocked the **%1$s** cache :\n\n**%2$s**</string>
 </resources>

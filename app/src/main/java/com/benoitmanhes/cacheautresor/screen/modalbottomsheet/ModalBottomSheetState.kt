@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 
 interface ModalBottomSheetState {
     val onDismiss: () -> Unit
+    val option: Set<ModalBottomSheetOption>
 
     @Composable
     fun Content(scope: ColumnScope, hide: () -> Unit)

@@ -21,6 +21,10 @@ object UiConstants {
         val animationDuration: Duration = 2.seconds
     }
 
+    object Shape {
+        const val mountainRatio: Float = 360f / 47f
+    }
+
     object Text {
         const val MaxLineSize: Int = 3
         const val RatioFontSizeReductionResponsiveText: Float = 0.9f

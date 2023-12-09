@@ -20,9 +20,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeRoot(
-    showErrorSnackBar: (errorMsg: String) -> Unit,
-) {
+fun HomeRoot() {
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
@@ -67,7 +65,6 @@ fun HomeRoot(
         HomeNavigation(
             navController = navController,
             scaffoldPadding = innerPadding,
-            showSnackbar = showErrorSnackBar,
         )
     }
 }
@@ -77,7 +74,7 @@ private object HomeRoot {
         HomeDestination.News,
         HomeDestination.Explore,
         HomeDestination.Create,
-        HomeDestination.Instruments,
+        HomeDestination.Encyclopedia,
         HomeDestination.Profile,
     )
 

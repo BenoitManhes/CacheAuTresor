@@ -5,6 +5,7 @@ import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress
+import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 import com.benoitmanhes.domain.usecase.CTUseCase
 import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
@@ -38,26 +39,25 @@ class GetAllUICachesUseCase @Inject constructor(
                         ptsWin = myCachesProgress.firstOrNull { it.cacheId == cache.cacheId }?.ptsWin,
                     )
                 }
-                .filter { it.userStatus != UIExploreCache.CacheUserStatus.Lock }
+                .filter { it.userStatus != CacheUserStatus.Hidden }
             emit(CTResult.Success(uiExploreCaches))
         }.collect {}
     }
 
-    private fun Cache.getUserStatus(explorerId: String, cachesProgress: List<CacheUserProgress>): UIExploreCache.CacheUserStatus {
+    private fun Cache.getUserStatus(explorerId: String, cachesProgress: List<CacheUserProgress>): CacheUserStatus {
         val cacheIdsFound = cachesProgress
             .filter { it.foundDate != null }
             .map { it.cacheId }
             .toSet()
-        val cacheStarted = cachesProgress
-            .map { it.cacheId }
-            .toSet()
+        val cacheProgress = cachesProgress.firstOrNull { it.cacheId == cacheId }
 
         return when {
-            explorerId == this.creatorId -> UIExploreCache.CacheUserStatus.Owned
-            cacheIdsFound.contains(this.cacheId) -> UIExploreCache.CacheUserStatus.Found
-            !cacheIdsFound.containsAll(this.cacheIdsRequired) -> UIExploreCache.CacheUserStatus.Lock
-            cacheStarted.contains(this.cacheId) -> UIExploreCache.CacheUserStatus.Started
-            else -> UIExploreCache.CacheUserStatus.Available
+            explorerId == this.creatorId -> CacheUserStatus.Owned
+            cacheProgress?.foundDate != null -> CacheUserStatus.Found
+            !cacheIdsFound.containsAll(this.cacheIdsRequired) -> CacheUserStatus.Hidden
+            cacheProgress == null -> CacheUserStatus.Locked
+            cacheProgress.currentStepRef != null -> CacheUserStatus.Started
+            else -> CacheUserStatus.Available
         }
     }
 

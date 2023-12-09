@@ -2,11 +2,14 @@ package com.benoitmanhes.designsystem.res.icons
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.benoitmanhes.designsystem.res.icons.iconpack.Add
+import com.benoitmanhes.designsystem.res.icons.iconpack.Book
+import com.benoitmanhes.designsystem.res.icons.iconpack.BookFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Box
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxBig
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMedium
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMicro
 import com.benoitmanhes.designsystem.res.icons.iconpack.BoxSmall
+import com.benoitmanhes.designsystem.res.icons.iconpack.Chevron
 import com.benoitmanhes.designsystem.res.icons.iconpack.Compass
 import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
@@ -29,13 +32,18 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
 import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
+import com.benoitmanhes.designsystem.res.icons.iconpack.Disconnect
 import com.benoitmanhes.designsystem.res.icons.iconpack.DoneStamp
 import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
+import com.benoitmanhes.designsystem.res.icons.iconpack.Etoile2
+import com.benoitmanhes.designsystem.res.icons.iconpack.Etoile4
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.res.icons.iconpack.Globe
+import com.benoitmanhes.designsystem.res.icons.iconpack.Key
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
+import com.benoitmanhes.designsystem.res.icons.iconpack.Rank
 
 object CTIconPack
 
@@ -49,17 +57,23 @@ val CTIconPack.CTIcons: List<ImageVector>
         }
         _CTIcons = listOf(
             Add,
+            Book,
+            BookFilled,
             Box,
             BoxBig,
             BoxMedium,
             BoxMicro,
             BoxSmall,
+            Chevron,
             Compass,
             Coop,
             Crown,
             Difficulty,
+            Disconnect,
             DoneStamp,
             Ensign,
+            Etoile2,
+            Etoile4,
             Explore,
             ExploreFilled,
             EyeClose,
@@ -70,6 +84,7 @@ val CTIconPack.CTIcons: List<ImageVector>
             Globe,
             Home,
             HomeFilled,
+            Key,
             Layer,
             Location,
             Logo,
@@ -82,6 +97,7 @@ val CTIconPack.CTIcons: List<ImageVector>
             PositionCurrent,
             Profile,
             ProfileFilled,
+            Rank,
             Search,
         )
         return _CTIcons!!

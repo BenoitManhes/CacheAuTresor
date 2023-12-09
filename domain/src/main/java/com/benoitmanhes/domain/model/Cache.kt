@@ -18,6 +18,8 @@ data class Cache(
     val tagIds: List<String>,
     val finalStepRef: String,
     val description: String,
+    val lockDescription: String,
+    val lockCode: String,
     val type: Type,
 ) : Model {
 

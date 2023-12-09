@@ -46,11 +46,11 @@ sealed interface TextSpec {
         @Suppress("SpreadOperator")
         @Composable
         override fun value(): AnnotatedString {
-            return AnnotatedString(stringResource(id, *args))
+            return AnnotatedString(stringResource(id, *args.resolveArgsContext()))
         }
 
         @Suppress("SpreadOperator")
-        override fun string(context: Context): String = context.getString(id, *args)
+        override fun string(context: Context): String = context.getString(id, *args.resolveArgsContext(context))
     }
 
     class PluralResources(
@@ -63,7 +63,7 @@ sealed interface TextSpec {
         @Suppress("SpreadOperator")
         @Composable
         override fun value(): AnnotatedString {
-            return AnnotatedString(pluralStringResource(id, count, *args))
+            return AnnotatedString(pluralStringResource(id, count, *args.resolveArgsContext()))
         }
 
         @Suppress("SpreadOperator")
@@ -80,6 +80,18 @@ sealed interface TextSpec {
                 val entry = this[idx]
                 if (entry is TextSpec) {
                     entry.string(context) // marked as compile error due to Java(?)
+                } else {
+                    this[idx]
+                }
+            }
+        }
+
+        @Composable
+        private fun Array<out Any>.resolveArgsContext(): Array<out Any> {
+            return Array(this.size) { idx ->
+                val entry = this[idx]
+                if (entry is TextSpec) {
+                    entry.value() ?: "" // marked as compile error due to Java(?)
                 } else {
                     this[idx]
                 }

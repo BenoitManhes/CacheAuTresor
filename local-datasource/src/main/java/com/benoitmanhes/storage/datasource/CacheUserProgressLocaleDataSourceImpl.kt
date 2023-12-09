@@ -51,4 +51,8 @@ class CacheUserProgressLocaleDataSourceImpl @Inject constructor(
     ) {
         cacheUserProgressDao.delete(cacheId = cacheId, explorerId = explorerId)
     }
+
+    override suspend fun clearCacheUserProgress(): Unit = withContext(Dispatchers.IO) {
+        cacheUserProgressDao.clear()
+    }
 }

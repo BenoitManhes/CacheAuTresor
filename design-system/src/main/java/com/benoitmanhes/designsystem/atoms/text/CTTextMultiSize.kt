@@ -1,6 +1,8 @@
 package com.benoitmanhes.designsystem.atoms.text
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,20 +14,24 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 fun CTTextMultiSize(
     firstText: TextSpec,
     secondText: TextSpec,
+    firstTextStyle: TextStyle = CTTheme.typography.header1,
+    secondTextStyle: TextStyle = CTTheme.typography.captionBold,
+    color: Color = CTTheme.color.onBackground,
 ) {
     val firstTextRaw = firstText.string()
     val secondTextRaw = secondText.string()
 
     val value = buildAnnotatedString {
-        withStyle(style = CTTheme.typography.header1.toSpanStyle()) {
+        withStyle(style = firstTextStyle.toSpanStyle()) {
             append(firstTextRaw)
         }
-        withStyle(style = CTTheme.typography.captionBold.toSpanStyle()) {
+        withStyle(style = secondTextStyle.toSpanStyle()) {
             append(secondTextRaw)
         }
     }
     CTTextView(
         text = TextSpec.RawAnnotatedString(value),
+        color = color,
     )
 }
 

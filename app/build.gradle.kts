@@ -90,6 +90,7 @@ dependencies {
     implementation(AndroidX.compose.foundation)
     implementation("com.google.accompanist:accompanist-navigation-animation:_")
     implementation(Google.accompanist.systemuicontroller)
+    implementation(Google.accompanist.pager.indicators)
     implementation(AndroidX.constraintLayout.compose)
 
     // Firebase

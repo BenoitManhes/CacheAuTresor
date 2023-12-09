@@ -9,6 +9,15 @@ object AppDimens {
         val instructionImageMaxHeight: Dp = 380.dp
     }
 
+    object LockScreen {
+        val imageSize: Dp = 180.dp
+    }
+
+    object Rank {
+        val rankTextWidth: Dp = 30.dp
+        val explorerImageSize: Dp = 30.dp
+    }
+
     object Profile {
         val explorerImageSize: Dp = 150.dp
     }

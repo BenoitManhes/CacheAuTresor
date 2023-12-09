@@ -11,4 +11,5 @@ interface CacheUserProgressRepository {
     suspend fun getAllUserProgressByCache(creatorId: String): List<CacheUserProgress>
     suspend fun saveCacheUserProgress(userProgress: CacheUserProgress)
     suspend fun fetchCacheUserProgress(explorerId: String, cacheId: String)
+    suspend fun clearCacheUserProgress()
 }

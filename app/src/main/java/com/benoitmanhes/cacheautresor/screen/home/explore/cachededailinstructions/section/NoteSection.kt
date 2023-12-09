@@ -12,6 +12,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import com.benoitmanhes.cacheautresor.BuildConfig
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
@@ -50,26 +51,28 @@ fun NoteSection(
             )
         }
         SpacerLarge()
-        Row(
-            modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
-            horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
-        ) {
-            SecondaryButtonState(
-                text = TextSpec.Resources(R.string.cacheDetail_addMarkerButton),
-                onClick = state.onClickMarker,
-                type = SecondaryButtonType.Outlined,
-                leadingIcon = CTTheme.icon.Add.toIconSpec(),
-            ).Composable(
-                modifier = Modifier.weight(1f),
-            )
-            SecondaryButtonState(
-                text = TextSpec.Resources(R.string.cacheDetail_instrumentsButton),
-                onClick = state.onClickMarker,
-                type = SecondaryButtonType.Outlined,
-                leadingIcon = CTTheme.icon.Compass.toIconSpec(),
-            ).Composable(
-                modifier = Modifier.weight(1f),
-            )
+        if (BuildConfig.DEBUG) {
+            Row(
+                modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
+                horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
+            ) {
+                SecondaryButtonState(
+                    text = TextSpec.Resources(R.string.cacheDetail_addMarkerButton),
+                    onClick = state.onClickMarker,
+                    type = SecondaryButtonType.Outlined,
+                    leadingIcon = CTTheme.icon.Add.toIconSpec(),
+                ).Composable(
+                    modifier = Modifier.weight(1f),
+                )
+                SecondaryButtonState(
+                    text = TextSpec.Resources(R.string.cacheDetail_instrumentsButton),
+                    onClick = state.onClickMarker,
+                    type = SecondaryButtonType.Outlined,
+                    leadingIcon = CTTheme.icon.Compass.toIconSpec(),
+                ).Composable(
+                    modifier = Modifier.weight(1f),
+                )
+            }
         }
     }
 }

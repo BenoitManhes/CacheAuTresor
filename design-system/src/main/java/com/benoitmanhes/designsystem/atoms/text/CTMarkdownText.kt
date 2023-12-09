@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import com.benoitmanhes.cacheautresor.designsystem.R
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.common.compose.text.TextSpec
 import dev.jeziellago.compose.markdowntext.MarkdownText
@@ -25,6 +26,7 @@ fun CTMarkdownText(
             linkColor = linkColor,
             style = style,
             onLinkClicked = onLinkClicked,
+            fontResource = R.font.league_spartan_regular,
         )
     }
 }

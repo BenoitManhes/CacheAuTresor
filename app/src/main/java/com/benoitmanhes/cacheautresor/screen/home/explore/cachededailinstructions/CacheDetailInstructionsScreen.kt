@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -22,6 +23,8 @@ fun CacheDetailInstructionsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
         state = lazyListState,
         contentPadding = PaddingValues(vertical = CTTheme.spacing.large),
     ) {

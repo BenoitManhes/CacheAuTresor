@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -27,6 +28,8 @@ fun CacheDetailRecapScreen(
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
         state = lazyListState,
         contentPadding = PaddingValues(vertical = CTTheme.spacing.large),
     ) {
@@ -48,9 +51,9 @@ fun CacheDetailRecapScreen(
         divider()
 
         CacheDescriptionSection.item(scope = this, description = uiState.description)
-        divider()
 
         uiState.characteristics.takeIf { it.isNotEmpty() }?.let {
+            divider()
             CacheCharacteristicsSection.item(scope = this, characteristics = uiState.characteristics)
         }
     }

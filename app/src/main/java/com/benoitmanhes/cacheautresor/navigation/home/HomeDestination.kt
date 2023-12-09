@@ -5,7 +5,6 @@ import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomNavBarItemEntry
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.Add
-import com.benoitmanhes.designsystem.res.icons.iconpack.Compass
 import com.benoitmanhes.designsystem.res.icons.iconpack.Explore
 import com.benoitmanhes.designsystem.res.icons.iconpack.ExploreFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Newspaper
@@ -13,6 +12,8 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Profile
 import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.res.icons.iconpack.Book
+import com.benoitmanhes.designsystem.res.icons.iconpack.BookFilled
 
 sealed class HomeDestination(
     override val route: String,
@@ -35,11 +36,11 @@ sealed class HomeDestination(
         unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Explore, contentDescription = null),
     )
 
-    object Instruments : HomeDestination(
-        route = "instruments",
-        labelText = TextSpec.Resources(R.string.bottomBar_instruments),
-        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Compass, contentDescription = null),
-        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Compass, contentDescription = null),
+    object Encyclopedia : HomeDestination(
+        route = "encyclopedia",
+        labelText = TextSpec.Resources(R.string.bottomBar_encyclopedia),
+        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.BookFilled, contentDescription = null),
+        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Book, contentDescription = null),
     )
 
     object Profile : HomeDestination(

@@ -20,4 +20,7 @@ interface CacheUserDataDao {
 
     @Query("SELECT * FROM `cache-user-data` WHERE cacheId = :cacheId")
     fun findWithIdFlow(cacheId: String): Flow<RoomCacheUserData?>
+
+    @Query("DELETE FROM `cache-user-data`")
+    suspend fun clear()
 }

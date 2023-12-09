@@ -25,6 +25,7 @@ private val LocalStroke: ProvidableCompositionLocal<Dimens.Stroke> = staticCompo
 private val LocalPadding: ProvidableCompositionLocal<CTPadding> = staticCompositionLocalOf { CTPadding }
 private val LocalSize: ProvidableCompositionLocal<Dimens.Size> = staticCompositionLocalOf { Dimens.Size }
 private val LocalIcon: ProvidableCompositionLocal<CTIconPack> = staticCompositionLocalOf { CTIconPack }
+private val LocalGradient: ProvidableCompositionLocal<CTGradient> = staticCompositionLocalOf { CTGradient }
 
 object CTTheme {
 
@@ -51,6 +52,9 @@ object CTTheme {
 
     val icon: CTIconPack
         @Composable get() = LocalIcon.current
+
+    val gradient: CTGradient
+        @Composable get() = LocalGradient.current
 }
 
 @Composable

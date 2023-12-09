@@ -6,6 +6,7 @@ import com.benoitmanhes.domain.interfaces.repository.StepRepository
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheStep
 import com.benoitmanhes.domain.model.CacheUserProgress
+import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.uimodel.UIStep
 import javax.inject.Inject
 
@@ -16,6 +17,7 @@ class GetUIStepsUseCase @Inject constructor(
         stepId: String,
         cache: Cache,
         userProgress: CacheUserProgress?,
+        cacheUserStatus: CacheUserStatus,
     ): UIStep {
         val step = stepRepository.getStep(stepId)
             ?: throw CTDomainError.Code.CACHE_STEP_NOT_FOUND.error(message = "Cache step $stepId not found")
@@ -23,7 +25,7 @@ class GetUIStepsUseCase @Inject constructor(
         return UIStep(
             stepId = step.stepId,
             clue = step.clue,
-            showClue = userProgress?.clueUnlockedStepRef?.contains(stepId) ?: false,
+            showClue = (userProgress?.clueUnlockedStepRef?.contains(stepId) ?: false) || cacheUserStatus == CacheUserStatus.Owned,
             instructions = step.instruction,
             status = when {
                 userProgress == null -> UIStep.Status.Lock

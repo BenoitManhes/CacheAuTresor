@@ -9,6 +9,8 @@ interface ExplorerRepository {
     suspend fun saveExplorer(explorer: Explorer)
     suspend fun getUserExplorer(explorerId: String): Explorer
     fun getUserExplorerFlow(explorerId: String, fetch: Boolean): Flow<Explorer>
+    fun getAllExplorerFlow(): Flow<List<Explorer>>
+    suspend fun fetchAllExplorers()
 
     suspend fun deleteExplorer(explorerId: String)
     suspend fun getExplorer(explorerId: String): Explorer?

@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
@@ -22,7 +21,7 @@ sealed interface CacheDetailsViewModelState {
     object Initialize : CacheDetailsViewModelState
 
     data class Data(
-        val cacheColor: @Composable () -> Color,
+        val cacheColor: Color,
         val headerState: CacheDetailHeaderState,
         val uiMarkers: List<UIMarker>,
         val fabButtonState: FabButtonState?,

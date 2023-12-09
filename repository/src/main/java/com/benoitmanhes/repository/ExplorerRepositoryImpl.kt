@@ -46,6 +46,14 @@ class ExplorerRepositoryImpl @Inject constructor(
         emitAll(localDataSource.getExplorerFlow(explorerId))
     }
 
+    override fun getAllExplorerFlow(): Flow<List<Explorer>> =
+        localDataSource.getAllExplorerFlow()
+
+    override suspend fun fetchAllExplorers() {
+        val remote = remoteDataSource.getAllExplorers()
+        localDataSource.saveExplorers(remote)
+    }
+
     override suspend fun getUserExplorer(explorerId: String): Explorer {
         val remoteExplorer = remoteDataSource.getExplorer(explorerId) ?: throw CTRepositoryError.UserExplorerNotFound
         localDataSource.saveExplorer(remoteExplorer)

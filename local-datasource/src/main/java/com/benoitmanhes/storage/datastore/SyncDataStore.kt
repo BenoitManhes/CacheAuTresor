@@ -19,9 +19,16 @@ class SyncDataStore @Inject constructor(
         dataStore.editLong(timestamp, DataStoreKeys.lastSyncUserPointTimestamp)
     }
 
+    suspend fun saveLastSyncAllUsers(timestamp: Long) {
+        dataStore.editLong(timestamp, DataStoreKeys.lastSyncUsersTimestamp)
+    }
+
     suspend fun getLastSyncCaches(): Long? =
         dataStore.data.map { it[DataStoreKeys.lastSyncCacheTimestamp] }.first()
 
     suspend fun getLastSyncUserPoints(): Long? =
         dataStore.data.map { it[DataStoreKeys.lastSyncUserPointTimestamp] }.first()
+
+    suspend fun getLastSyncAllUsers(): Long? =
+        dataStore.data.map { it[DataStoreKeys.lastSyncUsersTimestamp] }.first()
 }

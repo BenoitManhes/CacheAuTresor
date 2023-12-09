@@ -1,6 +1,7 @@
 package com.benoitmanhes.domain.uimodel
 
 import com.benoitmanhes.domain.model.Cache
+import com.benoitmanhes.domain.model.CacheUserStatus
 
 data class UIExploreCache(
     val cache: Cache,
@@ -8,8 +9,4 @@ data class UIExploreCache(
     val userStatus: CacheUserStatus,
     val distance: Double?,
     val ptsWin: Int?,
-) : UIModel {
-    enum class CacheUserStatus {
-        Available, Started, Found, Lock, Owned
-    }
-}
+) : UIModel

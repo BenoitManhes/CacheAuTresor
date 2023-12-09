@@ -27,10 +27,18 @@ abstract class CTUseCase {
         block(this)
     }
         .onStart { emit(CTResult.Loading()) }
+        .useCaseCatch { error ->
+            CTResult.Failure(error = error)
+        }
+
+    protected fun <T> Flow<T>.useCaseCatch(
+        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        errorValue: (CTDomainError) -> T,
+    ): Flow<T> = this
         .catch { t ->
             val domainError = mapErr(t)
             logError(domainError)
-            emit(CTResult.Failure(error = domainError))
+            emit(errorValue(domainError))
         }
 
     protected suspend fun <T> runCatch(

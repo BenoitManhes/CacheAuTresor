@@ -1,9 +1,11 @@
 package com.benoitmanhes.cacheautresor.common.maps
 
+import android.graphics.LightingColorFilter
 import android.graphics.Rect
 import android.view.MotionEvent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
-import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarkerIcon
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.domain.model.Coordinates
 import org.osmdroid.views.MapView
@@ -18,6 +20,7 @@ class CacheMarker(
 ) : Marker(mapView) {
 
     init {
+        textLabelForegroundColor = Color.White.toArgb()
         position = coordinates.toGeoPoint()
         setAnchor(
             ANCHOR_CENTER,
@@ -26,7 +29,14 @@ class CacheMarker(
         icon = cacheIcon.getDrawable(
             isSelected = isSelected,
             context = mapView.context,
-        )
+        )?.apply {
+            cacheIcon.tint.toArgb().let { colorTint ->
+                colorFilter = LightingColorFilter(Color.White.toArgb(), colorTint)
+            }
+        }
+        //        cacheIcon.iconText?.let { textMarker ->
+        //            setTextIcon(textMarker)
+        //        }
         onClick?.let {
             setOnMarkerClickListener { _, _ ->
                 onClick()

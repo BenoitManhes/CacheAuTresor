@@ -6,7 +6,6 @@ import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.domain.interfaces.repository.CacheRepository
 import com.benoitmanhes.domain.interfaces.repository.CacheUserProgressRepository
 import com.benoitmanhes.domain.model.Cache
-import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.usecase.CTUseCase
 import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
 import javax.inject.Inject
@@ -21,21 +20,16 @@ class StartCoopCacheUseCase @Inject constructor(
         val myExplorerId = getMyExplorerIdUseCase()
         val cache = cacheRepository.getCache(cacheId) ?: throw CTDomainError.Code.CACHE_NOT_FOUND.error()
         val cacheType = cache.type as Cache.Type.Coop
-        val newUserProgress = userProgressRepository.getFetchedCacheUserProgress(
+        val userProgress = userProgressRepository.getFetchedCacheUserProgress(
             cacheId = cacheId,
             explorerId = myExplorerId,
-        )
-        if (newUserProgress == null) {
-            userProgressRepository.saveCacheUserProgress(
-                CacheUserProgress(
-                    id = "$myExplorerId-$cacheId",
-                    explorerId = myExplorerId,
-                    cacheId = cacheId,
-                    currentStepRef = cacheType.crewStepsMap[crewPosition]?.first() ?: throw CTDomainError.Code.UNEXPECTED.error(),
-                    coopMemberRef = crewPosition,
-                )
+        ) ?: throw CTDomainError.Code.UNEXPECTED.error()
+        userProgressRepository.saveCacheUserProgress(
+            userProgress.copy(
+                currentStepRef = cacheType.crewStepsMap[crewPosition]?.first() ?: throw CTDomainError.Code.UNEXPECTED.error(),
+                coopMemberRef = crewPosition,
             )
-        }
+        )
         CTSuspendResult.Success(Unit)
     }
 }

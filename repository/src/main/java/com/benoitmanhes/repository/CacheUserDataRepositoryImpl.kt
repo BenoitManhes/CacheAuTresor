@@ -18,4 +18,8 @@ class CacheUserDataRepositoryImpl @Inject constructor(
 
     override suspend fun saveCacheUserData(userData: CacheUserData): Unit =
         cacheUserDataLocalDataSource.saveCacheUserData(userData)
+
+    override suspend fun clearCacheUserData() {
+        cacheUserDataLocalDataSource.clearCacheUserData()
+    }
 }

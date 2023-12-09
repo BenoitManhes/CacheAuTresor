@@ -1,7 +1,7 @@
 package com.benoitmanhes.cacheautresor.common.uimodel
 
 import com.benoitmanhes.cacheautresor.common.maps.CacheMarker
-import com.benoitmanhes.cacheautresor.screen.home.explore.CacheMarkerIcon
+import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
 import com.benoitmanhes.domain.model.Coordinates
 import org.osmdroid.views.MapView
 
@@ -9,7 +9,7 @@ data class UIMarker(
     val coordinates: Coordinates,
     val iconMarker: CacheMarkerIcon,
     val isSelected: Boolean,
-    val onClick: () -> Unit,
+    val onClick: () -> Unit = {},
 ) {
     fun getOSMMarker(
         mapViewState: MapView,
@@ -19,6 +19,5 @@ data class UIMarker(
         coordinates = coordinates,
         isSelected = isSelected,
         onClick = onClick,
-
     )
 }

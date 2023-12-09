@@ -19,6 +19,10 @@ class ExplorerLocalDataSourceImpl @Inject constructor(
         explorerDao.insert(RoomExplorerConverter.buildRoomModel(explorer))
     }
 
+    override suspend fun saveExplorers(explorer: List<Explorer>) {
+        explorerDao.insert(explorer.map { RoomExplorerConverter.buildRoomModel(it) })
+    }
+
     override suspend fun getExplorer(explorerId: String): Explorer? = withContext(Dispatchers.IO) {
         explorerDao.findWithId(explorerId)?.toAppModel()
     }
@@ -26,6 +30,13 @@ class ExplorerLocalDataSourceImpl @Inject constructor(
     override fun getExplorerFlow(explorerId: String): Flow<Explorer> =
         explorerDao.loadByName(explorerId)
             .map { it.toAppModel() }
+            .flowOn(Dispatchers.IO)
+
+    override fun getAllExplorerFlow(): Flow<List<Explorer>> =
+        explorerDao.findAllFlow()
+            .map { list ->
+                list.map { it.toAppModel() }
+            }
             .flowOn(Dispatchers.IO)
 
     override suspend fun deleteExplorer(explorerId: String): Unit = withContext(Dispatchers.IO) {

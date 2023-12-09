@@ -5,8 +5,13 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 object DomainConstants {
+    object News {
+        const val numberExplorerElite: Int = 3
+    }
+
     object Cache {
         const val ptsWinPenaltyCoef: Float = 0.5f
+        const val unlockingAvailableDistance: Double = 25.0
     }
 
     object Location {

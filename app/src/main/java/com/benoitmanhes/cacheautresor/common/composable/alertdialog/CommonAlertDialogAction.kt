@@ -20,4 +20,12 @@ object CommonAlertDialogAction {
             onClick = onClick,
         )
     }
+
+    fun gotIt(onClick: () -> Unit): AlertDialogAction {
+        return AlertDialogAction(
+            text = TextSpec.Resources(R.string.common_alertDialog_action_gotIt),
+            type = AlertDialogAction.Type.Confirm,
+            onClick = onClick,
+        )
+    }
 }

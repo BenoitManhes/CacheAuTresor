@@ -36,7 +36,7 @@ fun CTFabButton(
         shape = CTTheme.shape.medium,
         color = attribute.backgroundColor,
         contentColor = attribute.backgroundColor,
-        elevation = CTTheme.elevation.none,
+        elevation = CTTheme.elevation.medium,
         border = attribute.border,
     ) {
         Box(

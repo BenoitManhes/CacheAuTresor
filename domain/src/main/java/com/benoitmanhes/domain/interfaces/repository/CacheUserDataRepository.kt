@@ -7,4 +7,5 @@ interface CacheUserDataRepository {
     suspend fun getCacheUserData(cacheId: String): CacheUserData?
     suspend fun getCacheUserDataFlow(cacheId: String): Flow<CacheUserData?>
     suspend fun saveCacheUserData(userData: CacheUserData)
+    suspend fun clearCacheUserData()
 }

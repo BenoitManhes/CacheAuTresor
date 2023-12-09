@@ -23,6 +23,8 @@ data class RoomCache(
     val tagIds: List<String>,
     val description: String,
     val finalStepRef: String,
+    val lockDescription: String,
+    val lockCode: String,
     val type: Cache.Type,
 ) : RoomModel<Cache> {
 
@@ -40,6 +42,8 @@ data class RoomCache(
         tagIds = tagIds,
         finalStepRef = finalStepRef,
         description = description,
+        lockDescription = lockDescription,
+        lockCode = lockCode,
         type = type,
     )
 
@@ -58,6 +62,8 @@ data class RoomCache(
             tagIds = appModel.tagIds,
             description = appModel.description,
             finalStepRef = appModel.finalStepRef,
+            lockDescription = appModel.lockDescription,
+            lockCode = appModel.lockCode,
             type = appModel.type,
         )
     }

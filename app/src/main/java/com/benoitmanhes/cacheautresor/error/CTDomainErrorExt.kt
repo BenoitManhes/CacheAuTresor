@@ -1,8 +1,8 @@
 package com.benoitmanhes.cacheautresor.error
 
 import com.benoitmanhes.cacheautresor.R
-import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.core.error.CTDomainError
 
 fun CTDomainError.localizedTitle(): TextSpec = when (code) {
     CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> null
@@ -10,7 +10,8 @@ fun CTDomainError.localizedTitle(): TextSpec = when (code) {
     CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> null
     CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM -> null
     CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST -> null
-    CTDomainError.Code.CACHE_INVALID_LOG_CODE -> null // TODO
+    CTDomainError.Code.CACHE_INVALID_LOG_CODE -> null
+    CTDomainError.Code.CACHE_INVALID_UNLOCK_CODE -> null
     CTDomainError.Code.CACHE_NOT_FOUND -> null
     CTDomainError.Code.CACHE_STEP_NOT_FOUND -> null
     CTDomainError.Code.EXPLORER_NOT_FOUND -> null
@@ -40,7 +41,8 @@ fun CTDomainError.localizedDescription(): TextSpec = when (code) {
         id = R.string.authentication_error_noUserEmail
     )
 
-    CTDomainError.Code.CACHE_INVALID_LOG_CODE -> null // TODO
+    CTDomainError.Code.CACHE_INVALID_UNLOCK_CODE -> TextSpec.Resources(R.string.logModal_error_final)
+    CTDomainError.Code.CACHE_INVALID_LOG_CODE -> TextSpec.Resources(R.string.logModal_error_final)
     CTDomainError.Code.CACHE_NOT_FOUND -> null
     CTDomainError.Code.CACHE_STEP_NOT_FOUND -> null
     CTDomainError.Code.CACHE_USER_PROGRESS_NOT_FOUND -> null

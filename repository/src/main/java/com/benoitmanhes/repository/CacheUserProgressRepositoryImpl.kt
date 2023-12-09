@@ -51,4 +51,8 @@ class CacheUserProgressRepositoryImpl @Inject constructor(
             localeDataSource.saveCacheUserProgress(remoteObject)
         }
     }
+
+    override suspend fun clearCacheUserProgress() {
+        localeDataSource.clearCacheUserProgress()
+    }
 }

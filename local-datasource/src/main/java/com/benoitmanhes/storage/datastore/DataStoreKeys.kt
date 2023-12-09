@@ -9,4 +9,5 @@ object DataStoreKeys {
     val explorerId: Preferences.Key<String> = stringPreferencesKey("explorerId")
     val lastSyncCacheTimestamp: Preferences.Key<Long> = longPreferencesKey("last-sync-cache")
     val lastSyncUserPointTimestamp: Preferences.Key<Long> = longPreferencesKey("last-sync-user-point")
+    val lastSyncUsersTimestamp: Preferences.Key<Long> = longPreferencesKey("last-sync-users")
 }

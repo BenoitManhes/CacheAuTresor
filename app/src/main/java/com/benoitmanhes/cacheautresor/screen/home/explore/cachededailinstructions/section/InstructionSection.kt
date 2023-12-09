@@ -1,6 +1,7 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,20 +12,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.benoitmanhes.cacheautresor.BuildConfig
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
-import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.cacheautresor.utils.AppDimens
+import com.benoitmanhes.common.compose.extensions.textSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTImage
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
+import com.benoitmanhes.designsystem.atoms.text.CTMarkdownText
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
-import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.CacheInstructions
 import com.benoitmanhes.domain.model.InstructionContent
@@ -49,11 +52,12 @@ fun InstructionSection(
                     }
 
                     is InstructionContent.Text -> {
-                        CTTextView(
-                            text = instructionContent.value.textSpec(),
+                        CTMarkdownText(
+                            markdown = instructionContent.value.textSpec(),
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            maxLine = Int.MAX_VALUE,
+                            style = CTTheme.typography.body,
+                            color = CTTheme.color.onBackground,
                         )
                     }
                 }
@@ -86,15 +90,19 @@ fun InstructionSection(
                 modifier = Modifier.weight(1f),
             )
         }
-        SecondaryButtonState(
-            text = TextSpec.Resources(R.string.cacheDetail_reportButton),
-            onClick = state.onReport,
-            type = SecondaryButtonType.Text,
-            color = { CTTheme.color.critical },
-            leadingIcon = CTTheme.icon.Flag.toIconSpec(),
-        ).Composable(
-            modifier = Modifier.weight(1f),
-        )
+        if (BuildConfig.DEBUG) {
+            SecondaryButtonState(
+                text = TextSpec.Resources(R.string.cacheDetail_reportButton),
+                onClick = state.onReport,
+                type = SecondaryButtonType.Text,
+                color = { CTTheme.color.critical },
+                leadingIcon = CTTheme.icon.Flag.toIconSpec(),
+            ).Composable(
+                modifier = Modifier.weight(1f),
+            )
+        } else {
+            Box(modifier = Modifier.weight(1f))
+        }
     }
 }
 

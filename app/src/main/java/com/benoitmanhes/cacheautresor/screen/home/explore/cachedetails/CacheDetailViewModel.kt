@@ -3,14 +3,17 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.benoitmanhes.cacheautresor.BuildConfig
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.CacheFinishAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StartCoopAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StepCompleteAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
+import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.ClassicModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.LogModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.StartCoopModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
+import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarkerFocus
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
 import com.benoitmanhes.cacheautresor.common.extensions.mediumFormat
@@ -22,6 +25,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
+import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
@@ -51,9 +55,12 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.utils.extensions.getPrimaryColor
+import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
+import com.benoitmanhes.designsystem.utils.extensions.getCacheColor
+import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress
+import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
@@ -89,9 +96,6 @@ class CacheDetailViewModel @Inject constructor(
 
     private val _navigation = MutableStateFlow<CacheDetailNavigation?>(null)
     val navigation: StateFlow<CacheDetailNavigation?> get() = _navigation.asStateFlow()
-
-    private val _logModalState = MutableStateFlow<LogModalBottomSheet?>(null)
-    val logModalState: StateFlow<LogModalBottomSheet?> get() = _logModalState.asStateFlow()
 
     private var switchToInstruction = false
     private var cache: Cache? = null
@@ -154,7 +158,6 @@ class CacheDetailViewModel @Inject constructor(
 
     private fun logCache(uiStep: UIStep, codeLog: String) {
         viewModelScope.launch {
-            _logModalState.value = null
             loadingManager.showLoading()
             val result = logCacheUseCase(cacheId = cacheId, codeLog = codeLog)
             when (result) {
@@ -189,19 +192,12 @@ class CacheDetailViewModel @Inject constructor(
     private fun CTResult<UICacheDetails>.mapToUIState(): CacheDetailsViewModelState {
         return when (this) {
             is CTResult.Success -> CacheDetailsViewModelState.Data(
-                cacheColor = { successData.getPrimaryColor() },
+                cacheColor = successData.cache.getCacheColor(successData.status.cacheUserStatus),
                 headerState = CacheDetailHeaderState(
                     title = TextSpec.RawString(successData.cache.title),
                     subTitle = TextSpec.RawString(successData.cache.cacheId),
                 ),
-                uiMarkers = listOf(
-                    UIMarker(
-                        coordinates = successData.cache.coordinates,
-                        iconMarker = successData.getCacheMarker(),
-                        isSelected = false,
-                        onClick = {},
-                    )
-                ),
+                uiMarkers = successData.getStepMarkers(),
                 bottomBarState = BottomActionBarState(
                     firstButtonState = PrimaryButtonState(
                         text = successData.currentStep.getLogButtonLabel(),
@@ -281,7 +277,7 @@ class CacheDetailViewModel @Inject constructor(
                         leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty),
                         text = TextSpec.RawString("Rapide2")
                     ),
-                ),
+                ).takeIf { BuildConfig.DEBUG }.orEmpty(),
                 instructionsSectionState = InstructionSectionState(
                     title = successData.currentStep.getStepTitle(),
                     cacheInstructions = successData.currentStep.instructions,
@@ -342,7 +338,23 @@ class CacheDetailViewModel @Inject constructor(
             InstructionSectionState.Clue.Revealed(_clue.textSpec())
         } else {
             InstructionSectionState.Clue.Unrevealed {
-                revealClue(stepId = stepId, cacheId = cacheId)
+                modalBottomSheetManager.showModal(
+                    ClassicModalBottomSheet(
+                        icon = CTIconPack.Parchment.toIconSpec(),
+                        title = TextSpec.Resources(R.string.cacheDetail_clueModal_title),
+                        message = TextSpec.Resources(R.string.cacheDetail_clueModal_message),
+                        cancelAction = PrimaryButtonState(
+                            text = TextSpec.Resources(R.string.common_finallyNo),
+                            onClick = {},
+                        ),
+                        confirmAction = PrimaryButtonState(
+                            text = TextSpec.Resources(R.string.cacheDetail_clueModal_confirmMessage),
+                            onClick = {
+                                revealClue(stepId = stepId, cacheId = cacheId)
+                            }
+                        )
+                    )
+                )
             }
         }
     }
@@ -375,19 +387,14 @@ class CacheDetailViewModel @Inject constructor(
     }
 
     private fun showLogModalBottomSheet(uiStep: UIStep, isError: Boolean) {
-        _logModalState.value =
+        modalBottomSheetManager.showModal(
             LogModalBottomSheet(
                 message = uiStep.getLogBottomSheetMessage(),
                 errorMessage = uiStep.getLogBottomSheetError(),
                 isError = isError,
-                onDismiss = {
-                    _logModalState.value = null
-                },
                 onValidate = { logCache(uiStep, codeLog = it) },
-                hideError = {
-                    _logModalState.value = logModalState.value?.copy(isError = false)
-                },
             )
+        )
     }
 
     private fun UIStep.isLast(): Boolean =
@@ -427,6 +434,66 @@ class CacheDetailViewModel @Inject constructor(
             StepCompleteAlertDialog(stepName = uiStep.getStepTitle())
         }
         alertDialogManager.showDialog(alertDialog)
+    }
+
+    private fun UICacheDetails.getStepMarkers(): List<UIMarker> = when (status) {
+        is UICacheDetails.Status.Available -> listOf(
+            UIMarker(
+                coordinates = cache.coordinates,
+                iconMarker = cache.getCacheMarker(CacheUserStatus.Available),
+                isSelected = false,
+            )
+        )
+
+        is UICacheDetails.Status.Started,
+        is UICacheDetails.Status.Found,
+        -> steps.mapIndexed { index, uiStep ->
+            uiStep.toMarker(cache, status.cacheUserStatus, index)
+        }
+
+        is UICacheDetails.Status.Owned ->
+            steps
+                .mapIndexed { index, uiStep ->
+                    UIMarker(
+                        coordinates = uiStep.coordinates,
+                        isSelected = false,
+                        iconMarker = if (uiStep.type is UIStep.Type.Final || uiStep.type is UIStep.Type.Classical) {
+                            cache.getCacheMarker(CacheUserStatus.Owned)
+                        } else {
+                            CacheMarkerIcon.Empty(
+                                index.toString(),
+                                cache.getCacheColor(CacheUserStatus.Owned),
+                            )
+                        },
+                    )
+                }
+    }
+
+    private fun UIStep.toMarker(cache: Cache, cacheUserStatus: CacheUserStatus, index: Int): UIMarker {
+        val stepUserStatus = cacheUserStatus.takeIf { status != UIStep.Status.Lock }
+            ?: CacheUserStatus.Hidden
+        return UIMarker(
+            coordinates = coordinates,
+            isSelected = false,
+            iconMarker = getIconMarker(cache, index, stepUserStatus),
+        )
+    }
+
+    private fun UIStep.getIconMarker(cache: Cache, index: Int, stepUserStatus: CacheUserStatus): CacheMarkerIcon {
+        val tint = cache.getCacheColor(stepUserStatus)
+        return if (type is UIStep.Type.Final || type is UIStep.Type.Classical) {
+            if (status == UIStep.Status.Current) {
+                cache.getCacheMarkerFocus()
+            } else {
+                cache.getCacheMarker(stepUserStatus)
+            }
+        } else {
+            when (status) {
+                UIStep.Status.Lock -> CacheMarkerIcon.Empty(index.toString(), tint)
+                UIStep.Status.Current -> CacheMarkerIcon.Current(index.toString(), tint)
+                UIStep.Status.Done -> CacheMarkerIcon.Done(tint)
+            }
+        }
     }
 }
 

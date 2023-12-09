@@ -13,11 +13,18 @@ private val LeagueSpartan = FontFamily(
     Font(R.font.league_spartan_light, FontWeight.W300),
     Font(R.font.league_spartan_regular, FontWeight.W400),
     Font(R.font.league_spartan_medium, FontWeight.W500),
+    Font(R.font.league_spartan_semi_bold, FontWeight.W600),
 )
 
 @Suppress("DEPRECATION")
 @Immutable
 object CTTypography {
+    val header0: TextStyle = TextStyle(
+        fontFamily = LeagueSpartan,
+        fontWeight = FontWeight.W600,
+        fontSize = Dimens.Font.header0FontSize,
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+    )
     val header1: TextStyle = TextStyle(
         fontFamily = LeagueSpartan,
         fontWeight = FontWeight.W400,

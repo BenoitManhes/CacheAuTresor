@@ -7,11 +7,9 @@ import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.cacheautresor.navigation.home.HomeRoot
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.mainGraph(
-    showErrorSnackBar: (errorMsg: String) -> Unit,
-) {
+fun NavGraphBuilder.mainGraph() {
     composable(HomeDestination.route) {
-        HomeRoot(showErrorSnackBar)
+        HomeRoot()
     }
 }
 

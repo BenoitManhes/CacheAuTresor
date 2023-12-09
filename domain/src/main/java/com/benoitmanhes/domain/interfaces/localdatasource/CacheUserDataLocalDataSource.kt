@@ -11,4 +11,5 @@ interface CacheUserDataLocalDataSource {
     suspend fun saveCacheUserData(cacheUserData: CacheUserData)
 
     suspend fun deleteCacheUserData(cacheId: String)
+    suspend fun clearCacheUserData()
 }

@@ -24,6 +24,8 @@ data class FSCache(
     val tagIds: List<String>? = null,
     val finalStepRef: String? = null,
     val description: String? = null,
+    val lockDescription: String? = null,
+    val lockCode: String? = null,
     val type: Map<String, Any>? = null,
 ) : FirestoreModel<Cache> {
 
@@ -41,6 +43,8 @@ data class FSCache(
         tagIds = cache.tagIds,
         finalStepRef = cache.finalStepRef,
         description = cache.description,
+        lockDescription = cache.lockDescription,
+        lockCode = cache.lockCode,
         type = CacheTypeBuilder.fsModel(cache.type),
     )
 
@@ -58,6 +62,8 @@ data class FSCache(
         tagIds = tagIds ?: emptyList(),
         finalStepRef = finalStepRef.requiredField(),
         description = description.requiredField(),
+        lockDescription = lockDescription.requiredField(),
+        lockCode = lockCode.requiredField(),
         type = CacheTypeBuilder.appModel(type.requiredField()),
     )
 }
