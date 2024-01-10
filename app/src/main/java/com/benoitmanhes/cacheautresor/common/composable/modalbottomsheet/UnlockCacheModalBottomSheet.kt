@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetOption
@@ -33,7 +32,6 @@ data class UnlockCacheModalBottomSheet(
 
     override val option: Set<ModalBottomSheetOption> = setOf()
 
-    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content(scope: ColumnScope, hide: () -> Unit) {
         var textValue: String by remember { mutableStateOf("") }

@@ -1,10 +1,9 @@
 package com.benoitmanhes.cacheautresor.navigation
 
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -18,20 +17,19 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.compose.composable
 
-@ExperimentalAnimationApi
+private typealias AnimatedTransitionProvider<T> = (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> T?)
+
 fun NavGraphBuilder.ctComposable(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
-    enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { CTTransition.defaultEnter },
-    exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { CTTransition.defaultExit },
-    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = {
-        CTTransition.defaultPopEnter
-    },
-    popExitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { CTTransition.defaultPopExit },
-    content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
+    enterTransition: AnimatedTransitionProvider<EnterTransition>? = { CTTransition.defaultEnter },
+    exitTransition: AnimatedTransitionProvider<ExitTransition>? = { CTTransition.defaultExit },
+    popEnterTransition: AnimatedTransitionProvider<EnterTransition>? = { CTTransition.defaultPopEnter },
+    popExitTransition: AnimatedTransitionProvider<ExitTransition>? = { CTTransition.defaultPopExit },
+    content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit,
 ) {
     composable(
         route = route,
@@ -58,14 +56,12 @@ object CTTransition {
         initialOffsetX = { it }
     )
 
-    @OptIn(ExperimentalAnimationApi::class)
     val defaultExit: ExitTransition = scaleOut(
         animationSpec = tween(durationMillis = defaultTransitionDurationMillis),
         targetScale = defaultScaleFactor,
         transformOrigin = DefaultScaleOrigin,
     ) + fadeOut(targetAlpha = defaultFadeFactor)
 
-    @OptIn(ExperimentalAnimationApi::class)
     val defaultPopEnter: EnterTransition = scaleIn(
         animationSpec = tween(durationMillis = defaultPopDurationMillis),
         initialScale = defaultScaleFactor,

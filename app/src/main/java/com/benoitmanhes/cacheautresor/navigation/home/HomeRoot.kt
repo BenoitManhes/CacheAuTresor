@@ -1,7 +1,6 @@
 package com.benoitmanhes.cacheautresor.navigation.home
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -13,15 +12,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomBarFloatingButton
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.CTBottomNavBar
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HomeRoot() {
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     val showFab = remember(currentRoute?.route) { currentRoute?.route == HomeRoot.fabDestination.route }

@@ -227,10 +227,9 @@ private fun DataContent(
     instructionsLazyListState: LazyListState,
     modifier: Modifier = Modifier,
 ) {
-    val pageCount = remember(uiState.tabSelectorState?.items) {
-        uiState.tabSelectorState?.items?.size ?: 1
-    }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        pageCount = { uiState.tabSelectorState?.items?.size ?: 1 }
+    )
 
     LaunchedEffect(uiState.page) {
         pagerState.animateScrollToPage(uiState.page)
@@ -251,7 +250,6 @@ private fun DataContent(
         Divider()
 
         HorizontalPager(
-            pageCount = pageCount,
             state = pagerState,
             userScrollEnabled = false,
             beyondBoundsPageCount = 1,

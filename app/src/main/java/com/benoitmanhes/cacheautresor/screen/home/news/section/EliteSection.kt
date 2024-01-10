@@ -42,7 +42,6 @@ fun EliteSection(
             contentPadding = PaddingValues(horizontal = CTTheme.spacing.large),
             beyondBoundsPageCount = 1,
             pageSize = PageSize.Fill,
-            pageCount = eliteCard.count(),
             pageContent = { page ->
                 eliteCard.getOrNull(page)?.Content()
             }

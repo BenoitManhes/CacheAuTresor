@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
@@ -34,7 +33,6 @@ import com.benoitmanhes.designsystem.molecule.textfield.TextFieldType
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.common.compose.text.TextSpec
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginInputSection(
     onAccountTokenValid: (accountToken: String) -> Unit,

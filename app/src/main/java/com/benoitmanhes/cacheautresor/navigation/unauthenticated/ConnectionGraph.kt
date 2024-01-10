@@ -1,13 +1,11 @@
 package com.benoitmanhes.cacheautresor.navigation.unauthenticated
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.cacheautresor.navigation.ctComposable
 import com.benoitmanhes.cacheautresor.screen.authentication.accountcreation.AccountCreationScreen
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionScreen
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.connectionGraph(
     navigateToAccountCreation: (String) -> Unit,
     showErrorSnackBar: (errorMsg: String) -> Unit,

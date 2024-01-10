@@ -50,6 +50,7 @@ private fun NewsScreen(
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(
+        pageCount = { uiState.eliteCards?.count() ?: 0 },
         initialPage = 0,
     )
 

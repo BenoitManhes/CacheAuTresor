@@ -114,7 +114,9 @@ fun ExploreScreen(
     requestPermissionLocation: () -> Unit,
 ) {
     var page by rememberSaveable { mutableStateOf(0) }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        pageCount = { 2 }
+    )
 
     LaunchedEffect(page) {
         pagerState.animateScrollToPage(page)
@@ -126,7 +128,6 @@ fun ExploreScreen(
             .padding(innerPadding),
     ) {
         HorizontalPager(
-            pageCount = 2,
             state = pagerState,
             userScrollEnabled = false,
         ) { page ->

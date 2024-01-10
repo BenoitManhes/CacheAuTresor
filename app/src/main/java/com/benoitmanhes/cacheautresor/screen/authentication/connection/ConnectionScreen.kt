@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -19,7 +18,6 @@ import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.C
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.section.LoginInputSection
 import com.benoitmanhes.designsystem.theme.CTTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ConnectionScreen(
     navigateToAccountCreation: (accountToken: String) -> Unit,

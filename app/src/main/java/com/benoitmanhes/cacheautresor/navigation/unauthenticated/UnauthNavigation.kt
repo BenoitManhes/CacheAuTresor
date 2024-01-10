@@ -1,12 +1,10 @@
 package com.benoitmanhes.cacheautresor.navigation.unauthenticated
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun UnauthenticatedNavigation(
     navController: NavHostController,
@@ -17,7 +15,7 @@ fun UnauthenticatedNavigation(
         { accountToken -> navController.navigate(AccountCreationDestination.getRoute(accountToken)) }
     }
 
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = ConnectionDestination.route,
     ) {

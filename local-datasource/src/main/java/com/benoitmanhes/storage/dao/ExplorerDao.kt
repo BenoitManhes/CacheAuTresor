@@ -10,16 +10,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExplorerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: RoomExplorer)
+    fun insert(entity: RoomExplorer)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entities: List<RoomExplorer>)
+    fun insert(entities: List<RoomExplorer>)
 
     @Query("DELETE FROM EXPLORERS WHERE id = :id")
     fun delete(id: String)
 
     @Query("SELECT * FROM EXPLORERS WHERE id = :id")
-    suspend fun findWithId(id: String): RoomExplorer?
+    fun findWithId(id: String): RoomExplorer?
 
     @Query("SELECT * FROM EXPLORERS")
     fun findAllFlow(): Flow<List<RoomExplorer>>
