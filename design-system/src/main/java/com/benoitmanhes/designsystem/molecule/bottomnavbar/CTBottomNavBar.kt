@@ -27,8 +27,8 @@ fun <I : BottomNavBarItemEntry> CTBottomNavBar(
             bottomBarItems.map { item ->
                 BottomNavBarItem(
                     isSelected = itemIsSelected(item),
-                    selectedIcon = item.selectedIcon,
-                    unselectedIcon = item.unselectedIcon,
+                    selectedIcon = item.selectedIcon(),
+                    unselectedIcon = item.unselectedIcon(),
                     labelText = item.labelText,
                     onClick = { onItemSelected?.invoke(item) },
                 )

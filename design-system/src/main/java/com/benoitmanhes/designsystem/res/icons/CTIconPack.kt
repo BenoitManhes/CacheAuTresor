@@ -44,6 +44,16 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.res.icons.iconpack.Rank
+import com.benoitmanhes.designsystem.res.icons.iconpack.AddBox
+import com.benoitmanhes.designsystem.res.icons.iconpack.Alert
+import com.benoitmanhes.designsystem.res.icons.iconpack.Create
+import com.benoitmanhes.designsystem.res.icons.iconpack.CreateFilled
+import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDD
+import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDM
+import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDMS
+import com.benoitmanhes.designsystem.res.icons.iconpack.Minus
+import com.benoitmanhes.designsystem.res.icons.iconpack.PersonRemove
+import com.benoitmanhes.designsystem.res.icons.iconpack.RemoveRoad
 
 object CTIconPack
 
@@ -57,6 +67,8 @@ val CTIconPack.CTIcons: List<ImageVector>
         }
         _CTIcons = listOf(
             Add,
+            AddBox,
+            Alert,
             Book,
             BookFilled,
             Box,
@@ -67,6 +79,8 @@ val CTIconPack.CTIcons: List<ImageVector>
             Chevron,
             Compass,
             Coop,
+            Create,
+            CreateFilled,
             Crown,
             Difficulty,
             Disconnect,
@@ -82,22 +96,28 @@ val CTIconPack.CTIcons: List<ImageVector>
             FavoriteFilled,
             Flag,
             Globe,
+            GlobeDD,
+            GlobeDM,
+            GlobeDMS,
             Home,
             HomeFilled,
             Key,
             Layer,
             Location,
             Logo,
+            Minus,
             Mountain,
             Mystery,
             Newspaper,
             Parchment,
+            PersonRemove,
             Piste,
             Position,
             PositionCurrent,
             Profile,
             ProfileFilled,
             Rank,
+            RemoveRoad,
             Search,
         )
         return _CTIcons!!

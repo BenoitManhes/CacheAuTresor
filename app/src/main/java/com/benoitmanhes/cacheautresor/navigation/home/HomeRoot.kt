@@ -52,7 +52,7 @@ fun HomeRoot() {
         floatingActionButton = {
             if (showFab) {
                 BottomBarFloatingButton(
-                    icon = HomeRoot.fabDestination.selectedIcon,
+                    icon = HomeRoot.fabDestination.selectedIcon(),
                     onClick = {},
                 )
             }

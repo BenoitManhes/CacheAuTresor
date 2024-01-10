@@ -14,46 +14,52 @@ import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.res.icons.iconpack.Book
 import com.benoitmanhes.designsystem.res.icons.iconpack.BookFilled
+import com.benoitmanhes.designsystem.res.icons.iconpack.Create
+import com.benoitmanhes.designsystem.res.icons.iconpack.CreateFilled
+import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
+import com.benoitmanhes.designsystem.theme.composed
+import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 sealed class HomeDestination(
     override val route: String,
-    override val selectedIcon: IconSpec,
-    override val unselectedIcon: IconSpec,
+    override val selectedIcon: ComposeProvider<IconSpec>,
+    override val unselectedIcon: ComposeProvider<IconSpec>,
     override val labelText: TextSpec,
 ) : BottomNavBarItemEntry, CTDestination {
 
     object News : HomeDestination(
         route = "news",
         labelText = TextSpec.Resources(R.string.bottomBar_news),
-        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Newspaper, contentDescription = null),
-        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Newspaper, contentDescription = null),
+        selectedIcon = CTTheme.composed { icon.Newspaper.toIconSpec() },
+        unselectedIcon = CTTheme.composed { icon.Newspaper.toIconSpec() },
     )
 
     object Explore : HomeDestination(
         route = "explore",
         labelText = TextSpec.Resources(R.string.bottomBar_explore),
-        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.ExploreFilled, contentDescription = null),
-        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Explore, contentDescription = null),
+        selectedIcon = CTTheme.composed { icon.ExploreFilled.toIconSpec() },
+        unselectedIcon = CTTheme.composed { icon.Explore.toIconSpec() },
     )
 
     object Encyclopedia : HomeDestination(
         route = "encyclopedia",
         labelText = TextSpec.Resources(R.string.bottomBar_encyclopedia),
-        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.BookFilled, contentDescription = null),
-        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Book, contentDescription = null),
+        selectedIcon = CTTheme.composed { icon.BookFilled.toIconSpec() },
+        unselectedIcon = CTTheme.composed { icon.Book.toIconSpec() },
     )
 
     object Profile : HomeDestination(
         route = "profile",
         labelText = TextSpec.Resources(R.string.bottomBar_profile),
-        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.ProfileFilled, contentDescription = null),
-        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Profile, contentDescription = null),
+        selectedIcon = CTTheme.composed { icon.ProfileFilled.toIconSpec() },
+        unselectedIcon = CTTheme.composed { icon.Profile.toIconSpec() },
     )
 
     object Create : HomeDestination(
         route = "create",
         labelText = TextSpec.Resources(R.string.bottomBar_create),
-        selectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Add, contentDescription = null),
-        unselectedIcon = IconSpec.VectorIcon(imageVector = CTIconPack.Add, contentDescription = null),
+        selectedIcon = CTTheme.composed { icon.CreateFilled.toIconSpec() },
+        unselectedIcon = CTTheme.composed { icon.Create.toIconSpec() },
     )
 }
