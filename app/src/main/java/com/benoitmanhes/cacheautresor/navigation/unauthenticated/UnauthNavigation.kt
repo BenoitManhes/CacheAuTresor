@@ -12,7 +12,10 @@ fun UnauthenticatedNavigation(
     onNavigateBack: () -> Unit = remember(navController) { { navController.popBackStack() } },
 ) {
     val navigateToAccountCreation: (accountToken: String) -> Unit = remember {
-        { accountToken -> navController.navigate(AccountCreationDestination.getRoute(accountToken)) }
+        {
+                accountToken ->
+            navController.navigate(AccountCreationDestination.getRoute(accountToken))
+        }
     }
 
     NavHost(

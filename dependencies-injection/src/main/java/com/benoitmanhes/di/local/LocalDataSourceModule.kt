@@ -4,12 +4,16 @@ import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserDataLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserProgressLocaleDataSource
+import com.benoitmanhes.domain.interfaces.localdatasource.DraftCacheLocalDataSource
+import com.benoitmanhes.domain.interfaces.localdatasource.DraftCacheStepLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.SyncLocalDataSource
 import com.benoitmanhes.storage.datasource.AuthLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserDataLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserProgressLocaleDataSourceImpl
+import com.benoitmanhes.storage.datasource.DraftCacheLocalDataSourceImpl
+import com.benoitmanhes.storage.datasource.DraftCacheStepLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.ExplorerLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.SyncLocalDataSourceImpl
 import dagger.Binds
@@ -45,4 +49,12 @@ interface LocalDataSourceModule {
     @Binds
     @ActivityRetainedScoped
     fun bindSyncLocaleDataSource(dataSourceImpl: SyncLocalDataSourceImpl): SyncLocalDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindDraftCacheLocalDataSource(dataSourceImpl: DraftCacheLocalDataSourceImpl): DraftCacheLocalDataSource
+
+    @Binds
+    @ActivityRetainedScoped
+    fun bindDraftCacheStepLocaleDataSource(dataSourceImpl: DraftCacheStepLocalDataSourceImpl): DraftCacheStepLocalDataSource
 }

@@ -89,7 +89,9 @@ class CacheDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val cacheId: String = savedStateHandle.get<String>(ExploreDestination.CacheDetails.cacheDetailsArgument).orEmpty()
+    private val cacheId: String = savedStateHandle.get<String>(
+        ExploreDestination.CacheDetails.cacheDetailsArgument
+    ).orEmpty()
 
     private val _uiState = MutableStateFlow<CacheDetailsViewModelState>(CacheDetailsViewModelState.Initialize)
     val uiState: StateFlow<CacheDetailsViewModelState> get() = _uiState.asStateFlow()

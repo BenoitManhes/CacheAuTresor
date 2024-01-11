@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.benoitmanhes.storage.dao.CacheDao
 import com.benoitmanhes.storage.dao.CacheUserDataDao
 import com.benoitmanhes.storage.dao.CacheUserProgressDao
+import com.benoitmanhes.storage.dao.DraftCacheDao
+import com.benoitmanhes.storage.dao.DraftCacheStepDao
 import com.benoitmanhes.storage.dao.ExplorerDao
 import com.benoitmanhes.storage.database.MainDatabase
 import dagger.Module
@@ -51,4 +53,12 @@ internal object RoomDaoModule {
     @Provides
     fun provideCacheProgressDataDao(mainDatabase: MainDatabase): CacheUserProgressDao =
         mainDatabase.cacheUserProgressDao()
+
+    @Provides
+    fun provideDraftCacheDao(mainDatabase: MainDatabase): DraftCacheDao =
+        mainDatabase.draftCacheDao()
+
+    @Provides
+    fun provideDraftCacheStepDao(mainDatabase: MainDatabase): DraftCacheStepDao =
+        mainDatabase.draftCacheStepDao()
 }

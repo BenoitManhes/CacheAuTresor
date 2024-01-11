@@ -63,8 +63,3 @@ private fun ProfileScreen(
         )
     }
 }
-
-@Preview
-@Composable
-private fun PreviewProfileScreen() {
-}

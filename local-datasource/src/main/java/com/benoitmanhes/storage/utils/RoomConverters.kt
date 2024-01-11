@@ -3,6 +3,7 @@ package com.benoitmanhes.storage.utils
 import androidx.room.TypeConverter
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserData
+import com.benoitmanhes.domain.model.DraftCache
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.Date
@@ -83,6 +84,45 @@ object RoomConverters {
             )
 
             Cache.Type.Piste::class.java.simpleName -> Gson().fromJson(wrapper.rawData, Cache.Type.Piste::class.java)
+            else -> throw IllegalArgumentException("Unsupported type")
+        }
+    }
+
+    @TypeConverter
+    fun fromDraftCacheType(cacheType: DraftCache.Type): String {
+        val gson = Gson()
+        val type = when (cacheType) {
+            DraftCache.Type.Classical -> object : TypeToken<DraftCache.Type.Classical>() {}.type
+            is DraftCache.Type.Piste -> object : TypeToken<DraftCache.Type.Piste>() {}.type
+            is DraftCache.Type.Mystery -> object : TypeToken<DraftCache.Type.Mystery>() {}.type
+            is DraftCache.Type.Coop -> object : TypeToken<DraftCache.Type.Coop>() {}.type
+        }
+        val wrapperType = object : TypeToken<Wrapper>() {}.type
+        val wrapper = Wrapper(cacheType::class.java.simpleName, gson.toJson(cacheType, type))
+        return gson.toJson(wrapper, wrapperType)
+    }
+
+    @TypeConverter
+    fun toDraftCacheType(json: String): DraftCache.Type {
+        val wrapperType = object : TypeToken<Wrapper>() {}.type
+        val wrapper = Gson().fromJson<Wrapper>(json, wrapperType)
+        return when (wrapper.type) {
+            DraftCache.Type.Classical::class.java.simpleName -> Gson().fromJson(
+                wrapper.rawData,
+                DraftCache.Type.Classical::class.java
+            )
+
+            DraftCache.Type.Coop::class.java.simpleName -> Gson().fromJson(
+                wrapper.rawData,
+                DraftCache.Type.Coop::class.java
+            )
+            DraftCache.Type.Mystery::class.java.simpleName ->
+                Gson().fromJson(wrapper.rawData, DraftCache.Type.Mystery::class.java)
+
+            DraftCache.Type.Piste::class.java.simpleName -> Gson().fromJson(
+                wrapper.rawData,
+                DraftCache.Type.Piste::class.java
+            )
             else -> throw IllegalArgumentException("Unsupported type")
         }
     }

@@ -18,8 +18,10 @@ public val CTIconPack.Add: ImageVector
             return _add!!
         }
         _add = Builder(
-            name = "Add", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp, viewportWidth
-        = 48.0f, viewportHeight = 48.0f
+            name = "Add", defaultWidth = 48.0.dp, defaultHeight = 48.0.dp,
+            viewportWidth =
+            48.0f,
+            viewportHeight = 48.0f
         ).apply {
             group {
                 path(

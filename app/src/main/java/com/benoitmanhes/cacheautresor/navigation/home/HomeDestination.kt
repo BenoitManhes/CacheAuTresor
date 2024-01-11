@@ -3,8 +3,6 @@ package com.benoitmanhes.cacheautresor.navigation.home
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomNavBarItemEntry
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.Add
 import com.benoitmanhes.designsystem.res.icons.iconpack.Explore
 import com.benoitmanhes.designsystem.res.icons.iconpack.ExploreFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Newspaper

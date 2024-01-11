@@ -83,11 +83,15 @@ internal fun CTBasicTextField(
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
 
     val leadingIcon: ComposableContent? = options.filterIsInstance<TextFieldOption.LeadingIcon>().firstOrNull()?.let {
-        { CTIcon(icon = it.icon, size = Dimens.IconSize.Medium) }
+        {
+            CTIcon(icon = it.icon, size = Dimens.IconSize.Medium)
+        }
     }
 
     val actionIcon: ComposableContent? = options.filterIsInstance<TextFieldOption.ActionIcon>().firstOrNull()?.let {
-        { CTIcon(icon = it.icon, onClick = it.onClick, size = Dimens.IconSize.Medium) }
+        {
+            CTIcon(icon = it.icon, onClick = it.onClick, size = Dimens.IconSize.Medium)
+        }
     }
 
     when (textFieldType) {
