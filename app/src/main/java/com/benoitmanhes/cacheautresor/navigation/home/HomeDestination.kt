@@ -14,6 +14,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Book
 import com.benoitmanhes.designsystem.res.icons.iconpack.BookFilled
 import com.benoitmanhes.designsystem.res.icons.iconpack.Create
 import com.benoitmanhes.designsystem.res.icons.iconpack.CreateFilled
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.ComposeProvider
 import com.benoitmanhes.designsystem.theme.composed
@@ -24,6 +25,7 @@ sealed class HomeDestination(
     override val selectedIcon: ComposeProvider<IconSpec>,
     override val unselectedIcon: ComposeProvider<IconSpec>,
     override val labelText: TextSpec,
+    override val colorTheme: CTColorTheme,
 ) : BottomNavBarItemEntry, CTDestination {
 
     object News : HomeDestination(
@@ -31,6 +33,7 @@ sealed class HomeDestination(
         labelText = TextSpec.Resources(R.string.bottomBar_news),
         selectedIcon = CTTheme.composed { icon.Newspaper.toIconSpec() },
         unselectedIcon = CTTheme.composed { icon.Newspaper.toIconSpec() },
+        colorTheme = CTColorTheme.Default,
     )
 
     object Explore : HomeDestination(
@@ -38,6 +41,7 @@ sealed class HomeDestination(
         labelText = TextSpec.Resources(R.string.bottomBar_explore),
         selectedIcon = CTTheme.composed { icon.ExploreFilled.toIconSpec() },
         unselectedIcon = CTTheme.composed { icon.Explore.toIconSpec() },
+        colorTheme = CTColorTheme.Default,
     )
 
     object Encyclopedia : HomeDestination(
@@ -45,6 +49,7 @@ sealed class HomeDestination(
         labelText = TextSpec.Resources(R.string.bottomBar_encyclopedia),
         selectedIcon = CTTheme.composed { icon.BookFilled.toIconSpec() },
         unselectedIcon = CTTheme.composed { icon.Book.toIconSpec() },
+        colorTheme = CTColorTheme.Default,
     )
 
     object Profile : HomeDestination(
@@ -52,6 +57,7 @@ sealed class HomeDestination(
         labelText = TextSpec.Resources(R.string.bottomBar_profile),
         selectedIcon = CTTheme.composed { icon.ProfileFilled.toIconSpec() },
         unselectedIcon = CTTheme.composed { icon.Profile.toIconSpec() },
+        colorTheme = CTColorTheme.Default,
     )
 
     object Create : HomeDestination(
@@ -59,5 +65,6 @@ sealed class HomeDestination(
         labelText = TextSpec.Resources(R.string.bottomBar_create),
         selectedIcon = CTTheme.composed { icon.CreateFilled.toIconSpec() },
         unselectedIcon = CTTheme.composed { icon.Create.toIconSpec() },
+        colorTheme = CTColorTheme.Cartography,
     )
 }

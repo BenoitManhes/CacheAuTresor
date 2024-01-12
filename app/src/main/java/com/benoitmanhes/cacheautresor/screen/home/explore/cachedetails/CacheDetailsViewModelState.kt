@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails
 
-import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
@@ -14,6 +13,7 @@ import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
 import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.domain.model.Coordinates
 
 sealed interface CacheDetailsViewModelState {
@@ -21,7 +21,7 @@ sealed interface CacheDetailsViewModelState {
     object Initialize : CacheDetailsViewModelState
 
     data class Data(
-        val cacheColor: Color,
+        val cacheColorTheme: CTColorTheme,
         val headerState: CacheDetailHeaderState,
         val uiMarkers: List<UIMarker>,
         val fabButtonState: FabButtonState?,

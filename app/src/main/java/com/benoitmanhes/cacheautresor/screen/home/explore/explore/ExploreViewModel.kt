@@ -33,9 +33,10 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.Location
 import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
-import com.benoitmanhes.designsystem.utils.extensions.getCacheColor
+import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.model.Coordinates
@@ -130,7 +131,7 @@ class ExploreViewModel @Inject constructor(
                 distanceText = distance?.toDistanceText()
                     .takeIf { userStatus == CacheUserStatus.Available },
                 stickerText = null,
-                color = CTTheme.composed { color.placeholder },
+                colorTheme = CTColorTheme.Lock,
                 onClick = { clickUnlockCache(this) },
             )
         } else {
@@ -155,7 +156,7 @@ class ExploreViewModel @Inject constructor(
 
                     else -> null
                 },
-                color = { cache.getCacheColor(userStatus) },
+                colorTheme = cache.getColorTheme(userStatus),
                 onClick = {
                     _navigation.value = ExploreNavigation.CacheDetail(cache.cacheId)
                 },

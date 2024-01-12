@@ -56,7 +56,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
-import com.benoitmanhes.designsystem.utils.extensions.getCacheColor
+import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress
@@ -194,7 +194,7 @@ class CacheDetailViewModel @Inject constructor(
     private fun CTResult<UICacheDetails>.mapToUIState(): CacheDetailsViewModelState {
         return when (this) {
             is CTResult.Success -> CacheDetailsViewModelState.Data(
-                cacheColor = successData.cache.getCacheColor(successData.status.cacheUserStatus),
+                cacheColorTheme = successData.cache.getColorTheme(successData.status.cacheUserStatus),
                 headerState = CacheDetailHeaderState(
                     title = TextSpec.RawString(successData.cache.title),
                     subTitle = TextSpec.RawString(successData.cache.cacheId),
@@ -464,7 +464,7 @@ class CacheDetailViewModel @Inject constructor(
                         } else {
                             CacheMarkerIcon.Empty(
                                 index.toString(),
-                                cache.getCacheColor(CacheUserStatus.Owned),
+                                cache.getColorTheme(CacheUserStatus.Owned).dayColorScheme.primary,
                             )
                         },
                     )
@@ -482,7 +482,7 @@ class CacheDetailViewModel @Inject constructor(
     }
 
     private fun UIStep.getIconMarker(cache: Cache, index: Int, stepUserStatus: CacheUserStatus): CacheMarkerIcon {
-        val tint = cache.getCacheColor(stepUserStatus)
+        val tint = cache.getColorTheme(stepUserStatus).dayColorScheme.primary
         return if (type is UIStep.Type.Final || type is UIStep.Type.Classical) {
             if (status == UIStep.Status.Current) {
                 cache.getCacheMarkerFocus()

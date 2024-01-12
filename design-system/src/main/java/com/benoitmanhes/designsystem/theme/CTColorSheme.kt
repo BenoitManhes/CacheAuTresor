@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.res.Colors
 
 @Immutable
-object DayColorScheme : CTColorScheme {
+object DefaultDayColorScheme : CTColorScheme {
     override val primary: Color = Colors.Marigold
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber
@@ -27,7 +27,7 @@ object DayColorScheme : CTColorScheme {
 }
 
 @Immutable
-object NightColorScheme : CTColorScheme {
+object DefaultNightColorScheme : CTColorScheme {
     override val primary: Color = Colors.Marigold
     override val onPrimary: Color = Colors.White
     override val secondary: Color = Colors.BurntUmber

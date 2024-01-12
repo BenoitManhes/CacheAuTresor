@@ -18,7 +18,7 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.utils.extensions.getCacheColor
+import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheSize
 import com.benoitmanhes.domain.model.CacheUserStatus
@@ -38,7 +38,7 @@ internal fun Cache.Type.getCacheMarkerFocus(color: Color): CacheMarkerIcon = whe
 }
 
 internal fun Cache.getCacheMarker(status: CacheUserStatus): CacheMarkerIcon {
-    val tint = getCacheColor(status)
+    val tint = getColorTheme(status).dayColorScheme.primary
     return when (status) {
         CacheUserStatus.Owned -> CacheMarkerIcon.Owner(tint)
         CacheUserStatus.Found -> CacheMarkerIcon.Found(tint)
@@ -48,7 +48,7 @@ internal fun Cache.getCacheMarker(status: CacheUserStatus): CacheMarkerIcon {
 }
 
 internal fun Cache.getCacheMarkerFocus(): CacheMarkerIcon {
-    val tint = getCacheColor(CacheUserStatus.Started)
+    val tint = getColorTheme(CacheUserStatus.Started).dayColorScheme.primary
     return type.getCacheMarkerFocus(tint)
 }
 

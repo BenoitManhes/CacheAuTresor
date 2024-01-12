@@ -13,10 +13,11 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
+import com.benoitmanhes.designsystem.utils.ComposableContent
 
 typealias ComposeProvider<T> = @Composable () -> T
 
-val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DayColorScheme }
+private val LocalColor: ProvidableCompositionLocal<CTColorScheme> = staticCompositionLocalOf { DefaultDayColorScheme }
 private val LocalTypography: ProvidableCompositionLocal<CTTypography> = staticCompositionLocalOf { CTTypography }
 private val LocalShape: ProvidableCompositionLocal<CTShape> = staticCompositionLocalOf { CTShape }
 private val LocalSpacing: ProvidableCompositionLocal<Dimens.Spacing> = staticCompositionLocalOf { Dimens.Spacing }
@@ -59,16 +60,18 @@ object CTTheme {
 
 @Composable
 fun CTTheme(
+    colorTheme: CTColorTheme = CTColorTheme.Default,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
     val localTypography = CTTypography
 
-    val localColor = if (darkTheme) {
-        NightColorScheme
-    } else {
-        DayColorScheme
-    }
+    //    val localColor = if (darkTheme) {
+    //        colorTheme.nightColorScheme
+    //    } else {
+    //        colorTheme.dayColorScheme
+    //    }
+    val localColor = colorTheme.dayColorScheme
 
     val materialColorScheme = mappedMaterialColorScheme(darkTheme, localColor)
     val material2Colors = mappedMaterial2Colors(darkTheme, localColor)
@@ -168,3 +171,21 @@ private fun mappedMaterial2Typography(localTypography: CTTypography) = Typograph
     subtitle1 = localTypography.body,
     caption = localTypography.caption,
 )
+
+@Composable
+fun CTTheme.ColorTheme(
+    colorTheme: CTColorTheme,
+    content: ComposableContent,
+) {
+    /* For now only light mode is supported */
+    //    val localColor = if (isSystemInDarkTheme()) {
+    //        colorTheme.nightColorScheme
+    //    } else {
+    //        colorTheme.dayColorScheme
+    //    }
+
+    CompositionLocalProvider(
+        LocalColor provides colorTheme.dayColorScheme,
+        content = content,
+    )
+}

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.navigation.explore.exploreNavGraph
-import com.benoitmanhes.cacheautresor.screen.home.create.CreateScreen
+import com.benoitmanhes.cacheautresor.screen.home.create.CreateRoute
 import com.benoitmanhes.cacheautresor.screen.home.encyclopedia.EncyclopediaScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.explore.ExploreRoute
 import com.benoitmanhes.cacheautresor.screen.home.news.NewsRoute
@@ -31,7 +31,7 @@ fun HomeNavigation(
                 innerPadding = scaffoldPadding,
             )
         }
-        composable(HomeDestination.Create.route) { CreateScreen(scaffoldPadding) }
+        composable(HomeDestination.Create.route) { CreateRoute(scaffoldPadding) }
         composable(HomeDestination.Encyclopedia.route) { EncyclopediaScreen(scaffoldPadding) }
         composable(HomeDestination.Profile.route) { ProfileRoute(scaffoldPadding) }
 

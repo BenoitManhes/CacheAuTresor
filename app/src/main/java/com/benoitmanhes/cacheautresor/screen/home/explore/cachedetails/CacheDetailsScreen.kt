@@ -23,7 +23,6 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,8 +53,8 @@ import com.benoitmanhes.designsystem.molecule.loading.CTLoadingView
 import com.benoitmanhes.designsystem.molecule.selector.CTTabSelector
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.LocalColor
 import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
 import com.benoitmanhes.domain.model.Coordinates
 import kotlinx.coroutines.launch
@@ -86,11 +85,7 @@ fun CacheDetailsRoute(
         viewModel.consumeNavigation()
     }
 
-    CompositionLocalProvider(
-        LocalColor provides LocalColor.current.copy(
-            primaryColor = (uiState as? CacheDetailsViewModelState.Data)?.cacheColor,
-        )
-    ) {
+    CTTheme(colorTheme = (uiState as? CacheDetailsViewModelState.Data)?.cacheColorTheme ?: CTColorTheme.Default) {
         CTScreenWrapper {
             CacheDetailsScreen(
                 onNavigateBack = onNavigateBack,

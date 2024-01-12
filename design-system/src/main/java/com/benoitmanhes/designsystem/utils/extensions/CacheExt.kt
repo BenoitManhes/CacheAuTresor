@@ -1,25 +1,24 @@
 package com.benoitmanhes.designsystem.utils.extensions
 
-import androidx.compose.ui.graphics.Color
-import com.benoitmanhes.designsystem.res.Colors
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserStatus
 
-private fun Cache.getCachePaletteColor(): Pair<Color, Color> = when (type) {
-    is Cache.Type.Classical -> Colors.LaSalleGreen to Colors.MiddleGreen
-    is Cache.Type.Coop -> Colors.LightSeaGreen to Colors.PewterBlue
-    is Cache.Type.Mystery -> Colors.MetallicViolet to Colors.FrenchLilac
-    is Cache.Type.Piste -> Colors.WatermelonRed to Colors.NewYorkPink
+private fun Cache.getCacheColorTheme(): Pair<CTColorTheme, CTColorTheme> = when (type) {
+    is Cache.Type.Classical -> CTColorTheme.Classical to CTColorTheme.ClassicalStarted
+    is Cache.Type.Coop -> CTColorTheme.Coop to CTColorTheme.CoopStarted
+    is Cache.Type.Mystery -> CTColorTheme.Mystery to CTColorTheme.MysteryStarted
+    is Cache.Type.Piste -> CTColorTheme.Piste to CTColorTheme.PisteStarted
 }
 
-fun Cache.getCacheColor(cacheUserStatus: CacheUserStatus): Color {
-    val (availableColor, startedColor) = getCachePaletteColor()
+fun Cache.getColorTheme(cacheUserStatus: CacheUserStatus): CTColorTheme {
+    val (availableColor, startedColor) = getCacheColorTheme()
     return when (cacheUserStatus) {
-        CacheUserStatus.Owned -> Colors.SpaceCadet
-        CacheUserStatus.Found -> Colors.Marigold
+        CacheUserStatus.Owned -> CTColorTheme.Cartography
+        CacheUserStatus.Found -> CTColorTheme.Explore
         CacheUserStatus.Started -> startedColor
         CacheUserStatus.Available -> availableColor
-        CacheUserStatus.Locked -> Colors.QuickSilver
-        CacheUserStatus.Hidden -> Colors.QuickSilver
+        CacheUserStatus.Locked -> CTColorTheme.Lock
+        CacheUserStatus.Hidden -> CTColorTheme.Lock
     }
 }
