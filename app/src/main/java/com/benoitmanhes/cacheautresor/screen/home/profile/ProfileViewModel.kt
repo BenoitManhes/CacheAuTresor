@@ -6,6 +6,7 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.ClassicModalBottomSheet
 import com.benoitmanhes.cacheautresor.screen.home.profile.section.ExplorerCardState
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
+import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
@@ -49,7 +50,7 @@ class ProfileViewModel @Inject constructor(
         }
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(StopTimeOut),
+        started = SharingStarted.WhileSubscribed(AppConstants.ViewModel.defaultStopTimeOut),
         initialValue = null,
     )
 
@@ -85,9 +86,5 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             logoutUseCase().collect()
         }
-    }
-
-    companion object {
-        private const val StopTimeOut: Long = 5000
     }
 }

@@ -65,13 +65,7 @@ fun CTTheme(
     content: @Composable () -> Unit,
 ) {
     val localTypography = CTTypography
-
-    //    val localColor = if (darkTheme) {
-    //        colorTheme.nightColorScheme
-    //    } else {
-    //        colorTheme.dayColorScheme
-    //    }
-    val localColor = colorTheme.dayColorScheme
+    val localColor = colorTheme.color
 
     val materialColorScheme = mappedMaterialColorScheme(darkTheme, localColor)
     val material2Colors = mappedMaterial2Colors(darkTheme, localColor)

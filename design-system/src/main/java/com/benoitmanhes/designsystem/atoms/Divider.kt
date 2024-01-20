@@ -8,6 +8,7 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
@@ -26,10 +27,11 @@ fun CTDivider(
 fun CTVerticalDivider(
     modifier: Modifier = Modifier,
     color: Color = CTTheme.color.placeholder,
+    stroke: Dp = CTTheme.stroke.thin,
 ) {
     Box(
         modifier = modifier
-            .width(CTTheme.stroke.thin)
+            .width(stroke)
             .background(color),
     )
 }

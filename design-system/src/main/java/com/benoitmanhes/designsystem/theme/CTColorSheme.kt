@@ -24,6 +24,7 @@ object DefaultDayColorScheme : CTColorScheme {
     override val critical: Color = Colors.BurntUmber
     override val cacheFound: Color = Colors.Marigold
     override val cacheOwned: Color = Colors.SpaceCadet
+    override val border: Color = Colors.Black
 }
 
 @Immutable
@@ -46,6 +47,7 @@ object DefaultNightColorScheme : CTColorScheme {
     override val critical: Color = Colors.BurntUmber
     override val cacheFound: Color = Colors.Marigold
     override val cacheOwned: Color = Colors.SpaceCadet
+    override val border: Color = Colors.Black
 }
 
 @Immutable
@@ -68,6 +70,7 @@ interface CTColorScheme {
     val critical: Color
     val cacheFound: Color
     val cacheOwned: Color
+    val border: Color
 
     val primarySurface: Color
         get() = primary.copy(alpha = 0.2f)
@@ -93,5 +96,6 @@ interface CTColorScheme {
         override val onError: Color = this@CTColorScheme.onError
         override val cacheFound: Color = this@CTColorScheme.cacheFound
         override val cacheOwned: Color = this@CTColorScheme.cacheOwned
+        override val border: Color = this@CTColorScheme.border
     }
 }

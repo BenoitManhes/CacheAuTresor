@@ -1,5 +1,7 @@
 package com.benoitmanhes.designsystem.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import com.benoitmanhes.designsystem.res.Colors
 
@@ -7,6 +9,15 @@ import com.benoitmanhes.designsystem.res.Colors
 sealed interface CTColorTheme {
     val dayColorScheme: CTColorScheme
     val nightColorScheme: CTColorScheme
+
+    fun getCurrentColorScheme(isDarkMode: Boolean): CTColorScheme =
+        //        if (isDarkMode) nightColorScheme else dayColorScheme
+        dayColorScheme // Only dayMode now
+
+    val color: CTColorScheme
+        @Composable get() {
+            return getCurrentColorScheme(isSystemInDarkTheme())
+        }
 
     @Immutable
     data object Default : CTColorTheme {

@@ -56,6 +56,7 @@ object Dimens {
         val thin: Dp = 1.dp
         val medium: Dp = 2.dp
         val strong: Dp = 3.dp
+        val circularProgress: Dp = 5.dp
     }
 
     /* === Components Size === */
@@ -87,6 +88,7 @@ object Dimens {
         Small(dp = 16.dp),
         Medium(dp = 24.dp),
         Large(dp = 32.dp),
+        XLarge(dp = 40.dp),
         Huge(dp = 48.dp),
         Immense(dp = 64.dp),
         BottomBarItem(dp = 28.dp),
@@ -132,6 +134,7 @@ object Dimens {
         val bottomBarItemSize: Dp = 28.dp
         val fabButtonSize: Dp = 64.dp
         val fabIconButtonSize: Dp = 42.dp
+        val navigationBarCutoutGap: Dp = 40.dp
 
         val compassButtonSize: Dp = 36.dp
 

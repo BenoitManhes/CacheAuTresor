@@ -35,4 +35,8 @@ object AppConstants {
         const val areaLimitLatSouth: Double = -82.0
         const val markerTouchMargin: Int = 12
     }
+
+    object ViewModel {
+        const val defaultStopTimeOut: Long = 5000
+    }
 }

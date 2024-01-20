@@ -4,7 +4,7 @@ import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserStatus
 
-private fun Cache.getCacheColorTheme(): Pair<CTColorTheme, CTColorTheme> = when (type) {
+fun Cache.getCacheColorTheme(): Pair<CTColorTheme, CTColorTheme> = when (type) {
     is Cache.Type.Classical -> CTColorTheme.Classical to CTColorTheme.ClassicalStarted
     is Cache.Type.Coop -> CTColorTheme.Coop to CTColorTheme.CoopStarted
     is Cache.Type.Mystery -> CTColorTheme.Mystery to CTColorTheme.MysteryStarted

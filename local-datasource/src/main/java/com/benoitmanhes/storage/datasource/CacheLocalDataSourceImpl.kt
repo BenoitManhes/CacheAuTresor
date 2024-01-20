@@ -23,6 +23,9 @@ class CacheLocalDataSourceImpl @Inject constructor(
     override fun getAllCachesFlow(): Flow<List<Cache>> =
         cacheDao.findAllFlow().map { list -> list.map { it.toAppModel() } }
 
+    override fun getAllCachesByExplorer(explorerId: String): Flow<List<Cache>> =
+        cacheDao.findAllFlowByExplorer(explorerId).map { list -> list.map { it.toAppModel() } }
+
     override suspend fun saveCache(cache: Cache): Unit = withContext(Dispatchers.IO) {
         cacheDao.insert(RoomCache.build(cache))
     }

@@ -28,6 +28,9 @@ class CacheRepositoryImpl @Inject constructor(
     override fun getAllCachesFlow(): Flow<List<Cache>> =
         cacheLocalDataSource.getAllCachesFlow()
 
+    override fun getAllCachesByExplorer(explorerId: String): Flow<List<Cache>> =
+        cacheLocalDataSource.getAllCachesByExplorer(explorerId)
+
     override suspend fun fetchAllCaches() {
         val allCaches = cacheRemoteDataSource.getAllCaches()
         cacheLocalDataSource.saveCaches(allCaches)

@@ -138,4 +138,10 @@
     <string name="modalUnlock_title">Load the cache</string>
     <string name="dialog_cacheUnlocked_title">Cache unlocked!</string>
     <string name="dialog_cacheUnlocked_message">You have just unlocked the **%1$s** cache :\n\n**%2$s**</string>
+    <string name="create_tabSelector_creation">Creating</string>
+    <string name="create_tabSelector_available">Available</string>
+    <string name="create_tabSelector_archives">Archives</string>
+    <string name="create_header">My caches</string>
+    <string name="createAvailable_header">Here are your active caches</string>
+    <string name="createAvailable_empty">You do not have active cache yet</string>
 </resources>

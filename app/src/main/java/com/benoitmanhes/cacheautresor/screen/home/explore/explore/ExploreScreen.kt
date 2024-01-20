@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -113,7 +114,7 @@ fun ExploreScreen(
     onUnSelectCache: () -> Unit,
     requestPermissionLocation: () -> Unit,
 ) {
-    var page by rememberSaveable { mutableStateOf(0) }
+    var page by rememberSaveable { mutableIntStateOf(0) }
     val pagerState = rememberPagerState(
         pageCount = { 2 }
     )
