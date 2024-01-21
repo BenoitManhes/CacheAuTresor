@@ -148,4 +148,6 @@
     <string name="myCachesDraft_header">Voici tes caches en cours de création. Elles ne sont pas encore disponible pour les autres explorateurs.</string>
     <string name="myCachesDraft_empty">Tu n’as aucune cache en cours de création.</string>
     <string name="common_noValue_placeHolder">-</string>
+    <string name="startCreationModal_title">Création d’une cache</string>
+    <string name="startCreationModal_message">La cache en cours de création sera un brouillon. Lorsque que toutes les informations nécessaires seront fournis, tu pourras la publier.\n\nCommencer la création d’une cache ?</string>
 </resources>

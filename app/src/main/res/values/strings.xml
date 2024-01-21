@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Compass</string>
     <string name="bottomBar_home">Home</string>
-    <string name="bottomBar_favourites" translatable="false">Favourites</string>
+    <string name="bottomBar_favourites">Favourites</string>
     <string name="bottomBar_explore">Explore</string>
     <string name="bottomBar_encyclopedia">Encyclopedia</string>
     <string name="bottomBar_profile">Profile</string>
@@ -148,4 +148,6 @@
         name="myCachesDraft_header">Here are your caches in the process of being created. They are not yet available to other explorers.</string>
     <string name="myCachesDraft_empty">You do not have caches being created</string>
     <string name="common_noValue_placeHolder">-</string>
+    <string name="startCreationModal_title">Cache creation</string>
+    <string name="startCreationModal_message">The cache being created will be a draft. Once all the necessary information has been provided, you can publish it.\n\nStart cache creation ?</string>
 </resources>
