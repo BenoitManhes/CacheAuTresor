@@ -1,6 +1,5 @@
 package com.benoitmanhes.designsystem.molecule.textfield
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
@@ -33,13 +32,14 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.CTSelector
-import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerExtraSmall
+import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
 
 @Composable
 fun CTDoubleTextField(
@@ -159,9 +159,9 @@ fun CTDoubleTextField(
             }
         }
         SpacerExtraSmall()
-        AnimatedVisibility(visible = isError && errorText != null) {
+        AnimatedNullableVisibility(errorText.takeIf { isError }) { error ->
             CTTextView(
-                text = errorText!!,
+                text = error,
                 modifier = Modifier.padding(start = CTTheme.spacing.medium),
                 color = errorColor,
                 style = CTTheme.typography.caption,
