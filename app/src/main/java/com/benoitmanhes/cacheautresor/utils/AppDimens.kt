@@ -3,7 +3,6 @@ package com.benoitmanhes.cacheautresor.utils
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.benoitmanhes.designsystem.res.Dimens
 
 object AppDimens {
     object CacheDetail {

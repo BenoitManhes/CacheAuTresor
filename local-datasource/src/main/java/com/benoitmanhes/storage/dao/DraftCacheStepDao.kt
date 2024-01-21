@@ -21,6 +21,9 @@ interface DraftCacheStepDao {
     @Query("DELETE FROM `draft-cache-step` WHERE stepDraftId IN (:ids)")
     fun delete(ids: List<String>)
 
+    @Query("DELETE FROM `draft-cache-step`")
+    fun deleteAll()
+
     @Query("SELECT * FROM `draft-cache-step` WHERE stepDraftId = :id")
     fun findWithId(id: String): RoomDraftCacheStep?
 

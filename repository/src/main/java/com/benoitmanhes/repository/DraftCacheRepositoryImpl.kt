@@ -19,6 +19,10 @@ class DraftCacheRepositoryImpl @Inject constructor(
         draftCacheLocalDataSource.deleteDraftCache(draftCacheId)
     }
 
+    override suspend fun clearAll() {
+        draftCacheLocalDataSource.clearAll()
+    }
+
     override suspend fun saveDraftCache(draftCache: DraftCache) {
         draftCacheLocalDataSource.saveDraftCache(draftCache)
     }

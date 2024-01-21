@@ -31,8 +31,8 @@ sealed interface IconSpec {
     }
 
     data class ComposeIcon(
-        private val provider: ComposeProvider<ImageVector>,
         override val contentDescription: String? = null,
+        private val provider: ComposeProvider<ImageVector>,
     ) : IconSpec {
         @Composable
         override fun painter(): Painter = rememberVectorPainter(provider())

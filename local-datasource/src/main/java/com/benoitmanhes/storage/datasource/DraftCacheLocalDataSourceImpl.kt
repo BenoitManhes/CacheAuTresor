@@ -25,6 +25,10 @@ class DraftCacheLocalDataSourceImpl @Inject constructor(
         draftCacheDao.delete(draftCacheId)
     }
 
+    override suspend fun clearAll(): Unit = withContext(Dispatchers.IO) {
+        draftCacheDao.deleteAll()
+    }
+
     override suspend fun saveDraftCache(draftCache: DraftCache): Unit = withContext(Dispatchers.IO) {
         draftCacheDao.insert(RoomDraftCache.build(draftCache))
     }

@@ -139,10 +139,13 @@
     <string name="modalUnlock_title">Charger la cache</string>
     <string name="dialog_cacheUnlocked_title">Cache débloquée !</string>
     <string name="dialog_cacheUnlocked_message">Vous venez de débloquer la cache **%1$s** :\n\n**%2$s**</string>
-    <string name="create_tabSelector_creation">Création</string>
-    <string name="create_tabSelector_available">Disponible</string>
-    <string name="create_tabSelector_archives">Archives</string>
-    <string name="create_header">Mes caches</string>
-    <string name="createAvailable_header">Voici tes caches actives</string>
-    <string name="createAvailable_empty">Tu n’as pas encore de cache active</string>
+    <string name="myCaches_tabSelector_creation">Création</string>
+    <string name="myCaches_tabSelector_available">Disponible</string>
+    <string name="myCaches_tabSelector_archives">Archives</string>
+    <string name="myCaches_header">Mes caches</string>
+    <string name="myCachesAvailable_header">Voici les caches que tu as créé. Elles sont disponibles aux les autres explorateurs.</string>
+    <string name="myCachesAvailable_empty">Tu n’as pas encore de cache active</string>
+    <string name="myCachesDraft_header">Voici tes caches en cours de création. Elles ne sont pas encore disponible pour les autres explorateurs.</string>
+    <string name="myCachesDraft_empty">Tu n’as aucune cache en cours de création.</string>
+    <string name="common_noValue_placeHolder">-</string>
 </resources>

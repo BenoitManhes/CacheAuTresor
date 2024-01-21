@@ -26,6 +26,10 @@ class DraftCacheStepRepositoryImpl @Inject constructor(
         draftCacheStepLocalDataSource.deleteDraftCacheSteps(draftCacheSteps)
     }
 
+    override suspend fun deleteAll() {
+        draftCacheStepLocalDataSource.deleteAll()
+    }
+
     override suspend fun getDraftCacheStep(dratCacheStepId: String): DraftCacheStep? =
         draftCacheStepLocalDataSource.getDraftCacheStep(dratCacheStepId)
 

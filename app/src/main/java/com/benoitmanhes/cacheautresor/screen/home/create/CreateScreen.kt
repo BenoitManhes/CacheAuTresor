@@ -13,20 +13,17 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.available.MyCachesAvailableRoute
-import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.available.MyCachesAvailableViewModel
+import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.creation.MyCachesDraftRoute
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
@@ -57,7 +54,6 @@ fun CreateRoute(
 private fun CreateScreen(
     innerPadding: PaddingValues,
 ) {
-
     var selectedPage by rememberSaveable { mutableIntStateOf(0) }
     val pagerState = rememberPagerState(
         pageCount = { creationTabItems.count() },
@@ -87,7 +83,7 @@ private fun CreateScreen(
         SpacerMedium()
 
         CTTextView(
-            text = TextSpec.Resources(R.string.create_header),
+            text = TextSpec.Resources(R.string.myCaches_header),
             modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             style = CTTheme.typography.header0,
             color = CTTheme.color.onBackground,
@@ -107,19 +103,16 @@ private fun CreateScreen(
             userScrollEnabled = false,
         ) { page ->
             when (page) {
-                0 -> {}
-                1 -> {
-                    MyCachesAvailableRoute()
-                }
+                0 -> MyCachesDraftRoute()
 
-                2 -> {}
+                1 -> MyCachesAvailableRoute()
             }
         }
     }
 }
 
 private val creationTabItems: List<SelectorItem> = listOf(
-    SelectorItem(text = TextSpec.Resources(R.string.create_tabSelector_creation)),
-    SelectorItem(text = TextSpec.Resources(R.string.create_tabSelector_available)),
-    SelectorItem(text = TextSpec.Resources(R.string.create_tabSelector_archives)),
+    SelectorItem(text = TextSpec.Resources(R.string.myCaches_tabSelector_creation)),
+    SelectorItem(text = TextSpec.Resources(R.string.myCaches_tabSelector_available)),
+    //    SelectorItem(text = TextSpec.Resources(R.string.myCaches_tabSelector_archives)),
 )

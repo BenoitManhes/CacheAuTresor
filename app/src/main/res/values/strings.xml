@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Compass</string>
     <string name="bottomBar_home">Home</string>
-    <string name="bottomBar_favourites">Favourites</string>
+    <string name="bottomBar_favourites" translatable="false">Favourites</string>
     <string name="bottomBar_explore">Explore</string>
     <string name="bottomBar_encyclopedia">Encyclopedia</string>
     <string name="bottomBar_profile">Profile</string>
@@ -138,10 +138,14 @@
     <string name="modalUnlock_title">Load the cache</string>
     <string name="dialog_cacheUnlocked_title">Cache unlocked!</string>
     <string name="dialog_cacheUnlocked_message">You have just unlocked the **%1$s** cache :\n\n**%2$s**</string>
-    <string name="create_tabSelector_creation">Creating</string>
-    <string name="create_tabSelector_available">Available</string>
-    <string name="create_tabSelector_archives">Archives</string>
-    <string name="create_header">My caches</string>
-    <string name="createAvailable_header">Here are your active caches</string>
-    <string name="createAvailable_empty">You do not have active cache yet</string>
+    <string name="myCaches_tabSelector_creation">Creating</string>
+    <string name="myCaches_tabSelector_available">Available</string>
+    <string name="myCaches_tabSelector_archives">Archives</string>
+    <string name="myCaches_header">My caches</string>
+    <string name="myCachesAvailable_header">Here are your active caches. They are availabled for the others explorer.</string>
+    <string name="myCachesAvailable_empty">You do not have active cache yet</string>
+    <string
+        name="myCachesDraft_header">Here are your caches in the process of being created. They are not yet available to other explorers.</string>
+    <string name="myCachesDraft_empty">You do not have caches being created</string>
+    <string name="common_noValue_placeHolder">-</string>
 </resources>

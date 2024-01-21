@@ -15,7 +15,6 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
@@ -52,11 +51,12 @@ internal fun Cache.getCacheMarkerFocus(): CacheMarkerIcon {
     return type.getCacheMarkerFocus(tint)
 }
 
-fun Cache.getIcon(): IconSpec = when (type) {
-    is Cache.Type.Classical -> IconSpec.ComposeIcon(CTTheme.composed { icon.Parchment })
-    is Cache.Type.Coop -> IconSpec.ComposeIcon(CTTheme.composed { icon.Coop })
-    is Cache.Type.Mystery -> IconSpec.ComposeIcon(CTTheme.composed { icon.Mystery })
-    is Cache.Type.Piste -> IconSpec.ComposeIcon(CTTheme.composed { icon.Piste })
+fun Cache.getIcon(): IconSpec = type.getIcon()
+fun Cache.Type.getIcon(): IconSpec = when (this) {
+    is Cache.Type.Classical -> IconSpec.ComposeIcon { CTTheme.icon.Parchment }
+    is Cache.Type.Coop -> IconSpec.ComposeIcon { CTTheme.icon.Coop }
+    is Cache.Type.Mystery -> IconSpec.ComposeIcon { CTTheme.icon.Mystery }
+    is Cache.Type.Piste -> IconSpec.ComposeIcon { CTTheme.icon.Piste }
 }
 
 @Composable
@@ -68,7 +68,8 @@ fun Cache.getSizeIcon(): IconSpec = when (this.size) {
     CacheSize.Undefined -> IconSpec.VectorIcon(Icons.Rounded.QuestionMark, null)
 }
 
-fun Cache.getTypeText(): TextSpec = when (type) {
+fun Cache.getTypeText(): TextSpec = type.getTypeText()
+fun Cache.Type.getTypeText(): TextSpec = when (this) {
     is Cache.Type.Classical -> TextSpec.Resources(R.string.cache_type_classical)
     is Cache.Type.Coop -> TextSpec.Resources(R.string.cache_type_coop)
     is Cache.Type.Mystery -> TextSpec.Resources(R.string.cache_type_mystery)

@@ -25,6 +25,7 @@ data class RoomDraftCache(
     val lockDescription: String?,
     val lockCode: String?,
     val type: DraftCache.Type?,
+    val progress: Float,
 ) : RoomModel<DraftCache> {
 
     override fun toAppModel(): DraftCache = DraftCache(
@@ -43,6 +44,7 @@ data class RoomDraftCache(
         lockDescription = lockDescription,
         lockCode = lockCode,
         type = type,
+        progress = progress,
     )
 
     companion object {
@@ -62,6 +64,7 @@ data class RoomDraftCache(
             lockDescription = appModel.lockDescription,
             lockCode = appModel.lockCode,
             type = appModel.type,
+            progress = appModel.progress,
         )
     }
 }

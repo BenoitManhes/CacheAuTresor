@@ -15,6 +15,9 @@ interface DraftCacheDao {
     @Query("DELETE FROM `DRAFT-CACHE` WHERE draftCacheId = :id")
     fun delete(id: String)
 
+    @Query("DELETE FROM `DRAFT-CACHE`")
+    fun deleteAll()
+
     @Query("SELECT * FROM `DRAFT-CACHE` WHERE draftCacheId = :id")
     fun findWithId(id: String): RoomDraftCache?
 

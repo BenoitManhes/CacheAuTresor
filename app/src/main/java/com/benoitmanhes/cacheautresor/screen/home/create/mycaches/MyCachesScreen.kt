@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.style.TextAlign
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.CTImage
@@ -35,7 +36,6 @@ fun MyCachesScreen(
             DataScreen(uiState)
         }
     }
-
 }
 
 @Composable
@@ -56,6 +56,7 @@ private fun DataScreen(uiState: MyCachesViewModelState.Data) {
                     text = uiState.headerText,
                     style = CTTheme.typography.body,
                     color = CTTheme.color.onPrimary,
+                    textAlign = TextAlign.Center,
                 )
 
                 CTImage(

@@ -20,6 +20,7 @@ data class DraftCache(
     val lockDescription: String?,
     val lockCode: String?,
     val type: Type?,
+    val progress: Float,
 ) : Model {
     sealed interface Type : Model {
 
@@ -30,7 +31,7 @@ data class DraftCache(
         ) : Type
 
         data class Mystery(
-            val enigmaDraftStepId: String,
+            val enigmaDraftStepId: String?,
         ) : Type
 
         data class Coop(

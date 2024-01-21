@@ -31,6 +31,10 @@ class DraftCacheStepLocalDataSourceImpl @Inject constructor(
         draftCacheStepDao.delete(draftCacheSteps)
     }
 
+    override suspend fun deleteAll(): Unit = withContext(Dispatchers.IO) {
+        draftCacheStepDao.deleteAll()
+    }
+
     override suspend fun getDraftCacheStep(dratCacheStepId: String): DraftCacheStep? = withContext(Dispatchers.IO) {
         draftCacheStepDao.findWithId(dratCacheStepId)?.toAppModel()
     }
