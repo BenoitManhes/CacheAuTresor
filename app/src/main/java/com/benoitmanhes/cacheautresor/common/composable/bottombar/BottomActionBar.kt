@@ -4,44 +4,81 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.common.kotlin.safeLet
 import com.benoitmanhes.designsystem.atoms.CTDivider
+import com.benoitmanhes.designsystem.atoms.text.CTTextView
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
 fun BottomActionBar(
-    state: BottomActionBarState,
     modifier: Modifier = Modifier,
+    message: TextSpec? = null,
+    title: TextSpec? = null,
+    firstButton: PrimaryButtonState? = null,
+    secondButton: PrimaryButtonState? = null,
 ) {
     Surface(
         modifier = modifier
             .wrapContentSize(),
         color = CTTheme.color.surface,
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding(),
+        ) {
             CTDivider()
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(CTTheme.spacing.large),
-                horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
+                verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
             ) {
-                state.firstButtonState
-                    .copy(type = PrimaryButtonType.COLORED)
-                    .Content(
-                        modifier = Modifier.weight(1f),
-                    )
+                // Text column
+                if (title != null || message != null) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
+                    ) {
+                        CTTextView(
+                            text = title,
+                            style = CTTheme.typography.bodyBold,
+                            color = CTTheme.color.onSurface,
+                        )
+                        CTTextView(
+                            text = message,
+                            style = CTTheme.typography.bodySmall,
+                            color = CTTheme.color.onSurface,
+                        )
+                    }
+                }
 
-                state.secondButtonState
-                    ?.copy(type = PrimaryButtonType.OUTLINED)
-                    ?.Content(
-                        modifier = Modifier.weight(1f),
-                    )
+                // Buttons row
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
+                ) {
+                    firstButton
+                        ?.copy(type = PrimaryButtonType.COLORED)
+                        ?.Content(
+                            modifier = Modifier.weight(1f),
+                        )
+
+                    secondButton
+                        ?.copy(type = PrimaryButtonType.OUTLINED)
+                        ?.Content(
+                            modifier = Modifier.weight(1f),
+                        )
+                }
             }
         }
     }

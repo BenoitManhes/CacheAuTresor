@@ -150,4 +150,7 @@
     <string name="common_noValue_placeHolder">-</string>
     <string name="startCreationModal_title">Création d’une cache</string>
     <string name="startCreationModal_message">La cache en cours de création sera un brouillon. Lorsque que toutes les informations nécessaires seront fournis, tu pourras la publier.\n\nCommencer la création d’une cache ?</string>
+    <string name="availableFinalPlaces_bottomBar_title">Emplacement disponible</string>
+    <string name="availableFinalPlaces_bottomBar_message">Regardes où tu pourras cacher ta nouvelle cache. L’emplacement doit-être en dehors des zones rouges.</string>
+    <string name="availableFinalPlaces_firstButton_text">Commencer la création</string>
 </resources>

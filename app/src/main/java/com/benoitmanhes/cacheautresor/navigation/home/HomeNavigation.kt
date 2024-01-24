@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.benoitmanhes.cacheautresor.navigation.creation.creationNavGraph
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.navigation.explore.exploreNavGraph
 import com.benoitmanhes.cacheautresor.screen.home.create.CreateRoute
@@ -36,5 +37,6 @@ fun HomeNavigation(
         composable(HomeDestination.Profile.route) { ProfileRoute(scaffoldPadding) }
 
         exploreNavGraph(navController)
+        creationNavGraph(navController)
     }
 }

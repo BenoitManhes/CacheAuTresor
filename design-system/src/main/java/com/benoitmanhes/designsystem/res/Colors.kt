@@ -13,6 +13,7 @@ internal object Colors {
     val LightSeaGreen: Color = Color(0xFF1DA1AA)
     val Marigold: Color = Color(0xFFF0B02C)
     val MetallicViolet: Color = Color(0xFF570A93)
+    val Red: Color = Color(0xFFF12B10)
     val SpaceCadet: Color = Color(0xFF13204F)
     val QuickSilver: Color = Color(0xFFA6A6A6)
     val WatermelonRed: Color = Color(0xFFB54249)

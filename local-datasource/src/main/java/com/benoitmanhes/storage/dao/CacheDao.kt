@@ -22,6 +22,9 @@ interface CacheDao {
     fun findWithIdFlow(cacheId: String): Flow<RoomCache?>
 
     @Query("SELECT * FROM CACHES")
+    fun findAll(): List<RoomCache>
+
+    @Query("SELECT * FROM CACHES")
     fun findAllFlow(): Flow<List<RoomCache>>
 
     @Query("SELECT * FROM CACHES WHERE creatorId = :explorerId")

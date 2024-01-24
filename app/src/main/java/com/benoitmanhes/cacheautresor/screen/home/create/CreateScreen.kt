@@ -20,6 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.available.MyCachesAvailableRoute
@@ -76,7 +77,7 @@ private fun CreateScreen(
     Column(
         modifier = Modifier
             .statusBarsPadding()
-            .padding(bottom = innerPadding.calculateBottomPadding() - Dimens.Size.navigationBarCutoutGap)
+            .padding(bottom = (innerPadding.calculateBottomPadding() - Dimens.Size.navigationBarCutoutGap).coerceAtLeast(0.dp))
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
     ) {

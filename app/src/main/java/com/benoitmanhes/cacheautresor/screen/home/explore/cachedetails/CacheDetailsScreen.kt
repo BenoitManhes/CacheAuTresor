@@ -30,12 +30,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBar
+import com.benoitmanhes.cacheautresor.common.extensions.onTapListener
+import com.benoitmanhes.cacheautresor.common.extensions.refresh
+import com.benoitmanhes.cacheautresor.common.extensions.setUpDefaultParameters
+import com.benoitmanhes.cacheautresor.common.extensions.setUpMyLocation
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.maps.CTMapView
 import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
@@ -43,8 +44,6 @@ import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.CacheDetailInstructionsScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
-import com.benoitmanhes.cacheautresor.screen.home.explore.explore.refresh
-import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.cacheautresor.utils.AppDimens
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
@@ -56,17 +55,8 @@ import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
-import com.benoitmanhes.domain.model.Coordinates
 import kotlinx.coroutines.launch
-import org.osmdroid.events.MapEventsReceiver
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.CustomZoomButtonsController
-import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
-import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 @Composable
 fun CacheDetailsRoute(
@@ -111,11 +101,19 @@ private fun CacheDetailsScreen(
 
     val data = uiState as? CacheDetailsViewModelState.Data
 
+    // Map set-up
     LaunchedEffect(mapViewState) {
-        mapViewState.setupMap(AppConstants.Map.defaultLocation) {
-            coroutineScope.launch {
-                bottomSheetState.partialExpand()
-            }
+        mapViewState.apply {
+            setUpDefaultParameters()
+            setUpMyLocation()
+            onTapListener(
+                onSingleTap = {
+                    coroutineScope.launch {
+                        bottomSheetState.partialExpand()
+                    }
+                    true
+                }
+            )
         }
     }
 
@@ -186,11 +184,7 @@ private fun CacheDetailsScreen(
                             }
                         }
 
-                        data?.bottomBarState?.let { _bottomBarState ->
-                            BottomActionBar(
-                                state = _bottomBarState,
-                            )
-                        }
+                        data?.bottomBarState?.Content()
                     }
                 },
                 sheetDragHandle = null,
@@ -292,41 +286,4 @@ private fun EmptyContent(uiState: CacheDetailsViewModelState.Empty) {
             color = CTTheme.color.placeholder,
         )
     }
-}
-
-private fun MapView.setupMap(
-    center: Coordinates,
-    hideBottomSheet: () -> Unit,
-) { // Parameters
-    setTileSource(TileSourceFactory.MAPNIK)
-    setMultiTouchControls(true)
-    zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-    controller.setZoom(AppConstants.Map.myLocationZoom)
-    controller.setCenter(center.toGeoPoint())
-    maxZoomLevel = AppConstants.Map.maxZoom
-    minZoomLevel = AppConstants.Map.minZoom
-    isVerticalMapRepetitionEnabled = false
-
-    setScrollableAreaLimitLatitude(AppConstants.Map.areaLimitLatNorth, AppConstants.Map.areaLimitLatSouth, 0)
-
-    // Setup my location
-    val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this).apply {
-        enableMyLocation()
-        setPersonIcon(
-            ContextCompat.getDrawable(context, R.drawable.marker_me)?.toBitmap()
-        )
-        setPersonAnchor(0.5f, 0.5f)
-    }
-    overlays.add(locationOverlay)
-
-    // OnTap listener
-    val mapEventOverlay = MapEventsOverlay(object : MapEventsReceiver {
-        override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
-            hideBottomSheet()
-            return false
-        }
-
-        override fun longPressHelper(p: GeoPoint?): Boolean = false
-    })
-    overlays.add(mapEventOverlay)
 }

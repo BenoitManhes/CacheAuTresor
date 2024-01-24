@@ -22,6 +22,9 @@ object DefaultDayColorScheme : CTColorScheme {
     override val rootBackground: Color = Colors.Black
     override val backgroundMask: Color = Colors.TransparentBlack15
     override val critical: Color = Colors.BurntUmber
+    override val criticalSurface: Color = critical.copy(alpha = 0.15f)
+    override val criticalHard: Color = Colors.Red
+    override val criticalHardSurface: Color = criticalHard.copy(alpha = 0.15f)
     override val cacheFound: Color = Colors.Marigold
     override val cacheOwned: Color = Colors.SpaceCadet
     override val border: Color = Colors.Black
@@ -45,6 +48,9 @@ object DefaultNightColorScheme : CTColorScheme {
     override val rootBackground: Color = Colors.Black
     override val backgroundMask: Color = Colors.TransparentBlack15
     override val critical: Color = Colors.BurntUmber
+    override val criticalSurface: Color = critical.copy(alpha = 0.15f)
+    override val criticalHard: Color = Colors.Red
+    override val criticalHardSurface: Color = criticalHard.copy(alpha = 0.15f)
     override val cacheFound: Color = Colors.Marigold
     override val cacheOwned: Color = Colors.SpaceCadet
     override val border: Color = Colors.Black
@@ -68,6 +74,9 @@ interface CTColorScheme {
     val rootBackground: Color
     val backgroundMask: Color
     val critical: Color
+    val criticalSurface: Color
+    val criticalHard: Color
+    val criticalHardSurface: Color
     val cacheFound: Color
     val cacheOwned: Color
     val border: Color
@@ -93,6 +102,9 @@ interface CTColorScheme {
         override val rootBackground: Color = this@CTColorScheme.rootBackground
         override val backgroundMask: Color = this@CTColorScheme.backgroundMask
         override val critical: Color = this@CTColorScheme.critical
+        override val criticalSurface: Color = this@CTColorScheme.criticalSurface
+        override val criticalHard: Color = this@CTColorScheme.criticalHard
+        override val criticalHardSurface: Color = this@CTColorScheme.criticalHardSurface
         override val onError: Color = this@CTColorScheme.onError
         override val cacheFound: Color = this@CTColorScheme.cacheFound
         override val cacheOwned: Color = this@CTColorScheme.cacheOwned

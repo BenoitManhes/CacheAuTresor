@@ -12,12 +12,18 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val modalBottomSheetManager: ModalBottomSheetManager,
 ) : ViewModel() {
+    private val _navigate = MutableStateFlow<Boolean?>(null)
+    val navigate: StateFlow<Boolean?> get() = _navigate.asStateFlow()
+
     fun showCacheCreationModal() {
         modalBottomSheetManager.showModal(
             ClassicModalBottomSheet(
@@ -31,9 +37,13 @@ class HomeViewModel @Inject constructor(
                 ),
                 confirmAction = PrimaryButtonState(
                     text = TextSpec.Resources(R.string.common_alertDialog_action_letsGo),
-                    onClick = {},
+                    onClick = { _navigate.value = true },
                 )
             )
         )
+    }
+
+    fun consumeNavigation() {
+        _navigate.value = null
     }
 }

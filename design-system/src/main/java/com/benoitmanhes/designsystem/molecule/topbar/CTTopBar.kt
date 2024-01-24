@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ fun CTTopBar(
 ) {
     Row(
         modifier = modifier
+            .statusBarsPadding()
             .requiredHeight(Dimens.TopBar.height)
             .fillMaxWidth()
             .padding(horizontal = CTTheme.spacing.large),

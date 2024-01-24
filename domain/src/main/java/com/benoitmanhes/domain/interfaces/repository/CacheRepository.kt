@@ -7,6 +7,7 @@ interface CacheRepository {
     suspend fun getCache(cacheId: String): Cache?
     fun getCacheFlow(cacheId: String): Flow<Cache?>
     fun getAllCachesFlow(): Flow<List<Cache>>
+    suspend fun getAllCaches(): List<Cache>
     fun getAllCachesByExplorer(explorerId: String): Flow<List<Cache>>
     suspend fun fetchAllCaches(): Unit
     suspend fun saveCache(cache: Cache)

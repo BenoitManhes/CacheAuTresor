@@ -8,6 +8,7 @@ interface CacheLocalDataSource {
     fun getCacheFlow(cacheId: String): Flow<Cache?>
 
     fun getAllCachesFlow(): Flow<List<Cache>>
+    suspend fun getAllCaches(): List<Cache>
     fun getAllCachesByExplorer(explorerId: String): Flow<List<Cache>>
 
     suspend fun saveCache(cache: Cache)

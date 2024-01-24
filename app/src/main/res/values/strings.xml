@@ -150,4 +150,8 @@
     <string name="common_noValue_placeHolder">-</string>
     <string name="startCreationModal_title">Cache creation</string>
     <string name="startCreationModal_message">The cache being created will be a draft. Once all the necessary information has been provided, you can publish it.\n\nStart cache creation ?</string>
+    <string name="availableFinalPlaces_bottomBar_title">Available location</string>
+    <string
+        name="availableFinalPlaces_bottomBar_message">Look where you can hide your new cache. The location have to be out of red zones.</string>
+    <string name="availableFinalPlaces_firstButton_text">Start creation</string>
 </resources>

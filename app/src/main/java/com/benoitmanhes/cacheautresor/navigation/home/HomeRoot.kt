@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomBarFloatingButton
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.CTBottomNavBar
 import com.benoitmanhes.designsystem.theme.CTColorTheme
@@ -29,6 +32,16 @@ fun HomeRoot(
     val showFab = remember(currentRoute?.route) { currentRoute?.route == HomeRoot.fabDestination.route }
     val showBottomBar = remember(currentRoute?.route) {
         currentRoute?.route in HomeRoot.bottomBarDestinations.map { it.route }
+    }
+
+    val navigateEvent by viewModel.navigate.collectAsState()
+
+    LaunchedEffect(navigateEvent) {
+        navigateEvent ?: return@LaunchedEffect
+        if (navigateEvent == true) {
+            navController.navigate(EditCacheDestination.AvailableFinalPlaces.route)
+        }
+        viewModel.consumeNavigation()
     }
 
     Scaffold(

@@ -31,6 +31,11 @@ import androidx.core.graphics.drawable.toBitmap
 import com.benoitmanhes.cacheautresor.BuildConfig
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
+import com.benoitmanhes.cacheautresor.common.extensions.observeMapPosition
+import com.benoitmanhes.cacheautresor.common.extensions.onTapListener
+import com.benoitmanhes.cacheautresor.common.extensions.refresh
+import com.benoitmanhes.cacheautresor.common.extensions.setUpDefaultParameters
+import com.benoitmanhes.cacheautresor.common.extensions.setUpMyLocation
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
 import com.benoitmanhes.cacheautresor.common.maps.CTMapView
@@ -223,29 +228,11 @@ private fun MapView.setupMap(
     updateMapPosition: (Coordinates) -> Unit,
     unselectCache: () -> Unit,
 ) {
-    // Parameters
-    setTileSource(TileSourceFactory.MAPNIK)
-    setMultiTouchControls(true)
-    zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-    controller.setZoom(AppConstants.Map.defaultZoom)
-    controller.setCenter(AppConstants.Map.defaultLocation.toGeoPoint())
-    maxZoomLevel = AppConstants.Map.maxZoom
-    minZoomLevel = AppConstants.Map.minZoom
-    isVerticalMapRepetitionEnabled = false
-    setScrollableAreaLimitLatitude(AppConstants.Map.areaLimitLatNorth, AppConstants.Map.areaLimitLatSouth, 0)
+    setUpDefaultParameters()
+    setUpMyLocation()
 
-    // Setup my location
-    val locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), this).apply {
-        enableMyLocation()
-        enableFollowLocation()
-        setPersonIcon(
-            ContextCompat.getDrawable(context, R.drawable.marker_me)?.toBitmap()
-        )
-        setPersonAnchor(0.5f, 0.5f)
-    }
-    overlays.add(locationOverlay)
+    observeMapPosition(updateMapPosition)
 
-    // Observe map position
     addMapListener(object : MapListener {
         override fun onScroll(event: ScrollEvent?): Boolean {
             updateMapPosition(mapCenter.toModel())
@@ -255,24 +242,12 @@ private fun MapView.setupMap(
         override fun onZoom(event: ZoomEvent?): Boolean = true
     })
 
-    // OnTap listener
-    val mapEventOverlay = MapEventsOverlay(object : MapEventsReceiver {
-        override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+    onTapListener(
+        onSingleTap = {
             unselectCache()
-            return false
-        }
-
-        override fun longPressHelper(p: GeoPoint?): Boolean = false
-    })
-    overlays.add(mapEventOverlay)
-}
-
-fun MapView.refresh() {
-    if (isAnimating) {
-        postInvalidate()
-    } else {
-        invalidate()
-    }
+            false
+        },
+    )
 }
 
 // private fun getAnimationDurationFromDegree(degree: Float): Int {
