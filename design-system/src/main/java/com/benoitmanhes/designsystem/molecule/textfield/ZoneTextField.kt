@@ -19,15 +19,15 @@ fun ZoneTextField(
         shape = CTTheme.shape.medium,
         elevation = CTTheme.elevation.none,
         color = CTTheme.color.surface,
-        border = BorderStroke(CTTheme.stroke.thin, CTTheme.color.placeholder),
+        border = BorderStroke(CTTheme.stroke.thin, CTTheme.color.strokeDivider),
     ) {
         CTBasicTextField(
             value = value,
             onValueChange = onValueUpdated,
             modifier = Modifier.fillMaxSize(),
             colors = CTTextFieldColors(
-                textColor = CTTheme.color.onSurface,
-                color = CTTheme.color.onSurface,
+                textColor = CTTheme.color.textOnSurface,
+                color = CTTheme.color.textOnSurface,
             ),
             imeAction = ImeAction.Default,
         )

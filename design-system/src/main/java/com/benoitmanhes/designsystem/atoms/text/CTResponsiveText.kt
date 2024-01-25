@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.UiConstants
 
 @Composable
@@ -22,7 +23,7 @@ fun CTResponsiveText(
     text: TextSpec?,
     minFontSize: TextUnit,
     modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
+    color: Color = CTTheme.color.textDefault,
     style: TextStyle = LocalTextStyle.current,
     textAlign: TextAlign? = null,
     softWrap: Boolean = true,

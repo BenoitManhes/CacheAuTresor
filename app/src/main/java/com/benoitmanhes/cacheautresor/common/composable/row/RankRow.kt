@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
@@ -32,8 +31,8 @@ import com.benoitmanhes.designsystem.atoms.CTImage
 import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.atoms.text.CTTextMultiSize
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.ComposeProvider
 import com.benoitmanhes.designsystem.utils.ImageSpec
 
 @Composable
@@ -74,7 +73,7 @@ fun RankRow(
                 minFontSize = CTTheme.typography.caption.fontSize,
                 modifier = Modifier.width(AppDimens.Rank.rankTextWidth),
                 style = contentTextStyle,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
                 textAlign = TextAlign.Center,
             )
             CTImage(
@@ -88,13 +87,13 @@ fun RankRow(
                 text = explorerName,
                 style = contentTextStyle,
                 modifier = Modifier.weight(1f),
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
             CTTextMultiSize(
                 firstText = points,
                 firstTextStyle = contentTextStyle,
                 secondText = TextSpec.Resources(R.string.common_pointsUnit),
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
         }
     }
@@ -106,22 +105,23 @@ data class RankRowState(
     val explorerImage: ImageSpec,
     val explorerName: TextSpec,
     val points: TextSpec,
-    val backGroundGradient: ComposeProvider<Brush>?,
-    val sticky: Boolean,
-    val bold: Boolean,
+    val colorTheme: CTColorTheme,
+    val highlight: Boolean,
 ) {
     private val contentType: String = "RankRow"
 
     @Composable
     fun Content() {
-        RankRow(
-            rank = rank,
-            explorerImage = explorerImage,
-            explorerName = explorerName,
-            points = points,
-            backGroundGradient = backGroundGradient?.invoke(),
-            bold = bold,
-        )
+        CTTheme(colorTheme) {
+            RankRow(
+                rank = rank,
+                explorerImage = explorerImage,
+                explorerName = explorerName,
+                points = points,
+                bold = highlight,
+                backGroundGradient = CTTheme.gradient.surfacePrimary.takeIf { highlight },
+            )
+        }
     }
 
     @OptIn(ExperimentalFoundationApi::class)
@@ -129,7 +129,7 @@ data class RankRowState(
         scope: LazyListScope,
         key: Any,
     ) {
-        if (sticky) {
+        if (highlight) {
             scope.stickyHeader(key = key, contentType = contentType) {
                 Content()
             }
@@ -164,8 +164,8 @@ private fun PreviewRankRow() {
                 explorerImage = ImageSpec.ResImage(R.drawable.explorer),
                 explorerName = "Pseudo".textSpec(),
                 points = "125".textSpec(),
-                backGroundGradient = CTTheme.gradient.golden,
                 bold = true,
+                backGroundGradient = CTTheme.gradient.surfacePrimary,
             )
         }
     }

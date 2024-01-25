@@ -39,7 +39,7 @@ internal fun Selector(
     selectedItem: SelectorItem,
     onSelectedItem: (SelectorItem) -> Unit,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = CTTheme.color.primary,
+    backgroundColor: Color = CTTheme.color.surfacePrimary,
     shape: Shape = CTTheme.shape.circle,
     selectorShape: Shape = CTTheme.shape.circle,
     paddingValues: PaddingValues = PaddingValues(CTTheme.spacing.micro),
@@ -61,7 +61,7 @@ internal fun Selector(
         modifier = modifier
             .height(Dimens.Size.selectorHeight)
             .clip(shape)
-            .background(backgroundColor)
+            .background(CTTheme.gradient.surfacePrimary)
             .padding(paddingValues),
         content = {
             val itemColor = state.itemsContentColor

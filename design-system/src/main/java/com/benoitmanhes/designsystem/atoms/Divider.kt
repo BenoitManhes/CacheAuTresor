@@ -14,7 +14,7 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 @Composable
 fun CTDivider(
     modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.placeholder,
+    color: Color = CTTheme.color.strokeDivider,
 ) {
     Divider(
         modifier = modifier,
@@ -26,7 +26,7 @@ fun CTDivider(
 @Composable
 fun CTVerticalDivider(
     modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.placeholder,
+    color: Color = CTTheme.color.strokeDivider,
     stroke: Dp = CTTheme.stroke.thin,
 ) {
     Box(
@@ -38,7 +38,7 @@ fun CTVerticalDivider(
 
 fun LazyListScope.dividerItem(
     modifier: Modifier = Modifier,
-    color: @Composable () -> Color,
+    color: @Composable () -> Color = { CTTheme.color.strokeDivider },
 ) {
     item {
         CTDivider(

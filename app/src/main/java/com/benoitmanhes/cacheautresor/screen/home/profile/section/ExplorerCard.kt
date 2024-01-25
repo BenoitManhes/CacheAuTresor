@@ -21,6 +21,7 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.card.CTCardLarge
 import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
@@ -67,24 +68,24 @@ fun ExplorerCard(
             }
 
             // Exploration stats
-            PointsSectionProfile(
-                header = TextSpec.Resources(R.string.profile_explorationSection_title),
-                icon = CTTheme.icon.Crown.toIconSpec(),
-                points = explorationPts,
-                cacheNumber = numberCacheFounded,
-                color = CTTheme.color.cacheFound,
-                colorSurface = CTTheme.color.cacheFound.copy(alpha = 0.2f),
-            )
+            CTTheme(CTColorTheme.Explore) {
+                PointsSectionProfile(
+                    header = TextSpec.Resources(R.string.profile_explorationSection_title),
+                    icon = CTTheme.icon.Crown.toIconSpec(),
+                    points = explorationPts,
+                    cacheNumber = numberCacheFounded,
+                )
+            }
 
             // Cartography stats
-            PointsSectionProfile(
-                header = TextSpec.Resources(R.string.profile_cartographySection_title),
-                icon = CTTheme.icon.Flag.toIconSpec(),
-                points = cartographyPts,
-                cacheNumber = numberCacheCreated,
-                color = CTTheme.color.cacheOwned,
-                colorSurface = CTTheme.color.cacheOwned.copy(alpha = 0.2f),
-            )
+            CTTheme(CTColorTheme.Cartography) {
+                PointsSectionProfile(
+                    header = TextSpec.Resources(R.string.profile_cartographySection_title),
+                    icon = CTTheme.icon.Flag.toIconSpec(),
+                    points = cartographyPts,
+                    cacheNumber = numberCacheCreated,
+                )
+            }
         }
     }
 }

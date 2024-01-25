@@ -43,7 +43,7 @@ fun LockScreen(
             CTTextView(
                 text = message,
                 style = CTTheme.typography.body,
-                color = CTTheme.color.placeholder,
+                color = CTTheme.color.textLight,
                 textAlign = TextAlign.Center,
             )
         }

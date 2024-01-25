@@ -12,6 +12,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.google.accompanist.pager.HorizontalPagerIndicator
 
@@ -22,7 +23,11 @@ fun EliteSection(
     eliteCard: List<EliteCardState>,
 ) {
     val indicatorColor by animateColorAsState(
-        targetValue = if (pagerState.currentPage == 0) CTTheme.color.cacheFound else CTTheme.color.cacheOwned,
+        targetValue = if (pagerState.currentPage == 0) {
+            CTColorTheme.Explore.color.primary
+        } else {
+            CTColorTheme.Cartography.color.primary
+        },
         label = "indicator color",
     )
 
@@ -34,7 +39,7 @@ fun EliteSection(
             pagerState = pagerState,
             pageCount = eliteCard.size,
             activeColor = indicatorColor,
-            inactiveColor = CTTheme.color.placeholder,
+            inactiveColor = CTTheme.color.strokeDivider,
         )
         HorizontalPager(
             state = pagerState,

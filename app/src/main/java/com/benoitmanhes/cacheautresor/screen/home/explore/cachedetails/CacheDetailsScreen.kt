@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBar
 import com.benoitmanhes.cacheautresor.common.extensions.onTapListener
 import com.benoitmanhes.cacheautresor.common.extensions.refresh
 import com.benoitmanhes.cacheautresor.common.extensions.setUpDefaultParameters
@@ -283,7 +282,7 @@ private fun EmptyContent(uiState: CacheDetailsViewModelState.Empty) {
         CTTextView(
             text = uiState.message,
             style = CTTheme.typography.body,
-            color = CTTheme.color.placeholder,
+            color = CTTheme.color.textLight,
         )
     }
 }

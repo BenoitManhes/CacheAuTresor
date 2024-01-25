@@ -29,7 +29,7 @@ fun CTMarker(
         color = color,
         border = BorderStroke(
             width = CTTheme.stroke.medium,
-            color = CTTheme.color.onPrimary,
+            color = CTTheme.color.strokeOnPrimary,
         ),
         elevation = CTTheme.elevation.none,
     ) {
@@ -39,7 +39,7 @@ fun CTMarker(
         ) {
             CTIcon(
                 icon = icon,
-                color = CTTheme.color.onPrimary,
+                color = CTTheme.color.textOnSurfacePrimary,
                 size = Dimens.IconSize.Small,
             )
         }

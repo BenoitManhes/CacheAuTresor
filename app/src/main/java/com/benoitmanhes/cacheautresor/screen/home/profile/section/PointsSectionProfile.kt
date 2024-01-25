@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
@@ -31,8 +30,6 @@ fun PointsSectionProfile(
     points: Int,
     cacheNumber: Int,
     modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.primary,
-    colorSurface: Color = CTTheme.color.primarySurface
 ) {
     Column(
         modifier = modifier,
@@ -46,8 +43,8 @@ fun PointsSectionProfile(
             CTIconSlot(
                 icon = icon,
                 size = Dimens.IconSlotSize.Medium,
-                backgroundColor = colorSurface,
-                contentColor = color,
+                backgroundColor = CTTheme.color.surfacePrimarySoft,
+                contentColor = CTTheme.color.textOnSurfacePrimarySoft,
             )
 
             Row(

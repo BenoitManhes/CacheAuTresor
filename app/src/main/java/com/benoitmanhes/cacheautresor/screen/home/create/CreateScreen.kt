@@ -77,7 +77,11 @@ private fun CreateScreen(
     Column(
         modifier = Modifier
             .statusBarsPadding()
-            .padding(bottom = (innerPadding.calculateBottomPadding() - Dimens.Size.navigationBarCutoutGap).coerceAtLeast(0.dp))
+            .padding(
+                bottom = (innerPadding.calculateBottomPadding() - Dimens.Size.navigationBarCutoutGap).coerceAtLeast(
+                    0.dp
+                )
+            )
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
     ) {
@@ -87,7 +91,7 @@ private fun CreateScreen(
             text = TextSpec.Resources(R.string.myCaches_header),
             modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             style = CTTheme.typography.header0,
-            color = CTTheme.color.onBackground,
+            color = CTTheme.color.textOnBackground,
         )
 
         CTTabSelector(
@@ -100,7 +104,7 @@ private fun CreateScreen(
             beyondBoundsPageCount = 2,
             modifier = Modifier
                 .fillMaxSize()
-                .background(CTTheme.gradient.deepBlue, alpha = 0.75f),
+                .background(CTTheme.gradient.backgroundPrimary),
             userScrollEnabled = false,
         ) { page ->
             when (page) {

@@ -6,108 +6,171 @@ import com.benoitmanhes.designsystem.res.Colors
 
 @Immutable
 object DefaultDayColorScheme : CTColorScheme {
+    // Tint
     override val primary: Color = Colors.Marigold
-    override val onPrimary: Color = Colors.White
-    override val secondary: Color = Colors.BurntUmber
-    override val onSecondary: Color = Colors.White
+    override val primaryDark: Color = Colors.CarrotOrange
+    override val critical: Color = Colors.MaximumRed
+    override val disable: Color = Colors.TransparentBlack15
+
+    // Text
+    override val textDefault: Color = Colors.Black
+    override val textLight: Color = Colors.QuickSilver
+    override val textVeryLight: Color = Colors.TransparentBlack15
+    override val textPrimary: Color = primary
+    override val textDisable: Color = disable
+    override val textCritical: Color = critical
+    override val textOnSurface: Color = Colors.Black
+    override val textOnSurfacePrimary: Color = Colors.White
+    override val textOnSurfacePrimarySoft: Color = primary
+    override val textOnSurfaceCritical: Color = Colors.White
+    override val textOnSurfaceDisable: Color = Colors.White
+    override val textOnBackground: Color = Colors.Black
+
+    // Surface
     override val surface: Color = Colors.White
-    override val onSurface: Color = Colors.Black
+    override val surfaceLight: Color = Colors.TransparentBlack15
+    override val surfacePrimary: Color = primary
+    override val surfacePrimarySoft: Color = surfacePrimary.copy(alpha = 0.20f)
+    override val surfaceCritical: Color = critical
+    override val surfaceCriticalSoft: Color = critical.copy(alpha = 0.15f)
+    override val surfaceError: Color = Colors.BurntUmber
+    override val surfaceDisable: Color = disable
+
+    // Background
     override val background: Color = Colors.White
-    override val onBackground: Color = Colors.Black
-    override val placeholder: Color = Colors.TransparentBlack35
-    override val disable: Color = Colors.TransparentBlack10
-    override val onDisable: Color = Colors.White
-    override val error: Color = Colors.BurntUmber
-    override val onError: Color = Colors.White
-    override val rootBackground: Color = Colors.Black
     override val backgroundMask: Color = Colors.TransparentBlack15
-    override val critical: Color = Colors.BurntUmber
-    override val criticalSurface: Color = critical.copy(alpha = 0.15f)
-    override val criticalHard: Color = Colors.Red
-    override val criticalHardSurface: Color = criticalHard.copy(alpha = 0.15f)
-    override val cacheFound: Color = Colors.Marigold
-    override val cacheOwned: Color = Colors.SpaceCadet
-    override val border: Color = Colors.Black
+    override val backgroundRoot: Color = Colors.Black
+
+    // Stroke
+    override val strokeBorder: Color = Colors.Black
+    override val strokeDivider: Color = Colors.QuickSilver
+    override val strokeDisable: Color = disable
+    override val strokeOnPrimary: Color = Colors.White
+
+    // Gradient
+    override val gradientSurfacePrimaryStart: Color = primary
+    override val gradientSurfacePrimaryEnd: Color = primaryDark
+    override val gradientSurfacePrimarySoftStart: Color = primary.copy(alpha = 0.35f)
+    override val gradientSurfacePrimarySoftEnd: Color = primaryDark.copy(alpha = 0.35f)
+    override val gradientBackgroundPrimaryStart: Color = primary.copy(alpha = 0.75f)
+    override val gradientBackgroundPrimaryEnd: Color = primaryDark.copy(alpha = 0.75f)
+    override val gradientSurfaceCriticalStart: Color = Colors.Red
+    override val gradientSurfaceCriticalEnd: Color = critical
 }
 
-@Immutable
-object DefaultNightColorScheme : CTColorScheme {
-    override val primary: Color = Colors.Marigold
-    override val onPrimary: Color = Colors.White
-    override val secondary: Color = Colors.BurntUmber
-    override val onSecondary: Color = Colors.White
-    override val surface: Color = Colors.Neutral10
-    override val onSurface: Color = Colors.Neutral90
-    override val background: Color = Colors.Neutral10
-    override val onBackground: Color = Colors.Neutral90
-    override val placeholder: Color = Colors.TransparentWhite35
-    override val disable: Color = Colors.TransparentWhite10
-    override val onDisable: Color = Colors.Neutral90
-    override val error: Color = Colors.BurntUmber
-    override val onError: Color = Colors.White
-    override val rootBackground: Color = Colors.Black
-    override val backgroundMask: Color = Colors.TransparentBlack15
-    override val critical: Color = Colors.BurntUmber
-    override val criticalSurface: Color = critical.copy(alpha = 0.15f)
-    override val criticalHard: Color = Colors.Red
-    override val criticalHardSurface: Color = criticalHard.copy(alpha = 0.15f)
-    override val cacheFound: Color = Colors.Marigold
-    override val cacheOwned: Color = Colors.SpaceCadet
-    override val border: Color = Colors.Black
-}
+// Define a dark mode
+// object DefaultNightColorScheme : CTColorScheme
 
+/** Naming convention
+ * light/dark: Luminance
+ * soft/strong : alpha
+ */
 @Immutable
 interface CTColorScheme {
+    // Tint
     val primary: Color
-    val onPrimary: Color
-    val secondary: Color
-    val onSecondary: Color
-    val surface: Color
-    val onSurface: Color
-    val background: Color
-    val onBackground: Color
-    val placeholder: Color
-    val disable: Color
-    val onDisable: Color
-    val error: Color
-    val onError: Color
-    val rootBackground: Color
-    val backgroundMask: Color
+    val primaryDark: Color
     val critical: Color
-    val criticalSurface: Color
-    val criticalHard: Color
-    val criticalHardSurface: Color
-    val cacheFound: Color
-    val cacheOwned: Color
-    val border: Color
+    val disable: Color
 
-    val primarySurface: Color
-        get() = primary.copy(alpha = 0.2f)
+    // Text
+    val textDefault: Color
+    val textLight: Color
+    val textVeryLight: Color
+    val textPrimary: Color
+    val textDisable: Color
+    val textCritical: Color
+    val textOnSurface: Color
+    val textOnSurfacePrimary: Color
+    val textOnSurfacePrimarySoft: Color
+    val textOnSurfaceCritical: Color
+    val textOnSurfaceDisable: Color
+    val textOnBackground: Color
+
+    // Surface
+    val surface: Color
+    val surfaceLight: Color
+    val surfacePrimary: Color
+    val surfacePrimarySoft: Color
+    val surfaceCritical: Color
+    val surfaceCriticalSoft: Color
+    val surfaceError: Color
+    val surfaceDisable: Color
+
+    // Background
+    val background: Color
+    val backgroundMask: Color
+    val backgroundRoot: Color
+
+    // Stroke
+    val strokeBorder: Color
+    val strokeDivider: Color
+    val strokeDisable: Color
+    val strokeOnPrimary: Color
+
+    // Gradient
+    val gradientSurfacePrimaryStart: Color
+    val gradientSurfacePrimaryEnd: Color
+    val gradientSurfacePrimarySoftStart: Color
+    val gradientSurfacePrimarySoftEnd: Color
+    val gradientBackgroundPrimaryStart: Color
+    val gradientBackgroundPrimaryEnd: Color
+    val gradientSurfaceCriticalStart: Color
+    val gradientSurfaceCriticalEnd: Color
 
     fun copy(
         primaryColor: Color? = null,
+        primaryDarkColor: Color? = null,
     ): CTColorScheme = object : CTColorScheme {
+        // Tint
         override val primary: Color = primaryColor ?: this@CTColorScheme.primary
-        override val onPrimary: Color = this@CTColorScheme.onPrimary
-        override val secondary: Color = this@CTColorScheme.secondary
-        override val onSecondary: Color = this@CTColorScheme.onSecondary
-        override val surface: Color = this@CTColorScheme.surface
-        override val onSurface: Color = this@CTColorScheme.onSurface
-        override val background: Color = this@CTColorScheme.background
-        override val onBackground: Color = this@CTColorScheme.onBackground
-        override val placeholder: Color = this@CTColorScheme.placeholder
-        override val disable: Color = this@CTColorScheme.disable
-        override val onDisable: Color = this@CTColorScheme.onDisable
-        override val error: Color = this@CTColorScheme.error
-        override val rootBackground: Color = this@CTColorScheme.rootBackground
-        override val backgroundMask: Color = this@CTColorScheme.backgroundMask
+        override val primaryDark: Color = primaryDarkColor ?: this@CTColorScheme.primaryDark
         override val critical: Color = this@CTColorScheme.critical
-        override val criticalSurface: Color = this@CTColorScheme.criticalSurface
-        override val criticalHard: Color = this@CTColorScheme.criticalHard
-        override val criticalHardSurface: Color = this@CTColorScheme.criticalHardSurface
-        override val onError: Color = this@CTColorScheme.onError
-        override val cacheFound: Color = this@CTColorScheme.cacheFound
-        override val cacheOwned: Color = this@CTColorScheme.cacheOwned
-        override val border: Color = this@CTColorScheme.border
+        override val disable: Color = this@CTColorScheme.disable
+
+        // Text
+        override val textDefault: Color = this@CTColorScheme.textDefault
+        override val textLight: Color = this@CTColorScheme.textLight
+        override val textVeryLight: Color = this@CTColorScheme.textVeryLight
+        override val textPrimary: Color = primary
+        override val textDisable: Color = this@CTColorScheme.textDisable
+        override val textCritical: Color = this@CTColorScheme.textCritical
+        override val textOnSurface: Color = this@CTColorScheme.textOnSurface
+        override val textOnSurfacePrimary: Color = this@CTColorScheme.textOnSurfacePrimary
+        override val textOnSurfacePrimarySoft: Color = primary
+        override val textOnSurfaceCritical: Color = this@CTColorScheme.textOnSurfaceCritical
+        override val textOnSurfaceDisable: Color = this@CTColorScheme.textOnSurfaceDisable
+        override val textOnBackground: Color = this@CTColorScheme.textOnBackground
+
+        // Surface
+        override val surface: Color = this@CTColorScheme.surface
+        override val surfaceLight: Color = this@CTColorScheme.surfaceLight
+        override val surfacePrimary: Color = primary
+        override val surfacePrimarySoft: Color = surfacePrimary.copy(alpha = 0.20f)
+        override val surfaceCritical: Color = this@CTColorScheme.surfaceCritical
+        override val surfaceCriticalSoft: Color = this@CTColorScheme.surfaceCritical
+        override val surfaceError: Color = this@CTColorScheme.surfaceError
+        override val surfaceDisable: Color = this@CTColorScheme.surfaceDisable
+
+        // Background
+        override val background: Color = Colors.White
+        override val backgroundMask: Color = Colors.TransparentBlack15
+        override val backgroundRoot: Color = Colors.Black
+
+        // Stroke
+        override val strokeBorder: Color = Colors.Black
+        override val strokeDivider: Color = Colors.QuickSilver
+        override val strokeDisable: Color = disable
+        override val strokeOnPrimary: Color = this@CTColorScheme.strokeOnPrimary
+
+        // Gradient
+        override val gradientSurfacePrimaryStart: Color = primary
+        override val gradientSurfacePrimaryEnd: Color = primaryDark
+        override val gradientSurfacePrimarySoftStart: Color = primary.copy(alpha = 0.35f)
+        override val gradientSurfacePrimarySoftEnd: Color = primaryDark.copy(alpha = 0.35f)
+        override val gradientBackgroundPrimaryStart: Color = primary.copy(alpha = 0.75f)
+        override val gradientBackgroundPrimaryEnd: Color = primaryDark.copy(alpha = 0.75f)
+        override val gradientSurfaceCriticalStart: Color = this@CTColorScheme.gradientSurfaceCriticalStart
+        override val gradientSurfaceCriticalEnd: Color = this@CTColorScheme.gradientSurfaceCriticalEnd
     }
 }

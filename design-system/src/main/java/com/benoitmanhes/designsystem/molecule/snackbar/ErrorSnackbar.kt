@@ -11,8 +11,8 @@ fun ErrorSnackbar(
 ) {
     Snackbar(
         snackbarData = snackbarData,
-        backgroundColor = CTTheme.color.error,
-        actionColor = CTTheme.color.onError,
+        backgroundColor = CTTheme.color.surfaceCriticalSoft,
+        actionColor = CTTheme.color.textCritical,
         shape = CTTheme.shape.small,
     )
 }

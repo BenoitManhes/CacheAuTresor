@@ -15,8 +15,8 @@ import com.benoitmanhes.common.compose.text.TextSpec
 fun CTSticker(
     label: TextSpec,
     modifier: Modifier = Modifier,
-    surfaceColor: Color = CTTheme.color.primarySurface,
-    textColor: Color = CTTheme.color.primary,
+    surfaceColor: Color = CTTheme.color.surfacePrimarySoft,
+    textColor: Color = CTTheme.color.textOnSurfacePrimarySoft,
 ) {
     Box(
         modifier = modifier

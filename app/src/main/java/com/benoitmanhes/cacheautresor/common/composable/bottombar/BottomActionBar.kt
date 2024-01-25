@@ -9,10 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.common.kotlin.safeLet
 import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
@@ -52,12 +50,12 @@ fun BottomActionBar(
                         CTTextView(
                             text = title,
                             style = CTTheme.typography.bodyBold,
-                            color = CTTheme.color.onSurface,
+                            color = CTTheme.color.textOnSurface,
                         )
                         CTTextView(
                             text = message,
                             style = CTTheme.typography.bodySmall,
-                            color = CTTheme.color.onSurface,
+                            color = CTTheme.color.textOnSurface,
                         )
                     }
                 }

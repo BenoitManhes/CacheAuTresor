@@ -31,7 +31,7 @@ fun CTAlertDialog(
     ) {
         Surface(
             color = CTTheme.color.surface,
-            contentColor = CTTheme.color.onSurface,
+            contentColor = CTTheme.color.textOnSurface,
             shape = CTTheme.shape.medium,
         ) {
             Column {

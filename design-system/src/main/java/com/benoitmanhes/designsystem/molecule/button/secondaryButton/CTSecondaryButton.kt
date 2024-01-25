@@ -37,8 +37,8 @@ fun CTSecondaryButton(
     type: SecondaryButtonType = SecondaryButtonType.Colored,
     enabled: Boolean = true,
     leadingIcon: IconSpec? = null,
-    color: ComposeProvider<Color> = CTTheme.composed { this.color.primary },
-    contentColor: ComposeProvider<Color> = CTTheme.composed { this.color.onPrimary },
+    color: ComposeProvider<Color> = CTTheme.composed { this.color.surfacePrimary },
+    contentColor: ComposeProvider<Color> = CTTheme.composed { this.color.textOnSurfacePrimary },
 ) {
     ButtonFromType(
         modifier = modifier,
@@ -118,9 +118,9 @@ private fun ButtonFromType(
                 border = BorderStroke(
                     width = CTTheme.stroke.thin,
                     color = if (!enabled) {
-                        CTTheme.color.disable
+                        CTTheme.color.strokeDisable
                     } else {
-                        CTTheme.color.onSurface
+                        CTTheme.color.strokeBorder
                     },
                 ),
                 contentPadding = Dimens.SecondaryButton.padding,
@@ -152,21 +152,21 @@ private fun ButtonFromType(
 private fun buttonColorsColored(color: Color, contentColor: Color) = ButtonDefaults.buttonColors(
     backgroundColor = color,
     contentColor = contentColor,
-    disabledBackgroundColor = CTTheme.color.disable,
-    disabledContentColor = CTTheme.color.onDisable,
+    disabledBackgroundColor = CTTheme.color.surfaceDisable,
+    disabledContentColor = CTTheme.color.textDisable,
 )
 
 private val buttonColorsOutlined
     @Composable get() = ButtonDefaults.outlinedButtonColors(
         backgroundColor = Color.Transparent,
-        contentColor = CTTheme.color.onSurface,
-        disabledContentColor = CTTheme.color.disable,
+        contentColor = CTTheme.color.textOnSurface,
+        disabledContentColor = CTTheme.color.textDisable,
     )
 
 @Composable
 private fun buttonTextColors(color: Color) = ButtonDefaults.textButtonColors(
     contentColor = color,
-    disabledContentColor = CTTheme.color.disable,
+    disabledContentColor = CTTheme.color.textDisable,
 )
 
 @Preview

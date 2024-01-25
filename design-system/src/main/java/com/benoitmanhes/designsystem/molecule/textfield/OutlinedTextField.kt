@@ -47,9 +47,9 @@ fun CTOutlinedTextField(
     val borderStroke: Dp by animateDpAsState(targetValue = if (hasFocus) CTTheme.stroke.strong else CTTheme.stroke.thin)
     val borderColor: Color by animateColorAsState(
         targetValue = when {
-            isError -> CTTheme.color.error
+            isError -> CTTheme.color.critical
             hasFocus -> color
-            else -> CTTheme.color.placeholder
+            else -> CTTheme.color.strokeDivider
         }
     )
     val errorVisible = isError && errorText != null
@@ -81,7 +81,7 @@ fun CTOutlinedTextField(
                 imeAction = imeAction,
                 singleLine = true,
                 colors = CTTextFieldColors(
-                    textColor = CTTheme.color.onSurface,
+                    textColor = CTTheme.color.textOnSurface,
                     color = color,
                 ),
             )
@@ -93,7 +93,7 @@ fun CTOutlinedTextField(
             CTTextView(
                 modifier = Modifier.padding(start = CTTheme.spacing.medium),
                 text = errorText!!,
-                color = CTTheme.color.error,
+                color = CTTheme.color.textCritical,
                 style = CTTheme.typography.caption,
             )
         }

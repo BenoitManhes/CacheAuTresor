@@ -29,10 +29,13 @@ internal fun RowScope.BottomNavBarItem(
     unselectedIcon: IconSpec,
     labelText: TextSpec,
     selectedContentColor: Color = CTTheme.color.primary,
-    unselectedContentColor: Color = CTTheme.color.placeholder,
+    unselectedContentColor: Color = CTTheme.color.textLight,
     onClick: () -> Unit,
 ) {
-    val tint by animateColorAsState(if (isSelected) selectedContentColor else unselectedContentColor)
+    val tint by animateColorAsState(
+        if (isSelected) selectedContentColor else unselectedContentColor,
+        label = "animate-color"
+    )
 
     BottomNavigationItem(
         icon = {
@@ -42,7 +45,7 @@ internal fun RowScope.BottomNavBarItem(
                     .animateContentSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Crossfade(targetState = isSelected) { isSelectedIcon ->
+                Crossfade(targetState = isSelected, label = "crossfade-cticon") { isSelectedIcon ->
                     if (isSelectedIcon) {
                         CTIcon(
                             icon = selectedIcon,

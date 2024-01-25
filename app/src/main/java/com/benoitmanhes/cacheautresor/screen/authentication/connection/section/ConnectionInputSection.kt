@@ -32,6 +32,7 @@ import com.benoitmanhes.designsystem.molecule.textfield.InputType
 import com.benoitmanhes.designsystem.molecule.textfield.TextFieldType
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 
 @Composable
 internal fun LoginInputSection(
@@ -104,45 +105,45 @@ internal fun LoginInputSection(
         SpacerLarge()
         CTDividerText(TextSpec.Resources(R.string.orSeparator_label))
         SpacerLarge()
-        AnimatedVisibility(
-            visible = uiState.isRegisterTextVisible,
-            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
-            exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
-        ) {
-            Column {
-                CTOutlinedTextField(
-                    value = uiState.valueRegisterCode,
-                    onValueChange = { viewModel.updateRegisterCode(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = CTTheme.color.secondary,
-                    labelText = TextSpec.Resources(R.string.loginScreen_register_codeText_label),
-                    errorText = uiState.errorRegister?.localizedDescription(),
-                )
-                SpacerSmall()
+        CTTheme(CTColorTheme.Cartography) {
+            AnimatedVisibility(
+                visible = uiState.isRegisterTextVisible,
+                enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+                exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom),
+            ) {
+                Column {
+                    CTOutlinedTextField(
+                        value = uiState.valueRegisterCode,
+                        onValueChange = { viewModel.updateRegisterCode(it) },
+                        modifier = Modifier.fillMaxWidth(),
+                        labelText = TextSpec.Resources(R.string.loginScreen_register_codeText_label),
+                        errorText = uiState.errorRegister?.localizedDescription(),
+                    )
+                    SpacerSmall()
+                }
             }
-        }
-        Crossfade(targetState = uiState.connectionInputState, label = "crossfade") { state ->
-            if (state == ConnectionInputState.Register) {
-                CTPrimaryButton(
-                    text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
-                    onClick = {
-                        keyboardController?.hide()
-                        viewModel.register(onAccountTokenValid)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = CTTheme.color.secondary,
-                    status = uiState.registerButtonStatus,
-                )
-            } else {
-                CTPrimaryButton(
-                    text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
-                    onClick = {
-                        keyboardController?.hide()
-                        viewModel.updateConnexionState(ConnectionInputState.Register)
-                    },
-                    type = PrimaryButtonType.OUTLINED,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+            Crossfade(targetState = uiState.connectionInputState, label = "crossfade") { state ->
+                if (state == ConnectionInputState.Register) {
+                    CTPrimaryButton(
+                        text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
+                        onClick = {
+                            keyboardController?.hide()
+                            viewModel.register(onAccountTokenValid)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        status = uiState.registerButtonStatus,
+                    )
+                } else {
+                    CTPrimaryButton(
+                        text = TextSpec.Resources(R.string.loginScreen_registerButton_label),
+                        onClick = {
+                            keyboardController?.hide()
+                            viewModel.updateConnexionState(ConnectionInputState.Register)
+                        },
+                        type = PrimaryButtonType.OUTLINED,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
         }
     }

@@ -57,7 +57,6 @@ fun InstructionSection(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             style = CTTheme.typography.body,
-                            color = CTTheme.color.onBackground,
                         )
                     }
                 }
@@ -95,7 +94,7 @@ fun InstructionSection(
                 text = TextSpec.Resources(R.string.cacheDetail_reportButton),
                 onClick = state.onReport,
                 type = SecondaryButtonType.Text,
-                color = { CTTheme.color.critical },
+                color = { CTTheme.color.textCritical },
                 leadingIcon = CTTheme.icon.Flag.toIconSpec(),
             ).Composable(
                 modifier = Modifier.weight(1f),

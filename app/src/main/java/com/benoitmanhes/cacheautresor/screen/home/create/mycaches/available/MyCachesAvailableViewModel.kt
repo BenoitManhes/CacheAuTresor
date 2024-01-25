@@ -61,7 +61,7 @@ class MyCachesAvailableViewModel @Inject constructor(
 
     private fun cacheCard(cache: Cache, points: Int): CacheCardState = CacheCardState(
         itemId = cache.cacheId,
-        cacheColorTheme = cache.getCacheColorTheme().first,
+        cacheColorTheme = cache.getCacheColorTheme(),
         name = cache.title.textSpec(),
         icon = cache.getIcon(),
         typeText = cache.getTypeText(),

@@ -18,7 +18,7 @@ fun AuthenticatedRoot(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-        containerColor = CTTheme.color.rootBackground,
+        containerColor = CTTheme.color.backgroundRoot,
     ) {
         NavHost(
             navController = navController,

@@ -31,7 +31,7 @@ internal fun CircularJauge(
     color: Color = CTTheme.color.primary,
     size: Dp = Dimens.Jauge.circleIndicatorSize,
 ) {
-    val backgroundColor = CTTheme.color.disable
+    val backgroundColor = CTTheme.color.surfaceLight
 
     Canvas(
         modifier = modifier

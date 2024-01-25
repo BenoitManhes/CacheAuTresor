@@ -100,26 +100,26 @@ private fun mappedMaterialColorScheme(
 ) = if (darkTheme) {
     darkColorScheme(
         primary = localColor.primary,
-        onPrimary = localColor.onPrimary,
-        secondary = localColor.secondary,
-        onSecondary = localColor.onSecondary,
+        onPrimary = localColor.textOnSurfacePrimary,
+        secondary = localColor.primaryDark,
+        onSecondary = localColor.textOnSurfacePrimary,
         surface = localColor.surface,
-        onSurface = localColor.onSurface,
-        background = localColor.onBackground,
-        onBackground = localColor.onBackground,
-        error = localColor.error,
+        onSurface = localColor.textOnSurface,
+        background = localColor.textOnBackground,
+        onBackground = localColor.textOnBackground,
+        error = localColor.textCritical,
     )
 } else {
     lightColorScheme(
         primary = localColor.primary,
-        onPrimary = localColor.onPrimary,
-        secondary = localColor.secondary,
-        onSecondary = localColor.onSecondary,
+        onPrimary = localColor.textOnSurfacePrimary,
+        secondary = localColor.primaryDark,
+        onSecondary = localColor.textOnSurfacePrimary,
         surface = localColor.surface,
-        onSurface = localColor.onSurface,
-        background = localColor.onBackground,
-        onBackground = localColor.onBackground,
-        error = localColor.error,
+        onSurface = localColor.textOnSurface,
+        background = localColor.textOnBackground,
+        onBackground = localColor.textOnBackground,
+        error = localColor.textCritical,
     )
 }
 
@@ -130,26 +130,26 @@ private fun mappedMaterial2Colors(
 ) = if (darkTheme) {
     darkColors(
         primary = localColor.primary,
-        onPrimary = localColor.onPrimary,
-        secondary = localColor.secondary,
-        onSecondary = localColor.onSecondary,
+        onPrimary = localColor.textOnSurfacePrimary,
+        secondary = localColor.primaryDark,
+        onSecondary = localColor.textOnSurfacePrimary,
         surface = localColor.surface,
-        onSurface = localColor.onSurface,
-        background = localColor.onBackground,
-        onBackground = localColor.onBackground,
-        error = localColor.error,
+        onSurface = localColor.textOnSurface,
+        background = localColor.textOnBackground,
+        onBackground = localColor.textOnBackground,
+        error = localColor.textCritical,
     )
 } else {
     lightColors(
         primary = localColor.primary,
-        onPrimary = localColor.onPrimary,
-        secondary = localColor.secondary,
-        onSecondary = localColor.onSecondary,
+        onPrimary = localColor.textOnSurfacePrimary,
+        secondary = localColor.primaryDark,
+        onSecondary = localColor.textOnSurfacePrimary,
         surface = localColor.surface,
-        onSurface = localColor.onSurface,
-        background = localColor.onBackground,
-        onBackground = localColor.onBackground,
-        error = localColor.error,
+        onSurface = localColor.textOnSurface,
+        background = localColor.textOnBackground,
+        onBackground = localColor.textOnBackground,
+        error = localColor.textCritical,
     )
 }
 

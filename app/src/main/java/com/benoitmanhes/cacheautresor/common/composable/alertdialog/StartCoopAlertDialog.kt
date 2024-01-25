@@ -44,7 +44,7 @@ data class StartCoopAlertDialog(
                     CTTextView(
                         text = TextSpec.Resources(R.string.startCoopAlert_warning),
                         style = CTTheme.typography.caption,
-                        color = CTTheme.color.placeholder,
+                        color = CTTheme.color.textLight,
                     )
                 }
             },

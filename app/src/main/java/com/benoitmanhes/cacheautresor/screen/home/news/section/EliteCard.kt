@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.R
@@ -40,9 +39,8 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Etoile2
 import com.benoitmanhes.designsystem.res.icons.iconpack.Etoile4
 import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
 import com.benoitmanhes.designsystem.res.icons.iconpack.Rank
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.ComposeProvider
-import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.ImageSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
@@ -53,20 +51,19 @@ fun EliteCard(
     headerTitle: TextSpec,
     explorers: List<EliteCardState.Explorer>,
     onClickRank: () -> Unit,
-    gradient: ComposeProvider<Brush> = CTTheme.composed { this.gradient.golden },
     modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier,
         shape = CTTheme.shape.large,
-        border = BorderStroke(CTTheme.stroke.medium, brush = gradient()),
+        border = BorderStroke(CTTheme.stroke.medium, brush = CTTheme.gradient.surfacePrimary),
         color = CTTheme.color.surface,
     ) {
         Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(gradient())
+                    .background(CTTheme.gradient.surfacePrimary)
                     .padding(horizontal = CTTheme.spacing.medium)
                     .padding(top = CTTheme.spacing.medium, bottom = CTTheme.spacing.small),
                 verticalAlignment = Alignment.CenterVertically,
@@ -75,12 +72,12 @@ fun EliteCard(
                 CTIconSlot(
                     icon = headerIcon,
                     size = Dimens.IconSlotSize.Medium,
-                    contentColor = CTTheme.color.onPrimary,
+                    contentColor = CTTheme.color.textOnSurfacePrimary,
                 )
                 CTTextView(
                     text = headerTitle,
                     style = CTTheme.typography.body,
-                    color = CTTheme.color.onPrimary,
+                    color = CTTheme.color.textOnSurfacePrimary,
                 )
             }
 
@@ -113,7 +110,7 @@ fun EliteCard(
 
             CTDivider(
                 modifier = Modifier.fillMaxWidth(),
-                color = CTTheme.color.disable,
+                color = CTTheme.color.strokeDisable,
             )
 
             Box(
@@ -137,7 +134,7 @@ fun EliteCard(
                     CTTextView(
                         text = TextSpec.Resources(R.string.news_eliteCard_rankButton),
                         style = CTTheme.typography.body,
-                        color = CTTheme.color.onSurface,
+                        color = CTTheme.color.textOnSurface,
                     )
                     CTIcon(icon = CTTheme.icon.Chevron.toIconSpec(), size = Dimens.IconSize.Medium)
                 }
@@ -196,7 +193,7 @@ private fun PseudoAndPts(
             firstText = points,
             secondText = TextSpec.Resources(R.string.common_pointsUnit),
             firstTextStyle = CTTheme.typography.bodySmall,
-            color = CTTheme.color.placeholder,
+            color = CTTheme.color.textLight,
         )
     }
 }
@@ -207,7 +204,7 @@ data class EliteCardState(
     val onClickRank: () -> Unit,
     val headerIcon: IconSpec,
     val headerTitle: TextSpec,
-    val headerGradient: ComposeProvider<Brush>,
+    val colorTheme: CTColorTheme,
 ) {
     data class Explorer(
         val image: ImageSpec,
@@ -217,14 +214,15 @@ data class EliteCardState(
 
     @Composable
     fun Content(modifier: Modifier = Modifier) {
-        EliteCard(
-            headerIcon = headerIcon,
-            headerTitle = headerTitle,
-            explorers = explorers,
-            onClickRank = onClickRank,
-            modifier = modifier,
-            gradient = headerGradient,
-        )
+        CTTheme(colorTheme) {
+            EliteCard(
+                headerIcon = headerIcon,
+                headerTitle = headerTitle,
+                explorers = explorers,
+                onClickRank = onClickRank,
+                modifier = modifier,
+            )
+        }
     }
 }
 
@@ -259,7 +257,7 @@ private fun PreviewEliteCard() {
             onClickRank = {},
             headerIcon = CTTheme.icon.Crown.toIconSpec(),
             headerTitle = "Header".textSpec(),
-            headerGradient = CTTheme.composed { this.gradient.golden },
+            colorTheme = CTColorTheme.Cartography,
         ).Content(
             modifier = Modifier.padding(CTTheme.spacing.large),
         )

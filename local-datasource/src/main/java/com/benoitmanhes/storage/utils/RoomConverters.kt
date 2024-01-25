@@ -20,13 +20,13 @@ object RoomConverters {
     }
 
     @TypeConverter
-    fun listStringToString(list: List<String>): String =
-        Gson().toJson(list)
+    fun listStringNullableToString(list: List<String>?): String? =
+        list?.let(Gson()::toJson)
 
     @TypeConverter
-    fun stringToListString(rawList: String): List<String> {
+    fun stringToListStringNullable(rawList: String?): List<String>? = rawList?.let {
         val listType = object : TypeToken<List<String>>() {}.type
-        return Gson().fromJson(rawList, listType)
+        Gson().fromJson(rawList, listType)
     }
 
     @TypeConverter
@@ -89,7 +89,7 @@ object RoomConverters {
     }
 
     @TypeConverter
-    fun fromDraftCacheType(cacheType: DraftCache.Type): String {
+    fun fromDraftCacheType(cacheType: DraftCache.Type?): String? = cacheType?.let {
         val gson = Gson()
         val type = when (cacheType) {
             DraftCache.Type.Classical -> object : TypeToken<DraftCache.Type.Classical>() {}.type
@@ -99,14 +99,14 @@ object RoomConverters {
         }
         val wrapperType = object : TypeToken<Wrapper>() {}.type
         val wrapper = Wrapper(cacheType::class.java.simpleName, gson.toJson(cacheType, type))
-        return gson.toJson(wrapper, wrapperType)
+        gson.toJson(wrapper, wrapperType)
     }
 
     @TypeConverter
-    fun toDraftCacheType(json: String): DraftCache.Type {
+    fun toDraftCacheType(json: String?): DraftCache.Type? = json?.let {
         val wrapperType = object : TypeToken<Wrapper>() {}.type
         val wrapper = Gson().fromJson<Wrapper>(json, wrapperType)
-        return when (wrapper.type) {
+        when (wrapper.type) {
             DraftCache.Type.Classical::class.java.simpleName -> Gson().fromJson(
                 wrapper.rawData,
                 DraftCache.Type.Classical::class.java
@@ -116,6 +116,7 @@ object RoomConverters {
                 wrapper.rawData,
                 DraftCache.Type.Coop::class.java
             )
+
             DraftCache.Type.Mystery::class.java.simpleName ->
                 Gson().fromJson(wrapper.rawData, DraftCache.Type.Mystery::class.java)
 
@@ -123,6 +124,7 @@ object RoomConverters {
                 wrapper.rawData,
                 DraftCache.Type.Piste::class.java
             )
+
             else -> throw IllegalArgumentException("Unsupported type")
         }
     }

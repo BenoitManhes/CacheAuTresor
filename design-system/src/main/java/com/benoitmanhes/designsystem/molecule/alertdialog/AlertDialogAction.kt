@@ -20,11 +20,11 @@ data class AlertDialogAction(
             get() = when (this) {
                 Cancel,
                 Neutral,
-                -> CTTheme.color.onSurface
+                -> CTTheme.color.textOnSurface
 
-                Confirm -> CTTheme.color.primary
+                Confirm -> CTTheme.color.textPrimary
 
-                Dangerous -> CTTheme.color.error
+                Dangerous -> CTTheme.color.textCritical
             }
     }
 

@@ -53,7 +53,7 @@ fun CTDoubleTextField(
     errorText: TextSpec? = null,
     isError: Boolean = !errorText?.value()?.text.isNullOrEmpty(),
     color: Color = CTTheme.color.primary,
-    errorColor: Color = CTTheme.color.error,
+    errorColor: Color = CTTheme.color.critical,
     textFieldTypeTop: TextFieldType = TextFieldType.STANDARD,
     textFieldTypeBottom: TextFieldType = TextFieldType.STANDARD,
     imeAction: ImeAction = ImeAction.Done,
@@ -71,7 +71,7 @@ fun CTDoubleTextField(
     val borderColor: Color by animateColorAsState(
         targetValue = when {
             isError -> errorColor
-            else -> CTTheme.color.placeholder
+            else -> CTTheme.color.strokeDivider
         }
     )
     val contentColor by animateColorAsState(targetValue = if (isError) errorColor else color)
@@ -119,7 +119,7 @@ fun CTDoubleTextField(
                         inputType = inputTypeTop,
                         imeAction = ImeAction.Next,
                         colors = CTTextFieldColors(
-                            textColor = CTTheme.color.onSurface,
+                            textColor = CTTheme.color.textOnSurface,
                             color = contentColor,
                         ),
                         textFieldType = textFieldTypeTop,
@@ -148,7 +148,7 @@ fun CTDoubleTextField(
                         inputType = inputTypeBottom,
                         imeAction = imeAction,
                         colors = CTTextFieldColors(
-                            textColor = CTTheme.color.onSurface,
+                            textColor = CTTheme.color.textOnSurface,
                             color = contentColor,
                         ),
                         textFieldType = textFieldTypeBottom,

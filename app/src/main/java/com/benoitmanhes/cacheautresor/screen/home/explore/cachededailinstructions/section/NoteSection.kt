@@ -36,7 +36,7 @@ fun NoteSection(
                 .padding(horizontal = CTTheme.spacing.large)
                 .wrapContentHeight(),
             shape = CTTheme.shape.medium,
-            border = BorderStroke(CTTheme.stroke.thin, CTTheme.color.placeholder),
+            border = BorderStroke(CTTheme.stroke.thin, CTTheme.color.strokeDivider),
             onClick = state.onClickNote,
         ) {
             CTTextView(

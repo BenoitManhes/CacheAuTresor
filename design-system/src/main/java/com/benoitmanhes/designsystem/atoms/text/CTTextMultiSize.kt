@@ -16,7 +16,7 @@ fun CTTextMultiSize(
     secondText: TextSpec,
     firstTextStyle: TextStyle = CTTheme.typography.header1,
     secondTextStyle: TextStyle = CTTheme.typography.captionBold,
-    color: Color = CTTheme.color.onBackground,
+    color: Color = CTTheme.color.textDefault,
 ) {
     val firstTextRaw = firstText.string()
     val secondTextRaw = secondText.string()

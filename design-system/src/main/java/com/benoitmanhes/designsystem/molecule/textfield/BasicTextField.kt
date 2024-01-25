@@ -155,7 +155,7 @@ internal fun CTBasicTextField(
                                 imageVector = if (showPassword) CTIconPack.EyeClose else CTIconPack.EyeOpen,
                                 contentDescription = null,
                             ),
-                            color = CTTheme.color.onSurface,
+                            color = CTTheme.color.textOnSurface,
                             onClick = { showPassword = !showPassword },
                             size = Dimens.IconSize.Medium,
                         )

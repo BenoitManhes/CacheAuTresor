@@ -50,7 +50,7 @@ fun CTModalBottomSheetContent(
             CTTextView(
                 text = title,
                 style = CTTheme.typography.bodyBold,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
         }
 
@@ -58,7 +58,7 @@ fun CTModalBottomSheetContent(
             CTMarkdownText(
                 markdown = rawMessage,
                 style = CTTheme.typography.body,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
         }
     }

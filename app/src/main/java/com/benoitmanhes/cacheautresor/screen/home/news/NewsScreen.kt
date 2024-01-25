@@ -63,7 +63,6 @@ private fun NewsScreen(
                 text = TextSpec.Resources(R.string.news_title),
                 modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
                 style = CTTheme.typography.header0,
-                color = CTTheme.color.onBackground,
             )
         }
 

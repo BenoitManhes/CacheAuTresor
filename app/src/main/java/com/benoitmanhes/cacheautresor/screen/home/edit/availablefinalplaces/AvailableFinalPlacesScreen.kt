@@ -22,29 +22,35 @@ import com.benoitmanhes.cacheautresor.common.maps.CTMapView
 import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.domain.model.Coordinates
 import org.osmdroid.views.overlay.FolderOverlay
 import org.osmdroid.views.overlay.Polygon
 
 @Composable
 fun AvailableFinalPlacesRoute(
     navigateBack: () -> Unit,
+    navigateDraftCacheDetail: (String) -> Unit,
     viewModel: AvailableFinalPlacesViewModel = hiltViewModel(),
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+    val navigation by viewModel.navigation.collectAsState()
 
-    val forbiddenPlaces by viewModel.forbiddenPlaces.collectAsState()
+    LaunchedEffect(navigation) {
+        val navValue = navigation ?: return@LaunchedEffect
+        when (navValue) {
+            is AvailableFinalPlacesNavigation.DraftCacheDetail -> navigateDraftCacheDetail(navValue.draftCacheId)
+        }
+        viewModel.consumeNavigation()
+    }
 
     CTTheme(CTColorTheme.Cartography) {
         CTScreenWrapper {
             AvailableFinalPlacesScreen(
-                forbiddenPlaces = forbiddenPlaces,
+                uiState = uiState,
                 navigateBack = navigateBack,
-                startCreation = {},
                 requestLocationPermission = {},
             )
         }
@@ -53,21 +59,20 @@ fun AvailableFinalPlacesRoute(
 
 @Composable
 private fun AvailableFinalPlacesScreen(
-    forbiddenPlaces: List<Coordinates>,
+    uiState: AvailableFinalPlacesViewModelState,
     navigateBack: () -> Unit,
-    startCreation: () -> Unit,
     requestLocationPermission: () -> Unit,
 ) {
     val mapViewState = rememberMapViewWithLifecycle()
     val zonesFolder = remember { FolderOverlay() }
-    val borderZoneColor = CTTheme.color.criticalHard.toArgb()
-    val fillZoneColor = CTTheme.color.criticalHardSurface.toArgb()
+    val borderZoneColor = CTTheme.color.critical.toArgb()
+    val fillZoneColor = CTTheme.color.surfaceCriticalSoft.toArgb()
 
-    LaunchedEffect(forbiddenPlaces) {
+    LaunchedEffect(uiState.forbiddenPlaces) {
         mapViewState.overlays.removeAll(zonesFolder.items)
         zonesFolder.items.clear()
 
-        val polygones = forbiddenPlaces.map { center ->
+        val polygones = uiState.forbiddenPlaces.map { center ->
             val circlePoints = Polygon.pointsAsCircle(center.toGeoPoint(), 50.0)
             Polygon().apply {
                 points = circlePoints
@@ -96,10 +101,7 @@ private fun AvailableFinalPlacesScreen(
             BottomActionBar(
                 title = TextSpec.Resources(R.string.availableFinalPlaces_bottomBar_title),
                 message = TextSpec.Resources(R.string.availableFinalPlaces_bottomBar_message),
-                firstButton = PrimaryButtonState(
-                    text = TextSpec.Resources(R.string.availableFinalPlaces_firstButton_text),
-                    onClick = startCreation,
-                ),
+                firstButton = uiState.bottomBarButton,
             )
         },
     ) { innerPadding ->

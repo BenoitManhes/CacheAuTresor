@@ -15,8 +15,8 @@ fun BottomBarFloatingButton(
     icon: IconSpec,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentColor: Color = CTTheme.color.onPrimary,
-    backgroundColor: Color = CTTheme.color.primary,
+    contentColor: Color = CTTheme.color.textOnSurfacePrimary,
+    backgroundColor: Color = CTTheme.color.surfacePrimary,
 ) {
     FloatingActionButton(
         modifier = modifier,

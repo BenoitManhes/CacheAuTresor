@@ -9,12 +9,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
 fun CTTextView(
     text: TextSpec?,
     modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
+    color: Color = CTTheme.color.textDefault,
     style: TextStyle = LocalTextStyle.current,
     minLines: Int = 1,
     maxLine: Int = Int.MAX_VALUE,

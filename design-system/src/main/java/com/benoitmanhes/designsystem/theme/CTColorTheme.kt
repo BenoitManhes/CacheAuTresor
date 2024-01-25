@@ -22,127 +22,76 @@ sealed interface CTColorTheme {
     @Immutable
     data object Default : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Explore : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
             primaryColor = Colors.Marigold,
+            primaryDarkColor = Colors.CarrotOrange,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.Marigold,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Cartography : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
-            primaryColor = Colors.SpaceCadet,
+            primaryColor = Colors.DarkCerulean,
+            primaryDarkColor = Colors.SpaceCadet,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.SpaceCadet,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Lock : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
             primaryColor = Colors.QuickSilver,
+            primaryDarkColor = Colors.OldSilver,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.QuickSilver,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Classical : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
             primaryColor = Colors.LaSalleGreen,
+            primaryDarkColor = Colors.CalPolyPomonaGreen,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.LaSalleGreen,
-        )
-    }
-
-    @Immutable
-    data object ClassicalStarted : CTColorTheme {
-        override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
-            primaryColor = Colors.MiddleGreen,
-        )
-
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.MiddleGreen,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Coop : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
             primaryColor = Colors.LightSeaGreen,
+            primaryDarkColor = Colors.CyanCornflowerBlue,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.LightSeaGreen,
-        )
-    }
-
-    @Immutable
-    data object CoopStarted : CTColorTheme {
-        override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
-            primaryColor = Colors.PewterBlue,
-        )
-
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.PewterBlue,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Mystery : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
             primaryColor = Colors.MetallicViolet,
+            primaryDarkColor = Colors.DeepViolet,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.MetallicViolet,
-        )
-    }
-
-    @Immutable
-    data object MysteryStarted : CTColorTheme {
-        override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
-            primaryColor = Colors.FrenchLilac,
-        )
-
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.FrenchLilac,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 
     @Immutable
     data object Piste : CTColorTheme {
         override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
             primaryColor = Colors.WatermelonRed,
+            primaryDarkColor = Colors.RedViolet,
         )
 
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.WatermelonRed,
-        )
-    }
-
-    @Immutable
-    data object PisteStarted : CTColorTheme {
-        override val dayColorScheme: CTColorScheme = DefaultDayColorScheme.copy(
-            primaryColor = Colors.NewYorkPink,
-        )
-
-        override val nightColorScheme: CTColorScheme = DefaultNightColorScheme.copy(
-            primaryColor = Colors.NewYorkPink,
-        )
+        override val nightColorScheme: CTColorScheme = dayColorScheme
     }
 }

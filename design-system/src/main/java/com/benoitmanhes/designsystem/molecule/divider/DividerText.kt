@@ -28,7 +28,7 @@ fun CTDividerText(
         CTTextView(
             text = text,
             style = CTTheme.typography.caption,
-            color = CTTheme.color.placeholder,
+            color = CTTheme.color.textLight,
         )
         CTDivider(modifier = Modifier.weight(1f))
     }

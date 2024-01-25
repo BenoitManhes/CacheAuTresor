@@ -69,7 +69,7 @@ fun CacheCard(
                 icon = icon,
                 size = Dimens.IconSlotSize.Huge,
                 backgroundColor = color,
-                contentColor = CTTheme.color.onPrimary,
+                contentColor = CTTheme.color.textOnSurfacePrimary,
             )
             MainInfoLayout(
                 color = color,

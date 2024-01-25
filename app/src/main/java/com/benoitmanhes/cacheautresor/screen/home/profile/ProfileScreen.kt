@@ -58,7 +58,7 @@ private fun ProfileScreen(
 
         uiState.logoutButton.item(
             scope = this,
-            color = CTTheme.composed { color.critical },
+            color = CTTheme.composed { color.textCritical },
         )
     }
 }

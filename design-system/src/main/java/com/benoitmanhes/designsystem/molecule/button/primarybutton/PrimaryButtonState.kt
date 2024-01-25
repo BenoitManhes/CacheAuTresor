@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.theme.CTTheme
@@ -16,6 +17,7 @@ data class PrimaryButtonState(
     val onClick: () -> Unit,
     val type: PrimaryButtonType = PrimaryButtonType.COLORED,
     val status: ButtonStatus = ButtonStatus.ENABLE,
+    val gradientBackground: ComposeProvider<Brush> = CTTheme.composed { gradient.surfacePrimary },
     val options: Set<PrimaryButtonOption> = emptySet(),
 ) {
 
@@ -24,7 +26,7 @@ data class PrimaryButtonState(
     @Composable
     fun Content(
         modifier: Modifier = Modifier,
-        color: Color = CTTheme.color.primary,
+        color: Color = CTTheme.color.surfacePrimary,
     ) {
         CTPrimaryButton(
             text = text,
@@ -32,7 +34,8 @@ data class PrimaryButtonState(
             modifier = modifier,
             type = type,
             status = status,
-            color = color,
+            surfaceColor = color,
+            gradient = gradientBackground(),
             options = options,
         )
     }
@@ -41,7 +44,7 @@ data class PrimaryButtonState(
         scope: LazyListScope,
         key: Any = text.hashCode(),
         modifier: Modifier = Modifier,
-        color: ComposeProvider<Color> = CTTheme.composed { this.color.primary },
+        color: ComposeProvider<Color> = CTTheme.composed { this.color.surfacePrimary },
     ) {
         scope.item(
             key = key,

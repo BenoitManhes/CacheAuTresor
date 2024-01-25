@@ -61,7 +61,7 @@ fun CTModalBottomSheetView(
             sheetState = sheetState,
             shape = CTTheme.shape.bottomSheet,
             containerColor = Color.Transparent,
-            contentColor = CTTheme.color.onSurface,
+            contentColor = CTTheme.color.textOnSurface,
             dragHandle = {},
             windowInsets = WindowInsets(0),
         ) {

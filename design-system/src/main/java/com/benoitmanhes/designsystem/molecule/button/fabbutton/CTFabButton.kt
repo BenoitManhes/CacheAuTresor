@@ -24,8 +24,8 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 fun CTFabButton(
     state: FabButtonState,
     modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.primary,
-    contentColor: Color = CTTheme.color.onPrimary,
+    color: Color = CTTheme.color.surfacePrimary,
+    contentColor: Color = CTTheme.color.textOnSurfacePrimary,
 ) {
     val attribute = provideFabButtonAttribute(type = state.type, color = color, contentColor = contentColor)
     val size = remember { Dimens.FloatingButtonSize.Large }

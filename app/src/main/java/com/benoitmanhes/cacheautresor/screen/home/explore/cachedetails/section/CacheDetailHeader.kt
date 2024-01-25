@@ -38,14 +38,14 @@ fun CacheDetailHeader(
             CTResponsiveText(
                 text = state.title,
                 minFontSize = CTTheme.typography.body.fontSize,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
                 style = CTTheme.typography.header1,
                 maxLines = 1,
             )
             CTTextView(
                 text = state.subTitle,
                 style = CTTheme.typography.caption,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
         }
     }

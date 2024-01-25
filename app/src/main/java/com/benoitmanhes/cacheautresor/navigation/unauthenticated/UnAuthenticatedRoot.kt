@@ -31,7 +31,7 @@ fun UnAuthenticatedRoot(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-        containerColor = CTTheme.color.rootBackground,
+        containerColor = CTTheme.color.backgroundRoot,
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         },

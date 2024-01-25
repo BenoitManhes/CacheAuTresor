@@ -17,8 +17,8 @@ data class SecondaryButtonState(
     val type: SecondaryButtonType = SecondaryButtonType.Colored,
     val enabled: Boolean = true,
     val leadingIcon: IconSpec? = null,
-    val color: ComposeProvider<Color> = CTTheme.composed { this.color.primary },
-    val contentColor: ComposeProvider<Color> = CTTheme.composed { this.color.onPrimary },
+    val color: ComposeProvider<Color> = CTTheme.composed { this.color.surfacePrimary },
+    val contentColor: ComposeProvider<Color> = CTTheme.composed { this.color.textOnSurfacePrimary },
 ) {
     @Composable
     fun Composable(modifier: Modifier = Modifier) {

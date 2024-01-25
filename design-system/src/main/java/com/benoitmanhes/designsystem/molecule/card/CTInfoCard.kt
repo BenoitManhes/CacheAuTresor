@@ -31,8 +31,8 @@ fun CTInfoCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(paddingValues),
-        color = CTTheme.color.primarySurface,
-        contentColor = CTTheme.color.primary,
+        color = CTTheme.color.surfacePrimarySoft,
+        contentColor = CTTheme.color.textOnSurfacePrimarySoft,
         shape = CTTheme.shape.medium,
     ) {
         Row(
@@ -47,7 +47,7 @@ fun CTInfoCard(
                 CTIcon(
                     icon = state.icon,
                     size = Dimens.IconSize.Medium,
-                    color = CTTheme.color.primary,
+                    color = CTTheme.color.textOnSurfacePrimarySoft,
                 )
             }
 
@@ -55,14 +55,14 @@ fun CTInfoCard(
                 text = state.message,
                 modifier = Modifier.weight(1f),
                 style = CTTheme.typography.body,
-                color = CTTheme.color.primary,
+                color = CTTheme.color.textOnSurfacePrimarySoft,
             )
 
             state.trailingText?.let {
                 CTTextView(
                     text = state.trailingText,
                     style = CTTheme.typography.body,
-                    color = CTTheme.color.primary,
+                    color = CTTheme.color.textOnSurfacePrimarySoft,
                 )
             }
         }

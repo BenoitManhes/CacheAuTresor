@@ -13,8 +13,8 @@ import dev.jeziellago.compose.markdowntext.MarkdownText
 fun CTMarkdownText(
     markdown: TextSpec,
     modifier: Modifier = Modifier,
-    color: Color = CTTheme.color.onBackground,
-    linkColor: Color = CTTheme.color.primary,
+    color: Color = CTTheme.color.textDefault,
+    linkColor: Color = CTTheme.color.textPrimary,
     style: TextStyle = CTTheme.typography.body,
     onLinkClicked: ((String) -> Unit)? = null,
 ) {

@@ -57,9 +57,9 @@ fun CacheCard(
     groundText: TextSpec,
     sizeText: TextSpec,
     modifier: Modifier = Modifier,
-    titleColor: Color = CTTheme.color.onSurface,
+    titleColor: Color = CTTheme.color.textOnSurface,
     highlightColor: Color = CTTheme.color.primary,
-    borderColor: Color = CTTheme.color.border,
+    borderColor: Color = CTTheme.color.strokeBorder,
     trailingContent: CacheCardTrailing?,
     onClick: () -> Unit,
 ) {
@@ -72,13 +72,13 @@ fun CacheCard(
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentWidth()
-                    .background(CTTheme.color.primary),
+                    .background(CTTheme.color.surfacePrimary),
                 contentAlignment = Alignment.Center,
             ) {
                 CTIcon(
                     icon = icon,
                     size = Dimens.IconSize.XLarge,
-                    color = CTTheme.color.onPrimary,
+                    color = CTTheme.color.textOnSurfacePrimary,
                     modifier = Modifier.padding(CTTheme.spacing.small),
                 )
             }
@@ -153,12 +153,12 @@ private fun Subtitles(
             CTTextView(
                 text = "•".textSpec(),
                 style = CTTheme.typography.captionBold,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
             CTTextView(
                 text = subtitleOptional,
                 style = CTTheme.typography.caption,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
         }
     }
@@ -193,8 +193,8 @@ data class CacheCardState(
                 trailingContent = trailingContent,
                 onClick = onClick,
                 highlightColor = if (isError) CTTheme.color.critical else CTTheme.color.primary,
-                titleColor = if (isError) CTTheme.color.critical else CTTheme.color.onSurface,
-                borderColor = if (isError) CTTheme.color.critical else CTTheme.color.border,
+                titleColor = if (isError) CTTheme.color.critical else CTTheme.color.textOnSurface,
+                borderColor = if (isError) CTTheme.color.critical else CTTheme.color.strokeBorder,
                 modifier = modifier,
             )
         }
@@ -233,7 +233,7 @@ sealed interface CacheCardTrailing {
                 CircularProgressIndicator(
                     progress = { progress },
                     color = CTTheme.color.primary,
-                    trackColor = CTTheme.color.disable,
+                    trackColor = CTTheme.color.surfaceLight,
                     strokeCap = StrokeCap.Round,
                     strokeWidth = CTTheme.stroke.circularProgress,
                     modifier = Modifier
@@ -247,7 +247,7 @@ sealed interface CacheCardTrailing {
                     secondTextStyle = CTTheme.typography.captionBold.copy(
                         fontSize = CTTheme.typography.captionBold.fontSize / 2,
                     ),
-                    color = CTTheme.color.primary,
+                    color = CTTheme.color.textPrimary,
                 )
             }
         }
@@ -262,7 +262,7 @@ sealed interface CacheCardTrailing {
                 secondText = TextSpec.Resources(R.string.common_pointsUnit),
                 firstTextStyle = CTTheme.typography.bodyBold,
                 secondTextStyle = CTTheme.typography.captionBold,
-                color = CTTheme.color.onSurface,
+                color = CTTheme.color.textOnSurface,
             )
         }
     }

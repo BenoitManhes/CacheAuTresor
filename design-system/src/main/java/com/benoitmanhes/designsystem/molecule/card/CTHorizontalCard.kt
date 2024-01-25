@@ -22,7 +22,7 @@ import com.benoitmanhes.designsystem.utils.ComposableContent
 @Composable
 fun CTHorizontalCard(
     modifier: Modifier = Modifier,
-    borderColor: Color = CTTheme.color.border,
+    borderColor: Color = CTTheme.color.strokeBorder,
     onClick: () -> Unit,
     leadingContent: ComposableContent,
     content: ComposableContent,

@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.news
 
-import androidx.compose.ui.graphics.Brush
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
@@ -13,9 +12,7 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
-import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.ComposeProvider
-import com.benoitmanhes.designsystem.theme.composed
+import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.Explorer
@@ -53,7 +50,7 @@ class NewsViewModel @Inject constructor(
                         .map { it.mapToUIExplorer() },
                     headerIcon = CTIconPack.Crown.toIconSpec(),
                     headerTitle = TextSpec.Resources(R.string.news_eliteExplorersCard_title),
-                    headerGradient = CTTheme.composed { this.gradient.golden },
+                    colorTheme = CTColorTheme.Explore,
                     onClickRank = {
                         modalBottomSheetManager.showModal(
                             RankModalBottomSheet(
@@ -61,7 +58,7 @@ class NewsViewModel @Inject constructor(
                                 explorerRanks = eliteExplorers.mapIndexed { index, explorer ->
                                     explorer.mapToRankRow(
                                         myExplorerId = myExplorerId,
-                                        background = CTTheme.composed { gradient.golden },
+                                        colorTheme = CTColorTheme.Explore,
                                         rank = index,
                                         points = explorer.cachesFoundMap.values.sum(),
                                     )
@@ -76,7 +73,7 @@ class NewsViewModel @Inject constructor(
                         .map { it.mapToUICartographer() },
                     headerIcon = CTIconPack.Ensign.toIconSpec(),
                     headerTitle = TextSpec.Resources(R.string.news_eliteCartographersCard_title),
-                    headerGradient = CTTheme.composed { this.gradient.deepBlue },
+                    colorTheme = CTColorTheme.Cartography,
                     onClickRank = {
                         modalBottomSheetManager.showModal(
                             RankModalBottomSheet(
@@ -84,7 +81,7 @@ class NewsViewModel @Inject constructor(
                                 explorerRanks = eliteCartographers.mapIndexed { index, explorer ->
                                     explorer.mapToRankRow(
                                         myExplorerId = myExplorerId,
-                                        background = CTTheme.composed { gradient.deepBlue },
+                                        colorTheme = CTColorTheme.Cartography,
                                         rank = index,
                                         points = explorer.cachesMap.values.sum(),
                                     )
@@ -115,7 +112,7 @@ class NewsViewModel @Inject constructor(
 
     private fun Explorer.mapToRankRow(
         myExplorerId: String,
-        background: ComposeProvider<Brush>,
+        colorTheme: CTColorTheme,
         rank: Int,
         points: Int,
     ): RankRowState {
@@ -125,9 +122,8 @@ class NewsViewModel @Inject constructor(
             explorerImage = ImageSpec.ResImage(R.drawable.explorer),
             explorerName = name.textSpec(),
             points = points.toString().textSpec(),
-            backGroundGradient = background.takeIf { isMe },
-            sticky = isMe,
-            bold = isMe,
+            colorTheme = colorTheme,
+            highlight = isMe,
         )
     }
 

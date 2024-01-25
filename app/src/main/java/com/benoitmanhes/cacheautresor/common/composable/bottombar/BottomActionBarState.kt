@@ -20,8 +20,7 @@ data class BottomActionBarState(
             message = message,
             firstButton = firstButton,
             secondButton = secondButton,
-            modifier = modifier
-
+            modifier = modifier,
         )
     }
 }

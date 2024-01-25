@@ -81,7 +81,7 @@ fun CompassSection(
             .rotate(angle.safeNaN()),
         painter = painterResource(id = R.drawable.logo_monochrome),
         contentDescription = null,
-        colorFilter = ColorFilter.tint(CTTheme.color.onBackground),
+        colorFilter = ColorFilter.tint(CTTheme.color.textDefault),
     )
 }
 

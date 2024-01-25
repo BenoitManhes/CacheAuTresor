@@ -16,8 +16,8 @@ data class FabButtonState(
     @Composable
     fun Content(
         modifier: Modifier = Modifier,
-        color: Color = CTTheme.color.primary,
-        contentColor: Color = CTTheme.color.onPrimary,
+        color: Color = CTTheme.color.surfacePrimary,
+        contentColor: Color = CTTheme.color.textOnSurfacePrimary,
     ) {
         CTFabButton(
             state = this,

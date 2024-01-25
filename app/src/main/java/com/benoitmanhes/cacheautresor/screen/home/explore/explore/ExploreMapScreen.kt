@@ -27,9 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import com.benoitmanhes.cacheautresor.BuildConfig
-import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.observeMapPosition
 import com.benoitmanhes.cacheautresor.common.extensions.onTapListener
@@ -54,18 +52,11 @@ import com.benoitmanhes.domain.extension.similar
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 import kotlinx.coroutines.launch
-import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.events.MapListener
 import org.osmdroid.events.ScrollEvent
 import org.osmdroid.events.ZoomEvent
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.FolderOverlay
-import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 @Composable
 internal fun ExploreMapScreen(

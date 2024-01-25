@@ -21,7 +21,7 @@ fun CTCardLarge(
         shape = CTTheme.shape.large,
         elevation = CTTheme.elevation.large,
         backgroundColor = CTTheme.color.surface,
-        contentColor = CTTheme.color.onSurface,
+        contentColor = CTTheme.color.textOnSurface,
     ) {
         content()
     }

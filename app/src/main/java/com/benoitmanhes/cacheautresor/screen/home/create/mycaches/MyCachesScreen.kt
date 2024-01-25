@@ -55,7 +55,7 @@ private fun DataScreen(uiState: MyCachesViewModelState.Data) {
                 CTTextView(
                     text = uiState.headerText,
                     style = CTTheme.typography.body,
-                    color = CTTheme.color.onPrimary,
+                    color = CTTheme.color.textOnSurfacePrimary,
                     textAlign = TextAlign.Center,
                 )
 
@@ -63,7 +63,7 @@ private fun DataScreen(uiState: MyCachesViewModelState.Data) {
                     image = ImageSpec.ResImage(R.drawable.hand_drawn_arrow),
                     modifier = Modifier
                         .size(AppDimens.MyCaches.handDrawArrowSize),
-                    colorFilter = ColorFilter.tint(CTTheme.color.onPrimary),
+                    colorFilter = ColorFilter.tint(CTTheme.color.textOnSurfacePrimary),
                 )
             }
         }
@@ -87,7 +87,7 @@ private fun EmptyScreen(uiState: MyCachesViewModelState.Empty) {
             image = ImageSpec.ResImage(R.drawable.logo_monochrome),
             modifier = Modifier
                 .size(AppDimens.EmptyScreen.imageSize),
-            colorFilter = ColorFilter.tint(CTTheme.color.onPrimary),
+            colorFilter = ColorFilter.tint(CTTheme.color.textOnSurfacePrimary),
         )
 
         SpacerExtraLarge()
@@ -95,7 +95,7 @@ private fun EmptyScreen(uiState: MyCachesViewModelState.Empty) {
         CTTextView(
             text = uiState.message,
             style = CTTheme.typography.body,
-            color = CTTheme.color.onPrimary,
+            color = CTTheme.color.textOnSurfacePrimary,
         )
     }
 }

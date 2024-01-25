@@ -21,7 +21,7 @@ fun SectionHeader(
             padding(horizontal = CTTheme.spacing.large)
         },
         style = CTTheme.typography.bodySmall,
-        color = CTTheme.color.placeholder,
+        color = CTTheme.color.textLight,
     )
 }
 

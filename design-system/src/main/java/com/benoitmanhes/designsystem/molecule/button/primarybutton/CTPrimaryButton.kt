@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,15 +47,17 @@ fun CTPrimaryButton(
     modifier: Modifier = Modifier,
     type: PrimaryButtonType = PrimaryButtonType.COLORED,
     status: ButtonStatus = ButtonStatus.ENABLE,
-    color: Color = CTTheme.color.primary,
-    contentColor: Color = CTTheme.color.onPrimary,
+    surfaceColor: Color = CTTheme.color.surfacePrimary,
+    gradient: Brush = CTTheme.gradient.surfacePrimary,
+    contentColor: Color = CTTheme.color.textOnSurfacePrimary,
     options: Set<PrimaryButtonOption> = emptySet(),
 ) {
     ButtonFromType(
         status = status,
         modifier = modifier.heightIn(Dimens.Size.primaryButtonMinHeight),
         type = type,
-        color = color,
+        color = surfaceColor,
+        brush = gradient,
         contentColor = contentColor,
         onClick = onClick,
     ) { buttonColors ->
@@ -96,6 +99,7 @@ private fun ButtonFromType(
     type: PrimaryButtonType,
     status: ButtonStatus,
     color: Color,
+    brush: Brush,
     contentColor: Color,
     onClick: () -> Unit,
     content: @Composable (ButtonColors) -> Unit,
@@ -108,21 +112,35 @@ private fun ButtonFromType(
 
     when (type) {
         PrimaryButtonType.COLORED -> {
-            Button(
-                shape = CTTheme.shape.medium,
-                colors = buttonColorsColored(color, contentColor),
-                enabled = status != ButtonStatus.DISABLE,
-                elevation = ButtonDefaults.elevation(
-                    defaultElevation = Dimens.Elevation.none,
-                    pressedElevation = Dimens.Elevation.none,
-                    hoveredElevation = Dimens.Elevation.none,
-                    focusedElevation = Dimens.Elevation.none,
-                ),
-                modifier = modifier,
-                onClick = safeOnClick,
-            ) {
-                ProvideTextStyle(value = CTTheme.typography.bodyBold) {
-                    content(buttonColorsColored(color, contentColor))
+            if (status == ButtonStatus.DISABLE) {
+                Button(
+                    shape = CTTheme.shape.medium,
+                    colors = buttonColorsColored(color, contentColor),
+                    enabled = false,
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = Dimens.Elevation.none,
+                        pressedElevation = Dimens.Elevation.none,
+                        hoveredElevation = Dimens.Elevation.none,
+                        focusedElevation = Dimens.Elevation.none,
+                    ),
+                    modifier = modifier,
+                    onClick = safeOnClick,
+                ) {
+                    ProvideTextStyle(value = CTTheme.typography.bodyBold) {
+                        content(buttonColorsColored(color, contentColor))
+                    }
+                }
+            } else {
+                GradientButton(
+                    shape = CTTheme.shape.medium,
+                    gradient = brush,
+                    contentColor = CTTheme.color.textOnSurfacePrimary,
+                    modifier = modifier,
+                    onClick = safeOnClick,
+                ) {
+                    ProvideTextStyle(value = CTTheme.typography.bodyBold) {
+                        content(buttonColorsColored(color, contentColor))
+                    }
                 }
             }
         }
@@ -137,9 +155,9 @@ private fun ButtonFromType(
                 border = BorderStroke(
                     width = CTTheme.stroke.thin,
                     color = if (status == ButtonStatus.DISABLE) {
-                        CTTheme.color.disable
+                        CTTheme.color.strokeDisable
                     } else {
-                        CTTheme.color.onSurface
+                        CTTheme.color.strokeBorder
                     },
                 )
             ) {
@@ -169,21 +187,21 @@ private fun ButtonFromType(
 private fun buttonColorsColored(color: Color, contentColor: Color) = ButtonDefaults.buttonColors(
     backgroundColor = color,
     contentColor = contentColor,
-    disabledBackgroundColor = CTTheme.color.disable,
-    disabledContentColor = CTTheme.color.onDisable,
+    disabledBackgroundColor = CTTheme.color.surfaceDisable,
+    disabledContentColor = CTTheme.color.textOnSurfaceDisable,
 )
 
 private val buttonColorsOutlined
     @Composable get() = ButtonDefaults.outlinedButtonColors(
         backgroundColor = Color.Transparent,
-        contentColor = CTTheme.color.onSurface,
-        disabledContentColor = CTTheme.color.disable,
+        contentColor = CTTheme.color.textOnSurface,
+        disabledContentColor = CTTheme.color.textDisable,
     )
 
 @Composable
 private fun buttonTextColors(color: Color) = ButtonDefaults.textButtonColors(
     contentColor = color,
-    disabledContentColor = CTTheme.color.disable,
+    disabledContentColor = CTTheme.color.textDisable,
 )
 
 @Preview
