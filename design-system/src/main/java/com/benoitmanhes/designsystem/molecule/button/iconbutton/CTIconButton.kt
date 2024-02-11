@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
@@ -19,12 +20,14 @@ fun CTIconButton(
     icon: IconSpec,
     size: Dimens.IconButtonSize,
     modifier: Modifier = Modifier,
+    iconColor: Color = CTTheme.color.textDefault,
+    backgroundColor: Color = CTTheme.color.surface,
     onClick: () -> Unit,
 ) {
     Surface(
         modifier = modifier.size(size.button),
         shape = CTTheme.shape.circle,
-        color = CTTheme.color.surface,
+        color = backgroundColor,
         elevation = CTTheme.elevation.none,
         onClick = onClick,
     ) {
@@ -35,6 +38,7 @@ fun CTIconButton(
             CTIcon(
                 icon = icon,
                 size = size.icon,
+                color = iconColor,
             )
         }
     }

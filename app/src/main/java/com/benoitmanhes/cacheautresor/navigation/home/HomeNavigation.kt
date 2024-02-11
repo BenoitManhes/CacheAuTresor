@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.cacheautresor.navigation.creation.creationNavGraph
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.navigation.explore.exploreNavGraph
@@ -23,7 +24,9 @@ fun HomeNavigation(
         navController = navController,
         startDestination = HomeDestination.Explore.route
     ) {
-        composable(HomeDestination.News.route) { NewsRoute(scaffoldPadding) }
+        composable(HomeDestination.News.route) {
+            NewsRoute(innerPadding = scaffoldPadding)
+        }
         composable(HomeDestination.Explore.route) {
             ExploreRoute(
                 navigateToCacheDetail = { cacheSelectedId ->
@@ -32,7 +35,14 @@ fun HomeNavigation(
                 innerPadding = scaffoldPadding,
             )
         }
-        composable(HomeDestination.Create.route) { CreateRoute(scaffoldPadding) }
+        composable(HomeDestination.Create.route) {
+            CreateRoute(
+                innerPadding = scaffoldPadding,
+                navigateToEditDraftCache = { draftCacheId ->
+                    navController.navigate(route = EditCacheDestination.EditDraftCache.getRoute(draftCacheId))
+                }
+            )
+        }
         composable(HomeDestination.Encyclopedia.route) { EncyclopediaScreen(scaffoldPadding) }
         composable(HomeDestination.Profile.route) { ProfileRoute(scaffoldPadding) }
 

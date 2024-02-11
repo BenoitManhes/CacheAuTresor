@@ -38,6 +38,7 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 @Composable
 fun CreateRoute(
     innerPadding: PaddingValues,
+    navigateToEditDraftCache: (String) -> Unit,
 ) {
     CTTheme(CTColorTheme.Cartography) {
         CTScreenWrapper(
@@ -45,7 +46,10 @@ fun CreateRoute(
                 innerPadding.calculateBottomPadding().toPx().toInt()
             },
         ) {
-            CreateScreen(innerPadding)
+            CreateScreen(
+                innerPadding = innerPadding,
+                navigateToEditDraftCache = navigateToEditDraftCache,
+            )
         }
     }
 }
@@ -54,6 +58,7 @@ fun CreateRoute(
 @Composable
 private fun CreateScreen(
     innerPadding: PaddingValues,
+    navigateToEditDraftCache: (String) -> Unit,
 ) {
     var selectedPage by rememberSaveable { mutableIntStateOf(0) }
     val pagerState = rememberPagerState(
@@ -108,7 +113,7 @@ private fun CreateScreen(
             userScrollEnabled = false,
         ) { page ->
             when (page) {
-                0 -> MyCachesDraftRoute()
+                0 -> MyCachesDraftRoute(navigateToEditDraftCache)
 
                 1 -> MyCachesAvailableRoute()
             }

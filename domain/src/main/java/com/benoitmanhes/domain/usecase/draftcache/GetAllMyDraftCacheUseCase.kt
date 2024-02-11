@@ -13,6 +13,8 @@ class GetAllMyDraftCacheUseCase @Inject constructor(
 ) : CTUseCase() {
     operator fun invoke(): Flow<CTResult<List<DraftCache>>> =
         draftCacheRepository.getAllDraftCacheFlow()
-            .map { CTResult.Success(it) }
+            .map {
+                CTResult.Success(it.sortedByDescending { draftCache -> draftCache.progress })
+            }
             .useCaseCatch { CTResult.Failure(it) }
 }

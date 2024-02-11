@@ -21,8 +21,10 @@ import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.usecase.draftcache.GetAllMyDraftCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -62,6 +64,9 @@ class MyCachesDraftViewModel @Inject constructor(
                 initialValue = MyCachesViewModelState.Init,
             )
 
+    private val _navigation = MutableStateFlow<MyCachesDraftNavigation?>(null)
+    val navigation: StateFlow<MyCachesDraftNavigation?> get() = _navigation.asStateFlow()
+
     private fun cacheCard(draftCache: DraftCache): CacheCardState = CacheCardState(
         itemId = draftCache.draftCacheId,
         cacheColorTheme = CTColorTheme.Cartography,
@@ -74,9 +79,17 @@ class MyCachesDraftViewModel @Inject constructor(
         sizeText = draftCache.size?.toSizeText() ?: defaultText(),
         trailingContent = CacheCardTrailing.Progress(draftCache.progress),
         onClick = {
-            // TODO: navigate to EditCache screen
+            _navigation.value = MyCachesDraftNavigation.EditDraftCache(draftCache.draftCacheId)
         },
     )
 
     private fun defaultText(): TextSpec = TextSpec.Resources(R.string.common_noValue_placeHolder)
+    fun consumeNavigation() {
+        _navigation.value = null
+    }
+}
+
+sealed interface MyCachesDraftNavigation {
+    @JvmInline
+    value class EditDraftCache(val draftCacheId: String) : MyCachesDraftNavigation
 }

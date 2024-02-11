@@ -153,4 +153,21 @@
     <string name="availableFinalPlaces_bottomBar_title">Emplacement disponible</string>
     <string name="availableFinalPlaces_bottomBar_message">Regardes où tu pourras cacher ta nouvelle cache. L’emplacement doit-être en dehors des zones rouges.</string>
     <string name="availableFinalPlaces_firstButton_text">Commencer la création</string>
+    <string name="editDraftCache_topBar_title">Créer une cache</string>
+    <string name="cacheEditor_cacheName_header">Nom de la cache</string>
+    <string name="cacheEditor_type_header">Type de cache</string>
+    <string name="cacheEditor_initialCoordinates_header">Coordonnés initial</string>
+    <string name="cacheEditor_steps_header">Étapes</string>
+    <string name="cacheEditor_properties_header">Propriétés</string>
+    <string name="cacheEditor_description">Description</string>
+    <string name="cacheEditor_tags_header">Attributs</string>
+    <string name="cacheEditor_notes_header">Notes personnelles</string>
+    <string name="pickNameDraftCache_topBar_title">Nom de la cache</string>
+    <string name="pickNameDraftCache_footer">Choisis un nom pour la cache (max 36 caractères)</string>
+    <string name="pickTypeDraftCache_topBar_title">Type de cache</string>
+    <string name="pickTypeDraftCache_classical_description">Une cache placée aux alentours des coordonnées initiaux.</string>
+    <string name="pickTypeDraftCache_piste_description">Une succession d’étapes pour atteindre le lieux de la cache.</string>
+    <string name="pickTypeDraftCache_mystery_description">Une énigme à résoudre pour obtenir les coordonnées de la cache.</string>
+    <string
+        name="pickTypeDraftCache_coop_description">Une cache à faire à plusieurs. Chaque membre reçoit un fragment d’instruction.</string>
 </resources>

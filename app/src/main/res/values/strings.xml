@@ -154,4 +154,20 @@
     <string
         name="availableFinalPlaces_bottomBar_message">Look where you can hide your new cache. The location have to be out of red zones.</string>
     <string name="availableFinalPlaces_firstButton_text">Start creation</string>
+    <string name="editDraftCache_topBar_title">Create cache</string>
+    <string name="cacheEditor_cacheName_header">Cache name</string>
+    <string name="cacheEditor_type_header">Cache type</string>
+    <string name="cacheEditor_initialCoordinates_header">Initial coordinates</string>
+    <string name="cacheEditor_steps_header">Steps</string>
+    <string name="cacheEditor_properties_header">Properties</string>
+    <string name="cacheEditor_description">Description</string>
+    <string name="cacheEditor_tags_header">Features</string>
+    <string name="cacheEditor_notes_header">Personal notes</string>
+    <string name="pickNameDraftCache_topBar_title">Cache name</string>
+    <string name="pickNameDraftCache_footer">Choose a cache name (max 36 characters)</string>
+    <string name="pickTypeDraftCache_topBar_title">Cache type</string>
+    <string name="pickTypeDraftCache_classical_description">A cache placed around the initial coordinates.</string>
+    <string name="pickTypeDraftCache_piste_description">A succession of stages to reach the cache location.</string>
+    <string name="pickTypeDraftCache_mystery_description">Solve an enigma to find the coordinates of the cache.</string>
+    <string name="pickTypeDraftCache_coop_description">A shared cache. Each member receives an instruction fragment.</string>
 </resources>

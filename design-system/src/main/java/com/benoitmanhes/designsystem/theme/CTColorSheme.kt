@@ -148,7 +148,7 @@ interface CTColorScheme {
         override val surfacePrimary: Color = primary
         override val surfacePrimarySoft: Color = surfacePrimary.copy(alpha = 0.20f)
         override val surfaceCritical: Color = this@CTColorScheme.surfaceCritical
-        override val surfaceCriticalSoft: Color = this@CTColorScheme.surfaceCritical
+        override val surfaceCriticalSoft: Color = this@CTColorScheme.surfaceCriticalSoft
         override val surfaceError: Color = this@CTColorScheme.surfaceError
         override val surfaceDisable: Color = this@CTColorScheme.surfaceDisable
 

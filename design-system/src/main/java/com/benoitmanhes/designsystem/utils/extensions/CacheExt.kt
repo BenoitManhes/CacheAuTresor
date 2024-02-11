@@ -4,12 +4,14 @@ import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserStatus
 
-fun Cache.getCacheColorTheme(): CTColorTheme = when (type) {
+fun Cache.Type.getTypeColorTheme(): CTColorTheme = when (this) {
     is Cache.Type.Classical -> CTColorTheme.Classical
     is Cache.Type.Coop -> CTColorTheme.Coop
     is Cache.Type.Mystery -> CTColorTheme.Mystery
     is Cache.Type.Piste -> CTColorTheme.Piste
 }
+
+fun Cache.getCacheColorTheme(): CTColorTheme = type.getTypeColorTheme()
 
 fun Cache.getColorTheme(cacheUserStatus: CacheUserStatus): CTColorTheme {
     val cacheColorTheme = getCacheColorTheme()
