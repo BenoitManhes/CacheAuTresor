@@ -51,7 +51,6 @@ fun AvailableFinalPlacesRoute(
             AvailableFinalPlacesScreen(
                 uiState = uiState,
                 navigateBack = navigateBack,
-                requestLocationPermission = {},
             )
         }
     }
@@ -61,7 +60,6 @@ fun AvailableFinalPlacesRoute(
 private fun AvailableFinalPlacesScreen(
     uiState: AvailableFinalPlacesViewModelState,
     navigateBack: () -> Unit,
-    requestLocationPermission: () -> Unit,
 ) {
     val mapViewState = rememberMapViewWithLifecycle()
     val zonesFolder = remember { FolderOverlay() }
@@ -101,7 +99,7 @@ private fun AvailableFinalPlacesScreen(
             BottomActionBar(
                 title = TextSpec.Resources(R.string.availableFinalPlaces_bottomBar_title),
                 message = TextSpec.Resources(R.string.availableFinalPlaces_bottomBar_message),
-                firstButton = uiState.bottomBarButton,
+                primaryButton = uiState.bottomBarButton,
             )
         },
     ) { innerPadding ->

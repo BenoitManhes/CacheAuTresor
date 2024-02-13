@@ -3,15 +3,17 @@ package com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.composable.row.MapRowPickerState
 import com.benoitmanhes.cacheautresor.common.composable.row.StickerRowPickerState
 import com.benoitmanhes.cacheautresor.common.composable.row.TextRowPickerState
+import com.benoitmanhes.cacheautresor.common.extensions.format
+import com.benoitmanhes.cacheautresor.common.extensions.orPlaceHolder
 import com.benoitmanhes.cacheautresor.common.extensions.toCacheType
 import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.common.compose.extensions.textSpec
-import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.utils.extensions.getTypeColorTheme
+import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.usecase.draftcache.GetDraftCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +42,12 @@ class EditCacheViewModel @Inject constructor(
                     sticker = draftCache?.type?.let(::getTypeSticker),
                     colorTheme = draftCache?.type?.toCacheType()?.getTypeColorTheme() ?: CTColorTheme.Cartography,
                     onClick = { _navigation.value = EditCacheNavigation.PickType(draftCacheId) },
-                )
+                ),
+                initCoordinates = MapRowPickerState(
+                    uiMarker = draftCache?.let(::getInitCoordinatesUIMarker),
+                    text = draftCache?.coordinates?.format(Coordinates.Format.DM).orPlaceHolder(),
+                    onClick = { _navigation.value = EditCacheNavigation.PickInitCoordinates(draftCacheId) }
+                ),
             )
         }.stateIn(
             scope = viewModelScope,
@@ -50,9 +57,6 @@ class EditCacheViewModel @Inject constructor(
 
     private val _navigation = MutableStateFlow<EditCacheNavigation?>(null)
     val navigation: StateFlow<EditCacheNavigation?> get() = _navigation.asStateFlow()
-
-    private fun TextSpec?.orPlaceHolder(): TextSpec = this ?: TextSpec.Resources(R.string.common_noValue_placeHolder)
-
     fun consumeNavigation() {
         _navigation.value = null
     }
@@ -64,4 +68,7 @@ sealed interface EditCacheNavigation {
 
     @JvmInline
     value class PickType(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class PickInitCoordinates(val draftCacheId: String) : EditCacheNavigation
 }

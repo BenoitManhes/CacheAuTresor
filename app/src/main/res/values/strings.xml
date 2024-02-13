@@ -170,4 +170,13 @@
     <string name="pickTypeDraftCache_piste_description">A succession of stages to reach the cache location.</string>
     <string name="pickTypeDraftCache_mystery_description">Solve an enigma to find the coordinates of the cache.</string>
     <string name="pickTypeDraftCache_coop_description">A shared cache. Each member receives an instruction fragment.</string>
+    <string name="common_reinitialize">Reinitialize</string>
+    <string name="pickInitCoordinates_bottomBar_title">Enter the cache departure point</string>
+    <string name="pickInitCoordinates_bottomBar_description">By placing the marker on the map (long press) or manually.</string>
+    <string name="common_save">Save</string>
+    <string name="modalPickCoordinates_title">Enter the GPS coordinates</string>
+    <string name="modalPickCoordinates_message">There are 3 possible formats :\n  - Decimal Degree (DD) : #.######°\n - Degree Minute (DM) : #° ##.###\‘\n - Degree Minute Second (DMS) : #° ##\’ ##.###\"\n\n Special characters can be replaced by space</string>
+    <string name="common_invalidFormat">Invalid format</string>
+    <string name="pickInitCoordinates_alertArea_title">Invalid location</string>
+    <string name="pickInitCoordinates_alertArea_message">Choose initiales coordinates out of red areas</string>
 </resources>

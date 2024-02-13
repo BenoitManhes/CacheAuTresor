@@ -1,5 +1,7 @@
 package com.benoitmanhes.domain.utils
 
+import com.benoitmanhes.domain.model.Distance
+import com.benoitmanhes.domain.model.Distance.Companion.meters
 import kotlin.math.pow
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -11,7 +13,8 @@ object DomainConstants {
 
     object Cache {
         const val ptsWinPenaltyCoef: Float = 0.5f
-        const val unlockingAvailableDistance: Double = 25.0
+        val unlockingAvailableDistance: Distance = 25.meters
+        val initialCoordinatesDistanceMin: Distance = 10.meters
     }
 
     object EditCache {

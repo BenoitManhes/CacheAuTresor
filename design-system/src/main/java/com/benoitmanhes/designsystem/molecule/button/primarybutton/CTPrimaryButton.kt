@@ -153,7 +153,7 @@ private fun ButtonFromType(
                 modifier = modifier,
                 onClick = safeOnClick,
                 border = BorderStroke(
-                    width = CTTheme.stroke.thin,
+                    width = CTTheme.stroke.medium,
                     color = if (status == ButtonStatus.DISABLE) {
                         CTTheme.color.strokeDisable
                     } else {

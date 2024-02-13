@@ -201,7 +201,7 @@ class CacheDetailViewModel @Inject constructor(
                 ),
                 uiMarkers = successData.getStepMarkers(),
                 bottomBarState = BottomActionBarState(
-                    firstButton = PrimaryButtonState(
+                    primaryButton = PrimaryButtonState(
                         text = successData.currentStep.getLogButtonLabel(),
                         onClick = {
                             showLogModalBottomSheet(uiStep = successData.currentStep, isError = false)

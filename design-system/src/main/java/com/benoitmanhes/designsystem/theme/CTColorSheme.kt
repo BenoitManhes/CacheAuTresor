@@ -47,6 +47,9 @@ object DefaultDayColorScheme : CTColorScheme {
     override val strokeDisable: Color = disable
     override val strokeOnPrimary: Color = Colors.White
 
+    // Ripple
+    override val ripple: Color = primary.copy(alpha = .2f)
+
     // Gradient
     override val gradientSurfacePrimaryStart: Color = primary
     override val gradientSurfacePrimaryEnd: Color = primaryDark
@@ -108,6 +111,9 @@ interface CTColorScheme {
     val strokeDisable: Color
     val strokeOnPrimary: Color
 
+    // Ripple
+    val ripple: Color
+
     // Gradient
     val gradientSurfacePrimaryStart: Color
     val gradientSurfacePrimaryEnd: Color
@@ -156,6 +162,9 @@ interface CTColorScheme {
         override val background: Color = Colors.White
         override val backgroundMask: Color = Colors.TransparentBlack15
         override val backgroundRoot: Color = Colors.Black
+
+        // Ripple
+        override val ripple: Color = primary.copy(alpha = .2f)
 
         // Stroke
         override val strokeBorder: Color = Colors.Black

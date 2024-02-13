@@ -54,6 +54,8 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDMS
 import com.benoitmanhes.designsystem.res.icons.iconpack.Minus
 import com.benoitmanhes.designsystem.res.icons.iconpack.PersonRemove
 import com.benoitmanhes.designsystem.res.icons.iconpack.RemoveRoad
+import com.benoitmanhes.designsystem.res.icons.resicons.Edit
+import com.benoitmanhes.designsystem.utils.IconSpec
 
 object CTIconPack
 
@@ -122,3 +124,8 @@ val CTIconPack.CTIcons: List<ImageVector>
         )
         return _CTIcons!!
     }
+
+val CTIconPack.ResIcons: List<IconSpec>
+    get() = listOf(
+        Edit,
+    )

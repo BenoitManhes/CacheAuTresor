@@ -2,8 +2,6 @@ package com.benoitmanhes.cacheautresor.screen.home.news.section
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,10 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Surface
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +39,7 @@ import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.ImageSpec
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
@@ -116,11 +113,7 @@ fun EliteCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(
-                        onClick = onClickRank,
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = rememberRipple(),
-                    )
+                    .ctClickable(onClickRank)
                     .padding(horizontal = CTTheme.spacing.medium, vertical = CTTheme.spacing.small),
             ) {
                 Row(

@@ -11,14 +11,14 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.utils.extensions.onClickNullable
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 
 @Composable
 fun CTRow(
@@ -32,7 +32,7 @@ fun CTRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .onClickNullable(state.onClick)
+            .ctClickable(state.onClick)
             .padding(paddingValues),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),

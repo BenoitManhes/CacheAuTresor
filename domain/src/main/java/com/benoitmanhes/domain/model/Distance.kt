@@ -3,9 +3,11 @@ package com.benoitmanhes.domain.model
 import com.benoitmanhes.domain.interfaces.Model
 import kotlin.math.roundToLong
 
-data class Distance(
+@Suppress("MemberVisibilityCanBePrivate")
+@JvmInline
+value class Distance(
     val millimeters: Long,
-) : Model {
+) : Model, Comparable<Distance> {
 
     val meterRounded: Long get() = convertDistanceUnitRound(DistanceUnit.METER)
     val kmsRounded: Long get() = convertDistanceUnitRound(DistanceUnit.KILOMETER)
@@ -17,26 +19,36 @@ data class Distance(
     private fun convertDistanceUnitRound(unit: DistanceUnit): Long = millimeters / unit.inMillimeter
 
     companion object {
+        val ZERO: Distance = Distance(0)
+        val INFINITE: Distance = Distance(Long.MAX_VALUE / 2)
+
         inline val Long.meters: Distance
-            get() = buildFromDurationUnit(DistanceUnit.METER, this)
+            get() = buildFromDistanceUnit(DistanceUnit.METER, this)
 
         inline val Int.meters: Distance
-            get() = buildFromDurationUnit(DistanceUnit.METER, this.toLong())
+            get() = buildFromDistanceUnit(DistanceUnit.METER, this.toLong())
 
         inline val Double.meters: Distance
-            get() = buildFromDurationUnit(DistanceUnit.METER, this)
+            get() = buildFromDistanceUnit(DistanceUnit.METER, this)
         inline val Float.meters: Distance
-            get() = buildFromDurationUnit(DistanceUnit.METER, this.toDouble())
+            get() = buildFromDistanceUnit(DistanceUnit.METER, this.toDouble())
 
-        fun buildFromDurationUnit(unit: DistanceUnit, value: Long): Distance =
+        inline val Int.kms: Distance
+            get() = buildFromDistanceUnit(DistanceUnit.KILOMETER, this.toLong())
+
+        fun buildFromDistanceUnit(unit: DistanceUnit, value: Long): Distance =
             Distance(value * unit.inMillimeter)
 
-        fun buildFromDurationUnit(unit: DistanceUnit, value: Double): Distance =
+        fun buildFromDistanceUnit(unit: DistanceUnit, value: Double): Distance =
             Distance((value * unit.inMillimeter).roundToLong())
+    }
+
+    override fun compareTo(other: Distance): Int {
+        return this.millimeters.compareTo(other.millimeters)
     }
 }
 
 enum class DistanceUnit(val inMillimeter: Long) {
-    METER(1000),
-    KILOMETER(1000000),
+    METER(1_000),
+    KILOMETER(1_000_000),
 }

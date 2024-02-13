@@ -14,6 +14,10 @@ object AppDimens {
         val imageSize: Dp = LockScreen.imageSize
     }
 
+    object Map {
+        val smallMapSize: Dp = 48.dp
+    }
+
     object MyCaches {
         val progressSize: Dp = 36.dp
         val handDrawArrowSize: DpSize = DpSize(width = 55.dp, height = 47.dp)

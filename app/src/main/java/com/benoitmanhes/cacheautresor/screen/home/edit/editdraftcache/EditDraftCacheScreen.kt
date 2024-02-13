@@ -25,6 +25,7 @@ fun EditDraftCacheRoute(
     navigateBack: () -> Unit,
     navigateToPickName: (String) -> Unit,
     navigateToPickType: (String) -> Unit,
+    navigateToPickInitCoordinates: (String) -> Unit,
     viewModel: EditCacheViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.editCacheState.collectAsState()
@@ -35,6 +36,7 @@ fun EditDraftCacheRoute(
         when (navValue) {
             is EditCacheNavigation.PickName -> navigateToPickName(navValue.draftCacheId)
             is EditCacheNavigation.PickType -> navigateToPickType(navValue.draftCacheId)
+            is EditCacheNavigation.PickInitCoordinates -> navigateToPickInitCoordinates(navValue.draftCacheId)
         }
         viewModel.consumeNavigation()
     }
@@ -78,6 +80,11 @@ private fun EditDraftCacheScreen(
             uiState.cacheType?.let {
                 sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_type_header))
                 uiState.cacheType.lazyItem(this, key = "cache-type")
+            }
+
+            uiState.initCoordinates?.let {
+                sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_initialCoordinates_header))
+                uiState.initCoordinates.lazyItem(this, key = "init-coordinates")
             }
         }
     }

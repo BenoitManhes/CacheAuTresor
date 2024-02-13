@@ -22,4 +22,9 @@ sealed interface EditCacheDestination : CTDestination {
         override val arg: String = "draftCacheId"
         override val path: String = "pick-type-draft-cache"
     }
+
+    data object PickInitCoordinatesDraftCache : EditCacheDestination, CTSingleArgDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-init-coordinates-draft-cache"
+    }
 }

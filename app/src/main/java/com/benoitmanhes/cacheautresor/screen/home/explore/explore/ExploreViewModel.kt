@@ -13,10 +13,10 @@ import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.Classic
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.UnlockCacheModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
-import com.benoitmanhes.cacheautresor.common.extensions.toDistanceText
 import com.benoitmanhes.cacheautresor.common.extensions.toModel
 import com.benoitmanhes.cacheautresor.common.extensions.toOneDecimalFormat
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
+import com.benoitmanhes.cacheautresor.common.extensions.toText
 import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModel
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.screen.home.explore.explore.section.CacheBannerState
@@ -40,6 +40,7 @@ import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.model.Coordinates
+import com.benoitmanhes.domain.model.Distance
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 import com.benoitmanhes.domain.usecase.cache.GetAllUICachesUseCase
 import com.benoitmanhes.domain.usecase.cache.SortCacheUseCase
@@ -128,7 +129,7 @@ class ExploreViewModel @Inject constructor(
                 difficultyText = TextSpec.RawString("-"),
                 groundText = TextSpec.RawString("-"),
                 sizeText = TextSpec.RawString("-"),
-                distanceText = distance?.toDistanceText()
+                distanceText = distance?.toText()
                     .takeIf { userStatus == CacheUserStatus.Available },
                 stickerText = null,
                 colorTheme = CTColorTheme.Lock,
@@ -143,7 +144,7 @@ class ExploreViewModel @Inject constructor(
                 difficultyText = TextSpec.RawString(cache.difficulty.toOneDecimalFormat()),
                 groundText = TextSpec.RawString(cache.ground.toOneDecimalFormat()),
                 sizeText = cache.size.toSizeText(),
-                distanceText = distance?.toDistanceText()
+                distanceText = distance?.toText()
                     .takeIf { userStatus == CacheUserStatus.Available },
                 stickerText = when (userStatus) {
                     CacheUserStatus.Found -> ptsWin?.let {
@@ -168,7 +169,7 @@ class ExploreViewModel @Inject constructor(
         val distance = uiExploreCache.distance
         when (distance) {
             null -> ::requestLocation
-            in 0.0..DomainConstants.Cache.unlockingAvailableDistance -> showUnlockCacheModal(
+            in Distance.ZERO..DomainConstants.Cache.unlockingAvailableDistance -> showUnlockCacheModal(
                 uiExploreCache,
                 isError = false
             )

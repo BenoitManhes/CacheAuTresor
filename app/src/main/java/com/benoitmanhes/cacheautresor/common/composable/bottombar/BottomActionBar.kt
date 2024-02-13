@@ -22,8 +22,8 @@ fun BottomActionBar(
     modifier: Modifier = Modifier,
     message: TextSpec? = null,
     title: TextSpec? = null,
-    firstButton: PrimaryButtonState? = null,
-    secondButton: PrimaryButtonState? = null,
+    primaryButton: PrimaryButtonState? = null,
+    secondaryButton: PrimaryButtonState? = null,
 ) {
     Surface(
         modifier = modifier
@@ -62,19 +62,21 @@ fun BottomActionBar(
 
                 // Buttons row
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
                 ) {
-                    firstButton
-                        ?.copy(type = PrimaryButtonType.COLORED)
+                    secondaryButton
+                        ?.copy(type = PrimaryButtonType.OUTLINED)
                         ?.Content(
                             modifier = Modifier.weight(1f),
                         )
 
-                    secondButton
-                        ?.copy(type = PrimaryButtonType.OUTLINED)
+                    primaryButton
+                        ?.copy(type = PrimaryButtonType.COLORED)
                         ?.Content(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f),
                         )
                 }
             }

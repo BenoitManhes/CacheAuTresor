@@ -28,6 +28,7 @@ object AppConstants {
         val cameraMovingDelay: Duration = 500.milliseconds
         val defaultLocation: Coordinates = Coordinates(latitude = 45.760531, longitude = 4.833638)
         const val defaultZoom: Double = 15.0
+        const val smallMapZoom: Double = 18.0
         const val maxZoom: Double = 22.0
         const val minZoom: Double = 3.5
         const val myLocationZoom: Double = 18.0

@@ -33,28 +33,6 @@ data class Coordinates(
     val longitudeDMS: DegreeMinutesSeconds
         get() = decimalDegreesToDMS(longitude)
 
-    private fun decimalDegreesToDegreesMinutes(decimalDegrees: DecimalDegree): DegreeMinutes {
-        val degrees = decimalDegrees.toInt()
-        val minutes = (decimalDegrees - degrees) * MINUTES_IN_DEGREE
-        return degrees to minutes
-    }
-
-    private fun decimalDegreesToDMS(decimalDegrees: DecimalDegree): DegreeMinutesSeconds {
-        val degrees = decimalDegrees.toInt()
-        val remainingMinutes = (decimalDegrees - degrees) * MINUTES_IN_DEGREE
-        val minutes = remainingMinutes.toInt()
-        val seconds = (remainingMinutes - minutes) * SECONDS_IN_MINUTES
-        return Triple(degrees, minutes, seconds)
-    }
-
-    @Suppress("unused")
-    private fun dmsToDecimalDegrees(dms: DegreeMinutesSeconds): DecimalDegree =
-        dms.first + dms.second / MINUTES_IN_DEGREE + dms.third / SECOND_IN_DEGREE
-
-    @Suppress("unused")
-    private fun degreeMinutesToDecimalDegree(dm: DegreeMinutes): DecimalDegree =
-        dm.first + dm.second / MINUTES_IN_DEGREE
-
     enum class Format {
         DD, DM, DMS;
 
@@ -67,6 +45,39 @@ data class Coordinates(
                 return allFormats[nextIndex]
             }
         }
+    }
+
+    companion object {
+
+        fun fromDegreeMinute(dmLatitude: DegreeMinutes, dmLongitude: DegreeMinutes): Coordinates = Coordinates(
+            latitude = degreeMinutesToDecimalDegree(dmLatitude),
+            longitude = degreeMinutesToDecimalDegree(dmLongitude),
+        )
+
+        fun fromDMS(dmsLatitude: DegreeMinutesSeconds, dmsLongitude: DegreeMinutesSeconds): Coordinates = Coordinates(
+            latitude = dmsToDecimalDegrees(dmsLatitude),
+            longitude = dmsToDecimalDegrees(dmsLongitude),
+        )
+
+        private fun decimalDegreesToDegreesMinutes(decimalDegrees: DecimalDegree): DegreeMinutes {
+            val degrees = decimalDegrees.toInt()
+            val minutes = (decimalDegrees - degrees) * MINUTES_IN_DEGREE
+            return degrees to minutes
+        }
+
+        private fun decimalDegreesToDMS(decimalDegrees: DecimalDegree): DegreeMinutesSeconds {
+            val degrees = decimalDegrees.toInt()
+            val remainingMinutes = (decimalDegrees - degrees) * MINUTES_IN_DEGREE
+            val minutes = remainingMinutes.toInt()
+            val seconds = (remainingMinutes - minutes) * SECONDS_IN_MINUTES
+            return Triple(degrees, minutes, seconds)
+        }
+
+        private fun dmsToDecimalDegrees(dms: DegreeMinutesSeconds): DecimalDegree =
+            dms.first + dms.second / MINUTES_IN_DEGREE + dms.third / SECOND_IN_DEGREE
+
+        private fun degreeMinutesToDecimalDegree(dm: DegreeMinutes): DecimalDegree =
+            dm.first + dm.second / MINUTES_IN_DEGREE
     }
 }
 

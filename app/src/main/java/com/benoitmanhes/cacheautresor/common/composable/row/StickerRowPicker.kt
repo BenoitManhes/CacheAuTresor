@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.common.composable.row
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +19,7 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Chevron
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
@@ -30,7 +30,7 @@ fun StickerRowPicker(
 ) {
     Row(
         modifier = modifier
-            .clickable(onClick = onClick)
+            .ctClickable(onClick)
             .padding(
                 horizontal = CTTheme.spacing.large,
                 vertical = CTTheme.spacing.small,

@@ -2,12 +2,15 @@ package com.benoitmanhes.cacheautresor.common.composable.row
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.benoitmanhes.cacheautresor.common.composable.map.SmallMap
+import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
@@ -18,8 +21,9 @@ import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
-fun TextRowPicker(
+fun MapRowPicker(
     text: TextSpec,
+    uiMarker: UIMarker?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -29,15 +33,20 @@ fun TextRowPicker(
             .padding(
                 horizontal = CTTheme.spacing.large,
                 vertical = CTTheme.spacing.small,
-            ),
-        horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
+            )
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        uiMarker?.let {
+            SmallMap(uiMarker)
+        }
+
         CTTextView(
             text = text,
-            color = CTTheme.color.textOnBackground,
             style = CTTheme.typography.body,
-            modifier = Modifier.weight(1f),
+            color = CTTheme.color.textOnBackground,
+            modifier = Modifier.weight(1f)
         )
 
         CTIcon(
@@ -49,12 +58,23 @@ fun TextRowPicker(
 }
 
 @Stable
-data class TextRowPickerState(
+data class MapRowPickerState(
+    val uiMarker: UIMarker?,
     val text: TextSpec,
     val onClick: () -> Unit,
 ) {
     companion object {
-        private const val contentType: String = "TextRowPicker"
+        private const val contentType: String = "MapRowPicker"
+    }
+
+    @Composable
+    fun Content(modifier: Modifier = Modifier) {
+        MapRowPicker(
+            text = text,
+            uiMarker = uiMarker,
+            onClick = onClick,
+            modifier = modifier,
+        )
     }
 
     fun lazyItem(
@@ -62,10 +82,10 @@ data class TextRowPickerState(
         key: Any,
     ) {
         scope.item(
-            key = key,
             contentType = contentType,
+            key = key,
         ) {
-            TextRowPicker(text = text, onClick = onClick)
+            Content()
         }
     }
 }

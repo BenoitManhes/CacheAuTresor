@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +16,7 @@ import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class StartCoopModalBottomSheet(
@@ -42,10 +42,12 @@ data class StartCoopModalBottomSheet(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable {
-                            onClickCrewPosition(position)
-                            hide()
-                        }
+                        .ctClickable(
+                            onClick = {
+                                onClickCrewPosition(position)
+                                hide()
+                            }
+                        )
                         .padding(CTTheme.spacing.large),
                 ) {
                     CTTextView(

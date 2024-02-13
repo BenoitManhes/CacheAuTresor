@@ -2,7 +2,6 @@ package com.benoitmanhes.designsystem.molecule.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -18,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.atoms.CTVerticalDivider
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ComposableContent
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 
 @Composable
 fun CTHorizontalCard(
@@ -32,7 +32,7 @@ fun CTHorizontalCard(
             .fillMaxWidth()
             .height(IntrinsicSize.Max)
             .clip(CTTheme.shape.medium)
-            .clickable(onClick = onClick)
+            .ctClickable(onClick = onClick)
             .background(CTTheme.color.surface)
             .border(CTTheme.stroke.medium, borderColor, CTTheme.shape.medium),
         verticalAlignment = Alignment.CenterVertically,

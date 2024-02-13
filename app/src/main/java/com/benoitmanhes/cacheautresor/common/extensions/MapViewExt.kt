@@ -60,11 +60,11 @@ internal fun MapView.observeMapPosition(
 
 internal fun MapView.onTapListener(
     onSingleTap: () -> Boolean = { false },
-    onLongPress: () -> Boolean = { false },
+    onLongPress: (Coordinates?) -> Boolean = { false },
 ) {
     val mapEventOverlay = MapEventsOverlay(object : MapEventsReceiver {
         override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean = onSingleTap()
-        override fun longPressHelper(p: GeoPoint?): Boolean = onLongPress()
+        override fun longPressHelper(p: GeoPoint?): Boolean = onLongPress(p?.toModel())
     })
     overlays.add(mapEventOverlay)
 }

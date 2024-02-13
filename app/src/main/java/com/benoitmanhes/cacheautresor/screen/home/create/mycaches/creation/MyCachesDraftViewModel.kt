@@ -7,6 +7,7 @@ import com.benoitmanhes.cacheautresor.common.composable.card.CacheCardState
 import com.benoitmanhes.cacheautresor.common.composable.card.CacheCardTrailing
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
+import com.benoitmanhes.cacheautresor.common.extensions.orPlaceHolder
 import com.benoitmanhes.cacheautresor.common.extensions.toCacheType
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.MyCachesViewModelState
@@ -70,20 +71,19 @@ class MyCachesDraftViewModel @Inject constructor(
     private fun cacheCard(draftCache: DraftCache): CacheCardState = CacheCardState(
         itemId = draftCache.draftCacheId,
         cacheColorTheme = CTColorTheme.Cartography,
-        name = draftCache.title?.textSpec() ?: defaultText(),
+        name = draftCache.title?.textSpec().orPlaceHolder(),
         icon = draftCache.type?.toCacheType()?.getIcon() ?: IconSpec.ComposeIcon { CTTheme.icon.Logo },
-        typeText = draftCache.type?.toCacheType()?.getTypeText() ?: defaultText(),
+        typeText = draftCache.type?.toCacheType()?.getTypeText().orPlaceHolder(),
         cacheIdText = null,
-        difficultyText = draftCache.difficulty?.toString()?.textSpec() ?: defaultText(),
-        groundText = draftCache.ground?.toString()?.textSpec() ?: defaultText(),
-        sizeText = draftCache.size?.toSizeText() ?: defaultText(),
+        difficultyText = draftCache.difficulty?.toString()?.textSpec().orPlaceHolder(),
+        groundText = draftCache.ground?.toString()?.textSpec().orPlaceHolder(),
+        sizeText = draftCache.size?.toSizeText().orPlaceHolder(),
         trailingContent = CacheCardTrailing.Progress(draftCache.progress),
         onClick = {
             _navigation.value = MyCachesDraftNavigation.EditDraftCache(draftCache.draftCacheId)
         },
     )
 
-    private fun defaultText(): TextSpec = TextSpec.Resources(R.string.common_noValue_placeHolder)
     fun consumeNavigation() {
         _navigation.value = null
     }

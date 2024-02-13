@@ -36,7 +36,7 @@ class PickNameDraftCacheViewModel @Inject constructor(
         PickNameDraftCacheViewModelState(
             onTextChanged = ::updateName,
             bottomActionBar = BottomActionBarState(
-                firstButton = PrimaryButtonState(
+                primaryButton = PrimaryButtonState(
                     text = TextSpec.Resources(R.string.common_validate),
                     onClick = ::saveNote,
                 )

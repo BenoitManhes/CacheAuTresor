@@ -1,6 +1,5 @@
 package com.benoitmanhes.designsystem.molecule.card
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +26,7 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
@@ -39,18 +39,16 @@ fun CTSelectionCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val iconColor by animateColorAsState(
-        targetValue = if (isSelected) CTTheme.color.textOnSurfacePrimary else CTTheme.color.textOnSurface,
-        label = "ColorAnimation",
-    )
-    val iconSurfaceColor by animateColorAsState(
-        targetValue = if (isSelected) CTTheme.color.surfacePrimary else CTTheme.color.surface,
-        label = "ColorAnimation",
-    )
-    val contentSurfaceColor by animateColorAsState(
-        targetValue = if (isSelected) CTTheme.color.surfacePrimarySoft else CTTheme.color.surface,
-        label = "ColorAnimation",
-    )
+    val iconColor = remember(isSelected) {
+        CTTheme.composed { if (isSelected) color.textOnSurfacePrimary else color.textOnSurface }
+    }
+    val iconSurfaceColor = remember(isSelected) {
+        CTTheme.composed { if (isSelected) color.surfacePrimary else color.surface }
+    }
+    val contentSurfaceColor = remember(isSelected) {
+        CTTheme.composed { if (isSelected) color.surfacePrimarySoft else color.surface }
+    }
+
     CTHorizontalCard(
         onClick = onClick,
         modifier = modifier,
@@ -59,13 +57,13 @@ fun CTSelectionCard(
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentWidth()
-                    .background(iconSurfaceColor),
+                    .background(iconSurfaceColor()),
                 contentAlignment = Alignment.Center,
             ) {
                 CTIcon(
                     icon = icon,
                     size = Dimens.IconSize.XLarge,
-                    color = iconColor,
+                    color = iconColor(),
                     modifier = Modifier.padding(CTTheme.spacing.small),
                 )
             }
@@ -74,7 +72,7 @@ fun CTSelectionCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(contentSurfaceColor),
+                    .background(contentSurfaceColor()),
                 contentAlignment = Alignment.CenterStart,
             ) {
                 Column(

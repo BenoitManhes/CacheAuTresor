@@ -36,7 +36,7 @@ fun FabIconButton(
                 modifier = modifier
                     .size(Dimens.Size.fabIconButtonSize)
                     .clip(CTTheme.shape.small)
-                    .border(width = CTTheme.stroke.thin, color = color, shape = CTTheme.shape.small)
+                    .border(width = CTTheme.stroke.medium, color = color, shape = CTTheme.shape.small)
                     .background(CTTheme.color.surface)
                     .clickable(
                         onClick = onClick,

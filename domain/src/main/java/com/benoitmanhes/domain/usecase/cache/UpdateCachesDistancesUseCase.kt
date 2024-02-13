@@ -2,7 +2,7 @@ package com.benoitmanhes.domain.usecase.cache
 
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UIExploreCache
-import com.benoitmanhes.domain.usecase.common.CalculateDistanceUseCase
+import com.benoitmanhes.domain.usecase.coordinates.CalculateDistanceUseCase
 import javax.inject.Inject
 
 class UpdateCachesDistancesUseCase @Inject constructor(

@@ -170,4 +170,13 @@
     <string name="pickTypeDraftCache_mystery_description">Une énigme à résoudre pour obtenir les coordonnées de la cache.</string>
     <string
         name="pickTypeDraftCache_coop_description">Une cache à faire à plusieurs. Chaque membre reçoit un fragment d’instruction.</string>
+    <string name="common_reinitialize">Réinitialiser</string>
+    <string name="pickInitCoordinates_bottomBar_title">Saisis le point de départ de la cache</string>
+    <string name="pickInitCoordinates_bottomBar_description">En plaçant le marqueur sur la carte (appui long) ou manuellement.</string>
+    <string name="common_save">Enregistrer</string>
+    <string name="modalPickCoordinates_title">Saisis les coordonnées GPS</string>
+    <string name="modalPickCoordinates_message">Il existe 3 formats possible :\n  - Degré Décimal (DD) : #.######°\n - Degré Minute (DM) : #° ##.###’\n  - Degré Minute Seconde (DMS) : #° ##’ ##.###\"\n\nLes caractères spéciaux peuvent être remplacé par des espaces</string>
+    <string name="common_invalidFormat">Format invalide</string>
+    <string name="pickInitCoordinates_alertArea_title">Lieu invalide</string>
+    <string name="pickInitCoordinates_alertArea_message">Saisis des coordonnées en dehors des zones rouge</string>
 </resources>

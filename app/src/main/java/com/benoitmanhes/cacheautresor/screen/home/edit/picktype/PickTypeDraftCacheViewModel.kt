@@ -44,7 +44,7 @@ class PickTypeDraftCacheViewModel @Inject constructor(
         PickTypeDraftCacheViewModelState(
             typeSelectionCards = typesMap,
             bottomActionBar = BottomActionBarState(
-                firstButton = PrimaryButtonState(
+                primaryButton = PrimaryButtonState(
                     text = TextSpec.Resources(R.string.common_validate),
                     onClick = ::saveType,
                 )

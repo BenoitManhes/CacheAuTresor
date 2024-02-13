@@ -10,16 +10,16 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
 data class BottomActionBarState(
     val title: TextSpec? = null,
     val message: TextSpec? = null,
-    val firstButton: PrimaryButtonState? = null,
-    val secondButton: PrimaryButtonState? = null,
+    val primaryButton: PrimaryButtonState? = null,
+    val secondaryButton: PrimaryButtonState? = null,
 ) {
     @Composable
     fun Content(modifier: Modifier = Modifier) {
         BottomActionBar(
             title = title,
             message = message,
-            firstButton = firstButton,
-            secondButton = secondButton,
+            primaryButton = primaryButton,
+            secondaryButton = secondaryButton,
             modifier = modifier,
         )
     }
