@@ -25,7 +25,6 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
 import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.UiConstants
 
@@ -52,7 +51,7 @@ fun CTJauge(
         )
 
         CTIcon(
-            icon = state.icon,
+            icon = state.icon(),
             size = Dimens.IconSize.Huge,
             modifier = Modifier.layoutId(IconId),
         )
@@ -106,14 +105,14 @@ private fun PreviewCTJauge() {
                 CTJauge(
                     CTJaugeState(
                         rate = 2.5f,
-                        icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
+                        icon = { CTTheme.icon.Mountain },
                         text = TextSpec.RawString("Dangereux"),
                     )
                 )
                 CTJauge(
                     CTJaugeState(
                         rate = 4f,
-                        icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
+                        icon = { CTTheme.icon.Difficulty },
                         text = TextSpec.RawString("Expert"),
                     )
                 )

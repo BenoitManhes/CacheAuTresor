@@ -18,10 +18,8 @@ import com.benoitmanhes.designsystem.atoms.CTIconSlot
 import com.benoitmanhes.designsystem.atoms.CTVerticalDivider
 import com.benoitmanhes.designsystem.atoms.text.CTTextMultiSize
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun PointsSectionProfile(
@@ -72,7 +70,7 @@ private fun PreviewPointsSectionProfile() {
     CTTheme {
         PointsSectionProfile(
             header = "Title".textSpec(),
-            icon = CTTheme.icon.Crown.toIconSpec(),
+            icon = CTTheme.icon.Crown,
             points = 180,
             cacheNumber = 36,
         )

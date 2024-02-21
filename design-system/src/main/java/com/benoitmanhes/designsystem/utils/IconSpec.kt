@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
-import com.benoitmanhes.designsystem.theme.ComposeProvider
 
 sealed interface IconSpec {
 
@@ -28,14 +27,6 @@ sealed interface IconSpec {
 
         @Composable
         override fun painter(): Painter = painterResource(id = drawableRes)
-    }
-
-    data class ComposeIcon(
-        override val contentDescription: String? = null,
-        private val provider: ComposeProvider<ImageVector>,
-    ) : IconSpec {
-        @Composable
-        override fun painter(): Painter = rememberVectorPainter(provider())
     }
 
     data class VectorIcon(

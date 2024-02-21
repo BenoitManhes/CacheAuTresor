@@ -22,7 +22,7 @@ interface DraftCacheDao {
     fun findWithId(id: String): RoomDraftCache?
 
     @Query("SELECT * FROM `DRAFT-CACHE` WHERE draftCacheId = :id")
-    fun findWithIdFlow(id: String): Flow<RoomDraftCache>
+    fun findWithIdFlow(id: String): Flow<RoomDraftCache?>
 
     @Query("SELECT * FROM `DRAFT-CACHE`")
     fun findAllFlow(): Flow<List<RoomDraftCache>>

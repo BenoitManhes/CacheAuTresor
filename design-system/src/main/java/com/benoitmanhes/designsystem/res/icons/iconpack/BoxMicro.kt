@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.BoxMicro: ImageVector
+internal val CTIconPack.BoxMicro: ImageVector
     get() {
         if (boxMicro != null) {
             return boxMicro!!

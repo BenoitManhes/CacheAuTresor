@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.AddBox: ImageVector
+internal val CTIconPack.AddBox: ImageVector
     get() {
         if (_addBox != null) {
             return _addBox!!

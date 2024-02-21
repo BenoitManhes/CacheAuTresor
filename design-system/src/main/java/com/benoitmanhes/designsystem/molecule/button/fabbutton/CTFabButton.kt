@@ -53,7 +53,7 @@ fun CTFabButton(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 CTIcon(
-                    icon = state.icon,
+                    icon = state.icon(),
                     size = size.icon,
                     color = attribute.contentColor,
                 )

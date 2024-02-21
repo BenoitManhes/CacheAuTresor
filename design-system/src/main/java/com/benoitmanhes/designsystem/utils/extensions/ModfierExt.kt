@@ -12,11 +12,13 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 @Composable
 fun Modifier.ctClickable(
     onClick: (() -> Unit)?,
+    enabled: Boolean = true,
     rippleColor: Color = CTTheme.color.ripple,
 ): Modifier =
     onClick?.let {
         this.clickable(
             onClick = onClick,
+            enabled = enabled,
             interactionSource = remember { MutableInteractionSource() },
             indication = rememberRipple(color = rippleColor),
         )

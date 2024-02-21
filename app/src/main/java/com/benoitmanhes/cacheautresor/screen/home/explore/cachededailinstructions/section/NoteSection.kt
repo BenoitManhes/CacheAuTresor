@@ -19,11 +19,8 @@ import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
-import com.benoitmanhes.designsystem.res.icons.iconpack.Add
-import com.benoitmanhes.designsystem.res.icons.iconpack.Compass
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -60,7 +57,7 @@ fun NoteSection(
                     text = TextSpec.Resources(R.string.cacheDetail_addMarkerButton),
                     onClick = state.onClickMarker,
                     type = SecondaryButtonType.Outlined,
-                    leadingIcon = CTTheme.icon.Add.toIconSpec(),
+                    leadingIcon = CTTheme.icon.Add,
                 ).Composable(
                     modifier = Modifier.weight(1f),
                 )
@@ -68,7 +65,7 @@ fun NoteSection(
                     text = TextSpec.Resources(R.string.cacheDetail_instrumentsButton),
                     onClick = state.onClickMarker,
                     type = SecondaryButtonType.Outlined,
-                    leadingIcon = CTTheme.icon.Compass.toIconSpec(),
+                    leadingIcon = CTTheme.icon.Compass,
                 ).Composable(
                     modifier = Modifier.weight(1f),
                 )

@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.GlobeDD: ImageVector
+internal val CTIconPack.GlobeDD: ImageVector
     get() {
         if (globe_dd != null) {
             return globe_dd!!

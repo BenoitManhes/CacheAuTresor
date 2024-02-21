@@ -9,12 +9,9 @@ import com.benoitmanhes.cacheautresor.screen.home.news.section.EliteCardState
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
-import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
 import com.benoitmanhes.designsystem.theme.CTColorTheme
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.usecase.explorer.GetBestCartographersUseCase
 import com.benoitmanhes.domain.usecase.explorer.GetBestExplorersUseCase
@@ -48,7 +45,7 @@ class NewsViewModel @Inject constructor(
                     explorers = eliteExplorers
                         .take(DomainConstants.News.numberExplorerElite)
                         .map { it.mapToUIExplorer() },
-                    headerIcon = CTIconPack.Crown.toIconSpec(),
+                    headerIcon = { CTTheme.icon.Crown },
                     headerTitle = TextSpec.Resources(R.string.news_eliteExplorersCard_title),
                     colorTheme = CTColorTheme.Explore,
                     onClickRank = {
@@ -71,7 +68,7 @@ class NewsViewModel @Inject constructor(
                     explorers = eliteCartographers
                         .take(DomainConstants.News.numberExplorerElite)
                         .map { it.mapToUICartographer() },
-                    headerIcon = CTIconPack.Ensign.toIconSpec(),
+                    headerIcon = { CTTheme.icon.Ensign },
                     headerTitle = TextSpec.Resources(R.string.news_eliteCartographersCard_title),
                     colorTheme = CTColorTheme.Cartography,
                     onClickRank = {

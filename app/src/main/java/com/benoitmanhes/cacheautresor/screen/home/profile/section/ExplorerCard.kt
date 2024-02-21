@@ -19,12 +19,9 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTImage
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.card.CTCardLarge
-import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
-import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun ExplorerCard(
@@ -71,7 +68,7 @@ fun ExplorerCard(
             CTTheme(CTColorTheme.Explore) {
                 PointsSectionProfile(
                     header = TextSpec.Resources(R.string.profile_explorationSection_title),
-                    icon = CTTheme.icon.Crown.toIconSpec(),
+                    icon = CTTheme.icon.Crown,
                     points = explorationPts,
                     cacheNumber = numberCacheFounded,
                 )
@@ -81,7 +78,7 @@ fun ExplorerCard(
             CTTheme(CTColorTheme.Cartography) {
                 PointsSectionProfile(
                     header = TextSpec.Resources(R.string.profile_cartographySection_title),
-                    icon = CTTheme.icon.Flag.toIconSpec(),
+                    icon = CTTheme.icon.Flag,
                     points = cartographyPts,
                     cacheNumber = numberCacheCreated,
                 )

@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Rank: ImageVector
+internal val CTIconPack.Rank: ImageVector
     get() {
         if (_rank != null) {
             return _rank!!

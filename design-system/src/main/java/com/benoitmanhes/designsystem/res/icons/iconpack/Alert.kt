@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Alert: ImageVector
+internal val CTIconPack.Alert: ImageVector
     get() {
         if (_alert != null) {
             return _alert!!

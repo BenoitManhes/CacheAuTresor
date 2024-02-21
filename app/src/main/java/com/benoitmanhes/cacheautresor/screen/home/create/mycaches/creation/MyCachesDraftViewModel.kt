@@ -15,10 +15,8 @@ import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.result.CTResult
-import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.usecase.draftcache.GetAllMyDraftCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -72,7 +70,7 @@ class MyCachesDraftViewModel @Inject constructor(
         itemId = draftCache.draftCacheId,
         cacheColorTheme = CTColorTheme.Cartography,
         name = draftCache.title?.textSpec().orPlaceHolder(),
-        icon = draftCache.type?.toCacheType()?.getIcon() ?: IconSpec.ComposeIcon { CTTheme.icon.Logo },
+        icon = draftCache.type?.toCacheType()?.getIcon() ?: { CTTheme.icon.Logo },
         typeText = draftCache.type?.toCacheType()?.getTypeText().orPlaceHolder(),
         cacheIdText = null,
         difficultyText = draftCache.difficulty?.toString()?.textSpec().orPlaceHolder(),

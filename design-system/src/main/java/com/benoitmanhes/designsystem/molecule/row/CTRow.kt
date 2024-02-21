@@ -17,6 +17,8 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 
@@ -38,7 +40,7 @@ fun CTRow(
         horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
     ) {
         state.leadingIcon?.let { icon ->
-            CTIcon(icon = icon, size = Dimens.IconSize.Medium)
+            CTIcon(icon = icon(), size = Dimens.IconSize.Medium)
         }
         state.text?.let { text ->
             CTTextView(text = text, style = CTTheme.typography.body)
@@ -69,7 +71,7 @@ object CTRow {
 
 @Stable
 data class CTRowState(
-    val leadingIcon: IconSpec? = null,
+    val leadingIcon: ComposeProvider<IconSpec>? = null,
     val text: TextSpec? = null,
     val onClick: (() -> Unit)? = null,
 )
@@ -80,7 +82,7 @@ fun PreviewCTRow() {
     CTTheme {
         CTRow(
             state = CTRowState(
-                leadingIcon = IconSpec.VectorIcon(CTTheme.icon.ProfileFilled),
+                leadingIcon = CTTheme.composed { icon.ProfileFilled },
                 text = TextSpec.loreumIpsum(4),
             )
         )

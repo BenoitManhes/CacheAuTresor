@@ -19,6 +19,7 @@ object DomainConstants {
 
     object EditCache {
         const val maxCacheNameLenght: Int = 36
+        const val maxCrewNameLenght: Int = 36
     }
 
     object Location {

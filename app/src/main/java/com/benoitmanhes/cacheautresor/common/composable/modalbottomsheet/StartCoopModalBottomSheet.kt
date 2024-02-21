@@ -14,10 +14,8 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
-import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class StartCoopModalBottomSheet(
     val crewPositions: Set<String>,
@@ -32,7 +30,7 @@ data class StartCoopModalBottomSheet(
         scope: ColumnScope,
         hide: () -> Unit,
     ): Unit = ClassicModalBottomSheet(
-        icon = CTTheme.icon.Coop.toIconSpec(),
+        icon = { CTTheme.icon.Coop },
         title = TextSpec.Resources(R.string.cacheDetail_startCoopModal_title),
         message = TextSpec.Resources(R.string.cacheDetail_startCoopModal_message, crewPositions.count()),
         content = {

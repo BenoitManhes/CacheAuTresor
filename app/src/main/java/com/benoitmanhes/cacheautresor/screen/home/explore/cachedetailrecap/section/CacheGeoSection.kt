@@ -2,12 +2,10 @@ package com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.sect
 
 import androidx.compose.foundation.lazy.LazyListScope
 import com.benoitmanhes.cacheautresor.common.composable.row.CoordinatesRow
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.molecule.row.CTRow
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.Location
-import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.domain.model.Coordinates
 
 object CacheGeoSection {
@@ -25,7 +23,7 @@ object CacheGeoSection {
             CTRow.item(
                 scope = scope,
                 state = CTRowState(
-                    leadingIcon = IconSpec.VectorIcon(CTIconPack.Location),
+                    leadingIcon = { CTTheme.icon.Location },
                     text = distanceText,
                 ),
                 key = "LocationRow",

@@ -13,11 +13,11 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.cell.LabelCell
 import com.benoitmanhes.cacheautresor.common.composable.cell.LabelCellState
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
-import com.benoitmanhes.designsystem.molecule.sticker.CTSticker
-import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
-import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.molecule.sticker.CTSticker
+import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
+import com.benoitmanhes.designsystem.utils.IconSpec
 
 @Composable
 fun CacheTypeSection(
@@ -33,7 +33,7 @@ fun CacheTypeSection(
             // Type
             LabelCell(
                 state = LabelCellState(
-                    leadingIcon = state.typeIcon,
+                    leadingIcon = state.typeIcon(),
                     label = state.typeText,
                 )
             )
@@ -69,7 +69,7 @@ object CacheTypeSection {
 
 @Stable
 data class CacheTypeSectionState(
-    val typeIcon: IconSpec,
+    val typeIcon: ComposeProvider<IconSpec>,
     val typeText: TextSpec,
     val stickerLabel: TextSpec?,
 )
@@ -80,7 +80,7 @@ private fun PreviewCacheTypeSection() {
     CTTheme {
         CacheTypeSection(
             state = CacheTypeSectionState(
-                typeIcon = IconSpec.VectorIcon(CTTheme.icon.Parchment, null),
+                typeIcon = { CTTheme.icon.Parchment },
                 typeText = TextSpec.loreumIpsum(2),
                 stickerLabel = TextSpec.RawString("en cours...")
             )

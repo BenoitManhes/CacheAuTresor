@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Crown: ImageVector
+internal val CTIconPack.Crown: ImageVector
     get() {
         if (_iconCrown != null) {
             return _iconCrown!!

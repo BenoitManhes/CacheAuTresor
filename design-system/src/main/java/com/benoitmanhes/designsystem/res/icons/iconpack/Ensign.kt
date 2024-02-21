@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Ensign: ImageVector
+internal val CTIconPack.Ensign: ImageVector
     get() {
         if (_iconEnsign != null) {
             return _iconEnsign!!

@@ -25,10 +25,8 @@ import com.benoitmanhes.designsystem.atoms.text.CTMarkdownText
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonType
-import com.benoitmanhes.designsystem.res.icons.iconpack.Flag
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.CacheInstructions
 import com.benoitmanhes.domain.model.InstructionContent
 
@@ -95,7 +93,7 @@ fun InstructionSection(
                 onClick = state.onReport,
                 type = SecondaryButtonType.Text,
                 color = { CTTheme.color.textCritical },
-                leadingIcon = CTTheme.icon.Flag.toIconSpec(),
+                leadingIcon = CTTheme.icon.Flag,
             ).Composable(
                 modifier = Modifier.weight(1f),
             )

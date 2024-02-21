@@ -19,9 +19,7 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.ButtonStatus
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.modalBottomSheet.CTModalBottomSheetContent
 import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
-import com.benoitmanhes.designsystem.res.icons.iconpack.Key
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class LogModalBottomSheet(
     val message: TextSpec,
@@ -47,7 +45,7 @@ data class LogModalBottomSheet(
                 .animateContentSize()
                 .imePadding(),
             message = message,
-            icon = CTTheme.icon.Key.toIconSpec(),
+            icon = CTTheme.icon.Key,
             confirmAction = PrimaryButtonState(
                 text = TextSpec.Resources(R.string.common_validate),
                 status = if (textValue.isBlank()) ButtonStatus.DISABLE else ButtonStatus.ENABLE,

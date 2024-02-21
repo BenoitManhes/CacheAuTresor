@@ -185,19 +185,19 @@ private fun PreviewSecondaryButton() {
                     text = TextSpec.RawString("Button"),
                     type = SecondaryButtonType.Colored,
                     onClick = { },
-                    leadingIcon = IconSpec.VectorIcon(CTTheme.icon.Mountain)
+                    leadingIcon = CTTheme.icon.Mountain,
                 ).Composable()
                 SecondaryButtonState(
                     text = TextSpec.RawString("Outlined Button"),
                     onClick = { },
                     type = SecondaryButtonType.Outlined,
-                    leadingIcon = IconSpec.VectorIcon(CTTheme.icon.Mountain),
+                    leadingIcon = CTTheme.icon.Mountain,
                 ).Composable()
                 SecondaryButtonState(
                     text = TextSpec.RawString("Text Button"),
                     onClick = { },
                     type = SecondaryButtonType.Text,
-                    leadingIcon = IconSpec.VectorIcon(CTTheme.icon.Mountain),
+                    leadingIcon = CTTheme.icon.Mountain,
                 ).Composable()
                 SecondaryButtonState(
                     text = TextSpec.RawString("Button"),

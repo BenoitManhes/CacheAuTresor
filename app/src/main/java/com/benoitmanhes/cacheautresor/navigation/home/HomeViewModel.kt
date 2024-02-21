@@ -6,11 +6,8 @@ import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.Classic
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.Create
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +24,7 @@ class HomeViewModel @Inject constructor(
     fun showCacheCreationModal() {
         modalBottomSheetManager.showModal(
             ClassicModalBottomSheet(
-                icon = CTIconPack.Create.toIconSpec(),
+                icon = { CTTheme.icon.Create },
                 title = TextSpec.Resources(R.string.startCreationModal_title),
                 message = TextSpec.Resources(R.string.startCreationModal_message),
                 color = CTTheme.composed { color.primary },

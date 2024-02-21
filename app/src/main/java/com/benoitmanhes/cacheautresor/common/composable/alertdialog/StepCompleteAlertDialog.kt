@@ -5,13 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogState
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.text.CTMarkdownText
 import com.benoitmanhes.designsystem.molecule.alertdialog.AlertDialogAction
 import com.benoitmanhes.designsystem.molecule.alertdialog.CTAlertDialog
-import com.benoitmanhes.designsystem.res.icons.iconpack.DoneStamp
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class StepCompleteAlertDialog(
     val stepName: TextSpec,
@@ -30,7 +28,7 @@ data class StepCompleteAlertDialog(
         CTAlertDialog(
             title = TextSpec.Resources(R.string.cacheDetail_stepComplete_alertDialog_title),
             alertDialogAction = actions,
-            icon = CTTheme.icon.DoneStamp.toIconSpec(),
+            icon = CTTheme.icon.DoneStamp,
             onDismissRequest = {
                 closeDialog()
                 onDismiss?.invoke()

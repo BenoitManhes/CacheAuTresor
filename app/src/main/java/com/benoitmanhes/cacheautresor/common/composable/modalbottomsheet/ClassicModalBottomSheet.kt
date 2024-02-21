@@ -2,6 +2,7 @@ package com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetOption
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetState
@@ -14,8 +15,9 @@ import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.ComposableContent
 import com.benoitmanhes.designsystem.utils.IconSpec
 
+@Stable
 data class ClassicModalBottomSheet(
-    val icon: IconSpec? = null,
+    val icon: ComposeProvider<IconSpec>? = null,
     val title: TextSpec? = null,
     val message: TextSpec? = null,
     val cancelAction: PrimaryButtonState? = null,
@@ -33,7 +35,7 @@ data class ClassicModalBottomSheet(
     ): Unit = with(scope) {
         CTModalBottomSheetContent(
             hide = hide,
-            icon = icon,
+            icon = icon?.invoke(),
             title = title,
             message = message,
             cancelAction = cancelAction,

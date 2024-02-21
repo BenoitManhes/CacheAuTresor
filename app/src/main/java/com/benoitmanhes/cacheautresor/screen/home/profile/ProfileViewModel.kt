@@ -11,12 +11,9 @@ import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.Disconnect
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.ImageSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.usecase.authentication.LogoutUseCase
 import com.benoitmanhes.domain.usecase.explorer.GetMyExplorerUseCase
@@ -66,7 +63,7 @@ class ProfileViewModel @Inject constructor(
     private fun showLogoutModal() {
         modalBottomSheetManager.showModal(
             ClassicModalBottomSheet(
-                icon = CTIconPack.Disconnect.toIconSpec(),
+                icon = { CTTheme.icon.Disconnect },
                 title = TextSpec.Resources(R.string.profile_logoutModal_title),
                 message = TextSpec.Resources(R.string.profile_logoutModal_message),
                 color = CTTheme.composed { color.critical },

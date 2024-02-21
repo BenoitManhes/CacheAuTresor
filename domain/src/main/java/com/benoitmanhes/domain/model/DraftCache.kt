@@ -25,7 +25,7 @@ data class DraftCache(
     sealed interface Type : Model {
 
         @Serializable
-        object Classical : Type
+        data object Classical : Type
         data class Piste(
             val intermediateDraftStepIds: List<String>,
         ) : Type

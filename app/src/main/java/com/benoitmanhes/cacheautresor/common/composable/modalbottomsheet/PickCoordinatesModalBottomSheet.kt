@@ -19,10 +19,8 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.ButtonStatus
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.modalBottomSheet.CTModalBottomSheetContent
 import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
-import com.benoitmanhes.designsystem.res.icons.iconpack.Globe
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class PickCoordinatesModalBottomSheet(
     val onValidate: (String, () -> Unit) -> Unit,
@@ -46,7 +44,7 @@ data class PickCoordinatesModalBottomSheet(
                     .imePadding(),
                 title = TextSpec.Resources(R.string.modalPickCoordinates_title),
                 message = TextSpec.Resources(R.string.modalPickCoordinates_message),
-                icon = CTTheme.icon.Globe.toIconSpec(),
+                icon = CTTheme.icon.Globe,
                 confirmAction = PrimaryButtonState(
                     text = TextSpec.Resources(R.string.common_validate),
                     status = if (textValue.isBlank() || showError) ButtonStatus.DISABLE else ButtonStatus.ENABLE,

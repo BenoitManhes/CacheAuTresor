@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 
@@ -51,7 +50,7 @@ fun CTMarker(
 private fun PreviewCTMarker() {
     CTTheme {
         CTMarker(
-            icon = IconSpec.VectorIcon(CTTheme.icon.Parchment, contentDescription = null),
+            icon = CTTheme.icon.Parchment,
             color = CTTheme.color.primary,
         )
     }

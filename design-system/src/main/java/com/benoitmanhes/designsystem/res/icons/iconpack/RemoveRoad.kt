@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.RemoveRoad: ImageVector
+internal val CTIconPack.RemoveRoad: ImageVector
     get() {
         if (_removeRoad != null) {
             return _removeRoad!!

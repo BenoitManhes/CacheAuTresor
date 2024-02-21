@@ -20,6 +20,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.ComposeProvider
 
 @Composable
 fun CTInfoCard(
@@ -43,9 +44,9 @@ fun CTInfoCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
         ) {
-            state.icon?.let {
+            state.icon?.let { icon ->
                 CTIcon(
-                    icon = state.icon,
+                    icon = icon(),
                     size = Dimens.IconSize.Medium,
                     color = CTTheme.color.textOnSurfacePrimarySoft,
                 )
@@ -91,7 +92,7 @@ object CTInfoCard {
 }
 
 data class InfoCardState(
-    val icon: IconSpec?,
+    val icon: ComposeProvider<IconSpec>?,
     val message: TextSpec,
     val trailingText: TextSpec? = null,
 )
@@ -102,7 +103,7 @@ private fun PreviewInfoCard() {
     CTTheme {
         CTInfoCard(
             state = InfoCardState(
-                icon = IconSpec.VectorIcon(CTTheme.icon.Crown, null),
+                icon = { CTTheme.icon.Crown },
                 message = TextSpec.RawString(LoremIpsum(4).values.joinToString()),
                 trailingText = TextSpec.RawString("end"),
             )

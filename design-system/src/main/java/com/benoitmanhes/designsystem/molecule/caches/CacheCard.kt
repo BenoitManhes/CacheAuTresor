@@ -18,21 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.atoms.CTIconSlot
 import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.label.LabelIconMedium
 import com.benoitmanhes.designsystem.molecule.label.LabelIconSmall
-import com.benoitmanhes.designsystem.atoms.CTIconSlot
 import com.benoitmanhes.designsystem.molecule.sticker.CTSticker
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Box
-import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
-import com.benoitmanhes.designsystem.res.icons.iconpack.Location
-import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.common.compose.text.TextSpec
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -81,7 +76,7 @@ fun CacheCard(
             )
             distanceText?.let {
                 LabelIconMedium(
-                    icon = IconSpec.VectorIcon(CTTheme.icon.Location, null),
+                    icon = CTTheme.icon.Location,
                     text = distanceText,
                     color = color,
                 )
@@ -123,17 +118,17 @@ private fun RowScope.MainInfoLayout(
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large)
         ) {
             LabelIconSmall(
-                icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
+                icon = CTTheme.icon.Difficulty,
                 text = difficultyText,
                 color = color,
             )
             LabelIconSmall(
-                icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
+                icon = CTTheme.icon.Mountain,
                 text = groundText,
                 color = color,
             )
             LabelIconSmall(
-                icon = IconSpec.VectorIcon(CTTheme.icon.Box, null),
+                icon = CTTheme.icon.Box,
                 text = sizeText,
                 color = color,
             )
@@ -152,7 +147,7 @@ private fun PreviewCacheCard() {
             contentAlignment = Alignment.Center,
         ) {
             CacheCard(
-                icon = IconSpec.VectorIcon(CTTheme.icon.Logo, null),
+                icon = CTTheme.icon.Logo,
                 color = CTTheme.color.primary,
                 creatorText = TextSpec.RawString("Creator"),
                 titleText = TextSpec.RawString("Title: Cache title"),

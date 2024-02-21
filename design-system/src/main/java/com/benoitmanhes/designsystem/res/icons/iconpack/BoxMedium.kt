@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.BoxMedium: ImageVector
+internal val CTIconPack.BoxMedium: ImageVector
     get() {
         if (_boxregular != null) {
             return _boxregular!!

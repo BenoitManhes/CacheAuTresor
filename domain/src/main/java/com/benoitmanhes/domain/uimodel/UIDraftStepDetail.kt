@@ -1,21 +1,19 @@
 package com.benoitmanhes.domain.uimodel
 
-import com.benoitmanhes.domain.model.Coordinates
+import com.benoitmanhes.domain.model.DraftCache
+import com.benoitmanhes.domain.model.DraftCacheStep
 
-data class UIDraftStep(
-    val stepDraftId: String,
+data class UIDraftStepDetail(
+    val draftCache: DraftCache,
+    val draftStep: DraftCacheStep,
     val type: Type,
-    val instructions: String?,
-    val clue: String?,
-    val validationCode: String?,
-    val coordinates: Coordinates?,
 ) {
 
     sealed interface Type {
 
         data object Classical : Type
 
-        data object Mystery : Type
+        data object MysteryEnigma : Type
 
         data class Piste(
             val index: Int,
@@ -23,7 +21,7 @@ data class UIDraftStep(
 
         data class Coop(
             val index: Int,
-            val crewPosition: String,
+            val crewRef: String,
         ) : Type
 
         data object Final : Type

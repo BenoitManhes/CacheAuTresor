@@ -29,14 +29,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.benoitmanhes.designsystem.atoms.CTIcon
-import com.benoitmanhes.designsystem.atoms.text.CTTextView
-import com.benoitmanhes.designsystem.atoms.animation.LoadingDotAnimation
-import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
-import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.atoms.CTIcon
+import com.benoitmanhes.designsystem.atoms.animation.LoadingDotAnimation
+import com.benoitmanhes.designsystem.atoms.text.CTTextView
+import com.benoitmanhes.designsystem.res.Dimens
+import com.benoitmanhes.designsystem.theme.CTTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -76,7 +74,7 @@ fun CTPrimaryButton(
             ) {
                 options.filterIsInstance<PrimaryButtonOption.LeadingIcon>().firstOrNull()?.let { leadingIcon ->
                     CTIcon(
-                        icon = leadingIcon.icon,
+                        icon = leadingIcon.icon(),
                         size = Dimens.IconSize.Medium,
                     )
                 }
@@ -224,19 +222,19 @@ private fun PreviewCTButton() {
                     type = PrimaryButtonType.COLORED,
                     status = ButtonStatus.ENABLE,
                     onClick = { },
-                    options = setOf(PrimaryButtonOption.LeadingIcon(IconSpec.VectorIcon(CTTheme.icon.Mountain))),
+                    options = setOf(PrimaryButtonOption.LeadingIcon { CTTheme.icon.Mountain }),
                 )
                 CTPrimaryButton(
                     text = TextSpec.RawString("Outlined Button"),
                     onClick = { },
                     type = PrimaryButtonType.OUTLINED,
-                    options = setOf(PrimaryButtonOption.LeadingIcon(IconSpec.VectorIcon(CTTheme.icon.Mountain))),
+                    options = setOf(PrimaryButtonOption.LeadingIcon { CTTheme.icon.Mountain }),
                 )
                 CTPrimaryButton(
                     text = TextSpec.RawString("Text Button"),
                     onClick = { },
                     type = PrimaryButtonType.TEXT,
-                    options = setOf(PrimaryButtonOption.LeadingIcon(IconSpec.VectorIcon(CTTheme.icon.Mountain))),
+                    options = setOf(PrimaryButtonOption.LeadingIcon { CTTheme.icon.Mountain }),
                 )
                 CTPrimaryButton(
                     text = TextSpec.RawString("Button"),

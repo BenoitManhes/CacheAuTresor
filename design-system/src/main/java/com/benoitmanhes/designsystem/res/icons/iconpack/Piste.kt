@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Piste: ImageVector
+internal val CTIconPack.Piste: ImageVector
     get() {
         if (_iconPiste != null) {
             return _iconPiste!!

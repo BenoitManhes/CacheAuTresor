@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Difficulty: ImageVector
+internal val CTIconPack.Difficulty: ImageVector
     get() {
         if (_difficulty != null) {
             return _difficulty!!

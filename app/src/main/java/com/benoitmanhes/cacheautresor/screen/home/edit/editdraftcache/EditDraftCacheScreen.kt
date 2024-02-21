@@ -3,6 +3,7 @@ package com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +27,7 @@ fun EditDraftCacheRoute(
     navigateToPickName: (String) -> Unit,
     navigateToPickType: (String) -> Unit,
     navigateToPickInitCoordinates: (String) -> Unit,
+    navigateToEditDraftStep: (String, String) -> Unit,
     viewModel: EditCacheViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.editCacheState.collectAsState()
@@ -37,6 +39,7 @@ fun EditDraftCacheRoute(
             is EditCacheNavigation.PickName -> navigateToPickName(navValue.draftCacheId)
             is EditCacheNavigation.PickType -> navigateToPickType(navValue.draftCacheId)
             is EditCacheNavigation.PickInitCoordinates -> navigateToPickInitCoordinates(navValue.draftCacheId)
+            is EditCacheNavigation.EditDraftStep -> navigateToEditDraftStep(navValue.draftCacheId, navValue.draftStepId)
         }
         viewModel.consumeNavigation()
     }
@@ -84,7 +87,12 @@ private fun EditDraftCacheScreen(
 
             uiState.initCoordinates?.let {
                 sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_initialCoordinates_header))
-                uiState.initCoordinates.lazyItem(this, key = "init-coordinates")
+                uiState.initCoordinates.lazyItem(this)
+            }
+
+            uiState.stepSection?.let {
+                sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_steps_header))
+                uiState.stepSection.lazyItem(this)
             }
         }
     }

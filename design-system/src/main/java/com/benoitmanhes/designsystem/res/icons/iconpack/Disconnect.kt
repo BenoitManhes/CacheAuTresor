@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Disconnect: ImageVector
+internal val CTIconPack.Disconnect: ImageVector
     get() {
         if (_disconnect != null) {
             return _disconnect!!

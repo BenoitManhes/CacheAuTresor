@@ -29,18 +29,12 @@ import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.atoms.text.CTTextMultiSize
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Chevron
-import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
-import com.benoitmanhes.designsystem.res.icons.iconpack.Etoile2
-import com.benoitmanhes.designsystem.res.icons.iconpack.Etoile4
-import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
-import com.benoitmanhes.designsystem.res.icons.iconpack.Rank
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.designsystem.utils.ImageSpec
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun EliteCard(
@@ -87,19 +81,19 @@ fun EliteCard(
             ) {
                 EliteUserCell(
                     explorer = explorers.getOrNull(1),
-                    medalIcon = CTTheme.icon.Etoile4.toIconSpec(),
+                    medalIcon = CTTheme.icon.Etoile4,
                     medalIconSize = Dimens.IconSize.Medium,
                     modifier = Modifier.weight(100f)
                 )
                 EliteUserCell(
                     explorer = explorers.getOrNull(0),
-                    medalIcon = CTTheme.icon.Logo.toIconSpec(),
+                    medalIcon = CTTheme.icon.Logo,
                     medalIconSize = Dimens.IconSize.Large,
                     modifier = Modifier.weight(120f)
                 )
                 EliteUserCell(
                     explorer = explorers.getOrNull(2),
-                    medalIcon = CTTheme.icon.Etoile2.toIconSpec(),
+                    medalIcon = CTTheme.icon.Etoile2,
                     medalIconSize = Dimens.IconSize.Medium,
                     modifier = Modifier.weight(100f)
                 )
@@ -123,13 +117,13 @@ fun EliteCard(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
                 ) {
-                    CTIcon(icon = CTTheme.icon.Rank.toIconSpec(), size = Dimens.IconSize.Medium)
+                    CTIcon(icon = CTTheme.icon.Rank, size = Dimens.IconSize.Medium)
                     CTTextView(
                         text = TextSpec.Resources(R.string.news_eliteCard_rankButton),
                         style = CTTheme.typography.body,
                         color = CTTheme.color.textOnSurface,
                     )
-                    CTIcon(icon = CTTheme.icon.Chevron.toIconSpec(), size = Dimens.IconSize.Medium)
+                    CTIcon(icon = CTTheme.icon.Chevron, size = Dimens.IconSize.Medium)
                 }
             }
         }
@@ -195,7 +189,7 @@ private fun PseudoAndPts(
 data class EliteCardState(
     val explorers: List<Explorer>,
     val onClickRank: () -> Unit,
-    val headerIcon: IconSpec,
+    val headerIcon: ComposeProvider<IconSpec>,
     val headerTitle: TextSpec,
     val colorTheme: CTColorTheme,
 ) {
@@ -209,7 +203,7 @@ data class EliteCardState(
     fun Content(modifier: Modifier = Modifier) {
         CTTheme(colorTheme) {
             EliteCard(
-                headerIcon = headerIcon,
+                headerIcon = headerIcon(),
                 headerTitle = headerTitle,
                 explorers = explorers,
                 onClickRank = onClickRank,
@@ -248,7 +242,7 @@ private fun PreviewEliteCard() {
                 ),
             ),
             onClickRank = {},
-            headerIcon = CTTheme.icon.Crown.toIconSpec(),
+            headerIcon = { CTTheme.icon.Crown },
             headerTitle = "Header".textSpec(),
             colorTheme = CTColorTheme.Cartography,
         ).Content(

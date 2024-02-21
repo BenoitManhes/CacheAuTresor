@@ -1,5 +1,6 @@
 package com.benoitmanhes.cacheautresor.navigation.creation
 
+import android.net.Uri
 import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.cacheautresor.navigation.CTSingleArgDestination
 
@@ -26,5 +27,18 @@ sealed interface EditCacheDestination : CTDestination {
     data object PickInitCoordinatesDraftCache : EditCacheDestination, CTSingleArgDestination {
         override val arg: String = "draftCacheId"
         override val path: String = "pick-init-coordinates-draft-cache"
+    }
+
+    data object EditDraftStep : EditCacheDestination {
+        val draftCacheIdArg: String = "draftCacheId"
+        val draftStepIdArg: String = "draftStepId"
+        private const val path: String = "edit-draft-step"
+        override val route: String get() = "$path?$draftCacheIdArg={$draftCacheIdArg}&$draftStepIdArg={$draftStepIdArg}"
+        fun getRoute(draftCacheId: String, draftStepId: String): String =
+            Uri.Builder().apply {
+                path(path)
+                appendQueryParameter(draftCacheIdArg, draftCacheId)
+                appendQueryParameter(draftStepIdArg, draftStepId)
+            }.build().toString()
     }
 }

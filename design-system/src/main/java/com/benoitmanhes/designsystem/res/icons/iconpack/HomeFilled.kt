@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.HomeFilled: ImageVector
+internal val CTIconPack.HomeFilled: ImageVector
     get() {
         if (_iconHomeFilled != null) {
             return _iconHomeFilled!!

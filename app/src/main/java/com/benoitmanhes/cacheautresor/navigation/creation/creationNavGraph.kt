@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import com.benoitmanhes.cacheautresor.navigation.ctComposable
 import com.benoitmanhes.cacheautresor.screen.home.edit.availablefinalplaces.AvailableFinalPlacesRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.EditDraftCacheRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftstep.EditDraftStepRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickinitcoordinates.PickInitCoordinatesRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickname.PickDraftCacheNameRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.picktype.PickTypeDraftCacheScreen
@@ -38,6 +39,14 @@ fun NavGraphBuilder.creationNavGraph(
             navigateToPickInitCoordinates = { draftCacheId ->
                 navController.navigate(EditCacheDestination.PickInitCoordinatesDraftCache.getRoute(draftCacheId))
             },
+            navigateToEditDraftStep = { draftCacheId, draftStepId ->
+                navController.navigate(
+                    EditCacheDestination.EditDraftStep.getRoute(
+                        draftCacheId = draftCacheId,
+                        draftStepId = draftStepId,
+                    )
+                )
+            }
         )
     }
 
@@ -55,6 +64,12 @@ fun NavGraphBuilder.creationNavGraph(
 
     ctComposable(EditCacheDestination.PickInitCoordinatesDraftCache.route) {
         PickInitCoordinatesRoute(
+            navigateBack = navController::popBackStack,
+        )
+    }
+
+    ctComposable(EditCacheDestination.EditDraftStep.route) {
+        EditDraftStepRoute(
             navigateBack = navController::popBackStack,
         )
     }

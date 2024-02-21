@@ -3,8 +3,6 @@ package com.benoitmanhes.designsystem.molecule.button.primarybutton
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,10 +17,8 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.minimumInteractiveComponentSize
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,15 +28,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 
 @Composable
-fun GradientButton(
+internal fun GradientButton(
     gradient: Brush,
     contentColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     elevation: Dp = 0.dp,
     shape: Shape = MaterialTheme.shapes.small,
     border: BorderStroke? = null,
@@ -61,11 +58,10 @@ fun GradientButton(
                     border = border,
                     elevation = elevation
                 )
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = rememberRipple(),
+                .ctClickable(
                     enabled = enabled,
-                    onClick = onClick
+                    onClick = onClick,
+                    rippleColor = CTTheme.color.rippleOnPrimary,
                 ),
             propagateMinConstraints = true
         ) {

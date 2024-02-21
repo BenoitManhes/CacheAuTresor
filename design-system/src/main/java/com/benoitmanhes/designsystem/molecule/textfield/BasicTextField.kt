@@ -36,12 +36,8 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.EyeClose
-import com.benoitmanhes.designsystem.res.icons.iconpack.EyeOpen
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ComposableContent
-import com.benoitmanhes.designsystem.utils.IconSpec
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -151,10 +147,7 @@ internal fun CTBasicTextField(
                         exit = fadeOut(),
                     ) {
                         CTIcon(
-                            icon = IconSpec.VectorIcon(
-                                imageVector = if (showPassword) CTIconPack.EyeClose else CTIconPack.EyeOpen,
-                                contentDescription = null,
-                            ),
+                            icon = if (showPassword) CTTheme.icon.EyeClose else CTTheme.icon.EyeOpen,
                             color = CTTheme.color.textOnSurface,
                             onClick = { showPassword = !showPassword },
                             size = Dimens.IconSize.Medium,

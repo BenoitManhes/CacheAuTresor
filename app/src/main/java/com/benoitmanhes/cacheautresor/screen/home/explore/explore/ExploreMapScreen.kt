@@ -42,12 +42,8 @@ import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
 import com.benoitmanhes.cacheautresor.utils.AppConstants
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
-import com.benoitmanhes.designsystem.res.icons.iconpack.Layer
-import com.benoitmanhes.designsystem.res.icons.iconpack.Position
-import com.benoitmanhes.designsystem.res.icons.iconpack.PositionCurrent
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.extension.similar
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UIExploreCache
@@ -154,7 +150,7 @@ internal fun ExploreMapScreen(
         ) {
             if (BuildConfig.DEBUG) {
                 FabIconButton(
-                    icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Layer, contentDescription = null),
+                    icon = CTTheme.icon.Layer,
                     onClick = { /*TODO*/ },
                     type = FabButtonType.OUTLINED,
                 )
@@ -165,16 +161,13 @@ internal fun ExploreMapScreen(
             ) { isCurrentLocation ->
                 if (isCurrentLocation) {
                     FabIconButton(
-                        icon = IconSpec.VectorIcon(
-                            imageVector = CTTheme.icon.PositionCurrent,
-                            contentDescription = null
-                        ),
+                        icon = CTTheme.icon.PositionCurrent,
                         onClick = {},
                         type = FabButtonType.COLORED,
                     )
                 } else {
                     FabIconButton(
-                        icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Position, contentDescription = null),
+                        icon = CTTheme.icon.Position,
                         onClick = {
                             val hasLocationPermission = ContextCompat.checkSelfPermission(
                                 context,

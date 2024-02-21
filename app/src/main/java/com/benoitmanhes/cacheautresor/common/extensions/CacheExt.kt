@@ -1,22 +1,13 @@
 package com.benoitmanhes.cacheautresor.common.extensions
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.QuestionMark
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
-import com.benoitmanhes.designsystem.res.icons.iconpack.BoxBig
-import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMedium
-import com.benoitmanhes.designsystem.res.icons.iconpack.BoxMicro
-import com.benoitmanhes.designsystem.res.icons.iconpack.BoxSmall
-import com.benoitmanhes.designsystem.res.icons.iconpack.Coop
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
-import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
-import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.theme.ComposeProvider
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheSize
@@ -51,21 +42,20 @@ internal fun Cache.getCacheMarkerFocus(): CacheMarkerIcon {
     return type.getCacheMarkerFocus(tint)
 }
 
-fun Cache.getIcon(): IconSpec = type.getIcon()
-fun Cache.Type.getIcon(): IconSpec = when (this) {
-    is Cache.Type.Classical -> IconSpec.ComposeIcon { CTTheme.icon.Parchment }
-    is Cache.Type.Coop -> IconSpec.ComposeIcon { CTTheme.icon.Coop }
-    is Cache.Type.Mystery -> IconSpec.ComposeIcon { CTTheme.icon.Mystery }
-    is Cache.Type.Piste -> IconSpec.ComposeIcon { CTTheme.icon.Piste }
+fun Cache.getIcon(): ComposeProvider<IconSpec> = type.getIcon()
+fun Cache.Type.getIcon(): ComposeProvider<IconSpec> = when (this) {
+    is Cache.Type.Classical -> CTTheme.composed { icon.Parchment }
+    is Cache.Type.Coop -> CTTheme.composed { icon.Coop }
+    is Cache.Type.Mystery -> CTTheme.composed { icon.Mystery }
+    is Cache.Type.Piste -> CTTheme.composed { icon.Piste }
 }
 
-@Composable
-fun Cache.getSizeIcon(): IconSpec = when (this.size) {
-    CacheSize.Micro -> IconSpec.VectorIcon(CTTheme.icon.BoxMicro, null)
-    CacheSize.Small -> IconSpec.VectorIcon(CTTheme.icon.BoxSmall, null)
-    CacheSize.Regular -> IconSpec.VectorIcon(CTTheme.icon.BoxMedium, null)
-    CacheSize.Big -> IconSpec.VectorIcon(CTTheme.icon.BoxBig, null)
-    CacheSize.Undefined -> IconSpec.VectorIcon(Icons.Rounded.QuestionMark, null)
+fun Cache.getSizeIcon(): ComposeProvider<IconSpec> = when (this.size) {
+    CacheSize.Micro -> CTTheme.composed { icon.BoxMicro }
+    CacheSize.Small -> CTTheme.composed { icon.BoxSmall }
+    CacheSize.Regular -> CTTheme.composed { icon.BoxMedium }
+    CacheSize.Big -> CTTheme.composed { icon.BoxBig }
+    CacheSize.Undefined -> CTTheme.composed { icon.Question }
 }
 
 fun Cache.getTypeText(): TextSpec = type.getTypeText()

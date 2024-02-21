@@ -79,6 +79,7 @@ object Dimens {
         val icon: IconSize,
         val button: Dp,
     ) {
+        Small(icon = IconSize.Small, button = 32.dp),
         Medium(icon = IconSize.Medium, button = 48.dp),
     }
 

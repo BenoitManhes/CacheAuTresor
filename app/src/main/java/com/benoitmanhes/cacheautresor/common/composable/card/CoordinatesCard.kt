@@ -18,11 +18,8 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDD
-import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDM
-import com.benoitmanhes.designsystem.res.icons.iconpack.GlobeDMS
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.domain.model.Coordinates
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -35,9 +32,9 @@ fun CoordinatesCard(
 ) {
     val icon = remember(format) {
         when (format) {
-            Coordinates.Format.DD -> IconSpec.ComposeIcon { CTTheme.icon.GlobeDD }
-            Coordinates.Format.DM -> IconSpec.ComposeIcon { CTTheme.icon.GlobeDM }
-            Coordinates.Format.DMS -> IconSpec.ComposeIcon { CTTheme.icon.GlobeDMS }
+            Coordinates.Format.DD -> CTTheme.composed { icon.GlobeDD }
+            Coordinates.Format.DM -> CTTheme.composed { icon.GlobeDM }
+            Coordinates.Format.DMS -> CTTheme.composed { icon.GlobeDMS }
         }
     }
 
@@ -55,7 +52,7 @@ fun CoordinatesCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.small),
         ) {
-            CTIcon(icon = icon, size = Dimens.IconSize.Medium)
+            CTIcon(icon = icon(), size = Dimens.IconSize.Medium)
             CTTextView(text = coordinatesText, style = CTTheme.typography.body)
         }
     }

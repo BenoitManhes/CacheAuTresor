@@ -10,6 +10,10 @@ object AppDimens {
         val instructionImageMaxHeight: Dp = 380.dp
     }
 
+    object EditCache {
+        val crewAddMemberPlaceHolderHeight: Dp = 120.dp
+    }
+
     object EmptyScreen {
         val imageSize: Dp = LockScreen.imageSize
     }

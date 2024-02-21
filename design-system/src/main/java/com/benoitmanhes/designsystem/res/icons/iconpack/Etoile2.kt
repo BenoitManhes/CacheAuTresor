@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Etoile2: ImageVector
+internal val CTIconPack.Etoile2: ImageVector
     get() {
         if (_etoile2 != null) {
             return _etoile2!!

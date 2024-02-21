@@ -20,11 +20,10 @@ import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.CTVerticalDivider
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun CTStickerIcon(
@@ -81,12 +80,12 @@ fun CTStickerIcon(
 
 @Stable
 data class CTStickerIconState(
-    val icon: IconSpec,
+    val icon: ComposeProvider<IconSpec>,
     val text: TextSpec,
 ) {
     @Composable
     fun Content(modifier: Modifier = Modifier) {
-        CTStickerIcon(icon = icon, text = text, modifier = modifier)
+        CTStickerIcon(icon = icon(), text = text, modifier = modifier)
     }
 }
 
@@ -94,6 +93,6 @@ data class CTStickerIconState(
 @Preview
 private fun PreviewCTStickerIcon() {
     CTTheme(CTColorTheme.Mystery) {
-        CTStickerIcon(icon = CTTheme.icon.Mystery.toIconSpec(), text = TextSpec.RawString("Mystery"))
+        CTStickerIcon(icon = CTTheme.icon.Mystery, text = TextSpec.RawString("Mystery"))
     }
 }

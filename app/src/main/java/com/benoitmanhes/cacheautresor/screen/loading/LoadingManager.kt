@@ -1,5 +1,6 @@
 package com.benoitmanhes.cacheautresor.screen.loading
 
+import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.utils.DomainConstants
 import com.benoitmanhes.domain.utils.combineStates
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +33,14 @@ class LoadingManager @Inject constructor() {
                 delay(DomainConstants.Loading.minLoadingDuration.inWholeMilliseconds)
                 forceLoading.emit(false)
             }
+        }
+    }
+
+    fun handleLoadingFromResult(result: CTResult<*>) {
+        if (result is CTResult.Loading) {
+            showLoading()
+        } else {
+            hideLoading()
         }
     }
 

@@ -31,7 +31,6 @@ import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.resicons.Edit
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.domain.model.Coordinates

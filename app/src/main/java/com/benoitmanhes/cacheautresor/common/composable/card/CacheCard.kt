@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -35,17 +33,10 @@ import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.card.CTHorizontalCard
 import com.benoitmanhes.designsystem.molecule.label.LabelIconSmall
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Alert
-import com.benoitmanhes.designsystem.res.icons.iconpack.Box
-import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mystery
-import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
-import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun CacheCard(
@@ -113,17 +104,17 @@ fun CacheCard(
                     horizontalArrangement = Arrangement.spacedBy(CTTheme.spacing.large)
                 ) {
                     LabelIconSmall(
-                        icon = IconSpec.VectorIcon(CTTheme.icon.Difficulty, null),
+                        icon = CTTheme.icon.Difficulty,
                         text = difficultyText,
                         color = highlightColor,
                     )
                     LabelIconSmall(
-                        icon = IconSpec.VectorIcon(CTTheme.icon.Mountain, null),
+                        icon = CTTheme.icon.Mountain,
                         text = groundText,
                         color = highlightColor,
                     )
                     LabelIconSmall(
-                        icon = IconSpec.VectorIcon(CTTheme.icon.Box, null),
+                        icon = CTTheme.icon.Box,
                         text = sizeText,
                         color = highlightColor,
                     )
@@ -169,7 +160,7 @@ data class CacheCardState(
     val itemId: String,
     val cacheColorTheme: CTColorTheme,
     val name: TextSpec,
-    val icon: IconSpec,
+    val icon: ComposeProvider<IconSpec>,
     val typeText: TextSpec,
     val cacheIdText: TextSpec?,
     val difficultyText: TextSpec,
@@ -183,7 +174,7 @@ data class CacheCardState(
         CTTheme(cacheColorTheme) {
             val isError = trailingContent is CacheCardTrailing.Warning
             CacheCard(
-                icon = icon,
+                icon = icon(),
                 typeText = typeText,
                 cacheIdText = cacheIdText,
                 titleText = name,
@@ -271,7 +262,7 @@ sealed interface CacheCardTrailing {
         @Composable
         override fun Content() {
             CTIcon(
-                icon = CTTheme.icon.Alert.toIconSpec(),
+                icon = CTTheme.icon.Alert,
                 size = Dimens.IconSize.Medium,
                 color = CTTheme.color.critical,
             )
@@ -286,7 +277,7 @@ fun CacheCardPreview() {
         itemId = "id",
         cacheColorTheme = CTColorTheme.Mystery,
         name = "Tuto 01: Passerelle vers l’inconnu".textSpec(),
-        icon = CTTheme.icon.Mystery.toIconSpec(),
+        icon = { CTTheme.icon.Mystery },
         typeText = TextSpec.Resources(R.string.cache_type_mystery),
         cacheIdText = null,
         difficultyText = "3".textSpec(),
@@ -306,28 +297,28 @@ fun CacheCardPreview() {
                 trailingContent = CacheCardTrailing.Progress(0.01f),
                 groundText = "-".textSpec(),
                 sizeText = "-".textSpec(),
-                icon = Icons.Rounded.QuestionMark.toIconSpec(),
+                icon = { CTTheme.icon.Question },
             ).Content()
 
             defaulCardState.copy(
                 cacheColorTheme = CTColorTheme.Cartography,
                 trailingContent = CacheCardTrailing.Progress(0.67f),
                 typeText = "Piste".textSpec(),
-                icon = CTTheme.icon.Piste.toIconSpec(),
+                icon = { CTTheme.icon.Piste },
             ).Content()
 
             defaulCardState.copy(
                 cacheColorTheme = CTColorTheme.Mystery,
                 trailingContent = CacheCardTrailing.Warning,
                 typeText = "Mystery".textSpec(),
-                icon = CTTheme.icon.Mystery.toIconSpec(),
+                icon = { CTTheme.icon.Mystery },
             ).Content()
 
             defaulCardState.copy(
                 trailingContent = CacheCardTrailing.Point("127".textSpec()),
                 typeText = "Classical".textSpec(),
                 cacheColorTheme = CTColorTheme.Classical,
-                icon = CTTheme.icon.Parchment.toIconSpec(),
+                icon = { CTTheme.icon.Parchment },
                 cacheIdText = "CL-29TC3D".textSpec()
             ).Content()
         }

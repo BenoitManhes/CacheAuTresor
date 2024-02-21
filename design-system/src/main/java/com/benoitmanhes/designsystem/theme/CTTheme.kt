@@ -1,10 +1,10 @@
 package com.benoitmanhes.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -12,7 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
+import com.benoitmanhes.designsystem.res.icons.CTIcons
 import com.benoitmanhes.designsystem.utils.ComposableContent
 
 typealias ComposeProvider<T> = @Composable () -> T
@@ -25,7 +25,7 @@ private val LocalElevation: ProvidableCompositionLocal<Dimens.Elevation> = stati
 private val LocalStroke: ProvidableCompositionLocal<Dimens.Stroke> = staticCompositionLocalOf { Dimens.Stroke }
 private val LocalPadding: ProvidableCompositionLocal<CTPadding> = staticCompositionLocalOf { CTPadding }
 private val LocalSize: ProvidableCompositionLocal<Dimens.Size> = staticCompositionLocalOf { Dimens.Size }
-private val LocalIcon: ProvidableCompositionLocal<CTIconPack> = staticCompositionLocalOf { CTIconPack }
+private val LocalIcon: ProvidableCompositionLocal<CTIcons> = staticCompositionLocalOf { CTIcons }
 private val LocalGradient: ProvidableCompositionLocal<CTGradient> = staticCompositionLocalOf { CTGradient }
 
 object CTTheme {
@@ -51,7 +51,7 @@ object CTTheme {
     val padding: CTPadding
         @Composable get() = LocalPadding.current
 
-    val icon: CTIconPack
+    val icon: CTIcons
         @Composable get() = LocalIcon.current
 
     val gradient: CTGradient
@@ -79,7 +79,7 @@ fun CTTheme(
         LocalStroke provides Dimens.Stroke,
         LocalPadding provides CTPadding,
         LocalSize provides Dimens.Size,
-        LocalIcon provides CTIconPack,
+        LocalIcon provides CTIcons,
     ) {
         androidx.compose.material3.MaterialTheme(
             colorScheme = materialColorScheme,

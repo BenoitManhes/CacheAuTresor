@@ -15,7 +15,6 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.cell.LabelCell
 import com.benoitmanhes.cacheautresor.common.composable.cell.LabelCellState
 import com.benoitmanhes.cacheautresor.common.composable.section.Section
-import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
@@ -33,7 +32,7 @@ fun CartographerSection(
         ) {
             LabelCell(
                 state = LabelCellState(
-                    leadingIcon = IconSpec.VectorIcon(CTTheme.icon.ProfileFilled),
+                    leadingIcon = CTTheme.icon.ProfileFilled,
                     label = state.creatorName,
                 ),
                 modifier = Modifier

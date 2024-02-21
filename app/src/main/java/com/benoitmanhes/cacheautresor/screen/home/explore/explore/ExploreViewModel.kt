@@ -30,14 +30,10 @@ import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.Location
-import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.model.Distance
@@ -123,7 +119,7 @@ class ExploreViewModel @Inject constructor(
         return if (userStatus in bannerHideCacheStatus) {
             CacheBannerState(
                 cacheId = cache.cacheId,
-                icon = CTTheme.composed { icon.Logo.toIconSpec() },
+                icon = CTTheme.composed { icon.Logo },
                 creatorText = TextSpec.RawString("-"),
                 titleText = TextSpec.RawString("???"),
                 difficultyText = TextSpec.RawString("-"),
@@ -138,7 +134,7 @@ class ExploreViewModel @Inject constructor(
         } else {
             CacheBannerState(
                 cacheId = cache.cacheId,
-                icon = { cache.getIcon() },
+                icon = cache.getIcon(),
                 creatorText = TextSpec.RawString(explorerName ?: "-"),
                 titleText = TextSpec.RawString(cache.title),
                 difficultyText = TextSpec.RawString(cache.difficulty.toOneDecimalFormat()),
@@ -179,7 +175,7 @@ class ExploreViewModel @Inject constructor(
                     ClassicAlertDialog(
                         title = TextSpec.Resources(R.string.explore_tooFarDialog_title),
                         message = TextSpec.Resources(R.string.explore_tooFarDialog_message),
-                        icon = CTTheme.composed { icon.Location.toIconSpec() },
+                        icon = CTTheme.composed { icon.Location },
                         actions = listOf(
                             CommonAlertDialogAction.gotIt {},
                         ),
@@ -214,7 +210,7 @@ class ExploreViewModel @Inject constructor(
                 is CTSuspendResult.Success -> {
                     alertDialogManager.showDialog(
                         ClassicAlertDialog(
-                            icon = { uiExploreCache.cache.getIcon() },
+                            icon = uiExploreCache.cache.getIcon(),
                             title = TextSpec.Resources(R.string.dialog_cacheUnlocked_title),
                             message = TextSpec.Resources(
                                 R.string.dialog_cacheUnlocked_message,
@@ -260,7 +256,7 @@ class ExploreViewModel @Inject constructor(
         if (shouldShowLocationModal) {
             modalBottomSheetManager.showModal(
                 ClassicModalBottomSheet(
-                    icon = CTIconPack.Location.toIconSpec(),
+                    icon = { CTTheme.icon.Location },
                     title = TextSpec.Resources(R.string.locationModal_title),
                     message = TextSpec.Resources(R.string.locationModal_message),
                     cancelAction = PrimaryButtonState(

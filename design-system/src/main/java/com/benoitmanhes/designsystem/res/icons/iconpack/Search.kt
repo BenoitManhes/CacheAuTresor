@@ -5,7 +5,7 @@ import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Search: ImageVector
+internal val CTIconPack.Search: ImageVector
     get() {
         if (_search != null) {
             return _search!!

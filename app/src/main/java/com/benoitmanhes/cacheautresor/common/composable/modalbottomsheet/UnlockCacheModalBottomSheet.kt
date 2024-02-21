@@ -19,9 +19,7 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.ButtonStatus
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.modalBottomSheet.CTModalBottomSheetContent
 import com.benoitmanhes.designsystem.molecule.textfield.CTOutlinedTextField
-import com.benoitmanhes.designsystem.res.icons.iconpack.EyeOpen
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class UnlockCacheModalBottomSheet(
     val lockInstruction: TextSpec,
@@ -44,7 +42,7 @@ data class UnlockCacheModalBottomSheet(
                 .imePadding(),
             title = TextSpec.Resources(R.string.modalUnlock_title),
             message = lockInstruction,
-            icon = CTTheme.icon.EyeOpen.toIconSpec(),
+            icon = CTTheme.icon.EyeOpen,
             confirmAction = PrimaryButtonState(
                 text = TextSpec.Resources(R.string.common_validate),
                 status = if (textValue.isBlank()) ButtonStatus.DISABLE else ButtonStatus.ENABLE,

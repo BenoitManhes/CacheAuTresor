@@ -18,19 +18,19 @@ import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetMa
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.ButtonStatus
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
-import com.benoitmanhes.designsystem.res.icons.resicons.WrongLocation
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.usecase.cache.GetForbiddenInitPlacesUseCase
-import com.benoitmanhes.domain.usecase.cache.IsValidInitCoordinatesUseCase
 import com.benoitmanhes.domain.usecase.coordinates.ParseStringToCoordinates
+import com.benoitmanhes.domain.usecase.draftcache.ChangeInitCoordinatesDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.GetDraftCacheUseCase
-import com.benoitmanhes.domain.usecase.draftcache.SaveDraftCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,9 +45,8 @@ class PickInitCoordinatesViewModel @Inject constructor(
     private val loadingManager: LoadingManager,
     private val alertDialogManager: AlertDialogManager,
     private val getDraftCacheUseCase: GetDraftCacheUseCase,
-    private val saveDraftCacheUseCase: SaveDraftCacheUseCase,
-    private val isValidInitCoordinatesUseCase: IsValidInitCoordinatesUseCase,
     private val parseStringToCoordinates: ParseStringToCoordinates,
+    private val changeInitCoordinatesDraftCacheUseCase: ChangeInitCoordinatesDraftCacheUseCase,
     getForbiddenInitPlacesUseCase: GetForbiddenInitPlacesUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -99,7 +98,7 @@ class PickInitCoordinatesViewModel @Inject constructor(
         }
     }
 
-    fun updateCoordinatesFormat() {
+    private fun updateCoordinatesFormat() {
         _uiState.value = uiState.value.copy(
             currentCoordinates = uiState.value.currentCoordinates.copy(
                 format = Coordinates.Format.next(uiState.value.currentCoordinates.format),
@@ -139,26 +138,30 @@ class PickInitCoordinatesViewModel @Inject constructor(
 
     private fun saveCoordinates() {
         viewModelScope.launch {
-            loadingManager.showLoading()
-            val validity = uiState.value.currentCoordinates.coordinates?.let { isValidInitCoordinatesUseCase(it) } == true
-            if (validity) {
-                getDraftCacheUseCase(draftCacheId)?.also { draftCache ->
-                    saveDraftCacheUseCase(
-                        draftCache.copy(coordinates = uiState.value.currentCoordinates.coordinates)
-                    )
-                    _navigateBack.value = true
+            changeInitCoordinatesDraftCacheUseCase(
+                draftCacheId = draftCacheId,
+                newCoordinates = uiState.value.currentCoordinates.coordinates,
+            ).collect { result ->
+                loadingManager.handleLoadingFromResult(result)
+                when (result) {
+                    is CTResult.Failure -> {
+                        if (result.error?.code == CTDomainError.Code.INITIAL_COORDINATES_INVALID) {
+                            alertDialogManager.showDialog(
+                                ClassicAlertDialog(
+                                    title = TextSpec.Resources(R.string.pickInitCoordinates_alertArea_title),
+                                    message = TextSpec.Resources(R.string.pickInitCoordinates_alertArea_message),
+                                    icon = { CTTheme.icon.LocationWrong },
+                                    actions = listOf(CommonAlertDialogAction.gotIt {}),
+                                )
+                            )
+                        } else {
+                            snackbarManager.showError(result.error)
+                        }
+                    }
+
+                    is CTResult.Success -> _navigateBack.value = true
+                    is CTResult.Loading -> {} /* no-op */
                 }
-                loadingManager.hideLoading()
-            } else {
-                loadingManager.hideLoading()
-                alertDialogManager.showDialog(
-                    ClassicAlertDialog(
-                        title = TextSpec.Resources(R.string.pickInitCoordinates_alertArea_title),
-                        message = TextSpec.Resources(R.string.pickInitCoordinates_alertArea_message),
-                        icon = { CTTheme.icon.WrongLocation },
-                        actions = listOf(CommonAlertDialogAction.gotIt {}),
-                    )
-                )
             }
         }
     }

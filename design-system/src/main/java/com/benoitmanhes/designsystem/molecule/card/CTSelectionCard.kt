@@ -26,9 +26,9 @@ import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.ComposeProvider
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun CTSelectionCard(
@@ -100,7 +100,7 @@ fun CTSelectionCard(
 
 @Stable
 data class CTSelectionCardState(
-    val icon: IconSpec,
+    val icon: ComposeProvider<IconSpec>,
     val title: TextSpec,
     val description: TextSpec?,
     val isSelected: Boolean,
@@ -111,7 +111,7 @@ data class CTSelectionCardState(
     fun Content(modifier: Modifier = Modifier) {
         CTTheme(colorTheme) {
             CTSelectionCard(
-                icon = icon,
+                icon = icon(),
                 title = title,
                 description = description,
                 isSelected = isSelected,
@@ -144,7 +144,7 @@ private fun PreviewCTSelectionCard() {
         var isSelected by remember { mutableStateOf(false) }
 
         CTSelectionCard(
-            icon = CTTheme.icon.Parchment.toIconSpec(),
+            icon = CTTheme.icon.Parchment,
             title = TextSpec.loreumIpsum(4),
             description = TextSpec.loreumIpsum(12),
             isSelected = isSelected,

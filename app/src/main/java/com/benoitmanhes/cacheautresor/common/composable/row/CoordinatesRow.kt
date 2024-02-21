@@ -10,9 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.cacheautresor.common.extensions.format
 import com.benoitmanhes.designsystem.molecule.row.CTRow
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
-import com.benoitmanhes.designsystem.res.icons.iconpack.Globe
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.model.Coordinates
 
 @Composable
@@ -26,7 +24,7 @@ fun CoordinatesRow(
 
     CTRow(
         state = CTRowState(
-            leadingIcon = IconSpec.VectorIcon(CTTheme.icon.Globe),
+            leadingIcon = { CTTheme.icon.Globe },
             text = coordinates.format(format),
             onClick = {
                 format = Coordinates.Format.next(format)

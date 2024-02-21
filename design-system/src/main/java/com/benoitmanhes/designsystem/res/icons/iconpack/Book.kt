@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-val CTIconPack.Book: ImageVector
+internal val CTIconPack.Book: ImageVector
     get() {
         if (_book != null) {
             return _book!!

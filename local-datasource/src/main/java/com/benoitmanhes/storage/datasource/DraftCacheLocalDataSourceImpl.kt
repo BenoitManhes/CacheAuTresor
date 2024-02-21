@@ -19,7 +19,7 @@ class DraftCacheLocalDataSourceImpl @Inject constructor(
     }
 
     override fun getDraftCacheFlow(draftCacheId: String): Flow<DraftCache?> =
-        draftCacheDao.findWithIdFlow(draftCacheId).map { it.toAppModel() }
+        draftCacheDao.findWithIdFlow(draftCacheId).map { it?.toAppModel() }
 
     override suspend fun deleteDraftCache(draftCacheId: String): Unit = withContext(Dispatchers.IO) {
         draftCacheDao.delete(draftCacheId)

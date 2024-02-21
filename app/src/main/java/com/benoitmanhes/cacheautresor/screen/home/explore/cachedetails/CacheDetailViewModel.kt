@@ -45,19 +45,10 @@ import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
 import com.benoitmanhes.designsystem.molecule.selector.SelectorItem
 import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
-import com.benoitmanhes.designsystem.res.icons.CTIconPack
-import com.benoitmanhes.designsystem.res.icons.iconpack.BoxSmall
-import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
-import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
-import com.benoitmanhes.designsystem.res.icons.iconpack.Ensign
-import com.benoitmanhes.designsystem.res.icons.iconpack.Logo
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
-import com.benoitmanhes.designsystem.res.icons.iconpack.Piste
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.res.icons.iconpack.Parchment
+import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.model.CacheUserStatus
@@ -209,7 +200,7 @@ class CacheDetailViewModel @Inject constructor(
                     )
                 ).takeIf { successData.status is UICacheDetails.Status.Started },
                 fabButtonState = FabButtonState(
-                    icon = IconSpec.VectorIcon(CTIconPack.Logo, null),
+                    icon = CTTheme.composed { icon.Logo },
                     text = TextSpec.Resources(R.string.cacheDetail_startFab),
                     onClick = ::startCache,
                 ).takeIf { successData.status == UICacheDetails.Status.Available },
@@ -225,17 +216,17 @@ class CacheDetailViewModel @Inject constructor(
                 ).takeIf { successData.status != UICacheDetails.Status.Available },
                 difficultyJaugeState = CTJaugeState(
                     rate = successData.cache.difficulty,
-                    icon = IconSpec.VectorIcon(CTIconPack.Difficulty),
+                    icon = CTTheme.composed { icon.Difficulty },
                     text = successData.cache.difficulty.toDifficultyText(),
                 ),
                 groundJaugeState = CTJaugeState(
                     rate = successData.cache.ground,
-                    icon = IconSpec.VectorIcon(CTIconPack.Mountain),
+                    icon = CTTheme.composed { icon.Mountain },
                     text = successData.cache.ground.toGroundText()
                 ),
                 sizeJaugeState = CTJaugeState(
                     rate = successData.cache.size.toJaugeRate(),
-                    icon = IconSpec.VectorIcon(CTIconPack.BoxSmall),
+                    icon = CTTheme.composed { icon.BoxSmall },
                     text = successData.cache.size.toSizeText(),
                 ),
                 infoCardState = getInfoCard(successData),
@@ -256,27 +247,27 @@ class CacheDetailViewModel @Inject constructor(
                 characteristics = listOf(
                     // TODO Tags
                     CTRowState(
-                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain),
+                        leadingIcon = CTTheme.composed { icon.Mountain },
                         text = TextSpec.RawString("Mountain")
                     ),
                     CTRowState(
-                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste),
+                        leadingIcon = CTTheme.composed { icon.Piste },
                         text = TextSpec.RawString("Sportif")
                     ),
                     CTRowState(
-                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty),
+                        leadingIcon = CTTheme.composed { icon.Difficulty },
                         text = TextSpec.RawString("Rapide")
                     ),
                     CTRowState(
-                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Mountain),
+                        leadingIcon = CTTheme.composed { icon.Mountain },
                         text = TextSpec.RawString("Mountain2")
                     ),
                     CTRowState(
-                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Piste),
+                        leadingIcon = CTTheme.composed { icon.Piste },
                         text = TextSpec.RawString("Sportif2")
                     ),
                     CTRowState(
-                        leadingIcon = IconSpec.VectorIcon(CTIconPack.Difficulty),
+                        leadingIcon = CTTheme.composed { icon.Difficulty },
                         text = TextSpec.RawString("Rapide2")
                     ),
                 ).takeIf { BuildConfig.DEBUG }.orEmpty(),
@@ -305,7 +296,7 @@ class CacheDetailViewModel @Inject constructor(
         val status = uiCacheDetails.status
         return when {
             status is UICacheDetails.Status.Found -> InfoCardState(
-                icon = IconSpec.VectorIcon(CTIconPack.Crown),
+                icon = CTTheme.composed { icon.Crown },
                 message = TextSpec.Resources(
                     R.string.cacheDetail_foundInfoCard_message,
                     status.foundDate.mediumFormat(),
@@ -317,7 +308,7 @@ class CacheDetailViewModel @Inject constructor(
 
             !uiCacheDetails.cache.discovered -> {
                 InfoCardState(
-                    icon = IconSpec.VectorIcon(CTIconPack.Ensign),
+                    icon = CTTheme.composed { icon.Ensign },
                     message = TextSpec.Resources(R.string.cacheDetail_neverFoundInfoCard_message),
                 )
             }
@@ -342,7 +333,7 @@ class CacheDetailViewModel @Inject constructor(
             InstructionSectionState.Clue.Unrevealed {
                 modalBottomSheetManager.showModal(
                     ClassicModalBottomSheet(
-                        icon = CTIconPack.Parchment.toIconSpec(),
+                        icon = CTTheme.composed { icon.Parchment },
                         title = TextSpec.Resources(R.string.cacheDetail_clueModal_title),
                         message = TextSpec.Resources(R.string.cacheDetail_clueModal_message),
                         cancelAction = PrimaryButtonState(

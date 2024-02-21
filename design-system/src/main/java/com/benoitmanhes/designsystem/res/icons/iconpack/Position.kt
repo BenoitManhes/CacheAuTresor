@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Position: ImageVector
+internal val CTIconPack.Position: ImageVector
     get() {
         if (_location != null) {
             return _location!!

@@ -16,11 +16,9 @@ import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.sticker.CTStickerIconState
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Chevron
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun StickerRowPicker(
@@ -48,7 +46,7 @@ fun StickerRowPicker(
         SpacerLarge()
 
         CTIcon(
-            icon = CTTheme.icon.Chevron.toIconSpec(),
+            icon = CTTheme.icon.Chevron,
             size = Dimens.IconSize.Medium,
             color = CTTheme.color.textOnBackground,
         )

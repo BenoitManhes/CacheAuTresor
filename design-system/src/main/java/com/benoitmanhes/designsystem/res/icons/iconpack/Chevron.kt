@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Chevron: ImageVector
+internal val CTIconPack.Chevron: ImageVector
     get() {
         if (_chevron != null) {
             return _chevron!!

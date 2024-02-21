@@ -6,7 +6,7 @@ import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
-val CTIconPack.Newspaper: ImageVector
+internal val CTIconPack.Newspaper: ImageVector
     get() {
         if (_newspaper != null) {
             return _newspaper!!

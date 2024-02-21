@@ -1,8 +1,8 @@
 package com.benoitmanhes.cacheautresor.screen.home.edit.availablefinalplaces
 
+import androidx.compose.runtime.Immutable
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.domain.model.Coordinates
-import javax.annotation.concurrent.Immutable
 
 @Immutable
 data class AvailableFinalPlacesViewModelState(

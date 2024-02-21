@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-val CTIconPack.ExploreFilled: ImageVector
+internal val CTIconPack.ExploreFilled: ImageVector
     get() {
         if (_iconExploreFilled != null) {
             return _iconExploreFilled!!

@@ -12,10 +12,8 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Chevron
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 @Composable
 fun TextRowPicker(
@@ -41,7 +39,7 @@ fun TextRowPicker(
         )
 
         CTIcon(
-            icon = CTTheme.icon.Chevron.toIconSpec(),
+            icon = CTTheme.icon.Chevron,
             size = Dimens.IconSize.Medium,
             color = CTTheme.color.textOnBackground,
         )

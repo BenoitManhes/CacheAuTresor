@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.Coop: ImageVector
+internal val CTIconPack.Coop: ImageVector
     get() {
         if (_iconCoop != null) {
             return _iconCoop!!

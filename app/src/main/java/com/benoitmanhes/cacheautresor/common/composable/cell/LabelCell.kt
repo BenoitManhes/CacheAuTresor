@@ -7,13 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.ProfileFilled
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.IconSpec
-import com.benoitmanhes.common.compose.text.TextSpec
 
 @Composable
 fun LabelCell(
@@ -52,7 +51,7 @@ private fun PreviewLabelCell() {
             LabelCellState(
                 label = TextSpec.loreumIpsum(4),
                 headingText = TextSpec.loreumIpsum(3),
-                leadingIcon = IconSpec.VectorIcon(CTTheme.icon.ProfileFilled),
+                leadingIcon = CTTheme.icon.ProfileFilled,
             )
         )
     }

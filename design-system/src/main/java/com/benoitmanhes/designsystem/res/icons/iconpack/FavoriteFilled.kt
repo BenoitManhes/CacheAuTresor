@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.FavoriteFilled: ImageVector
+internal val CTIconPack.FavoriteFilled: ImageVector
     get() {
         if (_iconFavoriteFilled != null) {
             return _iconFavoriteFilled!!

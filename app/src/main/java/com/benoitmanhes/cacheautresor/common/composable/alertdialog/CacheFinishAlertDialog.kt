@@ -8,14 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogState
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.text.CTMarkdownText
 import com.benoitmanhes.designsystem.molecule.alertdialog.AlertDialogAction
 import com.benoitmanhes.designsystem.molecule.alertdialog.CTAlertDialog
 import com.benoitmanhes.designsystem.molecule.sticker.CTSticker
-import com.benoitmanhes.designsystem.res.icons.iconpack.Crown
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.utils.extensions.toIconSpec
 
 data class CacheFinishAlertDialog(
     val cacheName: String,
@@ -34,7 +32,7 @@ data class CacheFinishAlertDialog(
         CTAlertDialog(
             title = TextSpec.Resources(R.string.cacheDetail_cacheFinish_alertDialog_title),
             alertDialogAction = actions,
-            icon = CTTheme.icon.Crown.toIconSpec(),
+            icon = CTTheme.icon.Crown,
             onDismissRequest = {
                 closeDialog()
                 onDismiss?.invoke()

@@ -42,10 +42,7 @@ import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonType
 import com.benoitmanhes.designsystem.molecule.button.fabiconbutton.FabIconButton
 import com.benoitmanhes.designsystem.molecule.selector.CTSwitchSelector
 import com.benoitmanhes.designsystem.molecule.selector.SelectorItem
-import com.benoitmanhes.designsystem.res.icons.iconpack.Filter
-import com.benoitmanhes.designsystem.res.icons.iconpack.Search
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.utils.IconSpec
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.uimodel.UIExploreCache
 
@@ -160,7 +157,7 @@ fun ExploreScreen(
     ) {
         if (BuildConfig.DEBUG) {
             FabIconButton(
-                icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Search, contentDescription = null),
+                icon = CTTheme.icon.Search,
                 onClick = { /*TODO*/ },
                 type = FabButtonType.OUTLINED,
             )
@@ -177,7 +174,7 @@ fun ExploreScreen(
         )
         if (BuildConfig.DEBUG) {
             FabIconButton(
-                icon = IconSpec.VectorIcon(imageVector = CTTheme.icon.Filter, contentDescription = null),
+                icon = CTTheme.icon.Filter,
                 onClick = { /*TODO*/ },
                 type = FabButtonType.OUTLINED,
             )

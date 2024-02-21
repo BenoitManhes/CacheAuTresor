@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import com.benoitmanhes.designsystem.res.icons.CTIconPack
 
-public val CTIconPack.PersonRemove: ImageVector
+internal val CTIconPack.PersonRemove: ImageVector
     get() {
         if (_personRemove != null) {
             return _personRemove!!
