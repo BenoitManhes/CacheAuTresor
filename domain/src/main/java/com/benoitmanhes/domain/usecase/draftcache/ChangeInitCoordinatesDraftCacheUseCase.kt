@@ -20,7 +20,7 @@ class ChangeInitCoordinatesDraftCacheUseCase @Inject constructor(
 ) : CTUseCase() {
     operator fun invoke(draftCacheId: String, newCoordinates: Coordinates?): Flow<CTResult<Unit>> = useCaseFlow {
         val validity = newCoordinates?.let { isValidInitCoordinatesUseCase(it) } == true
-        if (!validity || newCoordinates == null) throw CTDomainError.Code.INITIAL_COORDINATES_INVALID.error()
+        if (!validity || newCoordinates == null) throw CTDomainError.Code.INVALID_COORDINATES.error()
 
         val draftCache = draftCacheRepository.getDraftCache(draftCacheId) ?: throw CTDomainError.Code.UNEXPECTED.error()
 

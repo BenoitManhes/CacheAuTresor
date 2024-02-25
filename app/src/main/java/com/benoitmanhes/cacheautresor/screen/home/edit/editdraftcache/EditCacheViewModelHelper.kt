@@ -109,7 +109,7 @@ internal fun EditCacheViewModel.getStepSection(steps: UIDraftCache.Steps, draftC
                 draftStep = steps.finalStep,
                 draftCacheId = draftCacheId,
                 label = TextSpec.Resources(R.string.cacheEditor_stepsFinal_label),
-                iconMarker = CacheMarkerIcon.Owner(CTColorTheme.Piste.dayColorScheme.primary),
+                iconMarker = CacheMarkerIcon.Owner(CTColorTheme.Coop.dayColorScheme.primary),
             ),
             addCrewMember = {
                 showEditCrewMemberNameModal(

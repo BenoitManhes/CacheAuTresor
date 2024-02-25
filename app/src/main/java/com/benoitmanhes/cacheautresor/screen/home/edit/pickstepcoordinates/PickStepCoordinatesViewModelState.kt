@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.screen.home.edit.pickinitcoordinates
+package com.benoitmanhes.cacheautresor.screen.home.edit.pickstepcoordinates
 
 import androidx.compose.runtime.Immutable
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
@@ -8,11 +8,10 @@ import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.domain.model.ForbiddenZone
 
 @Immutable
-data class PickInitCoordinatesViewModelState(
-    override val forbiddenPlaces: List<ForbiddenZone>,
+data class PickStepCoordinatesViewModelState(
     override val bottomActionBar: BottomActionBarState,
     override val currentCoordinates: CoordinatesCardState,
     override val uiMarker: UIMarker? = null,
-) : PickCoordinatesUiState {
-    override val otherMarkers: List<UIMarker> = emptyList()
-}
+    override val otherMarkers: List<UIMarker> = emptyList(),
+    override val forbiddenPlaces: List<ForbiddenZone> = emptyList(),
+) : PickCoordinatesUiState

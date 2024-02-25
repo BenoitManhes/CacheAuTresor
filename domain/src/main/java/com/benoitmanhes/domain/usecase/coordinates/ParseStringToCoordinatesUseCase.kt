@@ -7,7 +7,7 @@ import com.benoitmanhes.domain.usecase.CTUseCase
 import java.lang.Exception
 import javax.inject.Inject
 
-class ParseStringToCoordinates @Inject constructor() : CTUseCase() {
+class ParseStringToCoordinatesUseCase @Inject constructor() : CTUseCase() {
     operator fun invoke(input: String): Coordinates? = try {
         val digitsGroups = input
             .replace(specialSymbolRegex, " ")

@@ -70,8 +70,8 @@ private fun AvailableFinalPlacesScreen(
         mapViewState.overlays.removeAll(zonesFolder.items)
         zonesFolder.items.clear()
 
-        val polygones = uiState.forbiddenPlaces.map { center ->
-            val circlePoints = Polygon.pointsAsCircle(center.toGeoPoint(), 50.0)
+        val polygones = uiState.forbiddenPlaces.map { (center, distance) ->
+            val circlePoints = Polygon.pointsAsCircle(center.toGeoPoint(), distance.meters)
             Polygon().apply {
                 points = circlePoints
                 fillPaint.color = fillZoneColor

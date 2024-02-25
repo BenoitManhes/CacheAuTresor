@@ -9,6 +9,7 @@ import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.EditDraftC
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftstep.EditDraftStepRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickinitcoordinates.PickInitCoordinatesRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickname.PickDraftCacheNameRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.pickstepcoordinates.PickStepCoordinatesRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.picktype.PickTypeDraftCacheScreen
 
 fun NavGraphBuilder.creationNavGraph(
@@ -71,6 +72,18 @@ fun NavGraphBuilder.creationNavGraph(
     ctComposable(EditCacheDestination.EditDraftStep.route) {
         EditDraftStepRoute(
             navigateBack = navController::popBackStack,
+            navigateToPickStepCoordinates = { draftCacheId, draftStepId ->
+                navController.navigate(
+                    EditCacheDestination.PickStepCoordinates.getRoute(
+                        draftCacheId = draftCacheId,
+                        draftStepId = draftStepId,
+                    )
+                )
+            }
         )
+    }
+
+    ctComposable(EditCacheDestination.PickStepCoordinates.route) {
+        PickStepCoordinatesRoute(navigateBack = navController::popBackStack)
     }
 }

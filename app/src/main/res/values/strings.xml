@@ -172,13 +172,13 @@
     <string name="pickTypeDraftCache_coop_description">A shared cache. Each member receives an instruction fragment.</string>
     <string name="common_reinitialize">Reinitialize</string>
     <string name="pickInitCoordinates_bottomBar_title">Enter the cache departure point</string>
-    <string name="pickInitCoordinates_bottomBar_description">By placing the marker on the map (long press) or manually.</string>
+    <string name="pickCoordinates_bottomBar_description">By placing the marker on the map (long press) or manually.</string>
     <string name="common_save">Save</string>
     <string name="modalPickCoordinates_title">Enter the GPS coordinates</string>
     <string name="modalPickCoordinates_message">There are 3 possible formats :\n  - Decimal Degree (DD) : #.######°\n - Degree Minute (DM) : #° ##.###\‘\n - Degree Minute Second (DMS) : #° ##\’ ##.###\"\n\n Special characters can be replaced by space</string>
     <string name="common_invalidFormat">Invalid format</string>
-    <string name="pickInitCoordinates_alertArea_title">Invalid location</string>
-    <string name="pickInitCoordinates_alertArea_message">Choose initiales coordinates out of red areas</string>
+    <string name="pickCoordinates_alertArea_title">Invalid location</string>
+    <string name="pickCoordinates_alertArea_message">Choose coordinates out of red areas</string>
     <string name="cacheEditor_stepsClassical_label">Instructions</string>
     <string name="cacheEditor_stepsFinal_label">Final step</string>
     <string name="cacheEditor_stepsPiste_label">Step %d</string>
@@ -204,4 +204,6 @@
     <string name="modalAddStep_title">Add step</string>
     <string name="modalAddStep_message_piste">Do you want to add an intermediary step ?</string>
     <string name="modalAddStep_message_coop">Do you want to add an intermediary step to member **%s** ?</string>
+    <string name="pickStepCoordinates_bottomBar_title_intermediary">Enter the step %d coordinates</string>
+    <string name="pickStepCoordinates_bottomBar_title_final">Enter the final step coordinates</string>
 </resources>

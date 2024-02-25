@@ -161,22 +161,22 @@ class EditDraftStepViewModel @Inject constructor(
 sealed interface EditDraftStepNavigation {
     data class PickStepCoordinates(
         val draftCacheId: String,
-        val draftStepId: String?,
+        val draftStepId: String,
     ) : EditDraftStepNavigation
 
     data class EditInstructions(
         val draftCacheId: String,
-        val draftStepId: String?,
+        val draftStepId: String,
     ) : EditDraftStepNavigation
 
     data class EditClue(
         val draftCacheId: String,
-        val draftStepId: String?,
+        val draftStepId: String,
     ) : EditDraftStepNavigation
 
     data class EditValidationCode(
         val draftCacheId: String,
-        val draftStepId: String?,
+        val draftStepId: String,
     ) : EditDraftStepNavigation
 
     data object Back : EditDraftStepNavigation

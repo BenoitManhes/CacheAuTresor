@@ -28,6 +28,13 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
             .withCoroutine()
             .convertToAppModel()
 
+    protected suspend fun getFSObjectList(ids: List<String>, objectsIdField: String): List<M> =
+        firestore.collection(collectionRef)
+            .whereIn(objectsIdField, ids)
+            .get()
+            .withCoroutine()
+            .mapNotNull { it.convertToAppModel() }
+
     protected suspend fun getAllFSObject(): List<M> =
         firestore.collection(collectionRef)
             .get()
@@ -64,9 +71,11 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
                 e != null -> {
                     throw onFailure(e)
                 }
+
                 snapShot != null && snapShot.exists() -> {
                     this.onSuccess(snapShot)
                 }
+
                 else -> {
                     throw CTRemoteError.ObjectNotFound("Objet don’t exist")
                 }

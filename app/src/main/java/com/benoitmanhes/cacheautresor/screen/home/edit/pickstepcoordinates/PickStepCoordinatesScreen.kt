@@ -1,4 +1,4 @@
-package com.benoitmanhes.cacheautresor.screen.home.edit.pickinitcoordinates
+package com.benoitmanhes.cacheautresor.screen.home.edit.pickstepcoordinates
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,9 +11,9 @@ import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
-fun PickInitCoordinatesRoute(
+fun PickStepCoordinatesRoute(
     navigateBack: () -> Unit,
-    viewModel: PickInitCoordinatesViewModel = hiltViewModel(),
+    viewModel: PickStepCoordinatesViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val navigation by viewModel.navigateBack.collectAsState()

@@ -27,6 +27,7 @@ import com.benoitmanhes.designsystem.theme.composed
 @Composable
 fun EditDraftStepRoute(
     navigateBack: () -> Unit,
+    navigateToPickStepCoordinates: (String, String) -> Unit,
     viewModel: EditDraftStepViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -35,7 +36,10 @@ fun EditDraftStepRoute(
     LaunchedEffect(navigation) {
         val navValue = navigation ?: return@LaunchedEffect
         when (navValue) {
-            is EditDraftStepNavigation.PickStepCoordinates -> {}
+            is EditDraftStepNavigation.PickStepCoordinates -> {
+                navigateToPickStepCoordinates(navValue.draftCacheId, navValue.draftStepId)
+            }
+
             is EditDraftStepNavigation.EditInstructions -> {}
             is EditDraftStepNavigation.EditClue -> {}
             is EditDraftStepNavigation.EditValidationCode -> {}

@@ -21,4 +21,7 @@ class StepRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getStep(stepId: String): CacheStep? =
         getFSObject(stepId)
+
+    override suspend fun getSteps(ids: List<String>): List<CacheStep> =
+        getFSObjectList(ids, FSCacheStep::id.name)
 }

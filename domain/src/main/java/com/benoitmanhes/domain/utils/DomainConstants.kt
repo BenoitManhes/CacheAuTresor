@@ -15,6 +15,7 @@ object DomainConstants {
         const val ptsWinPenaltyCoef: Float = 0.5f
         val unlockingAvailableDistance: Distance = 25.meters
         val initialCoordinatesDistanceMin: Distance = 10.meters
+        val finalCoordinatesDistanceMin: Distance = 50.meters
     }
 
     object EditCache {

@@ -30,9 +30,22 @@ sealed interface EditCacheDestination : CTDestination {
     }
 
     data object EditDraftStep : EditCacheDestination {
-        val draftCacheIdArg: String = "draftCacheId"
-        val draftStepIdArg: String = "draftStepId"
+        const val draftCacheIdArg: String = "draftCacheId"
+        const val draftStepIdArg: String = "draftStepId"
         private const val path: String = "edit-draft-step"
+        override val route: String get() = "$path?$draftCacheIdArg={$draftCacheIdArg}&$draftStepIdArg={$draftStepIdArg}"
+        fun getRoute(draftCacheId: String, draftStepId: String): String =
+            Uri.Builder().apply {
+                path(path)
+                appendQueryParameter(draftCacheIdArg, draftCacheId)
+                appendQueryParameter(draftStepIdArg, draftStepId)
+            }.build().toString()
+    }
+
+    data object PickStepCoordinates : EditCacheDestination {
+        const val draftCacheIdArg: String = "draftCacheId"
+        const val draftStepIdArg: String = "draftStepId"
+        private const val path: String = "pick-step-coordinates"
         override val route: String get() = "$path?$draftCacheIdArg={$draftCacheIdArg}&$draftStepIdArg={$draftStepIdArg}"
         fun getRoute(draftCacheId: String, draftStepId: String): String =
             Uri.Builder().apply {
