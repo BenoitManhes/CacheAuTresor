@@ -35,9 +35,12 @@ data class EditDraftStepInstructionSection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = CTTheme.spacing.large),
-                    verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.extraSmall),
+                    verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
                 ) {
-                    CTMarkdownText(markdown = instructions)
+                    CTMarkdownText(
+                        markdown = instructions,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                     CTPrimaryButton(
                         text = TextSpec.Resources(R.string.stepEditor_instruction_editButton),
                         onClick = editInstructions,

@@ -12,6 +12,7 @@ object AppDimens {
 
     object EditCache {
         val crewAddMemberPlaceHolderHeight: Dp = 120.dp
+        val editInstructionsZoneTextfieldMinHeight = 200.dp
     }
 
     object EmptyScreen {

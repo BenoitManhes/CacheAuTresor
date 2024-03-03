@@ -28,6 +28,9 @@ fun EditDraftCacheRoute(
     navigateToPickType: (String) -> Unit,
     navigateToPickInitCoordinates: (String) -> Unit,
     navigateToEditDraftStep: (String, String) -> Unit,
+    navigateToPickDifficulty: (String) -> Unit,
+    navigateToPickGround: (String) -> Unit,
+    navigateToPickSize: (String) -> Unit,
     viewModel: EditCacheViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.editCacheState.collectAsState()
@@ -40,6 +43,9 @@ fun EditDraftCacheRoute(
             is EditCacheNavigation.PickType -> navigateToPickType(navValue.draftCacheId)
             is EditCacheNavigation.PickInitCoordinates -> navigateToPickInitCoordinates(navValue.draftCacheId)
             is EditCacheNavigation.EditDraftStep -> navigateToEditDraftStep(navValue.draftCacheId, navValue.draftStepId)
+            is EditCacheNavigation.PickDifficulty -> navigateToPickDifficulty(navValue.draftCacheId)
+            is EditCacheNavigation.PickGround -> navigateToPickGround(navValue.draftCacheId)
+            is EditCacheNavigation.PickSize -> navigateToPickSize(navValue.draftCacheId)
         }
         viewModel.consumeNavigation()
     }
@@ -93,6 +99,11 @@ private fun EditDraftCacheScreen(
             uiState.stepSection?.let {
                 sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_steps_header))
                 uiState.stepSection.lazyItem(this)
+            }
+
+            uiState.propertiesSection?.let {
+                sectionHeaderItem(TextSpec.Resources(R.string.stepEditor_propertiesSection_title))
+                uiState.propertiesSection.lazyItem(this)
             }
         }
     }

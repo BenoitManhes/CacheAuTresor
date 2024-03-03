@@ -26,11 +26,11 @@ fun CrewStepsCardPlaceHolder(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .ctClickable(onClick)
             .surface(
                 shape = CTTheme.shape.medium,
                 backgroundColor = CTTheme.color.surface,
             )
+            .ctClickable(onClick)
             .padding(CTTheme.spacing.large),
     ) {
         Column(

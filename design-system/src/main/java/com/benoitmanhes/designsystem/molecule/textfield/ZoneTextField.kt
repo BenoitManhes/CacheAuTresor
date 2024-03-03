@@ -6,6 +6,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
@@ -13,13 +14,15 @@ fun ZoneTextField(
     value: String?,
     onValueUpdated: (String?) -> Unit,
     modifier: Modifier = Modifier,
+    border: BorderStroke? = BorderStroke(CTTheme.stroke.thin, CTTheme.color.strokeDivider),
+    placeholder: TextSpec? = null,
 ) {
     Surface(
         modifier = modifier,
         shape = CTTheme.shape.medium,
         elevation = CTTheme.elevation.none,
         color = CTTheme.color.surface,
-        border = BorderStroke(CTTheme.stroke.thin, CTTheme.color.strokeDivider),
+        border = border,
     ) {
         CTBasicTextField(
             value = value,
@@ -30,6 +33,7 @@ fun ZoneTextField(
                 color = CTTheme.color.textOnSurface,
             ),
             imeAction = ImeAction.Default,
+            placeholder = placeholder,
         )
     }
 }

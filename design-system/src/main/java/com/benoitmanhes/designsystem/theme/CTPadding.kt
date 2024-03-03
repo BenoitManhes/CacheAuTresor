@@ -1,8 +1,10 @@
 package com.benoitmanhes.designsystem.theme
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.runtime.Immutable
 import com.benoitmanhes.designsystem.res.Dimens
 
+@Immutable
 object CTPadding {
     val textFieldDefault: PaddingValues = PaddingValues(
         start = Dimens.Padding.horizontalTextFieldDefault,

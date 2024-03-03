@@ -27,6 +27,7 @@ import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.UiConstants
+import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 
 @Composable
 fun CTJauge(
@@ -42,7 +43,9 @@ fun CTJauge(
         )
     }
     ConstraintLayout(
-        modifier = modifier.size(Dimens.Jauge.size),
+        modifier = modifier
+            .size(Dimens.Jauge.size)
+            .ctClickable(state.onClick),
         constraintSet = constraints(),
     ) {
         CircularJauge(

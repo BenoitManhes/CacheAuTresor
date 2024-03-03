@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.benoitmanhes.cacheautresor.navigation.animation.DestinationAnimation
 import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.cacheautresor.navigation.creation.creationNavGraph
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
@@ -22,7 +23,19 @@ fun HomeNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = HomeDestination.Explore.route
+        startDestination = HomeDestination.Explore.route,
+        enterTransition = {
+            DestinationAnimation.getEnterTransitionFromRoute(targetState.destination.route)(this)
+        },
+        exitTransition = {
+            DestinationAnimation.getExitTransitionFromRoute(targetState.destination.route)(this)
+        },
+        popEnterTransition = {
+            DestinationAnimation.getPopEnterTransitionFromRoute(initialState.destination.route)(this)
+        },
+        popExitTransition = {
+            DestinationAnimation.getPopExitTransitionFromRoute(initialState.destination.route)(this)
+        },
     ) {
         composable(HomeDestination.News.route) {
             NewsRoute(innerPadding = scaffoldPadding)

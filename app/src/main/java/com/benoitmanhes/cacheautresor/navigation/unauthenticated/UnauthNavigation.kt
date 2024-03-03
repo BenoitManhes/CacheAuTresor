@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.benoitmanhes.cacheautresor.navigation.animation.DestinationAnimation
 
 @Composable
 fun UnauthenticatedNavigation(
@@ -21,6 +22,18 @@ fun UnauthenticatedNavigation(
     NavHost(
         navController = navController,
         startDestination = ConnectionDestination.route,
+        enterTransition = {
+            DestinationAnimation.getEnterTransitionFromRoute(targetState.destination.route)(this)
+        },
+        exitTransition = {
+            DestinationAnimation.getExitTransitionFromRoute(targetState.destination.route)(this)
+        },
+        popEnterTransition = {
+            DestinationAnimation.getPopEnterTransitionFromRoute(initialState.destination.route)(this)
+        },
+        popExitTransition = {
+            DestinationAnimation.getPopExitTransitionFromRoute(initialState.destination.route)(this)
+        },
     ) {
         connectionGraph(
             navigateToAccountCreation = navigateToAccountCreation,

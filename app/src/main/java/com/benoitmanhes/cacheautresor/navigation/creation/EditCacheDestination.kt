@@ -54,4 +54,43 @@ sealed interface EditCacheDestination : CTDestination {
                 appendQueryParameter(draftStepIdArg, draftStepId)
             }.build().toString()
     }
+
+    data object EditInstructions : EditCacheDestination {
+        const val draftCacheIdArg: String = "draftCacheId"
+        const val draftStepIdArg: String = "draftStepId"
+        private const val path: String = "edit-instructions"
+        override val route: String get() = "$path?$draftCacheIdArg={$draftCacheIdArg}&$draftStepIdArg={$draftStepIdArg}"
+        fun getRoute(draftCacheId: String, draftStepId: String): String =
+            Uri.Builder().apply {
+                path(path)
+                appendQueryParameter(draftCacheIdArg, draftCacheId)
+                appendQueryParameter(draftStepIdArg, draftStepId)
+            }.build().toString()
+    }
+
+    data object PickStepClue : EditCacheDestination {
+        const val draftCacheIdArg: String = "draftCacheId"
+        const val draftStepIdArg: String = "draftStepId"
+        private const val path: String = "pick-step-clue"
+        override val route: String get() = "$path?$draftCacheIdArg={$draftCacheIdArg}&$draftStepIdArg={$draftStepIdArg}"
+        fun getRoute(draftCacheId: String, draftStepId: String): String =
+            Uri.Builder().apply {
+                path(path)
+                appendQueryParameter(draftCacheIdArg, draftCacheId)
+                appendQueryParameter(draftStepIdArg, draftStepId)
+            }.build().toString()
+    }
+
+    data object PickStepValidationCode : EditCacheDestination {
+        const val draftCacheIdArg: String = "draftCacheId"
+        const val draftStepIdArg: String = "draftStepId"
+        private const val path: String = "pick-step-validation-code"
+        override val route: String get() = "$path?$draftCacheIdArg={$draftCacheIdArg}&$draftStepIdArg={$draftStepIdArg}"
+        fun getRoute(draftCacheId: String, draftStepId: String): String =
+            Uri.Builder().apply {
+                path(path)
+                appendQueryParameter(draftCacheIdArg, draftCacheId)
+                appendQueryParameter(draftStepIdArg, draftStepId)
+            }.build().toString()
+    }
 }

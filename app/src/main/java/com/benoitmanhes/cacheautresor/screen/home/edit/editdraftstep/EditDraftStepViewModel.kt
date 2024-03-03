@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.ClassicModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.CommonModalAction
 import com.benoitmanhes.cacheautresor.common.composable.row.MapRowPickerState
@@ -16,6 +17,7 @@ import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
+import com.benoitmanhes.cacheautresor.screen.snackbar.showOnFailure
 import com.benoitmanhes.common.compose.extensions.nullIfBlank
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
@@ -25,7 +27,9 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.domain.model.Coordinates
+import com.benoitmanhes.domain.model.DraftCacheStep
 import com.benoitmanhes.domain.uimodel.UIDraftStepDetail
+import com.benoitmanhes.domain.usecase.draftcache.DeleteDraftStepUseCase
 import com.benoitmanhes.domain.usecase.draftcache.GetUIDraftStepDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +43,7 @@ import javax.inject.Inject
 class EditDraftStepViewModel @Inject constructor(
     private val loadingManager: LoadingManager,
     private val snackbarManager: SnackbarManager,
+    private val deleteDraftStepUseCase: DeleteDraftStepUseCase,
     modalBottomSheetManager: ModalBottomSheetManager,
     getUIDraftStepDetailUseCase: GetUIDraftStepDetailUseCase,
     savedStateHandle: SavedStateHandle,
@@ -58,18 +63,23 @@ class EditDraftStepViewModel @Inject constructor(
     private val _navigate = MutableStateFlow<EditDraftStepNavigation?>(null)
     val navigate: StateFlow<EditDraftStepNavigation?> get() = _navigate.asStateFlow()
 
+    private var deleteAction: Boolean = false
+
     init {
         viewModelScope.launch {
             getUIDraftStepDetailUseCase(
                 draftCacheId = draftCacheId,
                 draftStepId = draftStepId
             ).collectLatest { result ->
-                loadingManager.handleLoadingFromResult(result)
+                if (deleteAction) return@collectLatest
+
+                loadingManager.handleFromResult(result)
                 snackbarManager.showError((result as? CTResult.Failure)?.error)
 
                 result.data?.let { uiDraftStepDetail ->
                     _uiState.value = EditDraftStepViewModelState(
                         topBarTitle = getStepName(uiDraftStepDetail.type),
+                        bottomBar = getBottomActionBar(uiDraftStepDetail.draftStep, uiDraftStepDetail.type),
                         stepCoordinates = MapRowPickerState(
                             uiMarker = getStepMarker(uiDraftStepDetail),
                             text = uiDraftStepDetail.draftStep.coordinates?.format(Coordinates.Format.DM).orPlaceHolder(),
@@ -110,15 +120,28 @@ class EditDraftStepViewModel @Inject constructor(
                                             message = message,
                                             color = CTTheme.composed { color.critical },
                                             cancelAction = CommonModalAction.finallyNo(),
-                                            confirmAction = CommonModalAction.delete {
-                                                // TODO
-                                            }
+                                            confirmAction = CommonModalAction.delete(::deleteStep),
                                         ),
                                     )
                                 }
                             )
                         },
                     )
+                }
+            }
+        }
+    }
+
+    private fun deleteStep() {
+        viewModelScope.launch {
+            deleteAction = true
+            deleteDraftStepUseCase(draftCacheId = draftCacheId, draftStepId = draftStepId).collect { result ->
+                loadingManager.handleFromResult(result)
+                snackbarManager.showOnFailure(result)
+                when (result) {
+                    is CTResult.Success -> _navigate.value = EditDraftStepNavigation.Back
+                    is CTResult.Failure -> deleteAction = false
+                    is CTResult.Loading -> {} // nothing
                 }
             }
         }
@@ -151,6 +174,43 @@ class EditDraftStepViewModel @Inject constructor(
             R.string.modalDeleteStep_message_piste,
             stepType.index + 1,
         )
+    }
+
+    private fun getBottomActionBar(draftStep: DraftCacheStep, type: UIDraftStepDetail.Type): BottomActionBarState? = when {
+        coordinatesEnabled(type) && draftStep.coordinates == null -> BottomActionBarState(
+            title = TextSpec.Resources(R.string.stepEditor_bottomActionBar_title_incomplete),
+            message = TextSpec.Resources(R.string.stepEditor_bottomActionBar_message_coordinates),
+            primaryButton = PrimaryButtonState(
+                text = TextSpec.Resources(R.string.stepEditor_bottomActionBar_button_coordinates),
+                onClick = {
+                    _navigate.value = EditDraftStepNavigation.PickStepCoordinates(draftCacheId, draftStepId)
+                }
+            )
+        )
+
+        draftStep.instruction == null -> BottomActionBarState(
+            title = TextSpec.Resources(R.string.stepEditor_bottomActionBar_title_incomplete),
+            message = TextSpec.Resources(R.string.stepEditor_bottomActionBar_message_instructions),
+            primaryButton = PrimaryButtonState(
+                text = TextSpec.Resources(R.string.stepEditor_bottomActionBar_button_instructions),
+                onClick = {
+                    _navigate.value = EditDraftStepNavigation.EditInstructions(draftCacheId, draftStepId)
+                }
+            )
+        )
+
+        draftStep.validationCode == null -> BottomActionBarState(
+            title = TextSpec.Resources(R.string.stepEditor_bottomActionBar_title_incomplete),
+            message = TextSpec.Resources(R.string.stepEditor_bottomActionBar_message_validationCode),
+            primaryButton = PrimaryButtonState(
+                text = TextSpec.Resources(R.string.stepEditor_bottomActionBar_button_validationCode),
+                onClick = {
+                    _navigate.value = EditDraftStepNavigation.EditValidationCode(draftCacheId, draftStepId)
+                }
+            )
+        )
+
+        else -> null
     }
 
     fun consumeNavigation() {

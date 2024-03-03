@@ -6,11 +6,11 @@ import com.benoitmanhes.cacheautresor.navigation.CTDestination
 import com.benoitmanhes.cacheautresor.navigation.home.HomeRoot
 
 fun NavGraphBuilder.mainGraph() {
-    composable(HomeDestination.route) {
+    composable(HomeRootDestination.route) {
         HomeRoot()
     }
 }
 
-object HomeDestination : CTDestination {
-    override val route: String = "home"
+object HomeRootDestination : CTDestination {
+    override val route: String = "home-root"
 }

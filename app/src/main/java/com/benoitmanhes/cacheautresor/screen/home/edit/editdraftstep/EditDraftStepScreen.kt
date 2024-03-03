@@ -28,6 +28,9 @@ import com.benoitmanhes.designsystem.theme.composed
 fun EditDraftStepRoute(
     navigateBack: () -> Unit,
     navigateToPickStepCoordinates: (String, String) -> Unit,
+    navigateToEditInstructions: (String, String) -> Unit,
+    navigateToPickClue: (String, String) -> Unit,
+    navigateToPickValidationCode: (String, String) -> Unit,
     viewModel: EditDraftStepViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -40,9 +43,18 @@ fun EditDraftStepRoute(
                 navigateToPickStepCoordinates(navValue.draftCacheId, navValue.draftStepId)
             }
 
-            is EditDraftStepNavigation.EditInstructions -> {}
-            is EditDraftStepNavigation.EditClue -> {}
-            is EditDraftStepNavigation.EditValidationCode -> {}
+            is EditDraftStepNavigation.EditInstructions -> {
+                navigateToEditInstructions(navValue.draftCacheId, navValue.draftStepId)
+            }
+
+            is EditDraftStepNavigation.EditClue -> {
+                navigateToPickClue(navValue.draftCacheId, navValue.draftStepId)
+            }
+
+            is EditDraftStepNavigation.EditValidationCode -> {
+                navigateToPickValidationCode(navValue.draftCacheId, navValue.draftStepId)
+            }
+
             is EditDraftStepNavigation.Back -> navigateBack()
         }
         viewModel.consumeNavigation()

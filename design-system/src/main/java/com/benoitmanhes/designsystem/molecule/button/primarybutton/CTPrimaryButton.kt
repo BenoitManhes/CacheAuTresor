@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.LinearGradient
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.benoitmanhes.common.compose.text.TextSpec
@@ -35,6 +36,7 @@ import com.benoitmanhes.designsystem.atoms.animation.LoadingDotAnimation
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.GradientColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,17 +47,15 @@ fun CTPrimaryButton(
     modifier: Modifier = Modifier,
     type: PrimaryButtonType = PrimaryButtonType.COLORED,
     status: ButtonStatus = ButtonStatus.ENABLE,
-    surfaceColor: Color = CTTheme.color.surfacePrimary,
-    gradient: Brush = CTTheme.gradient.surfacePrimary,
-    contentColor: Color = CTTheme.color.textOnSurfacePrimary,
+    gradient: GradientColors = CTTheme.color.gradientSurfacePrimary,
+    contentColor: Color? = null,
     options: Set<PrimaryButtonOption> = emptySet(),
 ) {
     ButtonFromType(
         status = status,
         modifier = modifier.heightIn(Dimens.Size.primaryButtonMinHeight),
         type = type,
-        color = surfaceColor,
-        brush = gradient,
+        gradient = gradient,
         contentColor = contentColor,
         onClick = onClick,
     ) { buttonColors ->
@@ -96,9 +96,8 @@ private fun ButtonFromType(
     modifier: Modifier,
     type: PrimaryButtonType,
     status: ButtonStatus,
-    color: Color,
-    brush: Brush,
-    contentColor: Color,
+    gradient: GradientColors,
+    contentColor: Color?,
     onClick: () -> Unit,
     content: @Composable (ButtonColors) -> Unit,
 ) {
@@ -113,7 +112,7 @@ private fun ButtonFromType(
             if (status == ButtonStatus.DISABLE) {
                 Button(
                     shape = CTTheme.shape.medium,
-                    colors = buttonColorsColored(color, contentColor),
+                    colors = buttonColorsColored(CTTheme.color.surfaceDisable, CTTheme.color.textOnSurfaceDisable),
                     enabled = false,
                     elevation = ButtonDefaults.elevation(
                         defaultElevation = Dimens.Elevation.none,
@@ -125,19 +124,19 @@ private fun ButtonFromType(
                     onClick = safeOnClick,
                 ) {
                     ProvideTextStyle(value = CTTheme.typography.bodyBold) {
-                        content(buttonColorsColored(color, contentColor))
+                        content(buttonColorsColored(CTTheme.color.surfaceDisable, CTTheme.color.textOnSurfaceDisable))
                     }
                 }
             } else {
                 GradientButton(
                     shape = CTTheme.shape.medium,
-                    gradient = brush,
+                    gradient = Brush.linearGradient(gradient),
                     contentColor = CTTheme.color.textOnSurfacePrimary,
                     modifier = modifier,
                     onClick = safeOnClick,
                 ) {
                     ProvideTextStyle(value = CTTheme.typography.bodyBold) {
-                        content(buttonColorsColored(color, contentColor))
+                        content(buttonColorsColored(gradient.first(), contentColor ?: CTTheme.color.textOnSurfacePrimary))
                     }
                 }
             }
@@ -168,13 +167,13 @@ private fun ButtonFromType(
         PrimaryButtonType.TEXT -> {
             TextButton(
                 shape = CTTheme.shape.medium,
-                colors = buttonTextColors(color),
+                colors = buttonTextColors(contentColor ?: CTTheme.color.textPrimary),
                 enabled = status != ButtonStatus.DISABLE,
                 modifier = modifier,
                 onClick = safeOnClick,
             ) {
                 ProvideTextStyle(value = CTTheme.typography.bodyBold) {
-                    content(buttonTextColors(color))
+                    content(buttonTextColors(contentColor ?: CTTheme.color.textPrimary))
                 }
             }
         }

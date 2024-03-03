@@ -73,7 +73,7 @@ class ProfileViewModel @Inject constructor(
                 ),
                 confirmAction = PrimaryButtonState(
                     text = TextSpec.Resources(R.string.profile_logoutModal_confirmAction),
-                    gradientBackground = CTTheme.composed { gradient.surfaceCritical },
+                    gradientBackground = CTTheme.composed { color.gradientSurfaceCritical },
                     onClick = ::logout,
                 )
             )

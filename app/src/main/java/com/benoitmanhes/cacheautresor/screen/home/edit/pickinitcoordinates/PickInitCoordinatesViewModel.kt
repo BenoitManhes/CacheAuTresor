@@ -143,7 +143,7 @@ class PickInitCoordinatesViewModel @Inject constructor(
                 draftCacheId = draftCacheId,
                 newCoordinates = uiState.value.currentCoordinates.coordinates,
             ).collect { result ->
-                loadingManager.handleLoadingFromResult(result)
+                loadingManager.handleFromResult(result)
                 when (result) {
                     is CTResult.Failure -> {
                         if (result.error?.code == CTDomainError.Code.INVALID_COORDINATES) {

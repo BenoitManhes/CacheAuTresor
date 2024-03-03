@@ -1,8 +1,8 @@
 package com.benoitmanhes.cacheautresor.navigation.unauthenticated
 
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.benoitmanhes.cacheautresor.navigation.CTDestination
-import com.benoitmanhes.cacheautresor.navigation.ctComposable
 import com.benoitmanhes.cacheautresor.screen.authentication.accountcreation.AccountCreationScreen
 import com.benoitmanhes.cacheautresor.screen.authentication.connection.ConnectionScreen
 
@@ -11,14 +11,14 @@ fun NavGraphBuilder.connectionGraph(
     showErrorSnackBar: (errorMsg: String) -> Unit,
     onNavigateBack: () -> Unit,
 ) {
-    ctComposable(ConnectionDestination.route) {
+    composable(ConnectionDestination.route) {
         ConnectionScreen(
             navigateToAccountCreation = navigateToAccountCreation,
             showErrorSnackBar = showErrorSnackBar,
         )
     }
 
-    ctComposable(AccountCreationDestination.route) {
+    composable(AccountCreationDestination.route) {
         AccountCreationScreen(onNavigateBack = onNavigateBack, showSnackbar = showErrorSnackBar)
     }
 }

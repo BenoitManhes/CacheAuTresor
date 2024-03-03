@@ -89,7 +89,6 @@ fun CTModalBottomSheetContent(
                 },
             )?.Content(
                 modifier = Modifier.fillMaxWidth(),
-                color = color,
             )
         }
     }

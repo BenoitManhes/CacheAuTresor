@@ -46,6 +46,7 @@ internal fun CTBasicTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     labelText: TextSpec? = null,
+    placeholder: TextSpec? = null,
     enabled: Boolean = true,
     textStyle: TextStyle = LocalTextStyle.current,
     isError: Boolean = false,
@@ -121,7 +122,17 @@ internal fun CTBasicTextField(
                         innerTextField = innerTextField,
                         label = {
                             labelText?.let { safeLabel ->
-                                CTTextView(text = safeLabel)
+                                CTTextView(
+                                    text = safeLabel,
+                                )
+                            }
+                        },
+                        placeholder = placeholder?.let {
+                            {
+                                CTTextView(
+                                    text = placeholder,
+                                    color = CTTheme.color.textLight,
+                                )
                             }
                         },
                         leadingIcon = leadingIcon,

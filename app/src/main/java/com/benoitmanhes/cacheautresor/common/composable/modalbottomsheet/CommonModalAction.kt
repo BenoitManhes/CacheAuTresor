@@ -14,7 +14,7 @@ object CommonModalAction {
 
     fun delete(onClick: () -> Unit): PrimaryButtonState = PrimaryButtonState(
         text = TextSpec.Resources(R.string.common_delete),
-        gradientBackground = CTTheme.composed { gradient.surfaceCritical },
+        gradientBackground = CTTheme.composed { color.gradientSurfaceCritical },
         onClick = onClick,
     )
 

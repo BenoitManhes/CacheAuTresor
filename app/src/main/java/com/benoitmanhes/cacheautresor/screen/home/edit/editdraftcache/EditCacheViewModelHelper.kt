@@ -7,10 +7,16 @@ import com.benoitmanhes.cacheautresor.common.composable.row.MapRowPickerState
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getMarkerIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
+import com.benoitmanhes.cacheautresor.common.extensions.orPlaceHolder
 import com.benoitmanhes.cacheautresor.common.extensions.toCacheType
+import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
+import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
+import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
+import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.composable.CrewStepsCardState
+import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.section.DraftPropertiesSectionState
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.section.DraftStepSectionState
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
@@ -19,6 +25,7 @@ import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
+import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.sticker.CTStickerIconState
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
@@ -204,3 +211,31 @@ private fun EditCacheViewModel.crewStepsCard(
     },
     onClickDelete = { showRemoveCrewMemberModal(crewName, draftCacheId) },
 )
+
+internal fun EditCacheViewModel.propertiesSection(draftCache: DraftCache): DraftPropertiesSectionState =
+    DraftPropertiesSectionState(
+        difficulty = CTJaugeState(
+            rate = draftCache.difficulty,
+            icon = CTTheme.composed { icon.Difficulty },
+            text = draftCache.difficulty?.toDifficultyText().orPlaceHolder(),
+            onClick = {
+                _navigation.value = EditCacheNavigation.PickDifficulty(draftCache.draftCacheId)
+            }
+        ),
+        ground = CTJaugeState(
+            rate = draftCache.ground,
+            icon = CTTheme.composed { icon.Mountain },
+            text = draftCache.ground?.toGroundText().orPlaceHolder(),
+            onClick = {
+                _navigation.value = EditCacheNavigation.PickGround(draftCache.draftCacheId)
+            }
+        ),
+        size = CTJaugeState(
+            rate = draftCache.size?.toJaugeRate(),
+            icon = CTTheme.composed { icon.BoxSmall },
+            text = draftCache.size?.toSizeText().orPlaceHolder(),
+            onClick = {
+                _navigation.value = EditCacheNavigation.PickSize(draftCache.draftCacheId)
+            }
+        ),
+    )

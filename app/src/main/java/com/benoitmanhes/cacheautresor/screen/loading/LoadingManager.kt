@@ -36,7 +36,7 @@ class LoadingManager @Inject constructor() {
         }
     }
 
-    fun handleLoadingFromResult(result: CTResult<*>) {
+    fun handleFromResult(result: CTResult<*>) {
         if (result is CTResult.Loading) {
             showLoading()
         } else {

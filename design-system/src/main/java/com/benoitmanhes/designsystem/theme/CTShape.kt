@@ -1,12 +1,14 @@
 package com.benoitmanhes.designsystem.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import com.benoitmanhes.common.compose.shapes.SvgShape
 import com.benoitmanhes.designsystem.res.Dimens
 
+@Immutable
 object CTShape {
     val small: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.small)
     val medium: RoundedCornerShape = RoundedCornerShape(Dimens.Corner.medium)

@@ -4,6 +4,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.benoitmanhes.designsystem.res.Colors
 
+typealias GradientColors = List<Color>
+
 @Immutable
 object DefaultDayColorScheme : CTColorScheme {
     // Tint
@@ -53,14 +55,10 @@ object DefaultDayColorScheme : CTColorScheme {
     override val rippleNeutral: Color = textDefault.copy(alpha = .2f)
 
     // Gradient
-    override val gradientSurfacePrimaryStart: Color = primary
-    override val gradientSurfacePrimaryEnd: Color = primaryDark
-    override val gradientSurfacePrimarySoftStart: Color = primary.copy(alpha = 0.35f)
-    override val gradientSurfacePrimarySoftEnd: Color = primaryDark.copy(alpha = 0.35f)
-    override val gradientBackgroundPrimaryStart: Color = primary.copy(alpha = 0.75f)
-    override val gradientBackgroundPrimaryEnd: Color = primaryDark.copy(alpha = 0.75f)
-    override val gradientSurfaceCriticalStart: Color = Colors.Red
-    override val gradientSurfaceCriticalEnd: Color = critical
+    override val gradientSurfacePrimary: GradientColors = listOf(primary, primaryDark)
+    override val gradientSurfacePrimarySoft: GradientColors = listOf(primary.copy(alpha = 0.35f), primaryDark.copy(alpha = 0.35f))
+    override val gradientBackgroundPrimary: GradientColors = listOf(primary.copy(alpha = 0.75f), primaryDark.copy(alpha = 0.75f))
+    override val gradientSurfaceCritical: GradientColors = listOf(Colors.Red, critical)
 }
 
 // Define a dark mode
@@ -119,14 +117,10 @@ interface CTColorScheme {
     val rippleNeutral: Color
 
     // Gradient
-    val gradientSurfacePrimaryStart: Color
-    val gradientSurfacePrimaryEnd: Color
-    val gradientSurfacePrimarySoftStart: Color
-    val gradientSurfacePrimarySoftEnd: Color
-    val gradientBackgroundPrimaryStart: Color
-    val gradientBackgroundPrimaryEnd: Color
-    val gradientSurfaceCriticalStart: Color
-    val gradientSurfaceCriticalEnd: Color
+    val gradientSurfacePrimary: GradientColors
+    val gradientSurfacePrimarySoft: GradientColors
+    val gradientBackgroundPrimary: GradientColors
+    val gradientSurfaceCritical: GradientColors
 
     fun copy(
         primaryColor: Color? = null,
@@ -179,13 +173,9 @@ interface CTColorScheme {
         override val strokeOnPrimary: Color = this@CTColorScheme.strokeOnPrimary
 
         // Gradient
-        override val gradientSurfacePrimaryStart: Color = primary
-        override val gradientSurfacePrimaryEnd: Color = primaryDark
-        override val gradientSurfacePrimarySoftStart: Color = primary.copy(alpha = 0.35f)
-        override val gradientSurfacePrimarySoftEnd: Color = primaryDark.copy(alpha = 0.35f)
-        override val gradientBackgroundPrimaryStart: Color = primary.copy(alpha = 0.75f)
-        override val gradientBackgroundPrimaryEnd: Color = primaryDark.copy(alpha = 0.75f)
-        override val gradientSurfaceCriticalStart: Color = this@CTColorScheme.gradientSurfaceCriticalStart
-        override val gradientSurfaceCriticalEnd: Color = this@CTColorScheme.gradientSurfaceCriticalEnd
+        override val gradientSurfacePrimary: GradientColors = listOf(primary, primaryDark)
+        override val gradientSurfacePrimarySoft: GradientColors = listOf(primary.copy(alpha = 0.35f), primaryDark.copy(alpha = 0.35f))
+        override val gradientBackgroundPrimary: GradientColors = listOf(primary.copy(alpha = 0.75f), primaryDark.copy(alpha = 0.75f))
+        override val gradientSurfaceCritical: GradientColors = this@CTColorScheme.gradientSurfaceCritical
     }
 }

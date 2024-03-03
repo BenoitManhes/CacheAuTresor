@@ -74,6 +74,7 @@ class EditCacheViewModel @Inject constructor(
                     onClick = { _navigation.value = EditCacheNavigation.PickInitCoordinates(draftCacheId) }
                 ),
                 stepSection = uiDraftCache?.steps?.let { getStepSection(it, draftCacheId) },
+                propertiesSection = draftCache?.let(::propertiesSection),
             )
         }.stateIn(
             scope = viewModelScope,
@@ -121,7 +122,7 @@ class EditCacheViewModel @Inject constructor(
                 confirmAction = CommonModalAction.validate {
                     viewModelScope.launch {
                         newDraftStepUseCase(draftCacheId = draftCacheId, crewRef = crewRef).collect { result ->
-                            loadingManager.handleLoadingFromResult(result)
+                            loadingManager.handleFromResult(result)
                             snackbarManager.showError((result as? CTResult.Failure)?.error)
                         }
                     }
@@ -146,4 +147,13 @@ sealed interface EditCacheNavigation {
         val draftCacheId: String,
         val draftStepId: String,
     ) : EditCacheNavigation
+
+    @JvmInline
+    value class PickDifficulty(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class PickGround(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class PickSize(val draftCacheId: String) : EditCacheNavigation
 }
