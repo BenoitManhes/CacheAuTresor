@@ -14,4 +14,20 @@ data class EditCacheViewModelState(
     val initCoordinates: MapRowPickerState? = null,
     val stepSection: DraftStepSectionState? = null,
     val propertiesSection: DraftPropertiesSectionState? = null,
-)
+) {
+
+    private val generalSection: List<Any?> = listOf(
+        cacheName,
+        cacheType,
+        initCoordinates
+    )
+
+    private val characteristicsSection: List<Any?> = listOf(
+        propertiesSection,
+    )
+
+    val showGeneralSection: Boolean = generalSection.any { it != null }
+    val showStepsSection: Boolean = stepSection != null
+    val showCharacteristicsSection: Boolean = characteristicsSection.any { it != null }
+    val showLockSection: Boolean = false
+}

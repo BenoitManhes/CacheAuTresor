@@ -32,6 +32,7 @@ object Dimens {
     object Font {
         val header0FontSize: TextUnit = 32.sp
         val header1FontSize: TextUnit = 24.sp
+        val header2FontSize: TextUnit = 24.sp
         val bodyFontSize: TextUnit = 18.sp
         val bodySmallFontSize: TextUnit = 15.sp
         val captionFontSize: TextUnit = 12.sp

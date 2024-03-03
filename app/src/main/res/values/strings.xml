@@ -156,6 +156,10 @@
     <string name="availableFinalPlaces_firstButton_text">Start creation</string>
     <string name="editDraftCache_topBar_title">Create cache</string>
     <string name="cacheEditor_cacheName_header">Cache name</string>
+    <string name="cacheEditor_generalSection_header">General</string>
+    <string name="cacheEditor_stepSection_header">Steps &amp; instructions</string>
+    <string name="cacheEditor_characteristicsSection_header">Characteristics</string>
+    <string name="cacheEditor_LockSection_header">Lock</string>
     <string name="cacheEditor_type_header">Cache type</string>
     <string name="cacheEditor_initialCoordinates_header">Initial coordinates</string>
     <string name="cacheEditor_steps_header">Steps</string>

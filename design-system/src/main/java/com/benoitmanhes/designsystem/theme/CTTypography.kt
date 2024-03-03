@@ -31,6 +31,12 @@ object CTTypography {
         fontSize = Dimens.Font.header1FontSize,
         platformStyle = PlatformTextStyle(includeFontPadding = false),
     )
+    val header2: TextStyle = TextStyle(
+        fontFamily = LeagueSpartan,
+        fontWeight = FontWeight.W600,
+        fontSize = Dimens.Font.header2FontSize,
+        platformStyle = PlatformTextStyle(includeFontPadding = false),
+    )
     val body: TextStyle = TextStyle(
         fontFamily = LeagueSpartan,
         fontWeight = FontWeight.W400,

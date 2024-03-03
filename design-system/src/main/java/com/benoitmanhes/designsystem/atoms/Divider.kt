@@ -38,7 +38,7 @@ fun CTVerticalDivider(
 
 fun LazyListScope.dividerItem(
     modifier: Modifier = Modifier,
-    color: @Composable () -> Color = { CTTheme.color.strokeDivider },
+    color: @Composable () -> Color = { CTTheme.color.disable },
 ) {
     item {
         CTDivider(

@@ -14,12 +14,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
+import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.composable.SectionHeader2
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.designsystem.atoms.CTDivider
+import com.benoitmanhes.designsystem.atoms.dividerItem
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.molecule.topbar.CTFilledTopBar
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.theme.composed
 
 @Composable
 fun EditDraftCacheRoute(
@@ -81,6 +85,13 @@ private fun EditDraftCacheScreen(
             modifier = Modifier
                 .padding(innerPadding)
         ) {
+            if (uiState.showGeneralSection) {
+                SectionHeader2.lazyItem(
+                    scope = this,
+                    text = TextSpec.Resources(R.string.cacheEditor_generalSection_header),
+                    icon = CTTheme.composed { icon.Globe },
+                )
+            }
             uiState.cacheName?.let {
                 sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_cacheName_header))
                 uiState.cacheName.lazyItem(this, key = "cache-name")
@@ -96,14 +107,39 @@ private fun EditDraftCacheScreen(
                 uiState.initCoordinates.lazyItem(this)
             }
 
+            if (uiState.showStepsSection) {
+                dividerItem()
+                SectionHeader2.lazyItem(
+                    scope = this,
+                    text = TextSpec.Resources(R.string.cacheEditor_stepSection_header),
+                    icon = CTTheme.composed { icon.Book },
+                )
+            }
             uiState.stepSection?.let {
                 sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_steps_header))
                 uiState.stepSection.lazyItem(this)
             }
 
+            if (uiState.showCharacteristicsSection) {
+                dividerItem()
+                SectionHeader2.lazyItem(
+                    scope = this,
+                    text = TextSpec.Resources(R.string.cacheEditor_characteristicsSection_header),
+                    icon = CTTheme.composed { icon.Mountain },
+                )
+            }
             uiState.propertiesSection?.let {
                 sectionHeaderItem(TextSpec.Resources(R.string.stepEditor_propertiesSection_title))
                 uiState.propertiesSection.lazyItem(this)
+            }
+
+            if (uiState.showLockSection) {
+                dividerItem()
+                SectionHeader2.lazyItem(
+                    scope = this,
+                    text = TextSpec.Resources(R.string.cacheEditor_LockSection_header),
+                    icon = CTTheme.composed { icon.Key },
+                )
             }
         }
     }
