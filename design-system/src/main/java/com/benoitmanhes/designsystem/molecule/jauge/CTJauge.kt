@@ -19,13 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTIcon
 import com.benoitmanhes.designsystem.atoms.text.CTResponsiveText
 import com.benoitmanhes.designsystem.res.Dimens
-import com.benoitmanhes.designsystem.res.icons.iconpack.Difficulty
-import com.benoitmanhes.designsystem.res.icons.iconpack.Mountain
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.utils.UiConstants
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 
@@ -33,6 +31,7 @@ import com.benoitmanhes.designsystem.utils.extensions.ctClickable
 fun CTJauge(
     state: CTJaugeState,
     modifier: Modifier = Modifier,
+    jaugeSize: Dimens.JaugeSize = Dimens.JaugeSize.Small,
 ) {
     val progress = remember { Animatable(0f) }
     LaunchedEffect(state.rate) {
@@ -44,18 +43,19 @@ fun CTJauge(
     }
     ConstraintLayout(
         modifier = modifier
-            .size(Dimens.Jauge.size)
+            .size(jaugeSize.size)
             .ctClickable(state.onClick),
-        constraintSet = constraints(),
+        constraintSet = constraints(jaugeSize),
     ) {
         CircularJauge(
             progress = progress.value,
             modifier = Modifier.layoutId(CircularIndicatorId),
+            size = jaugeSize.circleIndicatorSize,
         )
 
         CTIcon(
             icon = state.icon(),
-            size = Dimens.IconSize.Huge,
+            size = jaugeSize.iconSize,
             modifier = Modifier.layoutId(IconId),
         )
 
@@ -64,21 +64,21 @@ fun CTJauge(
             minFontSize = Dimens.Font.captionSmallFontSize,
             modifier = Modifier
                 .layoutId(TextId)
-                .widthIn(max = Dimens.Jauge.maxTextSize),
-            style = CTTheme.typography.caption,
+                .widthIn(max = jaugeSize.maxTextSize),
+            style = jaugeSize.labelStyle,
             textAlign = TextAlign.Center,
             maxLines = 1,
         )
     }
 }
 
-private fun constraints(): ConstraintSet = ConstraintSet {
+private fun constraints(jaugeSize: Dimens.JaugeSize): ConstraintSet = ConstraintSet {
     val jauge = createRefFor(CircularIndicatorId)
     val icon = createRefFor(IconId)
     val text = createRefFor(TextId)
 
     constrain(jauge) {
-        height = Dimension.value(Dimens.Jauge.circleIndicatorSize)
+        height = Dimension.value(jaugeSize.circleIndicatorSize)
         top.linkTo(parent.top)
     }
 

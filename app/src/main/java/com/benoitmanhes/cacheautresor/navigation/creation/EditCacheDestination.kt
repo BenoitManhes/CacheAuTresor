@@ -93,4 +93,14 @@ sealed interface EditCacheDestination : CTDestination {
                 appendQueryParameter(draftStepIdArg, draftStepId)
             }.build().toString()
     }
+
+    data object PickDifficulty : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-difficulty"
+    }
+
+    data object PickGround : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-ground"
+    }
 }

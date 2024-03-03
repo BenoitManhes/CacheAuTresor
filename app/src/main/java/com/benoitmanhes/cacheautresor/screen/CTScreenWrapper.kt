@@ -7,6 +7,8 @@ import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogView
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingScreen
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetView
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarView
+import com.benoitmanhes.designsystem.theme.CTColorTheme
+import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ComposableContent
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -31,4 +33,20 @@ fun CTScreenWrapper(
     LoadingScreen()
     AlertDialogView()
     ModalBottomSheetView()
+}
+
+@Composable
+fun CTScreenWrapper(
+    colorTheme: CTColorTheme,
+    bottomPadding: Int = 0,
+    darkStatusBarIcons: Boolean = true,
+    content: ComposableContent,
+) {
+    CTTheme(colorTheme) {
+        CTScreenWrapper(
+            bottomPadding = bottomPadding,
+            darkStatusBarIcons = darkStatusBarIcons,
+            content = content,
+        )
+    }
 }

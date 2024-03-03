@@ -101,13 +101,14 @@ private fun coopDraftStepSection(
                 pageContent = { page ->
                     if (page < section.crewStepsCards.size) {
                         section.crewStepsCards.getOrNull(page)?.Content(
-                            modifier = Modifier.thenIf(page == section.crewStepsCards.size - 1) {
-                                onGloballyPositioned {
-                                    with(density) {
-                                        lastCardHeight = it.size.height.toDp()
+                            modifier = Modifier
+                                .thenIf(page == section.crewStepsCards.size - 1) {
+                                    onGloballyPositioned {
+                                        with(density) {
+                                            lastCardHeight = it.size.height.toDp()
+                                        }
                                     }
                                 }
-                            }
                         )
                     } else {
                         CrewStepsCardPlaceHolder(

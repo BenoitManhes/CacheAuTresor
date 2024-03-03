@@ -32,6 +32,10 @@ object AppDimens {
         val imageSize: Dp = 180.dp
     }
 
+    object PickJauge {
+        val rateTextWidth: Dp = 30.dp
+    }
+
     object Rank {
         val rankTextWidth: Dp = 30.dp
         val explorerImageSize: Dp = 30.dp

@@ -28,8 +28,8 @@ import com.benoitmanhes.designsystem.utils.UiConstants
 internal fun CircularJauge(
     progress: Float,
     modifier: Modifier = Modifier,
+    size: Dp,
     color: Color = CTTheme.color.primary,
-    size: Dp = Dimens.Jauge.circleIndicatorSize,
 ) {
     val backgroundColor = CTTheme.color.surfaceLight
 
@@ -79,14 +79,17 @@ private fun PreviewCircularJauge() {
             Column {
                 CircularJauge(
                     progress = 0.4f,
+                    size = Dimens.JaugeSize.Small.circleIndicatorSize,
                 )
                 SpacerLarge()
                 CircularJauge(
                     progress = 0.66f,
+                    size = Dimens.JaugeSize.Small.circleIndicatorSize,
                 )
                 SpacerLarge()
                 CircularJauge(
                     progress = 1f,
+                    size = Dimens.JaugeSize.Small.circleIndicatorSize,
                 )
             }
         }

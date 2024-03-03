@@ -17,9 +17,10 @@ fun SectionHeader(
 ) {
     CTTextView(
         text = title,
-        modifier = modifier.thenIf(horizontalPadding) {
-            padding(horizontal = CTTheme.spacing.large)
-        },
+        modifier = modifier
+            .thenIf(horizontalPadding) {
+                padding(horizontal = CTTheme.spacing.large)
+            },
         style = CTTheme.typography.bodySmall,
         color = CTTheme.color.textLight,
     )

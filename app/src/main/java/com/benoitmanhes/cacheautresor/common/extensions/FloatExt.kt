@@ -28,3 +28,10 @@ fun Float.toGroundText(): TextSpec {
     }
     return TextSpec.Resources(difficultyRes)
 }
+
+fun Float.toStringShort(): String =
+    if (this % 1 == 0f) {
+        this.toInt().toString()
+    } else {
+        this.toString()
+    }

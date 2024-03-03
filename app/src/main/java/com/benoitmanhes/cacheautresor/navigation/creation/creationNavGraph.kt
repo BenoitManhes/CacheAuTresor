@@ -7,6 +7,8 @@ import com.benoitmanhes.cacheautresor.screen.home.edit.availablefinalplaces.Avai
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.EditDraftCacheRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftstep.EditDraftStepRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.editinstructions.EditInstructionsRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.pickdifficulty.PickDifficultyRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.pickground.PickGroundRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickinitcoordinates.PickInitCoordinatesRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickname.PickDraftCacheNameRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickstepclue.PickStepClueRoute
@@ -50,8 +52,16 @@ fun NavGraphBuilder.creationNavGraph(
                     )
                 )
             },
-            navigateToPickDifficulty = {},
-            navigateToPickGround = {},
+            navigateToPickDifficulty = { draftCacheId ->
+                navController.navigate(
+                    EditCacheDestination.PickDifficulty.getRoute(draftCacheId)
+                )
+            },
+            navigateToPickGround = { draftCacheId ->
+                navController.navigate(
+                    EditCacheDestination.PickGround.getRoute(draftCacheId)
+                )
+            },
             navigateToPickSize = {},
         )
     }
@@ -126,5 +136,13 @@ fun NavGraphBuilder.creationNavGraph(
 
     composable(EditCacheDestination.PickStepValidationCode.route) {
         PickStepValidationCodeRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.PickDifficulty.route) {
+        PickDifficultyRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.PickGround.route) {
+        PickGroundRoute(navigateBack = navController::popBackStack)
     }
 }

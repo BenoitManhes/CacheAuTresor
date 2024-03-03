@@ -1,11 +1,13 @@
 package com.benoitmanhes.designsystem.res
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.benoitmanhes.designsystem.theme.CTTypography
 
 object Dimens {
     object Spacing {
@@ -93,6 +95,8 @@ object Dimens {
         Huge(dp = 48.dp),
         Immense(dp = 64.dp),
         BottomBarItem(dp = 28.dp),
+        JaugeSmall(dp = 48.dp),
+        JaugeLarge(dp = 80.dp),
     }
 
     enum class IconSlotSize(
@@ -105,13 +109,33 @@ object Dimens {
         Huge(icon = IconSize.Huge, container = 64.dp),
     }
 
-    object Jauge {
-        val size: DpSize = DpSize(
-            width = 84.dp,
-            height = 68.dp,
-        )
-        val circleIndicatorSize: Dp = size.width
-        val maxTextSize: Dp = 60.dp
+    enum class JaugeSize(
+        val size: DpSize,
+        val circleIndicatorSize: Dp,
+        val maxTextSize: Dp,
+        val labelStyle: TextStyle,
+        val iconSize: IconSize,
+    ) {
+        Small(
+            size = DpSize(
+                width = 84.dp,
+                height = 68.dp,
+            ),
+            circleIndicatorSize = 84.dp,
+            maxTextSize = 60.dp,
+            iconSize = IconSize.JaugeSmall,
+            labelStyle = CTTypography.caption,
+        ),
+        Large(
+            size = DpSize(
+                width = 150.dp,
+                height = 116.dp,
+            ),
+            circleIndicatorSize = 150.dp,
+            maxTextSize = 107.dp,
+            iconSize = IconSize.JaugeLarge,
+            labelStyle = CTTypography.body,
+        ),
     }
 
     object Loading {
