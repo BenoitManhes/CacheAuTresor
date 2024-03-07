@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
-import com.benoitmanhes.designsystem.molecule.row.CTRow
 import com.benoitmanhes.designsystem.molecule.switchbutton.CTSwitch
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.extensions.ctClickable

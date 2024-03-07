@@ -52,6 +52,7 @@ val slideHorizontalPopExitTransition: (AnimatedContentTransitionScope<NavBackSta
 }
 
 const val SlideDurationMs: Int = 200
+const val SlideVerticalDurationMs: Int = 300
 const val SlideDelayMs: Int = 100
 const val SlideOffsetRatio: Float = 1f
 const val FadeDurationMs: Int = 100

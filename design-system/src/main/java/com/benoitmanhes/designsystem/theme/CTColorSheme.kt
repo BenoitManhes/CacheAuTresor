@@ -56,8 +56,14 @@ object DefaultDayColorScheme : CTColorScheme {
 
     // Gradient
     override val gradientSurfacePrimary: GradientColors = listOf(primary, primaryDark)
-    override val gradientSurfacePrimarySoft: GradientColors = listOf(primary.copy(alpha = 0.35f), primaryDark.copy(alpha = 0.35f))
-    override val gradientBackgroundPrimary: GradientColors = listOf(primary.copy(alpha = 0.75f), primaryDark.copy(alpha = 0.75f))
+    override val gradientSurfacePrimarySoft: GradientColors = listOf(
+        primary.copy(alpha = 0.35f),
+        primaryDark.copy(alpha = 0.35f)
+    )
+    override val gradientBackgroundPrimary: GradientColors = listOf(
+        primary.copy(alpha = 0.75f),
+        primaryDark.copy(alpha = 0.75f)
+    )
     override val gradientSurfaceCritical: GradientColors = listOf(Colors.Red, critical)
 }
 
@@ -174,8 +180,14 @@ interface CTColorScheme {
 
         // Gradient
         override val gradientSurfacePrimary: GradientColors = listOf(primary, primaryDark)
-        override val gradientSurfacePrimarySoft: GradientColors = listOf(primary.copy(alpha = 0.35f), primaryDark.copy(alpha = 0.35f))
-        override val gradientBackgroundPrimary: GradientColors = listOf(primary.copy(alpha = 0.75f), primaryDark.copy(alpha = 0.75f))
+        override val gradientSurfacePrimarySoft: GradientColors = listOf(
+            primary.copy(alpha = 0.35f),
+            primaryDark.copy(alpha = 0.35f)
+        )
+        override val gradientBackgroundPrimary: GradientColors = listOf(
+            primary.copy(alpha = 0.75f),
+            primaryDark.copy(alpha = 0.75f)
+        )
         override val gradientSurfaceCritical: GradientColors = this@CTColorScheme.gradientSurfaceCritical
     }
 }

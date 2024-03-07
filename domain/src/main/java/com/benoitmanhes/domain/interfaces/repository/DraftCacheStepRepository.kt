@@ -10,6 +10,7 @@ interface DraftCacheStepRepository {
     suspend fun deleteDraftCacheSteps(draftCacheSteps: List<String>)
     suspend fun deleteAll()
     suspend fun getDraftCacheStep(dratCacheStepId: String): DraftCacheStep?
+    suspend fun getDraftCacheSteps(stepsIds: List<String>): List<DraftCacheStep>
     fun getDraftCacheStepFlow(dratCacheStepId: String): Flow<DraftCacheStep?>
     fun getDraftCacheStepsFlow(dratCacheStepIds: List<String>): Flow<List<DraftCacheStep>>
 }

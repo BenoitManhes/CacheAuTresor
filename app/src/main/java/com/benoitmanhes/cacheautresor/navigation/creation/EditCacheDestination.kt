@@ -103,4 +103,29 @@ sealed interface EditCacheDestination : CTDestination {
         override val arg: String = "draftCacheId"
         override val path: String = "pick-ground"
     }
+
+    data object PickSize : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-size"
+    }
+
+    data object PickDescription : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-description"
+    }
+
+    data object PickUnlockInstructions : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-unlock-instructions"
+    }
+
+    data object PickUnlockCode : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "draftCacheId"
+        override val path: String = "pick-unlock-code"
+    }
+
+    data object CreationSuccess : CTSingleArgDestination, EditCacheDestination {
+        override val arg: String = "cacheId"
+        override val path: String = "creation-success"
+    }
 }

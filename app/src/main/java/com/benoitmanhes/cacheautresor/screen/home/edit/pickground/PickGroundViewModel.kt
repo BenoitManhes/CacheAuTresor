@@ -5,11 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
-import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
 import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
 import com.benoitmanhes.cacheautresor.common.screen.pickjauge.composable.JaugePickerRowState
 import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
-import com.benoitmanhes.cacheautresor.screen.home.edit.pickdifficulty.PickDifficultyViewModelState
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
 import com.benoitmanhes.common.compose.text.TextSpec

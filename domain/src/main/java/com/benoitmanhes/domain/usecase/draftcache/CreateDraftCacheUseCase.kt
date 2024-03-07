@@ -18,7 +18,6 @@ class CreateDraftCacheUseCase @Inject constructor(
             difficulty = null,
             ground = null,
             size = null,
-            discovered = null,
             startCreatingDate = null,
             cacheIdsRequired = null,
             tagIds = null,

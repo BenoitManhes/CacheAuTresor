@@ -22,7 +22,7 @@ import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
-fun PickTypeDraftCacheScreen(
+fun PickTypeDraftCacheRoute(
     navigateBack: () -> Unit,
     viewModel: PickTypeDraftCacheViewModel = hiltViewModel(),
 ) {
@@ -37,7 +37,7 @@ fun PickTypeDraftCacheScreen(
 
     CTTheme(CTColorTheme.Cartography) {
         CTScreenWrapper(darkStatusBarIcons = false) {
-            PickTypeDraftCacheScreen(
+            PickTypeDraftCacheRoute(
                 uiState = uiState,
                 navigateBack = navigateBack,
             )
@@ -46,7 +46,7 @@ fun PickTypeDraftCacheScreen(
 }
 
 @Composable
-private fun PickTypeDraftCacheScreen(
+private fun PickTypeDraftCacheRoute(
     uiState: PickTypeDraftCacheViewModelState,
     navigateBack: () -> Unit,
 ) {

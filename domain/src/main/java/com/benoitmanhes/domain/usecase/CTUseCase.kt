@@ -31,6 +31,15 @@ abstract class CTUseCase {
             CTResult.Failure(error = error)
         }
 
+    protected fun <T> resultFlow(
+        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        block: suspend () -> T,
+    ): Flow<CTResult<T>> = useCaseFlow {
+        emit(
+            CTResult.Success(block())
+        )
+    }
+
     protected fun <T> Flow<T>.useCaseCatch(
         mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
         errorValue: (CTDomainError) -> T,

@@ -13,7 +13,7 @@ import androidx.navigation.NavBackStackEntry
 val slideVerticalEnterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) = {
     slideInVertically(
         initialOffsetY = { fullHeight -> (fullHeight * SlideOffsetRatio).toInt() },
-        animationSpec = tween(SlideDurationMs),
+        animationSpec = tween(SlideVerticalDurationMs),
     ) + fadeIn(animationSpec = tween(FadeDurationMs))
 }
 
@@ -28,6 +28,6 @@ val slideVerticalPopEnterTransition: (AnimatedContentTransitionScope<NavBackStac
 val slideVerticalPopExitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) = {
     slideOutVertically(
         targetOffsetY = { fullHeight -> (fullHeight * SlideOffsetRatio).toInt() },
-        animationSpec = tween(SlideDurationMs),
+        animationSpec = tween(SlideVerticalDurationMs),
     ) + fadeOut(animationSpec = tween(FadeDurationMs))
 }

@@ -16,11 +16,12 @@ import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.composable.SectionHeader2
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.atoms.CTDivider
 import com.benoitmanhes.designsystem.atoms.dividerItem
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
+import com.benoitmanhes.designsystem.atoms.spacer.spacerMediumItem
 import com.benoitmanhes.designsystem.molecule.topbar.CTFilledTopBar
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
+import com.benoitmanhes.designsystem.molecule.topbar.CTTopBarAction
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
@@ -35,6 +36,10 @@ fun EditDraftCacheRoute(
     navigateToPickDifficulty: (String) -> Unit,
     navigateToPickGround: (String) -> Unit,
     navigateToPickSize: (String) -> Unit,
+    navigateToPickDescription: (String) -> Unit,
+    navigateToPickUnlockInstructions: (String) -> Unit,
+    navigateToPickUnlockCode: (String) -> Unit,
+    navigateToCreationSuccess: (String) -> Unit,
     viewModel: EditCacheViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.editCacheState.collectAsState()
@@ -43,6 +48,7 @@ fun EditDraftCacheRoute(
     LaunchedEffect(navigation) {
         val navValue = navigation ?: return@LaunchedEffect
         when (navValue) {
+            EditCacheNavigation.Back -> navigateBack()
             is EditCacheNavigation.PickName -> navigateToPickName(navValue.draftCacheId)
             is EditCacheNavigation.PickType -> navigateToPickType(navValue.draftCacheId)
             is EditCacheNavigation.PickInitCoordinates -> navigateToPickInitCoordinates(navValue.draftCacheId)
@@ -50,6 +56,10 @@ fun EditDraftCacheRoute(
             is EditCacheNavigation.PickDifficulty -> navigateToPickDifficulty(navValue.draftCacheId)
             is EditCacheNavigation.PickGround -> navigateToPickGround(navValue.draftCacheId)
             is EditCacheNavigation.PickSize -> navigateToPickSize(navValue.draftCacheId)
+            is EditCacheNavigation.PickDescription -> navigateToPickDescription(navValue.draftCacheId)
+            is EditCacheNavigation.PickUnlockInstructions -> navigateToPickUnlockInstructions(navValue.draftCacheId)
+            is EditCacheNavigation.PickUnlockCode -> navigateToPickUnlockCode(navValue.draftCacheId)
+            is EditCacheNavigation.CreationSuccess -> navigateToCreationSuccess(navValue.cacheId)
         }
         viewModel.consumeNavigation()
     }
@@ -59,6 +69,7 @@ fun EditDraftCacheRoute(
             EditDraftCacheScreen(
                 uiState = uiState,
                 navigateBack = navigateBack,
+                delete = viewModel::showDeleteModal,
             )
         }
     }
@@ -68,17 +79,19 @@ fun EditDraftCacheRoute(
 private fun EditDraftCacheScreen(
     uiState: EditCacheViewModelState,
     navigateBack: () -> Unit,
+    delete: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             CTFilledTopBar(
                 title = TextSpec.Resources(R.string.startCreationModal_title),
                 navAction = CTNavAction.Back(navigateBack),
+                trailingAction = CTTopBarAction.Delete(delete),
             )
         },
         backgroundColor = CTTheme.color.background,
         bottomBar = {
-            uiState.bottomBar?.Content()
+            uiState.bottomActionBar?.Content()
         },
     ) { innerPadding ->
         LazyColumn(
@@ -108,7 +121,7 @@ private fun EditDraftCacheScreen(
             }
 
             if (uiState.showStepsSection) {
-                dividerItem()
+                sectionDividerItem()
                 SectionHeader2.lazyItem(
                     scope = this,
                     text = TextSpec.Resources(R.string.cacheEditor_stepSection_header),
@@ -121,7 +134,7 @@ private fun EditDraftCacheScreen(
             }
 
             if (uiState.showCharacteristicsSection) {
-                dividerItem()
+                sectionDividerItem()
                 SectionHeader2.lazyItem(
                     scope = this,
                     text = TextSpec.Resources(R.string.cacheEditor_characteristicsSection_header),
@@ -129,20 +142,41 @@ private fun EditDraftCacheScreen(
                 )
             }
             uiState.propertiesSection?.let {
-                sectionHeaderItem(TextSpec.Resources(R.string.stepEditor_propertiesSection_title))
                 uiState.propertiesSection.lazyItem(this)
             }
 
+            uiState.descriptionSection?.let {
+                sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_description_header))
+                uiState.descriptionSection.lazyItem(this, key = "cache-description")
+            }
+
             if (uiState.showLockSection) {
-                dividerItem()
+                sectionDividerItem()
                 SectionHeader2.lazyItem(
                     scope = this,
                     text = TextSpec.Resources(R.string.cacheEditor_LockSection_header),
                     icon = CTTheme.composed { icon.Key },
                 )
             }
+
+            uiState.unlockInstructions?.let {
+                sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_unlockingInstructions_header))
+                uiState.unlockInstructions.lazyItem(this, key = "cache-unlock-instructions")
+            }
+
+            uiState.unlockCode?.let {
+                sectionHeaderItem(TextSpec.Resources(R.string.cacheEditor_unlockingCode_header))
+                uiState.unlockCode.lazyItem(this, key = "cache-unlock-code")
+            }
+
+            SpacerLarge.item(this)
         }
     }
+}
+
+private fun LazyListScope.sectionDividerItem() {
+    spacerMediumItem()
+    dividerItem()
 }
 
 private fun LazyListScope.sectionHeaderItem(title: TextSpec) {

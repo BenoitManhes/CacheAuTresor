@@ -8,7 +8,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.common.screen.pickjauge.PickJaugeScreen
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.designsystem.theme.CTColorTheme
-import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
 fun PickDifficultyRoute(

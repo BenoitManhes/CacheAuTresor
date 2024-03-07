@@ -4,16 +4,21 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.benoitmanhes.cacheautresor.screen.home.edit.availablefinalplaces.AvailableFinalPlacesRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.creationsuccess.CreationSuccessRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.EditDraftCacheRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftstep.EditDraftStepRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.editinstructions.EditInstructionsRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.pickdescription.PickDescriptionRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickdifficulty.PickDifficultyRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickground.PickGroundRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickinitcoordinates.PickInitCoordinatesRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickname.PickDraftCacheNameRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.picksize.PickSizeRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickstepclue.PickStepClueRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickstepcoordinates.PickStepCoordinatesRoute
-import com.benoitmanhes.cacheautresor.screen.home.edit.picktype.PickTypeDraftCacheScreen
+import com.benoitmanhes.cacheautresor.screen.home.edit.picktype.PickTypeDraftCacheRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.pickunlockcode.PickUnlockCodeRoute
+import com.benoitmanhes.cacheautresor.screen.home.edit.pickunlockinstruction.PickUnlockInstructionsRoute
 import com.benoitmanhes.cacheautresor.screen.home.edit.pickvalidationcode.PickStepValidationCodeRoute
 
 fun NavGraphBuilder.creationNavGraph(
@@ -62,7 +67,33 @@ fun NavGraphBuilder.creationNavGraph(
                     EditCacheDestination.PickGround.getRoute(draftCacheId)
                 )
             },
-            navigateToPickSize = {},
+            navigateToPickSize = { draftCacheId ->
+                navController.navigate(
+                    EditCacheDestination.PickSize.getRoute(draftCacheId)
+                )
+            },
+            navigateToPickDescription = { draftCacheId ->
+                navController.navigate(
+                    EditCacheDestination.PickDescription.getRoute(draftCacheId)
+                )
+            },
+            navigateToPickUnlockInstructions = { draftCacheId ->
+                navController.navigate(
+                    EditCacheDestination.PickUnlockInstructions.getRoute(draftCacheId)
+                )
+            },
+            navigateToPickUnlockCode = { draftCacheId ->
+                navController.navigate(
+                    EditCacheDestination.PickUnlockCode.getRoute(draftCacheId)
+                )
+            },
+            navigateToCreationSuccess = { cacheId ->
+                navController.navigate(
+                    EditCacheDestination.CreationSuccess.getRoute(cacheId)
+                ) {
+                    popUpTo(EditCacheDestination.EditDraftCache.route) { inclusive = true }
+                }
+            }
         )
     }
 
@@ -73,7 +104,7 @@ fun NavGraphBuilder.creationNavGraph(
     }
 
     composable(EditCacheDestination.PickTypeDraftCache.route) {
-        PickTypeDraftCacheScreen(
+        PickTypeDraftCacheRoute(
             navigateBack = navController::popBackStack,
         )
     }
@@ -144,5 +175,25 @@ fun NavGraphBuilder.creationNavGraph(
 
     composable(EditCacheDestination.PickGround.route) {
         PickGroundRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.PickSize.route) {
+        PickSizeRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.PickDescription.route) {
+        PickDescriptionRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.PickUnlockInstructions.route) {
+        PickUnlockInstructionsRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.PickUnlockCode.route) {
+        PickUnlockCodeRoute(navigateBack = navController::popBackStack)
+    }
+
+    composable(EditCacheDestination.CreationSuccess.route) {
+        CreationSuccessRoute(close = navController::popBackStack)
     }
 }

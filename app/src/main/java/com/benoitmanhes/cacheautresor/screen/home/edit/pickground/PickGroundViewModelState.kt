@@ -14,4 +14,3 @@ data class PickGroundViewModelState(
     override val topBarTitle: TextSpec,
     override val bottomActionBar: BottomActionBarState,
 ) : PickJaugeUiState
-

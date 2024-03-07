@@ -2,10 +2,12 @@ package com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache
 
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.EditCrewNameModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.row.MapRowPickerState
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getMarkerIcon
+import com.benoitmanhes.cacheautresor.common.extensions.getSizeIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
 import com.benoitmanhes.cacheautresor.common.extensions.orPlaceHolder
 import com.benoitmanhes.cacheautresor.common.extensions.toCacheType
@@ -30,6 +32,7 @@ import com.benoitmanhes.designsystem.molecule.sticker.CTStickerIconState
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
+import com.benoitmanhes.domain.model.CacheCreationStep
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.model.DraftCacheStep
 import com.benoitmanhes.domain.uimodel.UIDraftCache
@@ -118,16 +121,18 @@ internal fun EditCacheViewModel.getStepSection(steps: UIDraftCache.Steps, draftC
                 label = TextSpec.Resources(R.string.cacheEditor_stepsFinal_label),
                 iconMarker = CacheMarkerIcon.Owner(CTColorTheme.Coop.dayColorScheme.primary),
             ),
-            addCrewMember = {
-                showEditCrewMemberNameModal(
-                    crewRef = "",
-                    error = false,
-                ) { newCrewRef ->
-                    addCrewMemberDraftCacheUseCase(draftCacheId = draftCacheId, crewMemberRef = newCrewRef)
-                }
-            }
+            addCrewMember = ::addCrewMember,
         )
     }
+
+private fun EditCacheViewModel.addCrewMember() {
+    showEditCrewMemberNameModal(
+        crewRef = "",
+        error = false,
+    ) { newCrewRef ->
+        addCrewMemberDraftCacheUseCase(draftCacheId = draftCacheId, crewMemberRef = newCrewRef)
+    }
+}
 
 internal fun EditCacheViewModel.showEditCrewMemberNameModal(
     crewRef: String,
@@ -232,10 +237,159 @@ internal fun EditCacheViewModel.propertiesSection(draftCache: DraftCache): Draft
         ),
         size = CTJaugeState(
             rate = draftCache.size?.toJaugeRate(),
-            icon = CTTheme.composed { icon.BoxSmall },
+            icon = draftCache.size?.getSizeIcon() ?: CTTheme.composed { icon.BoxMedium },
             text = draftCache.size?.toSizeText().orPlaceHolder(),
             onClick = {
                 _navigation.value = EditCacheNavigation.PickSize(draftCache.draftCacheId)
             }
         ),
     )
+
+internal fun EditCacheViewModel.stepsSectionIsVisible(creationStep: CacheCreationStep): Boolean =
+    creationStep::class in setOf(
+        CacheCreationStep.StepClassical::class,
+        CacheCreationStep.StepMystery::class,
+        CacheCreationStep.StepCoop::class,
+        CacheCreationStep.StepPiste::class,
+        CacheCreationStep.StepFinal::class,
+        CacheCreationStep.CoopAddCrewMember::class,
+    ) || characteristicsSectionIsVisible(creationStep)
+
+internal fun EditCacheViewModel.characteristicsSectionIsVisible(creationStep: CacheCreationStep): Boolean =
+    creationStep in setOf(
+        CacheCreationStep.Difficulty,
+        CacheCreationStep.Ground,
+        CacheCreationStep.Size,
+        CacheCreationStep.Description,
+    ) || lockSectionIsVisible(creationStep)
+
+internal fun EditCacheViewModel.lockSectionIsVisible(creationStep: CacheCreationStep): Boolean =
+    creationStep in setOf(
+        CacheCreationStep.UnlockInstruction,
+        CacheCreationStep.UnlockCode,
+        CacheCreationStep.Ready,
+    )
+
+internal fun EditCacheViewModel.bottomActionBar(creationStep: CacheCreationStep): BottomActionBarState =
+    BottomActionBarState(
+        title = getBottomActionBarTitle(creationStep),
+        message = getBottomActionBarDescription(creationStep),
+        primaryButton = PrimaryButtonState(
+            text = getActionLabel(creationStep),
+            onClick = { onClickBottomBar(creationStep) },
+        ),
+    )
+
+private fun EditCacheViewModel.getBottomActionBarTitle(creationStep: CacheCreationStep): TextSpec =
+    if (creationStep == CacheCreationStep.Ready) {
+        TextSpec.Resources(R.string.editCache_bottomActionBar_title_ready)
+    } else {
+        TextSpec.Resources(R.string.editCache_bottomActionBar_title_nextStep)
+    }
+
+private fun EditCacheViewModel.getBottomActionBarDescription(creationStep: CacheCreationStep): TextSpec? = when (creationStep) {
+    is CacheCreationStep.StepCoop -> TextSpec.Resources(
+        R.string.editCache_bottomActionBar_description_coop,
+        creationStep.index + 1,
+        creationStep.crewMemberRef,
+    )
+
+    CacheCreationStep.CoopAddCrewMember -> TextSpec.Resources(
+        R.string.editCache_bottomActionBar_description_coopCrewMember
+    )
+
+    else -> null
+}
+
+private fun EditCacheViewModel.getActionLabel(creationStep: CacheCreationStep): TextSpec = when (creationStep) {
+    CacheCreationStep.Name -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_name)
+    CacheCreationStep.Type -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_type)
+    CacheCreationStep.InitCoordinates -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_initCoordinates)
+    is CacheCreationStep.StepClassical -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_stepClassical)
+    is CacheCreationStep.StepMystery -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_stepMystery)
+    is CacheCreationStep.StepPiste -> TextSpec.Resources(
+        R.string.editCache_bottomActionBar_button_stepPiste,
+        creationStep.index + 1,
+    )
+
+    is CacheCreationStep.StepCoop -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_stepCoop)
+    is CacheCreationStep.StepFinal -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_stepFinal)
+    is CacheCreationStep.CoopAddCrewMember -> TextSpec.Resources(
+        R.string.editCache_bottomActionBar_button_addCoopMember
+    )
+
+    CacheCreationStep.Difficulty -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_difficulty)
+    CacheCreationStep.Ground -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_ground)
+    CacheCreationStep.Size -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_size)
+    CacheCreationStep.Description -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_description)
+    CacheCreationStep.UnlockInstruction -> TextSpec.Resources(
+        R.string.editCache_bottomActionBar_button_unlockInstruction
+    )
+
+    CacheCreationStep.UnlockCode -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_unlockCode)
+    CacheCreationStep.Ready -> TextSpec.Resources(R.string.editCache_bottomActionBar_button_activate)
+}
+
+private fun EditCacheViewModel.onClickBottomBar(creationStep: CacheCreationStep) {
+    when (creationStep) {
+        CacheCreationStep.Name -> {
+            _navigation.value = EditCacheNavigation.PickName(draftCacheId)
+        }
+
+        CacheCreationStep.Type -> {
+            _navigation.value = EditCacheNavigation.PickType(draftCacheId)
+        }
+
+        CacheCreationStep.InitCoordinates -> {
+            _navigation.value = EditCacheNavigation.PickInitCoordinates(draftCacheId)
+        }
+
+        is CacheCreationStep.StepClassical -> {
+            _navigation.value = EditCacheNavigation.EditDraftStep(draftCacheId = draftCacheId, draftStepId = creationStep.stepRef)
+        }
+
+        is CacheCreationStep.StepMystery -> {
+            _navigation.value = EditCacheNavigation.EditDraftStep(draftCacheId = draftCacheId, draftStepId = creationStep.stepRef)
+        }
+
+        is CacheCreationStep.StepPiste -> {
+            _navigation.value = EditCacheNavigation.EditDraftStep(draftCacheId = draftCacheId, draftStepId = creationStep.stepRef)
+        }
+
+        is CacheCreationStep.StepCoop -> {
+            _navigation.value = EditCacheNavigation.EditDraftStep(draftCacheId = draftCacheId, draftStepId = creationStep.stepRef)
+        }
+
+        is CacheCreationStep.StepFinal -> {
+            _navigation.value = EditCacheNavigation.EditDraftStep(draftCacheId = draftCacheId, draftStepId = creationStep.stepRef)
+        }
+
+        CacheCreationStep.CoopAddCrewMember -> addCrewMember()
+
+        CacheCreationStep.Difficulty -> {
+            _navigation.value = EditCacheNavigation.PickDifficulty(draftCacheId)
+        }
+
+        CacheCreationStep.Ground -> {
+            _navigation.value = EditCacheNavigation.PickGround(draftCacheId)
+        }
+
+        CacheCreationStep.Size -> {
+            _navigation.value = EditCacheNavigation.PickSize(draftCacheId)
+        }
+
+        CacheCreationStep.Description -> {
+            _navigation.value = EditCacheNavigation.PickDescription(draftCacheId)
+        }
+
+        CacheCreationStep.UnlockInstruction -> {
+            _navigation.value = EditCacheNavigation.PickUnlockInstructions(draftCacheId)
+        }
+
+        CacheCreationStep.UnlockCode -> {
+            _navigation.value = EditCacheNavigation.PickUnlockCode(draftCacheId)
+        }
+
+        CacheCreationStep.Ready -> showModalActivation()
+    }
+}

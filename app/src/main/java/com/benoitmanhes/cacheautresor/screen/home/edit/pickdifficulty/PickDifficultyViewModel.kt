@@ -60,6 +60,7 @@ class PickDifficultyViewModel @Inject constructor(
                 secondaryButton = PrimaryButtonState(
                     text = TextSpec.Resources(R.string.common_reinitialize),
                     onClick = { currentDraftCache?.difficulty?.let(::pickARow) },
+                    status = ButtonStatus.DISABLE,
                 ),
             )
         )

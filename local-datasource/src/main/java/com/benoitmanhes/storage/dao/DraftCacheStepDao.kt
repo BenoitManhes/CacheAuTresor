@@ -27,6 +27,9 @@ interface DraftCacheStepDao {
     @Query("SELECT * FROM `draft-cache-step` WHERE stepDraftId = :id")
     fun findWithId(id: String): RoomDraftCacheStep?
 
+    @Query("SELECT * FROM `draft-cache-step` WHERE stepDraftId IN (:ids)")
+    fun findWithIds(ids: List<String>): List<RoomDraftCacheStep>
+
     @Query("SELECT * FROM `draft-cache-step` WHERE stepDraftId = :id")
     fun findWithIdFlow(id: String): Flow<RoomDraftCacheStep?>
 

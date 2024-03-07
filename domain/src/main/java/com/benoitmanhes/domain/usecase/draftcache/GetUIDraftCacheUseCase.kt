@@ -10,6 +10,7 @@ import javax.inject.Inject
 class GetUIDraftCacheUseCase @Inject constructor(
     private val draftCacheRepository: DraftCacheRepository,
     private val getUIDraftCacheStepsUseCase: GetUIDraftCacheStepsUseCase,
+    private val getCacheCreationStep: GetCacheCreationStep,
 ) : CTUseCase() {
 
     operator fun invoke(draftCacheId: String): Flow<UIDraftCache?> = combine(
@@ -20,6 +21,7 @@ class GetUIDraftCacheUseCase @Inject constructor(
             UIDraftCache(
                 draftCache = draftCache,
                 steps = steps,
+                creationStep = getCacheCreationStep(draftCache, steps),
             )
         }
     }.useCaseCatch { null }

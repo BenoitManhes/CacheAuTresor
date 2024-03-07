@@ -6,14 +6,19 @@ import com.benoitmanhes.cacheautresor.common.composable.row.StickerRowPickerStat
 import com.benoitmanhes.cacheautresor.common.composable.row.TextRowPickerState
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.section.DraftPropertiesSectionState
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.section.DraftStepSectionState
+import com.benoitmanhes.common.compose.text.TextSpec
 
 data class EditCacheViewModelState(
-    val bottomBar: BottomActionBarState? = null,
+    val bottomActionBar: BottomActionBarState? = null,
     val cacheName: TextRowPickerState? = null,
     val cacheType: StickerRowPickerState? = null,
     val initCoordinates: MapRowPickerState? = null,
     val stepSection: DraftStepSectionState? = null,
     val propertiesSection: DraftPropertiesSectionState? = null,
+    val descriptionSection: TextRowPickerState? = null,
+    val unlockInstructions: TextRowPickerState? = null,
+    val unlockCode: TextRowPickerState? = null,
+    val personalNotes: TextSpec = TextSpec.RawString(""),
 ) {
 
     private val generalSection: List<Any?> = listOf(
@@ -24,10 +29,16 @@ data class EditCacheViewModelState(
 
     private val characteristicsSection: List<Any?> = listOf(
         propertiesSection,
+        descriptionSection,
+    )
+
+    private val unlockingSection: List<Any?> = listOf(
+        unlockInstructions,
+        unlockCode,
     )
 
     val showGeneralSection: Boolean = generalSection.any { it != null }
     val showStepsSection: Boolean = stepSection != null
     val showCharacteristicsSection: Boolean = characteristicsSection.any { it != null }
-    val showLockSection: Boolean = false
+    val showLockSection: Boolean = unlockingSection.any { it != null }
 }

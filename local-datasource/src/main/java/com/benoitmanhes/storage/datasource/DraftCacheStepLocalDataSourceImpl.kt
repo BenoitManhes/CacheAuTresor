@@ -39,6 +39,12 @@ class DraftCacheStepLocalDataSourceImpl @Inject constructor(
         draftCacheStepDao.findWithId(dratCacheStepId)?.toAppModel()
     }
 
+    override suspend fun getDraftCacheSteps(stepIds: List<String>): List<DraftCacheStep> = withContext(Dispatchers.IO) {
+        draftCacheStepDao.findWithIds(stepIds)
+            .map { it.toAppModel() }
+            .sortedBy { stepIds.indexOf(it.stepDraftId) }
+    }
+
     override fun getDraftCacheStepFlow(dratCacheStepId: String): Flow<DraftCacheStep?> =
         draftCacheStepDao.findWithIdFlow(dratCacheStepId).map { it?.toAppModel() }
 

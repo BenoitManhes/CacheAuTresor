@@ -8,7 +8,6 @@ import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBa
 import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
-import com.benoitmanhes.cacheautresor.screen.snackbar.showError
 import com.benoitmanhes.cacheautresor.screen.snackbar.showOnFailure
 import com.benoitmanhes.common.compose.extensions.nullIfBlank
 import com.benoitmanhes.common.compose.extensions.textSpec
@@ -34,8 +33,12 @@ class EditInstructionsViewModel @Inject constructor(
     getUIDraftStepDetailUseCase: GetUIDraftStepDetailUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val draftCacheId: String = savedStateHandle.get<String>(EditCacheDestination.EditInstructions.draftCacheIdArg).orEmpty()
-    private val draftStepId: String = savedStateHandle.get<String>(EditCacheDestination.EditInstructions.draftStepIdArg).orEmpty()
+    private val draftCacheId: String = savedStateHandle.get<String>(
+        EditCacheDestination.EditInstructions.draftCacheIdArg
+    ).orEmpty()
+    private val draftStepId: String = savedStateHandle.get<String>(
+        EditCacheDestination.EditInstructions.draftStepIdArg
+    ).orEmpty()
 
     private val _navigateBack = MutableStateFlow<Boolean?>(null)
     val navigateBack: StateFlow<Boolean?> get() = _navigateBack.asStateFlow()
@@ -123,7 +126,10 @@ class EditInstructionsViewModel @Inject constructor(
         UIDraftStepDetail.Type.Classical -> TextSpec.Resources(R.string.editInstructions_header_classical)
         UIDraftStepDetail.Type.MysteryEnigma -> TextSpec.Resources(R.string.editInstructions_header_mystery)
         UIDraftStepDetail.Type.Final -> TextSpec.Resources(R.string.editInstructions_header_final)
-        is UIDraftStepDetail.Type.Piste -> TextSpec.Resources(R.string.editInstructions_header_piste, stepType.index + 1)
+        is UIDraftStepDetail.Type.Piste -> TextSpec.Resources(
+            R.string.editInstructions_header_piste,
+            stepType.index + 1
+        )
         is UIDraftStepDetail.Type.Coop -> TextSpec.Resources(
             R.string.editInstructions_header_piste,
             stepType.index + 1,

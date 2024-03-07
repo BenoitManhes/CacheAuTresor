@@ -17,16 +17,20 @@ import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
+import com.benoitmanhes.cacheautresor.screen.snackbar.showOnFailure
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.result.CTResult
+import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.extensions.getTypeColorTheme
+import com.benoitmanhes.domain.model.CacheCreationStep
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.usecase.draftcache.AddCrewMemberDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.DeleteCrewMemberDraftCacheUseCase
+import com.benoitmanhes.domain.usecase.draftcache.DeleteDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.EditCrewMemberNameUseCase
 import com.benoitmanhes.domain.usecase.draftcache.GetUIDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.NewDraftStepUseCase
@@ -47,34 +51,61 @@ class EditCacheViewModel @Inject constructor(
     internal val editCrewMemberNameUseCase: EditCrewMemberNameUseCase,
     internal val addCrewMemberDraftCacheUseCase: AddCrewMemberDraftCacheUseCase,
     private val newDraftStepUseCase: NewDraftStepUseCase,
+    private val deleteDraftCacheUseCase: DeleteDraftCacheUseCase,
     private val loadingManager: LoadingManager,
     private val snackbarManager: SnackbarManager,
     getUIDraftCacheUseCase: GetUIDraftCacheUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val draftCacheId: String = savedStateHandle.get<String>(EditCacheDestination.EditDraftCache.arg).orEmpty()
+    internal val draftCacheId: String = savedStateHandle.get<String>(EditCacheDestination.EditDraftCache.arg).orEmpty()
 
     val editCacheState: StateFlow<EditCacheViewModelState> = getUIDraftCacheUseCase(draftCacheId)
         .map { uiDraftCache ->
             val draftCache = uiDraftCache?.draftCache
+            val creationStep = uiDraftCache?.creationStep ?: CacheCreationStep.Name
             EditCacheViewModelState(
+                bottomActionBar = bottomActionBar(creationStep),
                 cacheName = TextRowPickerState(
                     text = draftCache?.title?.textSpec().orPlaceHolder(),
                     onClick = { _navigation.value = EditCacheNavigation.PickName(draftCacheId) },
                 ),
+
                 cacheType = StickerRowPickerState(
                     sticker = draftCache?.type?.let(::getTypeSticker),
                     colorTheme = draftCache?.type?.toCacheType()?.getTypeColorTheme() ?: CTColorTheme.Cartography,
                     onClick = { _navigation.value = EditCacheNavigation.PickType(draftCacheId) },
                 ),
+
                 initCoordinates = MapRowPickerState(
                     uiMarker = draftCache?.let(::getInitCoordinatesUIMarker),
                     text = draftCache?.coordinates?.format(Coordinates.Format.DM).orPlaceHolder(),
                     key = "init.coordinates",
                     onClick = { _navigation.value = EditCacheNavigation.PickInitCoordinates(draftCacheId) }
                 ),
-                stepSection = uiDraftCache?.steps?.let { getStepSection(it, draftCacheId) },
-                propertiesSection = draftCache?.let(::propertiesSection),
+
+                stepSection = uiDraftCache?.steps?.let { getStepSection(it, draftCacheId) }
+                    ?.takeIf { stepsSectionIsVisible(creationStep) },
+
+                propertiesSection = draftCache?.let(::propertiesSection)
+                    ?.takeIf { characteristicsSectionIsVisible(creationStep) },
+
+                descriptionSection = TextRowPickerState(
+                    text = draftCache?.description?.textSpec().orPlaceHolder(),
+                    onClick = { _navigation.value = EditCacheNavigation.PickDescription(draftCacheId) },
+                )
+                    .takeIf { characteristicsSectionIsVisible(creationStep) },
+
+                unlockInstructions = TextRowPickerState(
+                    text = draftCache?.lockDescription?.textSpec().orPlaceHolder(),
+                    onClick = { _navigation.value = EditCacheNavigation.PickUnlockInstructions(draftCacheId) },
+                )
+                    .takeIf { lockSectionIsVisible(creationStep) },
+
+                unlockCode = TextRowPickerState(
+                    text = draftCache?.lockCode?.textSpec().orPlaceHolder(),
+                    onClick = { _navigation.value = EditCacheNavigation.PickUnlockCode(draftCacheId) },
+                )
+                    .takeIf { lockSectionIsVisible(creationStep) },
             )
         }.stateIn(
             scope = viewModelScope,
@@ -131,9 +162,58 @@ class EditCacheViewModel @Inject constructor(
 
         )
     }
+
+    fun showDeleteModal() {
+        modalBottomSheetManager.showModal(
+            ClassicModalBottomSheet(
+                icon = CTTheme.composed { icon.Delete },
+                title = TextSpec.Resources(R.string.editCache_deleteModal_title),
+                message = TextSpec.Resources(R.string.editCache_deleteModal_message),
+                color = CTTheme.composed { color.critical },
+                cancelAction = CommonModalAction.finallyNo(),
+                confirmAction = CommonModalAction.delete(::deleteDraftCache),
+            ),
+        )
+    }
+
+    private fun deleteDraftCache() {
+        viewModelScope.launch {
+            deleteDraftCacheUseCase(draftCacheId).collect { result ->
+                loadingManager.handleFromResult(result)
+                snackbarManager.showOnFailure(result)
+                if (result is CTResult.Success) {
+                    _navigation.value = EditCacheNavigation.Back
+                }
+            }
+        }
+    }
+
+    internal fun showModalActivation() {
+        modalBottomSheetManager.showModal(
+            ClassicModalBottomSheet(
+                icon = CTTheme.composed { icon.BoxBig },
+                title = TextSpec.Resources(R.string.modalActivation_title),
+                message = TextSpec.Resources(R.string.modalActivation_message),
+                confirmAction = PrimaryButtonState(
+                    text = TextSpec.Resources(R.string.modalActivation_action_yes),
+                    onClick = ::activate,
+                ),
+                cancelAction = PrimaryButtonState(
+                    text = TextSpec.Resources(R.string.modalActivation_action_no),
+                    onClick = {}, // nothing
+                ),
+            )
+        )
+    }
+
+    private fun activate() {
+        _navigation.value = EditCacheNavigation.CreationSuccess("CL-owned-test")
+    }
 }
 
 sealed interface EditCacheNavigation {
+    data object Back : EditCacheNavigation
+
     @JvmInline
     value class PickName(val draftCacheId: String) : EditCacheNavigation
 
@@ -156,4 +236,16 @@ sealed interface EditCacheNavigation {
 
     @JvmInline
     value class PickSize(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class PickDescription(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class PickUnlockInstructions(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class PickUnlockCode(val draftCacheId: String) : EditCacheNavigation
+
+    @JvmInline
+    value class CreationSuccess(val cacheId: String) : EditCacheNavigation
 }

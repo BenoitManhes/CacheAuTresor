@@ -50,7 +50,7 @@ fun Cache.Type.getIcon(): ComposeProvider<IconSpec> = when (this) {
     is Cache.Type.Piste -> CTTheme.composed { icon.Piste }
 }
 
-fun Cache.getSizeIcon(): ComposeProvider<IconSpec> = when (this.size) {
+fun CacheSize.getSizeIcon(): ComposeProvider<IconSpec> = when (this) {
     CacheSize.Micro -> CTTheme.composed { icon.BoxMicro }
     CacheSize.Small -> CTTheme.composed { icon.BoxSmall }
     CacheSize.Regular -> CTTheme.composed { icon.BoxMedium }

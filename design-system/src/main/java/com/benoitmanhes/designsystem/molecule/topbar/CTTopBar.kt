@@ -60,7 +60,7 @@ fun CTTopBar(
 
         trailingAction?.let {
             CTIconButton(
-                icon = trailingAction.icon,
+                icon = trailingAction.icon(),
                 size = Dimens.IconButtonSize.Medium,
                 onClick = trailingAction.onClick
             )

@@ -1,11 +1,13 @@
 package com.benoitmanhes.domain.uimodel
 
+import com.benoitmanhes.domain.model.CacheCreationStep
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.model.DraftCacheStep
 
 data class UIDraftCache(
     val draftCache: DraftCache,
     val steps: Steps?,
+    val creationStep: CacheCreationStep,
 ) {
     sealed interface Steps {
         data class Classical(

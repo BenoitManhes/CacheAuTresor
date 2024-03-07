@@ -104,12 +104,23 @@ data class CTSelectionCardState(
     val title: TextSpec,
     val description: TextSpec?,
     val isSelected: Boolean,
-    val colorTheme: CTColorTheme,
+    val colorTheme: CTColorTheme? = null,
     val onClick: () -> Unit,
 ) {
     @Composable
     fun Content(modifier: Modifier = Modifier) {
-        CTTheme(colorTheme) {
+        if (colorTheme != null) {
+            CTTheme(colorTheme) {
+                CTSelectionCard(
+                    icon = icon(),
+                    title = title,
+                    description = description,
+                    isSelected = isSelected,
+                    onClick = onClick,
+                    modifier = modifier
+                )
+            }
+        } else {
             CTSelectionCard(
                 icon = icon(),
                 title = title,

@@ -35,8 +35,12 @@ class PickStepClueViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val draftCacheId: String = savedStateHandle.get<String>(EditCacheDestination.PickStepClue.draftCacheIdArg).orEmpty()
-    private val draftStepId: String = savedStateHandle.get<String>(EditCacheDestination.PickStepClue.draftStepIdArg).orEmpty()
+    private val draftCacheId: String = savedStateHandle.get<String>(
+        EditCacheDestination.PickStepClue.draftCacheIdArg
+    ).orEmpty()
+    private val draftStepId: String = savedStateHandle.get<String>(
+        EditCacheDestination.PickStepClue.draftStepIdArg
+    ).orEmpty()
 
     private var currentStep: DraftCacheStep? = null
 
@@ -130,11 +134,14 @@ class PickStepClueViewModel @Inject constructor(
             ButtonStatus.ENABLE
         }
 
-    private fun getTopBarTitle(stepType: UIDraftStepDetail.Type): TextSpec = when(stepType) {
+    private fun getTopBarTitle(stepType: UIDraftStepDetail.Type): TextSpec = when (stepType) {
         UIDraftStepDetail.Type.Classical -> TextSpec.Resources(R.string.pickStepClue_topBar_title_classical)
         UIDraftStepDetail.Type.MysteryEnigma -> TextSpec.Resources(R.string.pickStepClue_topBar_title_mystery)
         UIDraftStepDetail.Type.Final -> TextSpec.Resources(R.string.pickStepClue_topBar_title_final)
-        is UIDraftStepDetail.Type.Piste -> TextSpec.Resources(R.string.pickStepClue_topBar_title_piste, stepType.index + 1)
+        is UIDraftStepDetail.Type.Piste -> TextSpec.Resources(
+            R.string.pickStepClue_topBar_title_piste,
+            stepType.index + 1
+        )
         is UIDraftStepDetail.Type.Coop -> TextSpec.Resources(
             R.string.pickStepClue_topBar_title_coop,
             stepType.index + 1,

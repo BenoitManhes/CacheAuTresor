@@ -11,7 +11,6 @@ data class DraftCache(
     val difficulty: Float?,
     val ground: Float?,
     val size: CacheSize?,
-    val discovered: Boolean?,
     val startCreatingDate: Date?,
     val cacheIdsRequired: List<String>?,
     val tagIds: List<String>?,

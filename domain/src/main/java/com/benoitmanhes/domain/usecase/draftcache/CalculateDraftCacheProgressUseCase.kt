@@ -13,7 +13,7 @@ class CalculateDraftCacheProgressUseCase @Inject constructor() : CTUseCase() {
             draftCache.difficulty,
             draftCache.ground,
             draftCache.size,
-            draftCache.cacheIdsRequired,
+//            draftCache.cacheIdsRequired,
             draftCache.finalStepRef,
             draftCache.description,
             draftCache.lockDescription,

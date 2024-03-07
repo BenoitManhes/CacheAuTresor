@@ -39,10 +39,11 @@ enum class DestinationAnimation(
     companion object {
         private val destinationVerticalAnimation: List<String> = listOf(
             EditCacheDestination.AvailableFinalPlaces.route,
-            EditCacheDestination.EditDraftCache.route,
+            EditCacheDestination.CreationSuccess.route,
         )
 
         private val destinationStaticAnimation: List<String> = listOf(
+            EditCacheDestination.EditDraftCache.route,
             HomeRootDestination.route,
             HomeDestination.Create.route,
             HomeDestination.News.route,

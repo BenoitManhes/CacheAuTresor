@@ -33,6 +33,9 @@ class DraftCacheStepRepositoryImpl @Inject constructor(
     override suspend fun getDraftCacheStep(dratCacheStepId: String): DraftCacheStep? =
         draftCacheStepLocalDataSource.getDraftCacheStep(dratCacheStepId)
 
+    override suspend fun getDraftCacheSteps(stepsIds: List<String>): List<DraftCacheStep> =
+        draftCacheStepLocalDataSource.getDraftCacheSteps(stepsIds)
+
     override fun getDraftCacheStepFlow(dratCacheStepId: String): Flow<DraftCacheStep?> =
         draftCacheStepLocalDataSource.getDraftCacheStepFlow(dratCacheStepId)
 
