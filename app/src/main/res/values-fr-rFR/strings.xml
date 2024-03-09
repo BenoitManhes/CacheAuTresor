@@ -314,4 +314,13 @@
     <string name="modalActivation_message">Avant d’activer la cache il est nécéssaire que celle-ci soit en place.\n\nAs tu bien placé la cache ?</string>
     <string name="modalActivation_action_no">Pas encore</string>
     <string name="modalActivation_action_yes">La cache est placée</string>
+    <string name="error_draftCacheMissingField_message">Il manque un champs à la cache</string>
+    <string name="error_draftCacheMissingStep_message">Il manque une étape à la cache</string>
+    <string name="error_draftCacheStepIncomplete_message">Une étape de la cache est incomplète</string>
+    <string name="error_draftCacheMissingCrewMember_message">Il manque un member d’équipage</string>
+    <string name="error_draftCacheInitCoordinatesInvalid_title">Coordonnées de départ invalides</string>
+    <string name="error_draftCacheInitCoordinatesInvalid_message">Le point de départ de la cache est trop proche d’une autre cache existante.</string>
+    <string name="error_draftCacheFinalCoordinatesInvalid_title">Coordonnées finales invalides</string>
+    <string name="error_draftCacheFinalCoordinatesInvalid_message">L’emplacement final de la cache est trop proche d’une autre cache existante.</string>
+    <string name="alertDialog_wrongCoordinates_action_change">Changer le lieux</string>
 </resources>

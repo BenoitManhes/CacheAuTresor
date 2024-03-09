@@ -2,9 +2,7 @@ package com.benoitmanhes.domain.usecase.draftcache
 
 import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.domain.interfaces.repository.DraftCacheRepository
-import com.benoitmanhes.domain.interfaces.repository.DraftCacheStepRepository
 import com.benoitmanhes.domain.model.DraftCache
-import com.benoitmanhes.domain.model.DraftCacheStep
 import com.benoitmanhes.domain.usecase.CTUseCase
 import javax.inject.Inject
 

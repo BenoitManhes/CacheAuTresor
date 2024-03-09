@@ -13,6 +13,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.format
 import com.benoitmanhes.cacheautresor.common.extensions.orPlaceHolder
 import com.benoitmanhes.cacheautresor.common.extensions.toCacheType
 import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
+import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
@@ -20,6 +21,7 @@ import com.benoitmanhes.cacheautresor.screen.snackbar.showError
 import com.benoitmanhes.cacheautresor.screen.snackbar.showOnFailure
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
+import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.theme.CTColorTheme
@@ -29,6 +31,7 @@ import com.benoitmanhes.designsystem.utils.extensions.getTypeColorTheme
 import com.benoitmanhes.domain.model.CacheCreationStep
 import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.usecase.draftcache.AddCrewMemberDraftCacheUseCase
+import com.benoitmanhes.domain.usecase.draftcache.CreateCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.DeleteCrewMemberDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.DeleteDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.EditCrewMemberNameUseCase
@@ -54,6 +57,8 @@ class EditCacheViewModel @Inject constructor(
     private val deleteDraftCacheUseCase: DeleteDraftCacheUseCase,
     private val loadingManager: LoadingManager,
     private val snackbarManager: SnackbarManager,
+    private val createCacheUseCase: CreateCacheUseCase,
+    internal val alertDialogManager: AlertDialogManager,
     getUIDraftCacheUseCase: GetUIDraftCacheUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -207,7 +212,38 @@ class EditCacheViewModel @Inject constructor(
     }
 
     private fun activate() {
-        _navigation.value = EditCacheNavigation.CreationSuccess("CL-owned-test")
+        viewModelScope.launch {
+            createCacheUseCase(draftCacheId).collect { result ->
+                loadingManager.handleFromResult(result)
+                when (result) {
+                    is CTResult.Loading -> {} // nothing
+                    is CTResult.Success -> _navigation.value = EditCacheNavigation.CreationSuccess(result.successData.cacheId)
+                    is CTResult.Failure -> {
+                        when (result.error?.code) {
+                            CTDomainError.Code.DRAFT_CACHE_INIT_COORDINATES_INVALID -> {
+                                showInvalidCoordinatesAlertDialog(
+                                    error = result.error,
+                                    onClickChange = { _navigation.value = EditCacheNavigation.PickInitCoordinates(draftCacheId) }
+                                )
+                            }
+
+                            CTDomainError.Code.DRAFT_CACHE_FINAL_COORDINATES_INVALID -> {
+                                showInvalidCoordinatesAlertDialog(
+                                    error = result.error,
+                                    onClickChange = {
+                                        editCacheState.value.stepSection?.finalStep?.onClick?.invoke()
+                                    }
+                                )
+                            }
+
+                            else -> {
+                                snackbarManager.showError(result.error)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

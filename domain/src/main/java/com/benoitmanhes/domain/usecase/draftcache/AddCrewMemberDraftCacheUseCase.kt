@@ -8,8 +8,9 @@ import com.benoitmanhes.domain.interfaces.repository.DraftCacheStepRepository
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.model.DraftCacheStep
 import com.benoitmanhes.domain.usecase.CTUseCase
-import java.util.UUID
 import javax.inject.Inject
+import kotlin.math.absoluteValue
+import kotlin.random.Random
 
 class AddCrewMemberDraftCacheUseCase @Inject constructor(
     private val draftCacheRepository: DraftCacheRepository,
@@ -31,7 +32,7 @@ class AddCrewMemberDraftCacheUseCase @Inject constructor(
 
             // Create the first crewMember step
             val firstStep = DraftCacheStep(
-                stepDraftId = UUID.randomUUID().toString(),
+                stepDraftId = Random.nextLong().absoluteValue.toString(36).take(8),
                 instruction = null,
                 clue = null,
                 validationCode = null,

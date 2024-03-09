@@ -9,8 +9,9 @@ import com.benoitmanhes.domain.model.Coordinates
 import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.model.DraftCacheStep
 import com.benoitmanhes.domain.usecase.CTUseCase
-import java.util.UUID
 import javax.inject.Inject
+import kotlin.math.absoluteValue
+import kotlin.random.Random
 
 class ChangeDraftCacheTypeUseCase @Inject constructor(
     private val draftCacheRepository: DraftCacheRepository,
@@ -57,7 +58,7 @@ class ChangeDraftCacheTypeUseCase @Inject constructor(
         val finalStep = draftCache.finalStepRef?.let {
             draftCacheStepRepository.getDraftCacheStep(it)
         } ?: DraftCacheStep(
-            stepDraftId = UUID.randomUUID().toString(),
+            stepDraftId = Random.nextLong().absoluteValue.toString(36).take(8),
             instruction = null,
             clue = null,
             coordinates = null,
@@ -99,7 +100,7 @@ class ChangeDraftCacheTypeUseCase @Inject constructor(
      */
     private suspend fun createNewStep(coordinates: Coordinates? = null): String {
         val newDraftCacheStep = DraftCacheStep(
-            stepDraftId = UUID.randomUUID().toString(),
+            stepDraftId = Random.nextLong().absoluteValue.toString(36).take(8),
             instruction = null,
             clue = null,
             coordinates = coordinates,

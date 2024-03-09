@@ -34,7 +34,7 @@ class ProfileViewModel @Inject constructor(
     private val modalBottomSheetManager: ModalBottomSheetManager,
 ) : ViewModel() {
 
-    val uiState: StateFlow<ProfileViewModelState?> = getMyExplorerUseCase().map { result ->
+    val uiState: StateFlow<ProfileViewModelState?> = getMyExplorerUseCase.asFlow().map { result ->
         result.data?.let { myExplorer ->
             ProfileViewModelState(
                 explorerCard = myExplorer.toExplorerCard(),

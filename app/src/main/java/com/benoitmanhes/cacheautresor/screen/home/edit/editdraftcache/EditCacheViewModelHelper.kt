@@ -2,6 +2,8 @@ package com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache
 
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.CommonAlertDialogAction
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.ErrorAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.EditCrewNameModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.row.MapRowPickerState
@@ -17,6 +19,8 @@ import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
 import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
+import com.benoitmanhes.cacheautresor.error.localizedDescription
+import com.benoitmanhes.cacheautresor.error.localizedTitle
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.composable.CrewStepsCardState
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.section.DraftPropertiesSectionState
 import com.benoitmanhes.cacheautresor.screen.home.edit.editdraftcache.section.DraftStepSectionState
@@ -24,6 +28,7 @@ import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTSuspendResult
+import com.benoitmanhes.designsystem.molecule.alertdialog.AlertDialogAction
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonOption
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
@@ -392,4 +397,27 @@ private fun EditCacheViewModel.onClickBottomBar(creationStep: CacheCreationStep)
 
         CacheCreationStep.Ready -> showModalActivation()
     }
+}
+
+internal fun EditCacheViewModel.showInvalidCoordinatesAlertDialog(
+    error: CTDomainError?,
+    onClickChange: () -> Unit,
+) {
+    alertDialogManager.showDialog(
+        ErrorAlertDialog(
+            title = error?.localizedTitle(),
+            message = error?.localizedDescription(),
+            icon = CTTheme.composed { icon.LocationWrong },
+            actions = listOf(
+                CommonAlertDialogAction.gotIt {}.copy(
+                    type = AlertDialogAction.Type.Cancel,
+                ), // nothing
+                AlertDialogAction(
+                    text = TextSpec.Resources(R.string.alertDialog_wrongCoordinates_action_change),
+                    type = AlertDialogAction.Type.Dangerous,
+                    onClick = onClickChange,
+                ),
+            )
+        )
+    )
 }

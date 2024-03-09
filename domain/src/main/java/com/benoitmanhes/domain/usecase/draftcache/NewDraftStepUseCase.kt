@@ -9,8 +9,9 @@ import com.benoitmanhes.domain.model.DraftCache
 import com.benoitmanhes.domain.model.DraftCacheStep
 import com.benoitmanhes.domain.usecase.CTUseCase
 import kotlinx.coroutines.flow.Flow
-import java.util.UUID
 import javax.inject.Inject
+import kotlin.math.absoluteValue
+import kotlin.random.Random
 
 class NewDraftStepUseCase @Inject constructor(
     private val draftCacheRepository: DraftCacheRepository,
@@ -48,7 +49,7 @@ class NewDraftStepUseCase @Inject constructor(
     }
 
     private fun newStep(): DraftCacheStep = DraftCacheStep(
-        stepDraftId = UUID.randomUUID().toString(),
+        stepDraftId = Random.nextLong().absoluteValue.toString(36).take(8),
         instruction = null,
         clue = null,
         validationCode = null,

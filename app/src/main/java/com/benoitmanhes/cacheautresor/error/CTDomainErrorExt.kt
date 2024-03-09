@@ -15,6 +15,12 @@ fun CTDomainError.localizedTitle(): TextSpec = when (code) {
     CTDomainError.Code.CACHE_NOT_FOUND -> null
     CTDomainError.Code.CACHE_STEP_NOT_FOUND -> null
     CTDomainError.Code.CREW_MEMBER_NAME_UNAVAILABLE -> null
+    CTDomainError.Code.DRAFT_CACHE_MISSING_FIELD -> null
+    CTDomainError.Code.DRAFT_CACHE_MISSING_STEP -> null
+    CTDomainError.Code.DRAFT_CACHE_STEP_INCOMPLETE -> null
+    CTDomainError.Code.DRAFT_CACHE_MISSING_CREW_MEMBER -> null
+    CTDomainError.Code.DRAFT_CACHE_INIT_COORDINATES_INVALID -> TextSpec.Resources(R.string.error_draftCacheInitCoordinatesInvalid_title)
+    CTDomainError.Code.DRAFT_CACHE_FINAL_COORDINATES_INVALID -> TextSpec.Resources(R.string.error_draftCacheFinalCoordinatesInvalid_title)
     CTDomainError.Code.EXPLORER_NOT_FOUND -> null
     CTDomainError.Code.INVALID_COORDINATES -> TextSpec.Resources(R.string.pickCoordinates_alertArea_title)
     CTDomainError.Code.NO_AUTHENTICATION -> null
@@ -49,6 +55,12 @@ fun CTDomainError.localizedDescription(): TextSpec = when (code) {
     CTDomainError.Code.CACHE_STEP_NOT_FOUND -> null
     CTDomainError.Code.CACHE_USER_PROGRESS_NOT_FOUND -> null
     CTDomainError.Code.CREW_MEMBER_NAME_UNAVAILABLE -> TextSpec.Resources(R.string.modalEditCrewName_error)
+    CTDomainError.Code.DRAFT_CACHE_MISSING_FIELD -> TextSpec.Resources(R.string.error_draftCacheMissingField_message)
+    CTDomainError.Code.DRAFT_CACHE_MISSING_STEP -> TextSpec.Resources(R.string.error_draftCacheMissingStep_message)
+    CTDomainError.Code.DRAFT_CACHE_STEP_INCOMPLETE -> TextSpec.Resources(R.string.error_draftCacheStepIncomplete_message)
+    CTDomainError.Code.DRAFT_CACHE_MISSING_CREW_MEMBER -> TextSpec.Resources(R.string.error_draftCacheMissingCrewMember_message)
+    CTDomainError.Code.DRAFT_CACHE_INIT_COORDINATES_INVALID -> TextSpec.Resources(R.string.error_draftCacheInitCoordinatesInvalid_message)
+    CTDomainError.Code.DRAFT_CACHE_FINAL_COORDINATES_INVALID -> TextSpec.Resources(R.string.error_draftCacheFinalCoordinatesInvalid_message)
     CTDomainError.Code.EXPLORER_NOT_FOUND -> null
     CTDomainError.Code.INVALID_COORDINATES -> TextSpec.Resources(R.string.pickCoordinates_alertArea_message)
     CTDomainError.Code.NO_AUTHENTICATION -> null

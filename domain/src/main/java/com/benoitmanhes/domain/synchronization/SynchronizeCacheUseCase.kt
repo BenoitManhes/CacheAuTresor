@@ -9,8 +9,8 @@ class SynchronizeCacheUseCase @Inject constructor(
     private val cacheRepository: CacheRepository,
     private val syncRepository: SyncRepository,
 ) : CTUseCase() {
-    suspend operator fun invoke(): Unit = runCatch {
-        if (syncRepository.needToSyncCache()) {
+    suspend operator fun invoke(forceSynchro: Boolean = false): Unit = runCatch {
+        if (syncRepository.needToSyncCache() || forceSynchro) {
             cacheRepository.fetchAllCaches()
             syncRepository.resetLastSyncCache()
         }

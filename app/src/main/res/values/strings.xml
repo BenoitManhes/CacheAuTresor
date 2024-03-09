@@ -314,4 +314,13 @@
     <string name="modalActivation_message">Before activate the cache, it must be in place.\n\Did you hide the cache ?</string>
     <string name="modalActivation_action_no">Not yet</string>
     <string name="modalActivation_action_yes">The cache is hidden</string>
+    <string name="error_draftCacheMissingField_message">A cache field is missing</string>
+    <string name="error_draftCacheMissingStep_message">A cache step is missing</string>
+    <string name="error_draftCacheStepIncomplete_message">A step is incomplete</string>
+    <string name="error_draftCacheMissingCrewMember_message">A crew member is missing</string>
+    <string name="error_draftCacheInitCoordinatesInvalid_title">Invalid start coordinates</string>
+    <string name="error_draftCacheInitCoordinatesInvalid_message">The start coordinates are to close to another existing cache.</string>
+    <string name="error_draftCacheFinalCoordinatesInvalid_title">Invalid final coordinates</string>
+    <string name="error_draftCacheFinalCoordinatesInvalid_message">The cache final coordinates are to close to another existing cache.</string>
+    <string name="alertDialog_wrongCoordinates_action_change">Change place</string>
 </resources>

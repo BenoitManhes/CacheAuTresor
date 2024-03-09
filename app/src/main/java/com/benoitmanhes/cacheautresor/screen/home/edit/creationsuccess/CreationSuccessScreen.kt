@@ -94,6 +94,5 @@ private fun CreationSuccessScreen(
             onClick = close,
             modifier = Modifier.fillMaxWidth(),
         )
-
     }
 }

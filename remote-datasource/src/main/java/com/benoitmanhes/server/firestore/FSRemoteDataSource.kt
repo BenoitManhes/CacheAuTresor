@@ -55,6 +55,16 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
             .withCoroutine()
     }
 
+    protected suspend fun saveFSObjectList(modelList: List<M>) {
+        val collection = firestore.collection(collectionRef)
+        val batch = firestore.batch()
+        modelList.forEach { model ->
+            val fsModel = model.parseToFSModel()
+            batch.set(collection.document(fsModel.id!!), fsModel)
+        }
+        batch.commit().withCoroutine()
+    }
+
     protected suspend fun deleteFSObject(id: String) {
         firestore.collection(collectionRef)
             .document(id)

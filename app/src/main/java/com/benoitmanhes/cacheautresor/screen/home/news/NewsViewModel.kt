@@ -36,7 +36,7 @@ class NewsViewModel @Inject constructor(
     val uiState: StateFlow<NewsViewModelState> = combine(
         getBestExplorersUseCase(),
         getBestCartographersUseCase(),
-        getMyExplorerUseCase(),
+        getMyExplorerUseCase.asFlow(),
     ) { eliteExplorers, eliteCartographers, myExplorer ->
         val myExplorerId = myExplorer.data?.explorerId.orEmpty()
         NewsViewModelState(

@@ -15,7 +15,11 @@ class GetMyExplorerUseCase @Inject constructor(
     private val explorerRepository: ExplorerRepository,
 ) : CTUseCase() {
 
-    operator fun invoke(): Flow<CTResult<Explorer>> = useCaseFlow {
+    suspend operator fun invoke(): Explorer? = runCatchNullable {
+        explorerRepository.getExplorer(getMyExplorerIdUseCase())
+    }
+
+    fun asFlow(): Flow<CTResult<Explorer>> = useCaseFlow {
         val myExplorerId = getMyExplorerIdUseCase()
         emitAll(
             explorerRepository.getUserExplorerFlow(myExplorerId, fetch = false).map {

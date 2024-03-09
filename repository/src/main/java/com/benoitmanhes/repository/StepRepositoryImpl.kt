@@ -13,4 +13,8 @@ class StepRepositoryImpl @Inject constructor(
 
     override suspend fun getSteps(stepIds: List<String>): List<CacheStep> =
         remoteDataSource.getSteps(stepIds)
+
+    override suspend fun saveSteps(steps: List<CacheStep>) {
+        remoteDataSource.saveSteps(steps)
+    }
 }

@@ -9,7 +9,7 @@ import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showOnFailure
-import com.benoitmanhes.common.compose.extensions.nullIfBlank
+import com.benoitmanhes.common.kotlin.extensions.nullIfBlank
 import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.result.CTResult
