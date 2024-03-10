@@ -53,6 +53,6 @@ data class DraftPropertiesSectionState(
     }
 
     companion object {
-        private val contentType: String = "DraftPropertiesSection"
+        private const val contentType: String = "DraftPropertiesSection"
     }
 }

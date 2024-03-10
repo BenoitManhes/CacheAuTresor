@@ -25,15 +25,13 @@ fun <I : BottomNavBarItemEntry> CTBottomNavBar(
             backgroundColor = backgroundColor,
         ) {
             bottomBarItems.map { item ->
-                CTTheme(item.colorTheme) {
-                    BottomNavBarItem(
-                        isSelected = itemIsSelected(item),
-                        selectedIcon = item.selectedIcon(),
-                        unselectedIcon = item.unselectedIcon(),
-                        labelText = item.labelText,
-                        onClick = { onItemSelected?.invoke(item) },
-                    )
-                }
+                BottomNavBarItem(
+                    isSelected = itemIsSelected(item),
+                    selectedIcon = item.selectedIcon(),
+                    unselectedIcon = item.unselectedIcon(),
+                    labelText = item.labelText,
+                    onClick = { onItemSelected?.invoke(item) },
+                )
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.edit.editdraftstep
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -11,7 +10,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
@@ -20,9 +18,9 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
 import com.benoitmanhes.designsystem.molecule.topbar.CTFilledTopBar
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
+import com.benoitmanhes.designsystem.molecule.topbar.CTTopBarAction
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
-import com.benoitmanhes.designsystem.theme.composed
 
 @Composable
 fun EditDraftStepRoute(
@@ -80,6 +78,7 @@ private fun EditDraftStepScreen(
             CTFilledTopBar(
                 title = uiState.topBarTitle,
                 navAction = CTNavAction.Back(navigateBack),
+                trailingAction = uiState.onClickDelete?.let(CTTopBarAction::Delete),
             )
         },
         backgroundColor = CTTheme.color.background,
@@ -107,14 +106,6 @@ private fun EditDraftStepScreen(
                 sectionHeaderItem(TextSpec.Resources(R.string.stepEditor_validationCode_header))
                 textPicker.lazyItem(this, "validation.code.text.picker")
             }
-
-            uiState.deleteStepButton?.item(
-                scope = this,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .composed { padding(CTTheme.spacing.large) },
-                color = CTTheme.composed { color.textCritical },
-            )
         }
     }
 }

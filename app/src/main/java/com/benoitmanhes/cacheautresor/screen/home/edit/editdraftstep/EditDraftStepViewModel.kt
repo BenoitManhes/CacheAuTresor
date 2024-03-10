@@ -23,7 +23,6 @@ import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonType
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.domain.model.Coordinates
@@ -44,7 +43,7 @@ class EditDraftStepViewModel @Inject constructor(
     private val loadingManager: LoadingManager,
     private val snackbarManager: SnackbarManager,
     private val deleteDraftStepUseCase: DeleteDraftStepUseCase,
-    modalBottomSheetManager: ModalBottomSheetManager,
+    private val modalBottomSheetManager: ModalBottomSheetManager,
     getUIDraftStepDetailUseCase: GetUIDraftStepDetailUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -108,28 +107,28 @@ class EditDraftStepViewModel @Inject constructor(
                                 _navigate.value = EditDraftStepNavigation.EditValidationCode(draftCacheId, draftStepId)
                             },
                         ),
-                        deleteStepButton = getDeleteMessage(uiDraftStepDetail.type)?.let { message ->
-                            PrimaryButtonState(
-                                text = TextSpec.Resources(R.string.stepEditor_deleteButton),
-                                type = PrimaryButtonType.TEXT,
-                                onClick = {
-                                    modalBottomSheetManager.showModal(
-                                        ClassicModalBottomSheet(
-                                            icon = CTTheme.composed { icon.RemoveRoad },
-                                            title = TextSpec.Resources(R.string.modalDeleteStep_title),
-                                            message = message,
-                                            color = CTTheme.composed { color.critical },
-                                            cancelAction = CommonModalAction.finallyNo(),
-                                            confirmAction = CommonModalAction.delete(::deleteStep),
-                                        ),
-                                    )
-                                }
-                            )
+                        onClickDelete = getDeleteMessage(uiDraftStepDetail.type)?.let { message ->
+                            {
+                                showDeleteModal(message)
+                            }
                         },
                     )
                 }
             }
         }
+    }
+
+    private fun showDeleteModal(message: TextSpec) {
+        modalBottomSheetManager.showModal(
+            ClassicModalBottomSheet(
+                icon = CTTheme.composed { icon.RemoveRoad },
+                title = TextSpec.Resources(R.string.modalDeleteStep_title),
+                message = message,
+                color = CTTheme.composed { color.critical },
+                cancelAction = CommonModalAction.finallyNo(),
+                confirmAction = CommonModalAction.delete(::deleteStep),
+            ),
+        )
     }
 
     private fun deleteStep() {
@@ -206,11 +205,18 @@ class EditDraftStepViewModel @Inject constructor(
                 text = TextSpec.Resources(R.string.stepEditor_bottomActionBar_button_validationCode),
                 onClick = {
                     _navigate.value = EditDraftStepNavigation.EditValidationCode(draftCacheId, draftStepId)
-                }
-            )
+                },
+            ),
         )
 
-        else -> null
+        else -> BottomActionBarState(
+            primaryButton = PrimaryButtonState(
+                text = TextSpec.Resources(R.string.common_validate),
+                onClick = {
+                    _navigate.value = EditDraftStepNavigation.Back
+                },
+            ),
+        )
     }
 
     fun consumeNavigation() {

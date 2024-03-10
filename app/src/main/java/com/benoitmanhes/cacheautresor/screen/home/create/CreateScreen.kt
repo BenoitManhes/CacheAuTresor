@@ -25,8 +25,8 @@ import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.available.MyCachesAvailableRoute
 import com.benoitmanhes.cacheautresor.screen.home.create.mycaches.creation.MyCachesDraftRoute
+import com.benoitmanhes.common.compose.extensions.surface
 import com.benoitmanhes.common.compose.text.TextSpec
-import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.selector.CTTabSelector
 import com.benoitmanhes.designsystem.molecule.selector.SelectorItem
@@ -34,6 +34,7 @@ import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
 import com.benoitmanhes.designsystem.res.Dimens
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
+import com.benoitmanhes.designsystem.utils.extensions.ctSurface
 
 @Composable
 fun CreateRoute(
@@ -81,28 +82,32 @@ private fun CreateScreen(
 
     Column(
         modifier = Modifier
-            .statusBarsPadding()
             .padding(
-                bottom = (innerPadding.calculateBottomPadding() - Dimens.Size.navigationBarCutoutGap).coerceAtLeast(
-                    0.dp
-                )
+                bottom = (innerPadding.calculateBottomPadding() - Dimens.Size.navigationBarCutoutGap)
+                    .coerceAtLeast(0.dp)
             )
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
     ) {
-        SpacerMedium()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .ctSurface(
+                    shape = CTTheme.shape.none,
+                    elevation = CTTheme.elevation.medium,
+                    backgroundColor = CTTheme.color.surface,
+                )
+                .statusBarsPadding()
+                .padding(CTTheme.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.large),
+        ) {
+            CTTextView(
+                text = TextSpec.Resources(R.string.myCaches_header),
+                style = CTTheme.typography.header0,
+                color = CTTheme.color.textOnBackground,
+            )
 
-        CTTextView(
-            text = TextSpec.Resources(R.string.myCaches_header),
-            modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
-            style = CTTheme.typography.header0,
-            color = CTTheme.color.textOnBackground,
-        )
-
-        CTTabSelector(
-            tabSelectorState = tabSelectorState,
-            modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
-        )
+            CTTabSelector(tabSelectorState = tabSelectorState)
+        }
 
         HorizontalPager(
             state = pagerState,

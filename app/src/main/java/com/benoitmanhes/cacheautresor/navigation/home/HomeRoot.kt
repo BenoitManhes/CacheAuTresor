@@ -19,7 +19,6 @@ import androidx.navigation.compose.rememberNavController
 import com.benoitmanhes.cacheautresor.navigation.creation.EditCacheDestination
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.BottomBarFloatingButton
 import com.benoitmanhes.designsystem.molecule.bottomnavbar.CTBottomNavBar
-import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 
 @Composable
@@ -68,12 +67,10 @@ fun HomeRoot(
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {
             if (showFab) {
-                CTTheme(CTColorTheme.Cartography) {
-                    BottomBarFloatingButton(
-                        icon = HomeRoot.fabDestination.selectedIcon(),
-                        onClick = viewModel::showCacheCreationModal,
-                    )
-                }
+                BottomBarFloatingButton(
+                    icon = HomeRoot.fabDestination.selectedIcon(),
+                    onClick = viewModel::showCacheCreationModal,
+                )
             }
         },
         isFloatingActionButtonDocked = true,
