@@ -1,6 +1,7 @@
 package com.benoitmanhes.domain.utils
 
 import com.benoitmanhes.domain.model.Distance
+import com.benoitmanhes.domain.model.Distance.Companion.kms
 import com.benoitmanhes.domain.model.Distance.Companion.meters
 import kotlin.math.pow
 import kotlin.time.Duration
@@ -16,6 +17,10 @@ object DomainConstants {
         val unlockingAvailableDistance: Distance = 25.meters
         val initialCoordinatesDistanceMin: Distance = 10.meters
         val finalCoordinatesDistanceMin: Distance = 50.meters
+    }
+
+    object Explore {
+        val cacheSortingDistance: Distance = 10.kms
     }
 
     object EditCache {

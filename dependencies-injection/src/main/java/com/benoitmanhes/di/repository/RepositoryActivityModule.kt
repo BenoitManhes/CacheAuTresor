@@ -26,7 +26,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-interface RepositoryModule {
+interface RepositoryActivityModule {
 
     @Binds
     @ActivityRetainedScoped

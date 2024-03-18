@@ -17,8 +17,10 @@ import com.benoitmanhes.designsystem.utils.extensions.getCacheColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.usecase.cache.GetAllMyCacheUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -27,6 +29,9 @@ import javax.inject.Inject
 class MyCachesAvailableViewModel @Inject constructor(
     getAllMyCacheUseCase: GetAllMyCacheUseCase,
 ) : ViewModel() {
+
+    private val _navigateToCache = MutableStateFlow<String?>(null)
+    val navigateToCache: StateFlow<String?> get() = _navigateToCache.asStateFlow()
 
     val uiState: StateFlow<MyCachesViewModelState> =
         getAllMyCacheUseCase().map { result ->
@@ -71,7 +76,11 @@ class MyCachesAvailableViewModel @Inject constructor(
         sizeText = cache.size.toSizeText(),
         trailingContent = CacheCardTrailing.Point(points.toString().textSpec()),
         onClick = {
-            // TODO: navigate to EditCache screen
+            _navigateToCache.value = cache.cacheId
         },
     )
+
+    fun consumeNavigation() {
+        _navigateToCache.value = null
+    }
 }

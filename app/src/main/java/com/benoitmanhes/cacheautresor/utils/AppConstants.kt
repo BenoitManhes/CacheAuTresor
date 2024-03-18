@@ -17,6 +17,10 @@ object AppConstants {
         val animationVisibilityDuration: Duration = 150.milliseconds
     }
 
+    object Locale {
+        const val default: String = "en"
+    }
+
     object Location {
         val defaultMinDurationInterval: Duration = 5.seconds
         const val defaultMinDistanceIntervalMeter: Float = 5f

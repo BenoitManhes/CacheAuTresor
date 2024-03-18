@@ -1,11 +1,5 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.explore
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,20 +15,20 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.benoitmanhes.cacheautresor.BuildConfig
 import com.benoitmanhes.cacheautresor.R
+import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessView
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
@@ -52,31 +46,12 @@ fun ExploreRoute(
     innerPadding: PaddingValues,
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
-    val context = LocalContext.current
-    val navigation by viewModel.navigation.collectAsState()
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-    ) { granted ->
-        if (!granted) {
-            viewModel.locationPermissionRefused {
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                intent.data = Uri.fromParts("package", context.packageName, null)
-                context.startActivity(intent)
-            }
-        }
-    }
-
-    LaunchedEffect(true) {
-        viewModel.initLocationListener(context)
-    }
+    val navigation by viewModel.navigation.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = navigation) {
         val navValue = navigation ?: return@LaunchedEffect
         when (navValue) {
-            is ExploreNavigation.RequestLocation -> {
-                locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-
             is ExploreNavigation.CacheDetail -> {
                 navigateToCacheDetail(navValue.cacheId)
             }
@@ -89,9 +64,10 @@ fun ExploreRoute(
             innerPadding.calculateBottomPadding().toPx().toInt()
         },
     ) {
+        LocationAccessView(viewModel = viewModel)
         ExploreScreen(
             innerPadding = innerPadding,
-            uiState = viewModel.uiState,
+            uiState = uiState,
             onMapPositionChange = viewModel::onMapPositionChange,
             onSelectCache = viewModel::selectCache,
             onUnSelectCache = viewModel::unselectCache,

@@ -323,4 +323,5 @@
     <string name="error_draftCacheFinalCoordinatesInvalid_title">Invalid final coordinates</string>
     <string name="error_draftCacheFinalCoordinatesInvalid_message">The cache final coordinates are to close to another existing cache.</string>
     <string name="alertDialog_wrongCoordinates_action_change">Change place</string>
+    <string name="locale_string">en</string>
 </resources>

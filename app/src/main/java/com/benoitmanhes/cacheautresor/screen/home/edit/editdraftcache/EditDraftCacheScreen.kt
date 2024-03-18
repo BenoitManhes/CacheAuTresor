@@ -7,10 +7,10 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.section.SectionHeader
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
@@ -42,8 +42,8 @@ fun EditDraftCacheRoute(
     navigateToCreationSuccess: (String) -> Unit,
     viewModel: EditCacheViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.editCacheState.collectAsState()
-    val navigation by viewModel.navigation.collectAsState()
+    val uiState by viewModel.editCacheState.collectAsStateWithLifecycle()
+    val navigation by viewModel.navigation.collectAsStateWithLifecycle()
 
     LaunchedEffect(navigation) {
         val navValue = navigation ?: return@LaunchedEffect

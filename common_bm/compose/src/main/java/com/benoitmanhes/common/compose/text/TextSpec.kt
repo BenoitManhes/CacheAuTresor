@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import com.benoitmanhes.common.kotlin.TextTranslatable
 
 sealed interface TextSpec {
 
@@ -35,6 +37,23 @@ sealed interface TextSpec {
         }
 
         override fun string(context: Context): String = value.text
+    }
+
+    data class Translation(
+        val textTranslatable: TextTranslatable,
+    ) : TextSpec {
+        @Composable
+        override fun value(): AnnotatedString? {
+            val locale = Locale.current.language
+            val value = textTranslatable.map[locale]
+                ?: textTranslatable.map["en"]
+            return value?.let(::AnnotatedString)
+        }
+
+        override fun string(context: Context): String? {
+            val language = context.resources.configuration.locales.get(0).language
+            return textTranslatable.map[language] ?: textTranslatable.map["en"]
+        }
     }
 
     class Resources(

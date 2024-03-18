@@ -1,8 +1,10 @@
 package com.benoitmanhes.domain.usecase
 
 import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.error.CTError
 import com.benoitmanhes.core.error.CTRemoteError
 import com.benoitmanhes.core.error.CTStorageError
+import com.benoitmanhes.core.extensions.error
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
 import com.benoitmanhes.logger.CTLogger
@@ -21,42 +23,47 @@ abstract class CTUseCase {
     protected val logger: Logger = CTLogger.get(this::class.java.simpleName)
 
     protected fun <T> useCaseFlow(
-        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        mapErr: (CTError) -> CTDomainError = { defaultMapError(it) },
         block: suspend FlowCollector<CTResult<T>>.() -> Unit,
     ): Flow<CTResult<T>> = flow {
         block(this)
     }
         .onStart { emit(CTResult.Loading()) }
-        .useCaseCatch { error ->
+        .useCaseCatch(mapErr) { error ->
             CTResult.Failure(error = error)
         }
 
     protected fun <T> resultFlow(
-        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        mapErr: (CTError) -> CTDomainError = { defaultMapError(it) },
         block: suspend () -> T,
-    ): Flow<CTResult<T>> = useCaseFlow {
+    ): Flow<CTResult<T>> = useCaseFlow(mapErr) {
         emit(
             CTResult.Success(block())
         )
     }
 
     protected fun <T> Flow<T>.useCaseCatch(
-        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        mapErr: (CTError) -> CTDomainError = { defaultMapError(it) },
         errorValue: (CTDomainError) -> T,
     ): Flow<T> = this
         .catch { t ->
-            val domainError = mapErr(t)
-            logError(domainError)
-            emit(errorValue(domainError))
+            if (t is CTError) {
+                val domainError = mapErr(t)
+                logError(domainError)
+                emit(errorValue(domainError))
+            } else {
+                logError(CTDomainError.Code.UNKNOWN.error(cause = t))
+                throw t
+            }
         }
 
     protected suspend fun <T> runCatch(
-        mapErr: (Throwable) -> CTDomainError = { defaultMapError(it) },
+        mapErr: (CTError) -> CTDomainError = { defaultMapError(it) },
         onError: (CTDomainError) -> T,
         block: suspend () -> T,
     ): T = try {
         block()
-    } catch (t: Throwable) {
+    } catch (t: CTError) {
         val error = mapErr(t)
         logError(error)
         onError(error)

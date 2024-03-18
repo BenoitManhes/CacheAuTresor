@@ -1,23 +1,18 @@
 package com.benoitmanhes.cacheautresor.screen.home.explore.explore
 
-import android.location.Location
-import android.location.LocationManager
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.ClassicAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.CommonAlertDialogAction
-import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.ClassicModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.UnlockCacheModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
-import com.benoitmanhes.cacheautresor.common.extensions.toModel
 import com.benoitmanhes.cacheautresor.common.extensions.toOneDecimalFormat
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
 import com.benoitmanhes.cacheautresor.common.extensions.toText
-import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModel
+import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModelDelegate
+import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModelDelegateImpl
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.screen.home.explore.explore.section.CacheBannerState
 import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
@@ -29,7 +24,6 @@ import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
-import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButtonState
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
@@ -43,17 +37,20 @@ import com.benoitmanhes.domain.usecase.cache.SortCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.UnlockCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.UpdateCachesDistancesUseCase
 import com.benoitmanhes.domain.utils.DomainConstants
+import com.benoitmanhes.logger.CTLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private val logger = CTLogger.get<ExploreViewModel>()
+
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    locationManager: LocationManager,
-    getAllUICacheUseCase: GetAllUICachesUseCase,
     private val unlockCacheUseCase: UnlockCacheUseCase,
     private val updateCachesDistancesUseCase: UpdateCachesDistancesUseCase,
     private val sortCacheUseCase: SortCacheUseCase,
@@ -61,55 +58,58 @@ class ExploreViewModel @Inject constructor(
     private val snackbarManager: SnackbarManager,
     private val loadingManager: LoadingManager,
     private val alertDialogManager: AlertDialogManager,
-) : LocationAccessViewModel(locationManager) {
+    locationAccessViewModelDelegateImpl: LocationAccessViewModelDelegateImpl,
+    getAllUICacheUseCase: GetAllUICachesUseCase,
+) : LocationAccessViewModelDelegate by locationAccessViewModelDelegateImpl,
+    ViewModel() {
 
-    var uiState: ExploreUIState by mutableStateOf(ExploreUIState())
-        private set
+    private val _uiState = MutableStateFlow(ExploreUIState())
+    val uiState: StateFlow<ExploreUIState> get() = _uiState.asStateFlow()
 
     private val _navigation = MutableStateFlow<ExploreNavigation?>(null)
     val navigation: StateFlow<ExploreNavigation?> get() = _navigation.asStateFlow()
 
-    private var shouldShowLocationModal: Boolean = false
-
     init {
-        viewModelScope.launch {
-            getAllUICacheUseCase().collect { result ->
+        viewModelScope.launch(Dispatchers.Default) {
+            combine(
+                getAllUICacheUseCase(),
+                currentLocation,
+            ) { result, location ->
                 when (result) {
                     is CTResult.Success -> {
-                        val cachesWithDistance = uiState.currentPosition?.let { _currentPosition ->
+                        val cachesWithDistance = sortCacheUseCase(
                             updateCachesDistancesUseCase(
-                                currentLocation = _currentPosition,
+                                currentLocation = location,
                                 uiExploreCaches = result.successData,
                             )
-                        } ?: result.successData
-
-                        val caches = sortCacheUseCase(cachesWithDistance)
-                        uiState = uiState.copy(
-                            caches = caches,
-                            cacheList = caches.mapNotNull { it.toBannerCache() },
+                        )
+                        _uiState.value = uiState.value.copy(
+                            caches = cachesWithDistance,
+                            cacheList = cachesWithDistance.mapNotNull { it.toBannerCache() },
                             isLoading = false,
+                            currentPosition = location,
                         )
                     }
 
                     is CTResult.Loading -> {
-                        uiState = uiState.copy(isLoading = true)
+                        _uiState.value = uiState.value.copy(isLoading = true)
                     }
 
                     is CTResult.Failure -> {
                         snackbarManager.showError(result.error)
-                        uiState = uiState.copy(isLoading = false)
+                        _uiState.value = uiState.value.copy(isLoading = false)
                     }
                 }
-            }
+            }.collect {}
         }
     }
 
     fun onMapPositionChange(position: Coordinates) {
-        uiState = uiState.copy(mapPosition = position)
+        _uiState.value = uiState.value.copy(mapPosition = position)
     }
 
     fun selectCache(uiExploreCache: UIExploreCache) {
-        uiState = uiState.copy(
+        _uiState.value = uiState.value.copy(
             cacheSelected = uiExploreCache,
             cacheBanner = uiExploreCache.toBannerCache(),
         )
@@ -164,7 +164,10 @@ class ExploreViewModel @Inject constructor(
     private fun clickUnlockCache(uiExploreCache: UIExploreCache) {
         val distance = uiExploreCache.distance
         when (distance) {
-            null -> ::requestLocation
+            null,
+            Distance.INFINITE,
+            -> ::requestLocation
+
             in Distance.ZERO..DomainConstants.Cache.unlockingAvailableDistance -> showUnlockCacheModal(
                 uiExploreCache,
                 isError = false
@@ -242,7 +245,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     fun unselectCache() {
-        uiState = uiState.copy(
+        _uiState.value = uiState.value.copy(
             cacheSelected = null,
             cacheBanner = null,
         )
@@ -250,49 +253,6 @@ class ExploreViewModel @Inject constructor(
 
     fun consumeNavigation() {
         _navigation.value = null
-    }
-
-    fun locationPermissionRefused(onConfirm: () -> Unit) {
-        if (shouldShowLocationModal) {
-            modalBottomSheetManager.showModal(
-                ClassicModalBottomSheet(
-                    icon = { CTTheme.icon.Location },
-                    title = TextSpec.Resources(R.string.locationModal_title),
-                    message = TextSpec.Resources(R.string.locationModal_message),
-                    cancelAction = PrimaryButtonState(
-                        text = TextSpec.Resources(R.string.common_refuse),
-                        onClick = {},
-                    ),
-                    confirmAction = PrimaryButtonState(
-                        text = TextSpec.Resources(R.string.locationModal_confirmAction),
-                        onClick = onConfirm,
-                    ),
-                )
-            )
-            shouldShowLocationModal = false
-        }
-    }
-
-    fun requestLocation() {
-        shouldShowLocationModal = true
-        _navigation.value = ExploreNavigation.RequestLocation(openSettings = false)
-    }
-
-    override fun onAccessLocationRefused() {
-        _navigation.value = ExploreNavigation.RequestLocation(openSettings = false)
-    }
-
-    override fun onLocationChanged(p0: Location) {
-        val caches = sortCacheUseCase(
-            updateCachesDistancesUseCase(
-                currentLocation = p0.toModel(),
-                uiExploreCaches = uiState.caches,
-            )
-        )
-        uiState = uiState.copy(
-            currentPosition = p0.toModel(),
-            caches = caches,
-        )
     }
 }
 

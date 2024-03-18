@@ -8,10 +8,15 @@ import javax.inject.Inject
 class UpdateCachesDistancesUseCase @Inject constructor(
     private val calculateDistanceUseCase: CalculateDistanceUseCase,
 ) {
-    operator fun invoke(currentLocation: Coordinates, uiExploreCaches: List<UIExploreCache>): List<UIExploreCache> =
+    operator fun invoke(
+        currentLocation: Coordinates?,
+        uiExploreCaches: List<UIExploreCache>,
+    ): List<UIExploreCache> =
         uiExploreCaches.map { uiCache ->
             uiCache.copy(
-                distance = calculateDistanceUseCase(currentLocation, uiCache.cache.coordinates),
+                distance = currentLocation?.let {
+                    calculateDistanceUseCase(currentLocation, uiCache.cache.coordinates)
+                },
             )
         }
 }

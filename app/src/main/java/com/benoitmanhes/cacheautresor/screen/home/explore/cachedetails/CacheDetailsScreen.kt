@@ -39,6 +39,7 @@ import com.benoitmanhes.cacheautresor.common.extensions.setUpMyLocation
 import com.benoitmanhes.cacheautresor.common.extensions.toGeoPoint
 import com.benoitmanhes.cacheautresor.common.maps.CTMapView
 import com.benoitmanhes.cacheautresor.common.maps.rememberMapViewWithLifecycle
+import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessView
 import com.benoitmanhes.cacheautresor.screen.CTScreenWrapper
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.CacheDetailInstructionsScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
@@ -75,6 +76,7 @@ fun CacheDetailsRoute(
     }
 
     CTTheme(colorTheme = (uiState as? CacheDetailsViewModelState.Data)?.cacheColorTheme ?: CTColorTheme.Default) {
+        LocationAccessView(viewModel = viewModel)
         CTScreenWrapper {
             CacheDetailsScreen(
                 onNavigateBack = onNavigateBack,

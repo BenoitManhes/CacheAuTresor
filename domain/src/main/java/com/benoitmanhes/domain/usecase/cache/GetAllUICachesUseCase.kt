@@ -55,8 +55,8 @@ class GetAllUICachesUseCase @Inject constructor(
             explorerId == this.creatorId -> CacheUserStatus.Owned
             cacheProgress?.foundDate != null -> CacheUserStatus.Found
             !cacheIdsFound.containsAll(this.cacheIdsRequired) -> CacheUserStatus.Hidden
-            cacheProgress == null -> CacheUserStatus.Locked
-            cacheProgress.currentStepRef != null -> CacheUserStatus.Started
+            //            cacheProgress == null -> CacheUserStatus.Locked
+            cacheProgress?.currentStepRef != null -> CacheUserStatus.Started
             else -> CacheUserStatus.Available
         }
     }

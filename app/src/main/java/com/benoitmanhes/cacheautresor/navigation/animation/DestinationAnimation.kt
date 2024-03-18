@@ -43,7 +43,6 @@ enum class DestinationAnimation(
         )
 
         private val destinationStaticAnimation: List<String> = listOf(
-            EditCacheDestination.EditDraftCache.route,
             HomeRootDestination.route,
             HomeDestination.Create.route,
             HomeDestination.News.route,

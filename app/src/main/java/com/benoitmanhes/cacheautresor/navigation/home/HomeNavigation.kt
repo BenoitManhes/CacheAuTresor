@@ -53,6 +53,9 @@ fun HomeNavigation(
                 innerPadding = scaffoldPadding,
                 navigateToEditDraftCache = { draftCacheId ->
                     navController.navigate(route = EditCacheDestination.EditDraftCache.getRoute(draftCacheId))
+                },
+                navigateToCacheDetail = { cacheId ->
+                    navController.navigate(route = ExploreDestination.CacheDetails.getRoute(cacheId))
                 }
             )
         }

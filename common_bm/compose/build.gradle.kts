@@ -48,4 +48,6 @@ dependencies {
     androidTestImplementation(AndroidX.test.ext.junit)
     androidTestImplementation(AndroidX.test.espresso.core)
     androidTestImplementation(AndroidX.compose.ui.testJunit4)
+
+    implementation(project(":common_bm:kotlin"))
 }

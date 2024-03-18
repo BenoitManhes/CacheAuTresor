@@ -38,6 +38,7 @@ import com.benoitmanhes.domain.usecase.draftcache.EditCrewMemberNameUseCase
 import com.benoitmanhes.domain.usecase.draftcache.GetUIDraftCacheUseCase
 import com.benoitmanhes.domain.usecase.draftcache.NewDraftStepUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -136,7 +137,7 @@ class EditCacheViewModel @Inject constructor(
                 color = CTTheme.composed { color.critical },
                 cancelAction = CommonModalAction.finallyNo(),
                 confirmAction = CommonModalAction.delete {
-                    viewModelScope.launch {
+                    viewModelScope.launch(Dispatchers.Default) {
                         deleteCrewMemberDraftCacheUseCase(draftCacheId = draftCacheId, crewRef = crewRef)
                     }
                 },
@@ -156,7 +157,7 @@ class EditCacheViewModel @Inject constructor(
                 },
                 cancelAction = CommonModalAction.finallyNo(),
                 confirmAction = CommonModalAction.validate {
-                    viewModelScope.launch {
+                    viewModelScope.launch(Dispatchers.Default) {
                         newDraftStepUseCase(draftCacheId = draftCacheId, crewRef = crewRef).collect { result ->
                             loadingManager.handleFromResult(result)
                             snackbarManager.showError((result as? CTResult.Failure)?.error)
@@ -182,7 +183,7 @@ class EditCacheViewModel @Inject constructor(
     }
 
     private fun deleteDraftCache() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             deleteDraftCacheUseCase(draftCacheId).collect { result ->
                 loadingManager.handleFromResult(result)
                 snackbarManager.showOnFailure(result)
@@ -212,7 +213,7 @@ class EditCacheViewModel @Inject constructor(
     }
 
     private fun activate() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             createCacheUseCase(draftCacheId).collect { result ->
                 loadingManager.handleFromResult(result)
                 when (result) {

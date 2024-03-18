@@ -6,12 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.benoitmanhes.cacheautresor.BuildConfig
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.CacheFinishAlertDialog
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.ClassicAlertDialog
+import com.benoitmanhes.cacheautresor.common.composable.alertdialog.CommonAlertDialogAction
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StartCoopAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.alertdialog.StepCompleteAlertDialog
 import com.benoitmanhes.cacheautresor.common.composable.bottombar.BottomActionBarState
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.ClassicModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.LogModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.StartCoopModalBottomSheet
+import com.benoitmanhes.cacheautresor.common.composable.modalbottomsheet.UnlockCacheModalBottomSheet
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarker
 import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarkerFocus
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
@@ -26,6 +29,8 @@ import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
 import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
+import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModelDelegate
+import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModelDelegateImpl
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
@@ -52,6 +57,7 @@ import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserProgress
 import com.benoitmanhes.domain.model.CacheUserStatus
+import com.benoitmanhes.domain.model.Distance
 import com.benoitmanhes.domain.uimodel.UICacheDetails
 import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.UseClueUseCase
@@ -59,7 +65,11 @@ import com.benoitmanhes.domain.usecase.cache.GetSelectedUICacheUseCase
 import com.benoitmanhes.domain.usecase.cache.LogCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.StartCacheUseCase
 import com.benoitmanhes.domain.usecase.cache.StartCoopCacheUseCase
+import com.benoitmanhes.domain.usecase.cache.UnlockCacheUseCase
+import com.benoitmanhes.domain.usecase.coordinates.CalculateDistanceUseCase
+import com.benoitmanhes.domain.utils.DomainConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -76,9 +86,13 @@ class CacheDetailViewModel @Inject constructor(
     private val alertDialogManager: AlertDialogManager,
     private val snackbarManager: SnackbarManager,
     private val logCacheUseCase: LogCacheUseCase,
+    private val unlockCacheUseCase: UnlockCacheUseCase,
+    private val calculateDistanceUseCase: CalculateDistanceUseCase,
     getSelectedUICacheUseCase: GetSelectedUICacheUseCase,
+    locationAccessViewModelDelegateImpl: LocationAccessViewModelDelegateImpl,
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : LocationAccessViewModelDelegate by locationAccessViewModelDelegateImpl,
+    ViewModel() {
 
     private val cacheId: String = savedStateHandle.get<String>(
         ExploreDestination.CacheDetails.cacheDetailsArgument
@@ -94,7 +108,7 @@ class CacheDetailViewModel @Inject constructor(
     private var cache: Cache? = null
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             getSelectedUICacheUseCase(cacheId)
                 .collect { result ->
                     cache = result.data?.cache
@@ -128,6 +142,88 @@ class CacheDetailViewModel @Inject constructor(
             }
 
             else -> startRegularCache()
+        }
+    }
+
+    private fun clickUnlockCache(cacheDetails: UICacheDetails) {
+        val distance = currentLocation.value?.let {
+            calculateDistanceUseCase(cacheDetails.cache.coordinates, it)
+        }
+        when (distance) {
+            null -> ::requestLocation
+            in Distance.ZERO..DomainConstants.Cache.unlockingAvailableDistance -> showUnlockCacheModal(
+                cacheDetails,
+                isError = false
+            )
+
+            else -> {
+                alertDialogManager.showDialog(
+                    ClassicAlertDialog(
+                        title = TextSpec.Resources(R.string.explore_tooFarDialog_title),
+                        message = TextSpec.Resources(R.string.explore_tooFarDialog_message),
+                        icon = CTTheme.composed { icon.Location },
+                        actions = listOf(
+                            CommonAlertDialogAction.gotIt {},
+                        ),
+                    )
+                )
+            }
+        }
+    }
+
+    private fun showUnlockCacheModal(
+        cacheDetails: UICacheDetails,
+        isError: Boolean,
+    ) {
+        modalBottomSheetManager.showModal(
+            UnlockCacheModalBottomSheet(
+                lockInstruction = cacheDetails.cache.lockDescription.textSpec(),
+                onValidate = { inputLockCode ->
+                    unlockCache(cacheDetails, inputLockCode)
+                },
+                isError = isError,
+            )
+        )
+    }
+
+    private fun unlockCache(cacheDetails: UICacheDetails, inputLockCode: String) {
+        viewModelScope.launch {
+            loadingManager.showLoading()
+            val result = unlockCacheUseCase(cacheId = cacheDetails.cache.cacheId, lockCodeInput = inputLockCode)
+            loadingManager.hideLoading()
+            when (result) {
+                is CTSuspendResult.Failure -> result.handleUnlockCacheError(cacheDetails)
+                is CTSuspendResult.Success -> {
+                    alertDialogManager.showDialog(
+                        ClassicAlertDialog(
+                            icon = cacheDetails.cache.getIcon(),
+                            title = TextSpec.Resources(R.string.dialog_cacheUnlocked_title),
+                            message = TextSpec.Resources(
+                                R.string.dialog_cacheUnlocked_message,
+                                cacheDetails.cache.getTypeText(),
+                                cacheDetails.cache.title,
+                            ),
+                            actions = listOf(
+                                CommonAlertDialogAction.letsGo {
+                                    startCache()
+                                }
+                            )
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun CTSuspendResult.Failure<Unit>.handleUnlockCacheError(cacheDetails: UICacheDetails) {
+        when (error?.code) {
+            CTDomainError.Code.CACHE_INVALID_UNLOCK_CODE -> {
+                showUnlockCacheModal(cacheDetails, isError = true)
+            }
+
+            else -> {
+                snackbarManager.showError(error)
+            }
         }
     }
 
@@ -202,7 +298,7 @@ class CacheDetailViewModel @Inject constructor(
                 fabButtonState = FabButtonState(
                     icon = CTTheme.composed { icon.Logo },
                     text = TextSpec.Resources(R.string.cacheDetail_startFab),
-                    onClick = ::startCache,
+                    onClick = { clickUnlockCache(successData) },
                 ).takeIf { successData.status == UICacheDetails.Status.Available },
                 tabSelectorState = TabSelectorState(
                     items = tabSelectorsItems,
@@ -274,7 +370,9 @@ class CacheDetailViewModel @Inject constructor(
                 instructionsSectionState = InstructionSectionState(
                     title = successData.currentStep.getStepTitle(),
                     cacheInstructions = successData.currentStep.instructions,
-                    clue = successData.currentStep.getClueSection(successData.cache.cacheId),
+                    clue = successData.currentStep.getClueSection(successData.cache.cacheId).takeIf {
+                        this.successData.status !is UICacheDetails.Status.Found
+                    },
                     onReport = {}, // TODO Report
                 ),
                 noteSectionState = NoteSectionState(

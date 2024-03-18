@@ -1,5 +1,6 @@
 package com.benoitmanhes.di.local
 
+import com.benoitmanhes.domain.interfaces.localdatasource.AppControlLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.AuthLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.CacheUserDataLocalDataSource
@@ -8,6 +9,7 @@ import com.benoitmanhes.domain.interfaces.localdatasource.DraftCacheLocalDataSou
 import com.benoitmanhes.domain.interfaces.localdatasource.DraftCacheStepLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.ExplorerLocalDataSource
 import com.benoitmanhes.domain.interfaces.localdatasource.SyncLocalDataSource
+import com.benoitmanhes.storage.datasource.AppControlLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.AuthLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheLocalDataSourceImpl
 import com.benoitmanhes.storage.datasource.CacheUserDataLocalDataSourceImpl
@@ -19,42 +21,46 @@ import com.benoitmanhes.storage.datasource.SyncLocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 interface LocalDataSourceModule {
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindAuthLocalDataSource(authLocalDataSource: AuthLocalDataSourceImpl): AuthLocalDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindExplorerLocalDataSource(explorerLocalDataSource: ExplorerLocalDataSourceImpl): ExplorerLocalDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindCacheLocalDataSource(dataSourceImpl: CacheLocalDataSourceImpl): CacheLocalDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindCacheUserDataLocalDataSource(dataSourceImpl: CacheUserDataLocalDataSourceImpl): CacheUserDataLocalDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindCacheUserProgressLocaleDataSource(dataSourceImpl: CacheUserProgressLocaleDataSourceImpl): CacheUserProgressLocaleDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindSyncLocaleDataSource(dataSourceImpl: SyncLocalDataSourceImpl): SyncLocalDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindDraftCacheLocalDataSource(dataSourceImpl: DraftCacheLocalDataSourceImpl): DraftCacheLocalDataSource
 
     @Binds
-    @ActivityRetainedScoped
+    @Singleton
     fun bindDraftCacheStepLocaleDataSource(dataSourceImpl: DraftCacheStepLocalDataSourceImpl): DraftCacheStepLocalDataSource
+
+    @Binds
+    @Singleton
+    fun bindAppControlDataSource(dataSourceImpl: AppControlLocalDataSourceImpl): AppControlLocalDataSource
 }

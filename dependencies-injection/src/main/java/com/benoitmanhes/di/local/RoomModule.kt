@@ -12,16 +12,16 @@ import com.benoitmanhes.storage.database.MainDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 object RoomModule {
 
     @Provides
-    @ActivityRetainedScoped
+    @Singleton
     fun provideMainDatabase(
         @ApplicationContext appContext: Context,
     ): MainDatabase = Room
@@ -34,31 +34,37 @@ object RoomModule {
 }
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 internal object RoomDaoModule {
 
     @Provides
+    @Singleton
     fun provideExplorerDao(mainDatabase: MainDatabase): ExplorerDao {
         return mainDatabase.explorerDao()
     }
 
     @Provides
+    @Singleton
     fun provideCacheDao(mainDatabase: MainDatabase): CacheDao =
         mainDatabase.cacheDao()
 
     @Provides
+    @Singleton
     fun provideCacheUserDataDao(mainDatabase: MainDatabase): CacheUserDataDao =
         mainDatabase.cacheUserDataDao()
 
     @Provides
+    @Singleton
     fun provideCacheProgressDataDao(mainDatabase: MainDatabase): CacheUserProgressDao =
         mainDatabase.cacheUserProgressDao()
 
     @Provides
+    @Singleton
     fun provideDraftCacheDao(mainDatabase: MainDatabase): DraftCacheDao =
         mainDatabase.draftCacheDao()
 
     @Provides
+    @Singleton
     fun provideDraftCacheStepDao(mainDatabase: MainDatabase): DraftCacheStepDao =
         mainDatabase.draftCacheStepDao()
 }
