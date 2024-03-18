@@ -539,7 +539,7 @@ class CacheDetailViewModel @Inject constructor(
         is UICacheDetails.Status.Started,
         is UICacheDetails.Status.Found,
         -> steps.mapIndexed { index, uiStep ->
-            uiStep.toMarker(cache, status.cacheUserStatus, index)
+            uiStep.toMarker(cache, status.cacheUserStatus, index + 1)
         }
 
         is UICacheDetails.Status.Owned ->
@@ -552,7 +552,7 @@ class CacheDetailViewModel @Inject constructor(
                             cache.getCacheMarker(CacheUserStatus.Owned)
                         } else {
                             CacheMarkerIcon.Empty(
-                                index.toString(),
+                                (index + 1).toString(),
                                 cache.getColorTheme(CacheUserStatus.Owned).dayColorScheme.primary,
                             )
                         },

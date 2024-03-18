@@ -49,7 +49,9 @@ class GetSelectedUICacheUseCase @Inject constructor(
                 steps = getCacheStepsRefs(cache, userProgress).map {
                     getUIStepsUseCase(it, cache, userProgress, status.cacheUserStatus)
                 }.filterNot {
-                    it.status == UIStep.Status.Lock && it.type == UIStep.Type.Final && status.cacheUserStatus != CacheUserStatus.Available
+                    it.status == UIStep.Status.Lock
+                        && it.type == UIStep.Type.Final
+                        && status.cacheUserStatus == CacheUserStatus.Started
                 },
                 userData = userData,
             )
