@@ -81,6 +81,7 @@ object CTIcons {
     val Delete: IconSpec get() = IconSpec.ResIcon(R.drawable.delete)
     val DeletePerson: IconSpec get() = IconSpec.ResIcon(R.drawable.person_remove)
     val Done: IconSpec get() = IconSpec.ResIcon(R.drawable.done)
+    val DoneCircle: IconSpec get() = IconSpec.ResIcon(R.drawable.done_circle)
     val Difficulty: IconSpec get() = CTIconPack.Difficulty.toIconSpec()
     val Disconnect: IconSpec get() = CTIconPack.Disconnect.toIconSpec()
     val DoneStamp: IconSpec get() = CTIconPack.DoneStamp.toIconSpec()

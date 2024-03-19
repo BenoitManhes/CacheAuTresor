@@ -11,6 +11,7 @@ data class UIStep(
     val status: Status,
     val coordinates: Coordinates,
     val type: Type,
+    val code: String,
 ) {
 
     sealed interface Type {

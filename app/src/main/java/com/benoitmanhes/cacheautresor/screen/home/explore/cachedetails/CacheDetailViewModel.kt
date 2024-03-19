@@ -20,17 +20,16 @@ import com.benoitmanhes.cacheautresor.common.extensions.getCacheMarkerFocus
 import com.benoitmanhes.cacheautresor.common.extensions.getIcon
 import com.benoitmanhes.cacheautresor.common.extensions.getTypeText
 import com.benoitmanhes.cacheautresor.common.extensions.mediumFormat
-import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.cacheautresor.common.extensions.toDifficultyText
 import com.benoitmanhes.cacheautresor.common.extensions.toGroundText
 import com.benoitmanhes.cacheautresor.common.extensions.toJaugeRate
 import com.benoitmanhes.cacheautresor.common.extensions.toSizeText
-import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
-import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
-import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.common.maps.CacheMarkerIcon
+import com.benoitmanhes.cacheautresor.common.uimodel.UIMarker
 import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModelDelegate
 import com.benoitmanhes.cacheautresor.common.viewModel.LocationAccessViewModelDelegateImpl
+import com.benoitmanhes.cacheautresor.navigation.explore.ExploreDestination
+import com.benoitmanhes.cacheautresor.screen.alertdialog.AlertDialogManager
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.section.CacheTypeSectionState
@@ -40,6 +39,8 @@ import com.benoitmanhes.cacheautresor.screen.loading.LoadingManager
 import com.benoitmanhes.cacheautresor.screen.modalbottomsheet.ModalBottomSheetManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.SnackbarManager
 import com.benoitmanhes.cacheautresor.screen.snackbar.showError
+import com.benoitmanhes.common.compose.extensions.textSpec
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.core.error.CTDomainError
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.core.result.CTSuspendResult
@@ -48,9 +49,6 @@ import com.benoitmanhes.designsystem.molecule.button.primarybutton.PrimaryButton
 import com.benoitmanhes.designsystem.molecule.card.InfoCardState
 import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
-import com.benoitmanhes.designsystem.molecule.selector.SelectorItem
-import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
-import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 import com.benoitmanhes.designsystem.utils.extensions.getColorTheme
@@ -104,7 +102,6 @@ class CacheDetailViewModel @Inject constructor(
     private val _navigation = MutableStateFlow<CacheDetailNavigation?>(null)
     val navigation: StateFlow<CacheDetailNavigation?> get() = _navigation.asStateFlow()
 
-    private var switchToInstruction = false
     private var cache: Cache? = null
 
     init {
@@ -230,7 +227,6 @@ class CacheDetailViewModel @Inject constructor(
     private fun startCoopCache(crewPosition: String) {
         viewModelScope.launch {
             loadingManager.showLoading()
-            switchToInstruction = true
             startCoopCacheUseCase(cacheId = cacheId, crewPosition = crewPosition)
             loadingManager.hideLoading()
         }
@@ -239,7 +235,6 @@ class CacheDetailViewModel @Inject constructor(
     private fun startRegularCache() {
         viewModelScope.launch {
             loadingManager.showLoading()
-            switchToInstruction = true
             startCacheUseCase(cacheId)
             loadingManager.hideLoading()
         }
@@ -268,16 +263,6 @@ class CacheDetailViewModel @Inject constructor(
     private val uiStateData: CacheDetailsViewModelState.Data?
         get() = uiState.value as? CacheDetailsViewModelState.Data
 
-    private fun switchTab(selectedItem: SelectorItem) {
-        updateData { dataState ->
-            dataState.copy(
-                tabSelectorState = dataState.tabSelectorState?.copy(
-                    selectedItem = selectedItem,
-                )
-            )
-        }
-    }
-
     private fun CTResult<UICacheDetails>.mapToUIState(): CacheDetailsViewModelState {
         return when (this) {
             is CTResult.Success -> CacheDetailsViewModelState.Data(
@@ -300,16 +285,6 @@ class CacheDetailViewModel @Inject constructor(
                     text = TextSpec.Resources(R.string.cacheDetail_startFab),
                     onClick = { clickUnlockCache(successData) },
                 ).takeIf { successData.status == UICacheDetails.Status.Available },
-                tabSelectorState = TabSelectorState(
-                    items = tabSelectorsItems,
-                    selectedItem = if (switchToInstruction) {
-                        switchToInstruction = false
-                        tabSelectorsItems.last()
-                    } else {
-                        uiStateData?.tabSelectorState?.selectedItem ?: tabSelectorsItems.first()
-                    },
-                    onSelectedItem = ::switchTab,
-                ).takeIf { successData.status != UICacheDetails.Status.Available },
                 difficultyJaugeState = CTJaugeState(
                     rate = successData.cache.difficulty,
                     icon = CTTheme.composed { icon.Difficulty },
@@ -367,14 +342,22 @@ class CacheDetailViewModel @Inject constructor(
                         text = TextSpec.RawString("Rapide2")
                     ),
                 ).takeIf { BuildConfig.DEBUG }.orEmpty(),
-                instructionsSectionState = InstructionSectionState(
-                    title = successData.currentStep.getStepTitle(),
-                    cacheInstructions = successData.currentStep.instructions,
-                    clue = successData.currentStep.getClueSection(successData.cache.cacheId).takeIf {
-                        this.successData.status !is UICacheDetails.Status.Found
-                    },
-                    onReport = {}, // TODO Report
-                ),
+                stepInstructions = if (successData.status != UICacheDetails.Status.Available) {
+                    successData.steps.map { step ->
+                        InstructionSectionState(
+                            title = step.getStepTitle(),
+                            cacheInstructions = step.instructions,
+                            clue = step.getClueSection(successData.cache.cacheId).takeIf {
+                                this.successData.status !is UICacheDetails.Status.Found
+                            },
+                            status = step.status,
+                            code = step.code.textSpec().takeIf { successData.status == UICacheDetails.Status.Owned },
+                            onReport = {}, // TODO Report
+                        )
+                    }
+                } else {
+                    emptyList()
+                },
                 noteSectionState = NoteSectionState(
                     initialNoteValue = successData.userData.note.orEmpty().textSpec(),
                     onClickNote = {
@@ -382,7 +365,8 @@ class CacheDetailViewModel @Inject constructor(
                     },
                     onClickInstruments = {}, // TODO Instrument
                     onClickMarker = {}, // TODO Add marker
-                )
+                ).takeIf { successData.status != UICacheDetails.Status.Owned },
+                initialPageIndex = successData.steps.indexOfFirst { it.status == UIStep.Status.Current } + 1,
             )
 
             is CTResult.Loading -> CacheDetailsViewModelState.Initialize
@@ -536,9 +520,17 @@ class CacheDetailViewModel @Inject constructor(
             )
         )
 
-        is UICacheDetails.Status.Started,
-        is UICacheDetails.Status.Found,
-        -> steps.mapIndexed { index, uiStep ->
+        is UICacheDetails.Status.Started -> {
+            steps
+                .filterNot {
+                    it.status == UIStep.Status.Lock && it.type == UIStep.Type.Final
+                }
+                .mapIndexed { index, uiStep ->
+                    uiStep.toMarker(cache, status.cacheUserStatus, index + 1)
+                }
+        }
+
+        is UICacheDetails.Status.Found -> steps.mapIndexed { index, uiStep ->
             uiStep.toMarker(cache, status.cacheUserStatus, index + 1)
         }
 
@@ -587,8 +579,3 @@ class CacheDetailViewModel @Inject constructor(
         }
     }
 }
-
-private val tabSelectorsItems: List<SelectorItem> = listOf(
-    SelectorItem(TextSpec.RawString("Recap")),
-    SelectorItem(TextSpec.RawString("Instructions")),
-)

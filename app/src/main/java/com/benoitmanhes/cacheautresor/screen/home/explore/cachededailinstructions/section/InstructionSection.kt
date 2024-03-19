@@ -21,6 +21,7 @@ import com.benoitmanhes.common.compose.extensions.textSpec
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTImage
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerLarge
+import com.benoitmanhes.designsystem.atoms.spacer.SpacerSmall
 import com.benoitmanhes.designsystem.atoms.text.CTMarkdownText
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.secondaryButton.SecondaryButtonState
@@ -29,12 +30,15 @@ import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.ImageSpec
 import com.benoitmanhes.domain.model.CacheInstructions
 import com.benoitmanhes.domain.model.InstructionContent
+import com.benoitmanhes.domain.uimodel.UIStep
 
 @Composable
 fun InstructionSection(
     state: InstructionSectionState,
 ) {
-    Section(title = state.title) {
+    Section(
+        title = TextSpec.Resources(R.string.cacheDetail_instructionsSection_title_classical),
+    ) {
         Column(
             modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             verticalArrangement = Arrangement.spacedBy(CTTheme.spacing.medium),
@@ -66,12 +70,23 @@ fun InstructionSection(
         SectionHeader(
             title = TextSpec.Resources(R.string.cacheDetail_clueSection_title),
         )
-        SpacerLarge()
+        SpacerSmall()
         CTTextView(
             modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
             text = clue.text,
             style = CTTheme.typography.body,
         )
+        SpacerLarge()
+    }
+    state.code?.let {
+        SectionHeader(title = TextSpec.Resources(R.string.cacheDetail_codeSection_title))
+        SpacerSmall()
+        CTTextView(
+            modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
+            text = state.code,
+            style = CTTheme.typography.body,
+        )
+        SpacerLarge()
     }
     Row(
         modifier = Modifier
@@ -126,7 +141,11 @@ data class InstructionSectionState(
     val cacheInstructions: CacheInstructions,
     val clue: Clue?,
     val onReport: () -> Unit,
+    val status: UIStep.Status,
+    val code: TextSpec?,
 ) {
+    val enabled: Boolean = status != UIStep.Status.Lock
+
     sealed interface Clue {
         data class Unrevealed(val onClickClue: () -> Unit) : Clue
         data class Revealed(val text: TextSpec) : Clue

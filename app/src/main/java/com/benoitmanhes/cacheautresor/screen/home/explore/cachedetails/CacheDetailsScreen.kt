@@ -12,17 +12,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Divider
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalTonalElevationEnabled
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.cacheautresor.common.extensions.onTapListener
 import com.benoitmanhes.cacheautresor.common.extensions.refresh
 import com.benoitmanhes.cacheautresor.common.extensions.setUpDefaultParameters
@@ -45,16 +45,19 @@ import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstruction
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetailrecap.CacheDetailRecapScreen
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.section.CacheDetailHeader
 import com.benoitmanhes.cacheautresor.utils.AppDimens
+import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.spacer.SpacerMedium
 import com.benoitmanhes.designsystem.atoms.text.CTTextView
 import com.benoitmanhes.designsystem.molecule.button.fabbutton.CTFabButton
 import com.benoitmanhes.designsystem.molecule.loading.CTLoadingView
-import com.benoitmanhes.designsystem.molecule.selector.CTTabSelector
+import com.benoitmanhes.designsystem.molecule.tabrow.CTScrollableTabRow
+import com.benoitmanhes.designsystem.molecule.tabrow.CTTab
 import com.benoitmanhes.designsystem.molecule.topbar.CTNavAction
 import com.benoitmanhes.designsystem.molecule.topbar.CTTopBar
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.utils.AnimatedNullableVisibility
+import com.benoitmanhes.domain.uimodel.UIStep
 import kotlinx.coroutines.launch
 import org.osmdroid.views.overlay.FolderOverlay
 
@@ -96,8 +99,6 @@ private fun CacheDetailsScreen(
     val mapViewState = rememberMapViewWithLifecycle()
     val bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(bottomSheetState)
-    val recapLazyListState = rememberLazyListState()
-    val instructionsLazyListState = rememberLazyListState()
     val markerFolder = remember { FolderOverlay() }
 
     val data = uiState as? CacheDetailsViewModelState.Data
@@ -170,8 +171,6 @@ private fun CacheDetailsScreen(
                             is CacheDetailsViewModelState.Data -> {
                                 DataContent(
                                     uiState = uiState,
-                                    recapLazyListState = recapLazyListState,
-                                    instructionsLazyListState = instructionsLazyListState,
                                     modifier = Modifier.weight(1f),
                                 )
                             }
@@ -209,35 +208,56 @@ private fun CacheDetailsScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun DataContent(
     uiState: CacheDetailsViewModelState.Data,
-    recapLazyListState: LazyListState,
-    instructionsLazyListState: LazyListState,
     modifier: Modifier = Modifier,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
-        pageCount = { uiState.tabSelectorState?.items?.size ?: 1 }
+        pageCount = { uiState.pageCount },
+        initialPage = uiState.initialPageIndex,
     )
-
-    LaunchedEffect(uiState.page) {
-        pagerState.animateScrollToPage(uiState.page)
-    }
 
     Column(
         modifier
             .fillMaxWidth()
             .animateContentSize(),
     ) {
-        uiState.tabSelectorState?.let {
-            CTTabSelector(
-                tabSelectorState = it,
-                modifier = Modifier.padding(horizontal = CTTheme.spacing.large),
-            )
-            SpacerMedium()
+        if (uiState.stepInstructions.isNotEmpty()) {
+            CompositionLocalProvider(
+                LocalTonalElevationEnabled provides false,
+            ) {
+                CTScrollableTabRow(
+                    selectedTabIndex = pagerState.currentPage,
+                ) {
+                    CTTab(
+                        text = TextSpec.Resources(R.string.cacheDetail_tabSelector_recap),
+                        selected = pagerState.currentPage == 0,
+                        onClick = {
+                            coroutineScope.launch { pagerState.scrollToPage(0) }
+                        }
+                    )
+
+                    uiState.stepInstructions.forEachIndexed { index, instructionSectionState ->
+                        val icon = when (instructionSectionState.status) {
+                            UIStep.Status.Done -> CTTheme.icon.Done
+                            else -> null
+                        }
+                        CTTab(
+                            text = instructionSectionState.title,
+                            selected = pagerState.currentPage == index + 1,
+                            enabled = instructionSectionState.enabled,
+                            trailingIcon = icon,
+                            onClick = {
+                                coroutineScope.launch { pagerState.scrollToPage(index + 1) }
+                            }
+                        )
+                    }
+                }
+            }
         }
-        Divider()
 
         HorizontalPager(
             state = pagerState,
@@ -248,15 +268,16 @@ private fun DataContent(
                 0 -> {
                     CacheDetailRecapScreen(
                         uiState = uiState,
-                        lazyListState = recapLazyListState,
                     )
                 }
 
-                1 -> {
-                    CacheDetailInstructionsScreen(
-                        uiState = uiState,
-                        lazyListState = instructionsLazyListState,
-                    )
+                else -> {
+                    uiState.stepInstructions.getOrNull(page - 1)?.let { instuctions ->
+                        CacheDetailInstructionsScreen(
+                            instructionsSectionState = instuctions,
+                            noteSectionState = uiState.noteSectionState,
+                        )
+                    }
                 }
             }
         }

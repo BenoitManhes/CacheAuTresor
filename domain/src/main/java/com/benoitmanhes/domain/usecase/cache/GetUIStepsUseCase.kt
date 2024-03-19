@@ -28,6 +28,7 @@ class GetUIStepsUseCase @Inject constructor(
             showClue = (userProgress?.clueUnlockedStepRef?.contains(stepId) ?: false) || cacheUserStatus == CacheUserStatus.Owned,
             instructions = step.instruction,
             status = when {
+                cacheUserStatus == CacheUserStatus.Owned -> UIStep.Status.Current
                 userProgress == null -> UIStep.Status.Lock
                 userProgress.stepDoneRefs.contains(stepId) -> UIStep.Status.Done
                 userProgress.currentStepRef == stepId -> UIStep.Status.Current
@@ -35,6 +36,7 @@ class GetUIStepsUseCase @Inject constructor(
             },
             coordinates = step.coordinates,
             type = getUIStepType(cache, step),
+            code = step.validationCode,
         )
     }
 

@@ -12,8 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import com.benoitmanhes.cacheautresor.R
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.atoms.CTImage
@@ -25,9 +28,10 @@ import com.benoitmanhes.designsystem.utils.ImageSpec
 fun CTEmptyScreen(
     illustration: ImageSpec,
     message: TextSpec,
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(CTTheme.color.background),
     ) {
@@ -51,7 +55,8 @@ fun CTEmptyScreen(
                 style = CTTheme.typography.bodyBold,
                 modifier = Modifier
                     .layoutId(Refs.Message)
-                    .padding(horizontal = CTTheme.spacing.large),
+                    .padding(horizontal = CTTheme.spacing.large)
+                    .padding(top = textPaddingTop),
                 textAlign = TextAlign.Center,
             )
         }
@@ -61,16 +66,19 @@ fun CTEmptyScreen(
 private fun constraintsSet(): ConstraintSet = ConstraintSet {
     val image = createRefFor(Refs.Illustration)
     val text = createRefFor(Refs.Message)
+    val guideline = createGuidelineFromTop(0.45f)
 
     constrain(image) {
-        centerTo(parent)
+        centerAround(guideline)
     }
 
     constrain(text) {
         top.linkTo(image.bottom)
-        bottom.linkTo(parent.bottom)
+        width = Dimension.matchParent
     }
 }
+
+private val textPaddingTop: Dp = 24.dp
 
 private object Refs {
     const val Illustration: String = "Illustration.Ref"

@@ -8,6 +8,7 @@ import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Explorer
 import com.benoitmanhes.domain.usecase.CTUseCase
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 import javax.inject.Inject
 
 class CreateAccountUseCase @Inject constructor(
@@ -47,5 +48,6 @@ class CreateAccountUseCase @Inject constructor(
         name = explorerName,
         cachesMap = emptyMap(),
         cachesFoundMap = emptyMap(),
+        creationDate = Date(),
     )
 }

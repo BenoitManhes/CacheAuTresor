@@ -1,7 +1,9 @@
 package com.benoitmanhes.server.firestore.model
 
 import com.benoitmanhes.domain.model.Explorer
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.IgnoreExtraProperties
+import java.util.Date
 
 @IgnoreExtraProperties
 data class FSExplorer(
@@ -9,6 +11,7 @@ data class FSExplorer(
     val name: String? = null,
     val cachesMap: Map<String, Int>? = null,
     val cachesFoundMap: Map<String, Int>? = null,
+    val creationDate: Timestamp? = null,
 ) : FirestoreModel<Explorer> {
 
     constructor(explorer: Explorer) : this(
@@ -23,5 +26,6 @@ data class FSExplorer(
         name = name.requiredField(),
         cachesMap = cachesMap ?: emptyMap(),
         cachesFoundMap = cachesFoundMap ?: emptyMap(),
+        creationDate = creationDate?.toDate() ?: Date(),
     )
 }

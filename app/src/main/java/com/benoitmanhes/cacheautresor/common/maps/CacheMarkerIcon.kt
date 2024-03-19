@@ -27,11 +27,15 @@ sealed class CacheMarkerIcon(
     ): Drawable? {
         val drawableRes = if (isSelected) iconSelectedRes else iconRes
         val initDrawable = ContextCompat.getDrawable(context, drawableRes)
-        return if (iconText != null) initDrawable?.drawTextInDrawable(
-            context,
-            iconText!!,
-            Color.White
-        ) else initDrawable
+        return if (iconText != null) {
+            initDrawable?.drawTextInDrawable(
+                context,
+                iconText!!,
+                Color.White
+            )
+        } else {
+            initDrawable
+        }
     }
 
     class Classical(color: Color) : CacheMarkerIcon(

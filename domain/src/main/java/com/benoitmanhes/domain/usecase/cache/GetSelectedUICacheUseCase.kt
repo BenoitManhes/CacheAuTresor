@@ -9,9 +9,7 @@ import com.benoitmanhes.domain.interfaces.repository.ExplorerRepository
 import com.benoitmanhes.domain.model.Cache
 import com.benoitmanhes.domain.model.CacheUserData
 import com.benoitmanhes.domain.model.CacheUserProgress
-import com.benoitmanhes.domain.model.CacheUserStatus
 import com.benoitmanhes.domain.uimodel.UICacheDetails
-import com.benoitmanhes.domain.uimodel.UIStep
 import com.benoitmanhes.domain.usecase.CTUseCase
 import com.benoitmanhes.domain.usecase.common.GetMyExplorerIdUseCase
 import kotlinx.coroutines.flow.Flow
@@ -48,10 +46,6 @@ class GetSelectedUICacheUseCase @Inject constructor(
                 status = status,
                 steps = getCacheStepsRefs(cache, userProgress).map {
                     getUIStepsUseCase(it, cache, userProgress, status.cacheUserStatus)
-                }.filterNot {
-                    it.status == UIStep.Status.Lock
-                        && it.type == UIStep.Type.Final
-                        && status.cacheUserStatus == CacheUserStatus.Started
                 },
                 userData = userData,
             )

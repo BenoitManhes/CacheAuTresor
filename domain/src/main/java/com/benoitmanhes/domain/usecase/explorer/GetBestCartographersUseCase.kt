@@ -13,7 +13,10 @@ class GetBestCartographersUseCase @Inject constructor(
     operator fun invoke(): Flow<List<Explorer>> =
         explorerRepository.getAllExplorerFlow()
             .map { list ->
-                list.sortedByDescending { it.cachesMap.values.sum() }
+                list.sortedWith(
+                    compareByDescending<Explorer> { it.cachesMap.values.sum() }
+                        .thenComparingLong { it.creationDate.time }
+                )
             }
             .useCaseCatch { emptyList() }
 }

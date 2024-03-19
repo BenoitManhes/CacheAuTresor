@@ -11,22 +11,22 @@ import com.benoitmanhes.designsystem.molecule.button.fabbutton.FabButtonState
 import com.benoitmanhes.designsystem.molecule.card.InfoCardState
 import com.benoitmanhes.designsystem.molecule.jauge.CTJaugeState
 import com.benoitmanhes.designsystem.molecule.row.CTRowState
-import com.benoitmanhes.designsystem.molecule.selector.TabSelectorState
 import com.benoitmanhes.common.compose.text.TextSpec
 import com.benoitmanhes.designsystem.theme.CTColorTheme
 import com.benoitmanhes.domain.model.Coordinates
+import javax.annotation.concurrent.Immutable
 
 sealed interface CacheDetailsViewModelState {
 
     object Initialize : CacheDetailsViewModelState
 
+    @Immutable
     data class Data(
         val cacheColorTheme: CTColorTheme,
         val headerState: CacheDetailHeaderState,
         val uiMarkers: List<UIMarker>,
         val fabButtonState: FabButtonState?,
         val bottomBarState: BottomActionBarState?,
-        val tabSelectorState: TabSelectorState?,
         val difficultyJaugeState: CTJaugeState,
         val groundJaugeState: CTJaugeState,
         val sizeJaugeState: CTJaugeState,
@@ -37,13 +37,15 @@ sealed interface CacheDetailsViewModelState {
         val distanceText: TextSpec?,
         val description: TextSpec,
         val characteristics: List<CTRowState>,
-        val instructionsSectionState: InstructionSectionState,
-        val noteSectionState: NoteSectionState,
+        val stepInstructions: List<InstructionSectionState>,
+        val noteSectionState: NoteSectionState?,
+        val initialPageIndex: Int,
     ) : CacheDetailsViewModelState {
 
-        val page: Int get() = (tabSelectorState?.page ?: 0).coerceAtLeast(0)
+        val pageCount: Int get() = stepInstructions.count() + 1
     }
 
+    @Immutable
     data class Empty(
         val message: TextSpec,
     ) : CacheDetailsViewModelState

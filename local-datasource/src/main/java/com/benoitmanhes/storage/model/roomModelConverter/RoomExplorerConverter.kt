@@ -9,5 +9,6 @@ object RoomExplorerConverter : AbstractRoomModelConverter<Explorer, RoomExplorer
         name = appModel.name,
         cachesMap = appModel.cachesMap,
         cachesFoundMap = appModel.cachesFoundMap,
+        creationDate = appModel.creationDate.time,
     )
 }

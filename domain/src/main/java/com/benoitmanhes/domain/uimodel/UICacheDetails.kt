@@ -14,7 +14,9 @@ data class UICacheDetails(
     val userData: CacheUserData,
 ) : UIModel {
 
-    val currentStep: UIStep = steps.firstOrNull { it.status == UIStep.Status.Current } ?: steps.first()
+    val currentStep: UIStep = steps.firstOrNull { it.status == UIStep.Status.Current }
+        ?: steps.lastOrNull { it.status == UIStep.Status.Done }
+        ?: steps.first()
 
     sealed interface Status {
         val cacheUserStatus: CacheUserStatus

@@ -11,15 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSection
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.InstructionSectionState
 import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSection
-import com.benoitmanhes.cacheautresor.screen.home.explore.cachedetails.CacheDetailsViewModelState
+import com.benoitmanhes.cacheautresor.screen.home.explore.cachededailinstructions.section.NoteSectionState
 import com.benoitmanhes.designsystem.atoms.dividerItem
 import com.benoitmanhes.designsystem.theme.CTTheme
 import com.benoitmanhes.designsystem.theme.composed
 
 @Composable
 fun CacheDetailInstructionsScreen(
-    uiState: CacheDetailsViewModelState.Data,
+    instructionsSectionState: InstructionSectionState,
+    noteSectionState: NoteSectionState?,
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
@@ -28,9 +30,11 @@ fun CacheDetailInstructionsScreen(
         state = lazyListState,
         contentPadding = PaddingValues(vertical = CTTheme.spacing.large),
     ) {
-        InstructionSection.item(scope = this, state = uiState.instructionsSectionState)
-        divider()
-        NoteSection.item(scope = this, state = uiState.noteSectionState)
+        InstructionSection.item(scope = this, state = instructionsSectionState)
+        noteSectionState?.let {
+            divider()
+            NoteSection.item(scope = this, state = noteSectionState)
+        }
     }
 }
 

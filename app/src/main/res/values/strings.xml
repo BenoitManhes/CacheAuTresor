@@ -66,6 +66,7 @@
     <string name="cacheDetail_tabSelector_recap">Recap</string>
     <string name="cacheDetail_tabSelector_instructions">Instructions</string>
     <string name="cacheDetail_instructionsSection_title_classical">Instructions</string>
+    <string name="cacheDetail_codeSection_title">Validation code</string>
     <string name="cacheDetail_enigmaSection_title">Enigma</string>
     <string name="cacheDetail_clueButton">Clue</string>
     <string name="cacheDetail_reportButton">Report</string>
