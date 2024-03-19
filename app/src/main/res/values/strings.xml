@@ -28,6 +28,7 @@
     <string name="error_networkConnection_description">Prease, check your internet connection</string>
     <string name="authentication_error_noUserEmail">No user with this email</string>
     <string name="authentication_error_invalidPassword">Invalid password</string>
+    <string name="authentication_error_credential">Identifier or password invalid</string>
     <string name="authentication_error_emailFormInvalid">Email form incorrect</string>
     <string name="exploreScreen_selectorItem_map">Map</string>
     <string name="exploreScreen_selectorItem_list">List</string>

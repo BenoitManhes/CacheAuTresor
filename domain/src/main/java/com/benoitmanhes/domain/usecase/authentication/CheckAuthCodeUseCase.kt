@@ -1,6 +1,7 @@
 package com.benoitmanhes.domain.usecase.authentication
 
 import com.benoitmanhes.core.error.CTDomainError
+import com.benoitmanhes.core.extensions.error
 import com.benoitmanhes.core.result.CTResult
 import com.benoitmanhes.domain.interfaces.repository.AuthRepository
 import com.benoitmanhes.domain.usecase.CTUseCase
@@ -15,7 +16,7 @@ class CheckAuthCodeUseCase @Inject constructor(
         if (authRepository.isAuthCodeValid(code)) {
             emit(CTResult.Success(code))
         } else {
-            throw CTDomainError(CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN)
+            emit(CTResult.Failure(CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN.error()))
         }
     }
 }

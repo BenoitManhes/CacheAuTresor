@@ -47,6 +47,7 @@ fun AccountCreationInputSection(
             onValueChange = { viewModel.updateName(it) },
             labelText = TextSpec.Resources(R.string.accountCreation_name_label),
             errorText = viewModel.uiState.errorUserName?.localizedDescription(),
+            isError = viewModel.uiState.errorUserName != null,
             imeAction = ImeAction.Next,
         )
         Spacer(modifier = Modifier.weight(0.2f))

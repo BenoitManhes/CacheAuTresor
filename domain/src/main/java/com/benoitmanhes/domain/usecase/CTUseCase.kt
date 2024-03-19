@@ -52,8 +52,9 @@ abstract class CTUseCase {
                 logError(domainError)
                 emit(errorValue(domainError))
             } else {
-                logError(CTDomainError.Code.UNKNOWN.error(cause = t))
-                throw t
+                val cause = t
+                logError(CTDomainError.Code.UNKNOWN.error(cause = cause, message = cause::class.java.simpleName))
+                throw cause
             }
         }
 
@@ -94,7 +95,8 @@ abstract class CTUseCase {
         val code: CTDomainError.Code = when (t) {
             is CTDomainError -> t.code
 
-            is CTRemoteError.AuthenticationInvalidCredentialError -> CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL
+            is CTRemoteError.Authentication -> CTDomainError.Code.AUTHENTICATION_CREDENTIAL_INVALID
+            is CTRemoteError.AuthenticationInvalidCredentialError -> CTDomainError.Code.AUTHENTICATION_INVALID_PASSWORD
             is CTRemoteError.AuthenticationEmailInvalidForm -> CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM
             is CTRemoteError.AuthenticationUserEmailNoExist -> CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST
             is CTRemoteError.NetworkException -> CTDomainError.Code.NO_INTERNET
@@ -126,7 +128,7 @@ abstract class CTUseCase {
         private val nonImportantCodeErrors = listOf(
             CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE,
             CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN,
-            CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL,
+            CTDomainError.Code.AUTHENTICATION_INVALID_PASSWORD,
             CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM,
             CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST,
             CTDomainError.Code.EXPLORER_NOT_FOUND,

@@ -3,7 +3,9 @@ package com.benoitmanhes.server.firestore
 import com.benoitmanhes.core.error.CTRemoteError
 import com.benoitmanhes.domain.interfaces.remotedatasource.AuthRemoteDataSource
 import com.benoitmanhes.domain.model.Account
+import com.benoitmanhes.server.extensions.toCTError
 import com.benoitmanhes.server.extensions.withCoroutine
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -34,7 +36,12 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun login(email: String, password: String): Account {
-        auth.signInWithEmailAndPassword(email, password).withCoroutine()
+        auth.signInWithEmailAndPassword(email, password).withCoroutine { exception ->
+            when (exception) {
+                is FirebaseException -> CTRemoteError.Authentication(exception)
+                else -> exception.toCTError()
+            }
+        }
         return getCurrentAccount() ?: throw CTRemoteError.UnexpectedResult(message = "No account after login")
     }
 

@@ -69,6 +69,7 @@ class ConnectionInputViewModel @Inject constructor(
                         is CTResult.Loading -> {
                             uiState = uiState.copy(loadingLogin = true)
                         }
+
                         is CTResult.Success -> {
                             uiState = uiState.copy(
                                 loadingLogin = false,
@@ -76,11 +77,13 @@ class ConnectionInputViewModel @Inject constructor(
                                 valueRegisterCode = null,
                             )
                         }
+
                         is CTResult.Failure -> {
                             uiState = when (loginResult.error?.code) {
                                 CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM,
                                 CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST,
-                                CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL,
+                                CTDomainError.Code.AUTHENTICATION_INVALID_PASSWORD,
+                                CTDomainError.Code.AUTHENTICATION_CREDENTIAL_INVALID,
                                 -> uiState.copy(
                                     errorLogin = loginResult.error,
                                     loadingLogin = false,
@@ -106,6 +109,7 @@ class ConnectionInputViewModel @Inject constructor(
                     is CTResult.Loading -> {
                         uiState = uiState.copy(loadingRegister = true)
                     }
+
                     is CTResult.Failure -> {
                         uiState = when (result.error?.code) {
                             CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> uiState.copy(
@@ -119,6 +123,7 @@ class ConnectionInputViewModel @Inject constructor(
                             )
                         }
                     }
+
                     is CTResult.Success -> {
                         uiState = uiState.copy(
                             loadingRegister = false,

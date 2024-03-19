@@ -20,6 +20,11 @@ sealed class CTRemoteError(
         "User email not found"
     )
 
+    data class Authentication(override val cause: Throwable?) : CTRemoteError(
+        cause,
+        "Invalid credential"
+    )
+
     data class NetworkException(override val cause: Throwable?) : CTRemoteError(cause, "Check your internet connection")
     data class ObjectNotFound(override val message: String) : CTRemoteError(null, message)
     data class ParsingFailed(override val message: String) : CTRemoteError(null, message)

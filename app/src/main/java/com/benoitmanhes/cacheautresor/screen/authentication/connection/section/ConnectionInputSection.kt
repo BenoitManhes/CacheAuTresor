@@ -118,6 +118,7 @@ internal fun LoginInputSection(
                         modifier = Modifier.fillMaxWidth(),
                         labelText = TextSpec.Resources(R.string.loginScreen_register_codeText_label),
                         errorText = uiState.errorRegister?.localizedDescription(),
+                        isError = uiState.errorRegister != null,
                     )
                     SpacerSmall()
                 }

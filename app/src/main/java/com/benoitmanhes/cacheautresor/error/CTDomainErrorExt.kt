@@ -7,7 +7,8 @@ import com.benoitmanhes.core.error.CTDomainError
 fun CTDomainError.localizedTitle(): TextSpec = when (code) {
     CTDomainError.Code.ACCOUNT_CREATION_INVALID_TOKEN -> null
     CTDomainError.Code.ACCOUNT_CREATION_EXPLORER_NAME_UNAVAILABLE -> null
-    CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> null
+    CTDomainError.Code.AUTHENTICATION_CREDENTIAL_INVALID -> null
+    CTDomainError.Code.AUTHENTICATION_INVALID_PASSWORD -> null
     CTDomainError.Code.AUTHENTICATION_EMAIL_INVALID_FORM -> null
     CTDomainError.Code.AUTHENTICATION_USER_EMAIL_NO_EXIST -> null
     CTDomainError.Code.CACHE_INVALID_LOG_CODE -> null
@@ -37,7 +38,11 @@ fun CTDomainError.localizedDescription(): TextSpec = when (code) {
         id = R.string.accountCreation_name_error
     )
 
-    CTDomainError.Code.AUTHENTICATION_INVALID_CREDENTIAL -> TextSpec.Resources(
+    CTDomainError.Code.AUTHENTICATION_CREDENTIAL_INVALID -> TextSpec.Resources(
+        id = R.string.authentication_error_credential
+    )
+
+    CTDomainError.Code.AUTHENTICATION_INVALID_PASSWORD -> TextSpec.Resources(
         id = R.string.authentication_error_invalidPassword
     )
 

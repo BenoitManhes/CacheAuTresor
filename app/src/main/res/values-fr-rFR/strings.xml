@@ -28,6 +28,7 @@
     <string name="error_networkConnection_title">Pas de réseau</string>
     <string name="error_networkConnection_description">Vérifie, ta connexion internet</string>
     <string name="authentication_error_noUserEmail">Aucun utilisateur avec cet email</string>
+    <string name="authentication_error_credential">Mot de passe ou identifiant invalide</string>
     <string name="authentication_error_invalidPassword">Mot de passe incorrect</string>
     <string name="authentication_error_emailFormInvalid">Le format de l’adresse mail est incorrecte</string>
     <string name="exploreScreen_selectorItem_map">Carte</string>
