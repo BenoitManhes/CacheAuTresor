@@ -9,16 +9,23 @@ sealed class CTRemoteError(
         cause,
         "Invalid password"
     )
+
     data class AuthenticationEmailInvalidForm(override val cause: Throwable?) : CTRemoteError(
         cause,
         "User email not found"
     )
+
     data class AuthenticationUserEmailNoExist(override val cause: Throwable?) : CTRemoteError(
         cause,
         "User email not found"
     )
+
     data class NetworkException(override val cause: Throwable?) : CTRemoteError(cause, "Check your internet connection")
     data class ObjectNotFound(override val message: String) : CTRemoteError(null, message)
     data class ParsingFailed(override val message: String) : CTRemoteError(null, message)
     data class UnexpectedResult(override val message: String) : CTRemoteError(null, message)
+    data class Unknown(
+        override val cause: Throwable?,
+        override val message: String = "Unknown remote error",
+    ) : CTRemoteError(cause, message)
 }

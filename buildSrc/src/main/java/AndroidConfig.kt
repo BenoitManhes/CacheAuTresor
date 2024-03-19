@@ -1,6 +1,6 @@
 object AndroidConfig {
     const val VERSION_CODE: Int = 1
-    const val VERSION_NAME: String = "0.1.0"
+    const val VERSION_NAME: String = "1.0.0"
 
     const val COMPILE_SDK: Int = 34
     const val TARGET_SDK: Int = COMPILE_SDK

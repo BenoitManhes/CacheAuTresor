@@ -29,11 +29,15 @@ abstract class FSRemoteDataSource<M : Model, F : FirestoreModel<M>>(
             .convertToAppModel()
 
     protected suspend fun getFSObjectList(ids: List<String>, objectsIdField: String): List<M> =
-        firestore.collection(collectionRef)
-            .whereIn(objectsIdField, ids)
-            .get()
-            .withCoroutine()
-            .mapNotNull { it.convertToAppModel() }
+        if (ids.isEmpty()) {
+            emptyList()
+        } else {
+            firestore.collection(collectionRef)
+                .whereIn(objectsIdField, ids)
+                .get()
+                .withCoroutine()
+                .mapNotNull { it.convertToAppModel() }
+        }
 
     protected suspend fun getAllFSObject(): List<M> =
         firestore.collection(collectionRef)

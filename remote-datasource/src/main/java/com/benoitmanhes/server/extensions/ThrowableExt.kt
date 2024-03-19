@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestoreException
 
-fun Throwable.toCTError(defaultError: Throwable = this): Throwable =
+fun Throwable.toCTError(defaultError: CTRemoteError = CTRemoteError.Unknown(this)): CTRemoteError =
     when (this) {
         is FirebaseAuthInvalidUserException -> CTRemoteError.AuthenticationUserEmailNoExist(this)
         is FirebaseAuthInvalidCredentialsException -> handleFirebaseAuthInvalidCredentialsException(this)

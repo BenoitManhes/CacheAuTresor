@@ -100,6 +100,7 @@ abstract class CTUseCase {
             is CTRemoteError.NetworkException -> CTDomainError.Code.NO_INTERNET
             is CTRemoteError.ParsingFailed,
             is CTRemoteError.ObjectNotFound,
+            is CTRemoteError.Unknown,
             -> CTDomainError.Code.SERVER_ERROR
 
             is CTStorageError.ExplorerNotFound -> CTDomainError.Code.EXPLORER_NOT_FOUND
